@@ -1,0 +1,72 @@
+#! /usr/bin/perl -w
+use strict;
+use Getopt::Long;
+use FindBin qw($RealBin);
+  
+
+#======================= [ syntax ] =======================
+sub syntax () {
+  print <<EOS;
+rsync-client
+  Get or put file/directory to rsync server.
+      --getfile <path> get exact filename
+      --getsha <path> get file(s) w/specified pre-pended sha1
+      --put <path>
+      --module  specify remote module name (required)
+      --port    use port (has default)
+      --host    use host (has default)
+      --user    specify user (has default)
+      --todir   local dir to put fetched file (defaults to '.')
+EOS
+}
+
+#======================= [ Command line processing: ] =======================
+my %options=();
+GetOptions(
+	   "port=s"        => \$options{port},
+	   "host=s"        => \$options{host},
+	   "user=s"        => \$options{user},
+	   "module=s"      => \$options{module},
+	   "getfile=s"     => \$options{getfile},
+	   "getsha=s"      => \$options{getsha},
+	   "put=s"         => \$options{put},
+	   "put-as=s"      => \$options{putas},
+	   "todir=s"       => \$options{todir},
+	  );
+
+
+{
+  $options{port} = "1199" unless defined $options{port};
+  $options{host} = "vinci5" unless defined $options{host};
+  $options{user} = "adam" unless defined $options{user};
+  $options{todir} = "." unless defined $options{todir};
+  $options{putas} = $options{put} unless defined $options{putas};
+
+  syntax and exit() unless defined $options{module};
+
+  #======================= [ Main: ] =======================
+  {
+    my $common = "--port $options{port} --archive"; ## --cvs-exclude --recursive --relative"; 
+    my $command;
+    if ( defined $options{getfile} ) {
+      my $url = "rsync://$options{user}" . '@' . "$options{host}/$options{module}/$options{getfile}";
+      $command = "rsync $common $url $options{todir}";
+    }
+    elsif ( defined $options{getsha} ) {
+      ## map SHA1 into pathname, e.g. '03AE3..' -> '0/3/A/E/03AE3...'
+      my $sha = $options{getsha};
+      my $path = join( '/', split( //, substr( $sha, 0, 4 ) ) );
+      my $url = "rsync://$options{user}" . '@' . "$options{host}/$options{module}/$path/$sha" . "*";
+      $command = "rsync $common $url $options{todir}";
+    }
+    elsif ( defined $options{put} ) {
+      my $url = "rsync://$options{user}" . '@' . "$options{host}/$options{module}/$options{putas}";
+      $command = "rsync $common $options{put} $url";      
+    }
+    else {
+      exit( "no action specifed" );
+    }
+    print "$command\n";
+    `$command`;
+  }
+}

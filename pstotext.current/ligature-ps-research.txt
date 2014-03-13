@@ -1,0 +1,97 @@
+It seems that there are documents on rexa with ligature problems that do not
+exhibit the problem with rexa's current pstotext conversion.  This may be due
+to my obtaining different ps/pdf files online (which is necessary, since I
+can't access the ps/pdf files from rexa directly), or due to my using of pdf
+while rexa used a ps file, or vice versa.
+
+    Online Algorithms for Network Design 
+    Adam Meyerson 
+    http://www.rexa.info/paper?id=97323
+
+    An Energy-Efficient MAC Protocol for Wireless Sensor Networks 
+    Wei Ye, John Heidemann, Deborah Estrin 
+    http://www.rexa.info/paper?id=62214
+
+    A Type and Effect System for Atomicity
+    Cormac Flanagan Shaz Qadeer 
+    http://www.rexa.info/paper?id=45049
+
+    Investigations of the Software Testing Coupling Effect 
+    A. JEFFERSON OFFUTT 
+    http://www.rexa.info/paper?id=54695
+    
+---
+
+Seems entire lines are (now) being omitted by the current version of pstotext.
+However, the behavior is not exhibited on rexa itself, so either the document
+used was different, or pstotext now has new bugs (but I'm using the original
+version of pstotdll.c that I was given)
+
+    Analyzing the Effect of Prioritized Background Tasks in Multiserver Systems 
+    Adam Wierman Takayuki Osogami Mor Harchol-Balter Alan Scheller-Wolf 
+    http://www.rexa.info/paper?id=82308
+
+    Using Relative Novelty to Identify Useful Temporal Abstractions in 
+    Reinforcement Learning 
+    ozgur@cs.umass.edu 
+    Andrew G. Barto 
+    http://www.rexa.info/paper?id=33107    
+
+    Diagnostics for Interactive Controlled Language Checking 
+    Teruko Mitamura, Kathryn Baker, Eric Nyberg, David Svoboda 
+    http://www.rexa.info/paper?id=68771
+
+
+---
+
+
+test02.ps ligatures
+
+    \013 ff
+    \014 fi
+    \015 fl
+    \016 ff
+
+    ligatures missing entirely in txt output
+
+    %%Creator: dvips(k) 5.86 Copyright 1999 Radical Eye Software
+
+
+test04.ps ligatures
+
+    \256 fi
+    \257 fl
+
+    ligatures handled properly by pstotext
+
+    %PDF-1.1
+
+---
+
+It seems that if a pdf/ps file is created from latex, ligature conversion
+should be handled, by virtue of ligature values being specified in the
+DvipsGlyphs (and CorkSpecialGlyphs?) array.
+
+Ligatures would also appear to be handled correctly when Times-Roman is used,
+since ligature glyph values are specified in the SpecialGlyphs array.
+
+---
+
+PS encodings
+
+In a font dictionary, the descriptions of the individual glyphs are keyed by
+character names (not by character codes).  E.g.: "A", "c", three, ampersand,
+parenleft.
+
+Encoding vector is indexed by character CODE (0-255), and the vector elements
+are names (as above).
+
+PS data is in terms of character CODEs, looks up glyph NAME in encoding vector
+(Encoding array), then uses NAME to find glyph rendering data in the
+CharStrings dictionary.
+
+Different encodings can select different subsets of a character set that has >
+256 entries.
+
+All unused positions in an encoding vector must be filled with the character
+name ".notdef" (which has a corresponding glyph in the CharStrings dictionary)

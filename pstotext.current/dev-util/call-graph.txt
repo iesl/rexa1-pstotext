@@ -1,0 +1,151 @@
+1	GetOutputBufferReady {ptotdll.c 480}
+2	OverlapLength {ptotdll.c 1154}
+3	OverlapRatio {ptotdll.c 1132}
+4	SegmentLength {ptotdll.c 1168}
+5	SetOutputBufferReady {ptotdll.c 476}
+6	handler {main.c 148}
+7		cleanup {main.c 125}
+8			pstotextExit {ptotdll.c 688}
+9				free {}
+10			pclose {}
+11			strcmp {}
+12			unlink {}
+13		exit {}
+14	load_pstotext {pstotxtd.c 246}
+15		DosGetInfoBlocks {}
+16		fprintf {}
+17		DosQueryModuleName {}
+18		strrchr {}
+19		strcat {}
+20		fputs {}
+21		fputc {}
+22		DosLoadModule {}
+23		DosQueryProcAddr {}
+24		DosFreeModule {}
+25		dllfn_pstotextInit {}
+26	main {main.c 298}
+27		strcasecmp {}
+28		usage {main.c 60}
+29			fprintf {}
+30		exit {}
+31		strcmp {}
+32		do_it {main.c 158}
+33			strlen {}
+34			fopen {}
+35			perror {}
+36			exit {}
+37			signal {}
+38			make_temp {main.c 95}
+39				tempnam {}
+40				fopen {}
+41				perror {}
+42				exit {}
+43				putbundle {bundle.c 9}
+44					fputs {}
+45				fclose {}
+46			strcpy {}
+47			strcat {}
+48			sprintf {}
+49			fprintf {}
+50			popen {}
+51			pstotextInit {ptotdll.c 618}
+52				malloc {}
+53				free {}
+54			pstotextSetCork {ptotdll.c 682}
+55			fwprintf {}
+56			fgets {}
+57			fputs {}
+58			pstotextFilter {ptotdll.c 1425}
+59				ReadChar {ptotdll.c 697}
+60				ParseInverseTransform {ptotdll.c 744}
+61					ReadLong {ptotdll.c 733}
+62						ReadChar ... {59}
+63						UnreadChar {ptotdll.c 703}
+64				ParseMetrics {ptotdll.c 873}
+65					ReadInt {ptotdll.c 722}
+66						ReadChar ... {59}
+67						UnreadChar ... {63}
+68					realloc {}
+69					malloc {}
+70					ReadPair {ptotdll.c 810}
+71						ReadLong ... {61}
+72				ParseEncoding {ptotdll.c 750}
+73					ReadInt ... {65}
+74					realloc {}
+75					malloc {}
+76				ParseFont {ptotdll.c 815}
+77					ReadInt ... {65}
+78					realloc {}
+79					malloc {}
+80					ReadPair ... {70}
+81					ReadTrimmedString {ptotdll.c 707}
+82						ReadChar ... {59}
+83						UnreadChar ... {63}
+84				ParseString {ptotdll.c 1174}
+85					ReadInt ... {65}
+86					ReadPair ... {70}
+87					ReadChar ... {59}
+88					strlen {}
+89					strncpy {}
+90					SameDirection {ptotdll.c 1123}
+91					Output {ptotdll.c 943}
+92						ceil {}
+93						floor {}
+94						TokenStackHasToken {ptotdll.c 550}
+95						strcpy {}
+96						Itransform {ptotdll.c 931}
+97						AppendToOutputBuffer {ptotdll.c 468}
+98							strlen {}
+99							strcpy {}
+100						UnwindAndProcessTokenStack {ptotdll.c 556}
+101							TokenStackHasToken ... {94}
+102							PeekTokenStack {ptotdll.c 546}
+103							PopTokenStack {ptotdll.c 542}
+104							OutputTokenEnd {ptotdll.c 569}
+105								strlen {}
+106								sprintf {}
+107								PopDblArgStack {ptotdll.c 530}
+108								PopIntArgStack {ptotdll.c 519}
+109								GetOutputBuffer {ptotdll.c 472}
+110						ClearOutputBuffer {ptotdll.c 464}
+111						PushTokenStack {ptotdll.c 538}
+112						strlen {}
+113						sprintf {}
+114						PeekTokenStack ... {102}
+115						PushIntArgStack {ptotdll.c 515}
+116						PushDblArgStack {ptotdll.c 526}
+117						PopDblArgStack ... {107}
+118				Output ... {91}
+119				ParseMetricsMore {ptotdll.c 905}
+120					ReadPair ... {70}
+121				ParseEncodingMore {ptotdll.c 779}
+122					ReadInt ... {65}
+123			fputc {}
+124			pstotextClose {ptotdll.c 1387}
+125				UnwindAndProcessTokenStack ... {100}
+126				strlen {}
+127				sprintf {}
+128				Itransform ... {96}
+129			fclose {}
+130			cleanup ... {7}
+131	scratch_file {pstotxtd.c 348}
+132		malloc {}
+133		getenv {}
+134		strcpy {}
+135		tolower {}
+136		strlen {}
+137		strcat {}
+138		mktemp {}
+139		fopen {}
+140		perror {}
+141		exit {}
+142		fclose {}
+143	send_prolog {pstotxtd.c 324}
+144		DosGetResource {}
+145		fputs {}
+146		strlen {}
+147		DosFreeResource {}
+148		fprintf {}
+149	unload_pstotext {pstotxtd.c 311}
+150		dllfn_pstotextExit {}
+151		DosFreeModule {}

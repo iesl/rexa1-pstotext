@@ -1,0 +1,39 @@
+#! /usr/bin/perl -w
+use strict;
+use FindBin qw($Bin $RealBin $Script $RealScript);
+use Getopt::Long;
+
+
+#======================= [ syntax ] =======================
+sub syntax () {
+}
+
+my %options=();
+GetOptions(
+	  );
+
+
+{
+  my $lineno = 0;
+ DOCUMENT: 
+  while (my $nextFile = shift) {
+    $lineno = 0;
+    print "$nextFile.. ";
+    open( FILE, "./pstotext $nextFile|" );
+    while (<FILE>) {
+      $lineno++;
+      next if ( /<\?xml/ || /document>/ || /^$/ || /^<page/ );
+      if (!(/<line/ && /<eol/)) {
+	print "$nextFile($lineno): unmatched <line>/<eol>\n";
+	close( FILE );
+ 	next DOCUMENT;
+      } 
+    }
+    print " passed\n";
+    close( FILE );
+  }
+}
+
+
+
+

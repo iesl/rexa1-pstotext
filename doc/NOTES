@@ -1,0 +1,108 @@
+# Development notes on ligature-correction 
+
+[06/17/05]
+When generating the set of deligatured words, if 2 ligatures exist in the same
+range, the longest ligature is assumed.  For example, "affluent", which
+arguably contains both "fl" and "ffl", will be deligaturized to "auent" and
+not "aluent", which could, I suppose, might be worth checking for (but we
+don't).  The longest ligature starting at a given position is preferred.
+
+Currently, any deligatured words that collide with real words are eliminated
+from consideration.  This avoids "false positives", such as "red" being
+erroneously fixed to become "fired".  We could avoid this issue altogether if
+we allow the pstotext to insert a special character-missing code into any word
+for which a glyph encoding is not known.  I did not want to modify the code
+that enable this, as the impact of the required modifications was not obvious
+to me.  I can look into this further, however.
+
+The generation of deligatured words is done each time pstotext is executed.
+This adds between 1.5 seconds to execution time (on my 1.7Ghz Intel laptop).
+To eliminate this overhead, we could consider modifying pstotext to run in a
+batch mode.
+
+Some additional comments about ligature corrections:
+
+- Ligatures considered include: ff, fl, fi, ffl, ffi
+
+- A deligatured word with an initial capitalized letter is handled properly
+(capitalization is maintained).  Furthermore, since some words can begin with
+a ligature, the capitalized and non-capitalized versions are handled
+independently (consider that "fluffy" might show up as "uy", but that "Fluffy"
+would should up as "Fluy", because "Fl" is not a ligature, while "fl" is).
+
+- Hyphentated words (that are split across lines) are not corrected (neither the
+prefix or suffix).  Doing so would introduce more erroneous corrections than
+it would fix.  For example "ef-\ncient" *should* be corrected to
+"ef-\nficient", but we don't go there. :)
+
+- A hyphentated word that appears on a single line will only have its first
+portion corrected.  ("uy-eects" would be changed to "fluffy-eects", not
+"fluffy-effects").
+
+- Trailing punctuation is preserved.  That is, if a word happens to have
+trailing punctuation, the ligature correction is performed correctly (this
+required some special handling).  For example, "Vericiation," would become
+"Verification,".
+
+Use pstotext's new "-ligature" command-line option to invoke missing ligature
+corrections.
+
+ligature.{c,h} contain nearly all of the ligature-correction code.
+
+main.c has been updated to accommodate the new -ligature command-line option
+(note: locale initialization code should be uncommented; it was causing errors
+on my machine).
+
+ptotdll.c has been updated mostly with new comments, some variable renamings
+(in ParseString() for code readability), and the ligature correction code
+hooks.
+
+The Makefile has been updated appropriately (note: with compiler optimizations
+off, debug info on)
+
+I created a dev-util directory and placed existing and some new development
+scripts there.
+
+---
+
+The code has been tested on only 6 documents.  It was time-consuming to find
+appropriate documents, because many of the ps/pdf docs I found online actually
+had their ligatures handled properly by pstotext, even when corresponding text
+on rexa exhibited problems (in the title and abstract).  I attribute this to:
+1) the pstotext code has been improved since rexa's data was last generated or
+2) the ps/pdf documents I was retrieving were different versions than the one
+processed by rexa.
+
+The point is that the code works for these 6 documents only, and I will not
+guarantee that it is segfault-free!  My testing strategy was ad hoc, as I did
+not have time to generate a proper test suite.
+[06/17/05]
+
+pstotext can be asked to correct words that have missing ligatures ("ff",
+"fl", "fi", "ffi", "ffl") via the -ligatures command-line option.  The
+-ligatures option takes a file name that must be a "ligature dictionary".
+This file contains lines of tab-separated pairs of words, where the first word
+is the "de-ligatured" word (i.e., it is missing ligatures) and the
+"re-ligatured" word (i.e., the correct spelling of the word).  
+
+(See ligature-writeup.txt for details on how ligatures are corrected.)
+
+This ligature dictionary file is created by running the generate-ligatures
+program.  This program requires a dictionary input file, which simply contains
+a "universal" list of words.  generate-ligatures will determine the
+deligatured version of each word and create a ligature dictionary file (e.g.,
+ligatures.txt), which can used with pstotext's -ligatures option.
+
+Currently (as of 06/17/05!), our universal word list is a combination of
+/usr/share/dict/words and all of the words found in the DBLP database.
+dblp/extract-dblp-words.pl is used for this purpose.  It takes an XML version
+of DBLP and outputs a file ("dblp-words.txt", by default) containing a
+distinct list of words from DBLP.  dblp/make-dictionary.pl is then used to
+combine dblp-words.txt and /usr/share/dict/words to form a single input file
+that can be fed to generate-ligatures.
+
+Note that the Makefile's "ligatures" target performs all of these steps
+automatically.  That is, it extracts words from a DBLP database (but *you*
+must first make sure the DBLP XML files are in place!), combines DBLP words
+with /usr/share/dict/words, and then generates the ligatures.txt file by
+running generate-ligatures.

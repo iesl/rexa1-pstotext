@@ -1,0 +1,1110 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+<page n="1">
+<line><tbox llx="117" lly="682" urx="512" ury="703" f="1"><![CDATA[EÆcient Web Spidering with Reinforcement Learning ]]></tbox></line>
+<line><tbox llx="160" lly="658" urx="252" ury="676" f="2"><![CDATA[Jason Rennie ]]></tbox><tbox llx="239" lly="664" urx="250" ury="675" f="3"><![CDATA[y ]]></tbox></line>
+<line><tbox llx="143" lly="644" urx="267" ury="660" f="4"><![CDATA[jr6b@andrew.cmu.edu ]]></tbox></line>
+<line><tbox llx="353" lly="658" urx="479" ury="676" f="2"><![CDATA[Andrew McCallum ]]></tbox><tbox llx="466" lly="664" urx="481" ury="675" f="3"><![CDATA[zy ]]></tbox></line>
+<line><tbox llx="342" lly="644" urx="496" ury="660" f="4"><![CDATA[mccallum@justresearch.com ]]></tbox></line>
+<line><tbox llx="126" lly="627" urx="137" ury="638" f="3"><![CDATA[y ]]></tbox><tbox llx="130" lly="622" urx="284" ury="637" f="4"><![CDATA[School of Computer Science ]]></tbox></line>
+<line><tbox llx="130" lly="608" urx="280" ury="623" f="4"><![CDATA[Carnegie Mellon University ]]></tbox></line>
+<line><tbox llx="144" lly="594" urx="266" ury="609" f="4"><![CDATA[Pittsburgh, PA 15213 ]]></tbox></line>
+<line><tbox llx="376" lly="627" urx="387" ury="638" f="3"><![CDATA[z ]]></tbox><tbox llx="380" lly="622" urx="462" ury="637" f="4"><![CDATA[Just Research ]]></tbox></line>
+<line><tbox llx="367" lly="608" urx="471" ury="623" f="4"><![CDATA[4616 Henry Street ]]></tbox></line>
+<line><tbox llx="358" lly="594" urx="480" ury="609" f="4"><![CDATA[Pittsburgh, PA 15213 ]]></tbox></line>
+<line><tbox llx="150" lly="559" urx="214" ury="577" f="2"><![CDATA[Abstract ]]></tbox></line>
+<line><tbox llx="68" lly="535" urx="291" ury="548" f="5"><![CDATA[Consider the task of exploring the Web in order to ]]></tbox></line>
+<line><tbox llx="68" lly="525" urx="291" ury="538" f="5"><![CDATA[find pages of a particular kind or on a particular topic. ]]></tbox></line>
+<line><tbox llx="68" lly="515" urx="291" ury="528" f="5"><![CDATA[This task arises in the construction of domain-specific ]]></tbox></line>
+<line><tbox llx="68" lly="505" urx="291" ury="518" f="5"><![CDATA[search engines. A selective, directed web spider can ]]></tbox></line>
+<line><tbox llx="68" lly="495" urx="291" ury="508" f="5"><![CDATA[be much more eÆcient than a spider that gathers new ]]></tbox></line>
+<line><tbox llx="68" lly="485" urx="291" ury="498" f="5"><![CDATA[pages indiscriminantly. This paper argues that the ]]></tbox></line>
+<line><tbox llx="68" lly="475" urx="291" ury="488" f="5"><![CDATA[creation of eÆcient web spiders is best framed and ]]></tbox></line>
+<line><tbox llx="68" lly="465" urx="291" ury="478" f="5"><![CDATA[solved by reinforcement learning, a branch of machine ]]></tbox></line>
+<line><tbox llx="68" lly="456" urx="291" ury="468" f="5"><![CDATA[learning that concerns itself with optimal sequential ]]></tbox></line>
+<line><tbox llx="68" lly="446" urx="291" ury="458" f="5"><![CDATA[decision making. One strength of reinforcement learn- ]]></tbox></line>
+<line><tbox llx="68" lly="436" urx="291" ury="448" f="5"><![CDATA[ing is that it provides a formalism for measuring the ]]></tbox></line>
+<line><tbox llx="68" lly="426" urx="291" ury="438" f="5"><![CDATA[utility of actions that give no immediate benefit, but ]]></tbox></line>
+<line><tbox llx="68" lly="416" urx="192" ury="428" f="5"><![CDATA[do give benefit in the future. ]]></tbox></line>
+<line><tbox llx="68" lly="400" urx="291" ury="412" f="5"><![CDATA[Topic-specific spidering fits into the reinforcement ]]></tbox></line>
+<line><tbox llx="68" lly="390" urx="291" ury="402" f="5"><![CDATA[learning framework because valuing hyperlinks with ]]></tbox></line>
+<line><tbox llx="68" lly="380" urx="291" ury="392" f="5"><![CDATA[future reward is important. Experimental results on ]]></tbox></line>
+<line><tbox llx="68" lly="370" urx="291" ury="382" f="5"><![CDATA[large collections of real web data show that a reinforce- ]]></tbox></line>
+<line><tbox llx="68" lly="360" urx="291" ury="372" f="5"><![CDATA[ment learning spider finds relevant pages three times ]]></tbox></line>
+<line><tbox llx="68" lly="350" urx="291" ury="362" f="5"><![CDATA[faster than a competing spider based on breadth first ]]></tbox></line>
+<line><tbox llx="68" lly="340" urx="291" ury="352" f="5"><![CDATA[search. The results also show that our spider is not ]]></tbox></line>
+<line><tbox llx="68" lly="330" urx="291" ury="343" f="5"><![CDATA[yet taking full advantage of future utility because of ]]></tbox></line>
+<line><tbox llx="68" lly="320" urx="292" ury="333" f="5"><![CDATA[inaccuracies in our approximation for mapping hyper- ]]></tbox></line>
+<line><tbox llx="68" lly="310" urx="291" ury="323" f="5"><![CDATA[links to their expected future utility. Thus we believe ]]></tbox></line>
+<line><tbox llx="68" lly="300" urx="291" ury="313" f="5"><![CDATA[that improving the accuracy of this mapping will in- ]]></tbox></line>
+<line><tbox llx="68" lly="290" urx="291" ury="303" f="5"><![CDATA[crease performance even further, and we present ideas ]]></tbox></line>
+<line><tbox llx="68" lly="280" urx="126" ury="293" f="5"><![CDATA[for doing so. ]]></tbox></line>
+<line><tbox llx="58" lly="241" urx="165" ury="259" f="2"><![CDATA[1 Introduction ]]></tbox></line>
+<line><tbox llx="58" lly="223" urx="304" ury="238" f="4"><![CDATA[Spiders are agents that explore the hyperlink ]]></tbox></line>
+<line><tbox llx="58" lly="209" urx="304" ury="224" f="4"><![CDATA[graph of the Web, often for the purpose of find- ]]></tbox></line>
+<line><tbox llx="58" lly="194" urx="304" ury="210" f="4"><![CDATA[ing documents with which to populate a search ]]></tbox></line>
+<line><tbox llx="58" lly="180" urx="304" ury="195" f="4"><![CDATA[engine. Extensive spidering is the key to ob- ]]></tbox></line>
+<line><tbox llx="58" lly="165" urx="304" ury="181" f="4"><![CDATA[taining high coverage by the major Web search ]]></tbox></line>
+<line><tbox llx="58" lly="151" urx="152" ury="166" f="4"><![CDATA[engines, such as ]]></tbox><tbox llx="146" lly="152" urx="199" ury="164" f="6"><![CDATA[AltaVista ]]></tbox><tbox llx="195" lly="151" urx="225" ury="166" f="4"><![CDATA[and ]]></tbox><tbox llx="219" lly="152" urx="267" ury="164" f="6"><![CDATA[HotBot. ]]></tbox><tbox llx="266" lly="151" urx="304" ury="166" f="4"><![CDATA[Since ]]></tbox></line>
+<line><tbox llx="58" lly="136" urx="304" ury="152" f="4"><![CDATA[the goal of these general-purpose search en- ]]></tbox></line>
+<line><tbox llx="58" lly="122" urx="304" ury="137" f="4"><![CDATA[gines is to provide search capabilities over the ]]></tbox></line>
+<line><tbox llx="58" lly="108" urx="304" ury="123" f="4"><![CDATA[Web as a whole, they aim to find as many dis- ]]></tbox></line>
+<line><tbox llx="58" lly="93" urx="304" ury="108" f="4"><![CDATA[tinct web pages as possible. Such a goal lends ]]></tbox></line>
+<line><tbox llx="320" lly="560" urx="566" ury="575" f="4"><![CDATA[itself to strategies like breadth-first search. If, ]]></tbox></line>
+<line><tbox llx="320" lly="546" urx="566" ury="561" f="4"><![CDATA[on the other hand, the task is to find pages ]]></tbox></line>
+<line><tbox llx="320" lly="531" urx="566" ury="546" f="4"><![CDATA[of a particular kind or on a particular topic, ]]></tbox></line>
+<line><tbox llx="320" lly="517" urx="566" ury="532" f="4"><![CDATA[(as is the case for a domain-specific search en- ]]></tbox></line>
+<line><tbox llx="320" lly="502" urx="566" ury="518" f="4"><![CDATA[gine), then an intelligent spider should try to ]]></tbox></line>
+<line><tbox llx="320" lly="488" urx="566" ury="503" f="4"><![CDATA[avoid hyperlinks that lead to o#-topic areas, ]]></tbox></line>
+<line><tbox llx="320" lly="473" urx="566" ury="489" f="4"><![CDATA[and concentrate on links that lead to docu- ]]></tbox></line>
+<line><tbox llx="320" lly="459" urx="420" ury="474" f="4"><![CDATA[ments of interest. ]]></tbox></line>
+<line><tbox llx="330" lly="442" urx="566" ury="457" f="4"><![CDATA[This paper describes our research in directed ]]></tbox></line>
+<line><tbox llx="320" lly="428" urx="566" ury="443" f="4"><![CDATA[web spidering. We argue that the creation of ]]></tbox></line>
+<line><tbox llx="320" lly="413" urx="566" ury="429" f="4"><![CDATA[eÆcient web spiders is best framed and solved ]]></tbox></line>
+<line><tbox llx="320" lly="399" urx="566" ury="414" f="4"><![CDATA[by reinforcement learning, a branch of ma- ]]></tbox></line>
+<line><tbox llx="320" lly="384" urx="566" ury="400" f="4"><![CDATA[chine learning that concerns itself with opti- ]]></tbox></line>
+<line><tbox llx="320" lly="370" urx="566" ury="385" f="4"><![CDATA[mal sequential decision making. One strength ]]></tbox></line>
+<line><tbox llx="320" lly="355" urx="566" ury="371" f="4"><![CDATA[of reinforcement learning is that it provides a ]]></tbox></line>
+<line><tbox llx="320" lly="341" urx="566" ury="356" f="4"><![CDATA[formalism for measuring the utility of actions ]]></tbox></line>
+<line><tbox llx="320" lly="327" urx="566" ury="342" f="4"><![CDATA[that give no immediate benefit, but do give ]]></tbox></line>
+<line><tbox llx="320" lly="312" urx="566" ury="327" f="4"><![CDATA[benefit in the future. Reinforcement learning ]]></tbox></line>
+<line><tbox llx="320" lly="298" urx="566" ury="313" f="4"><![CDATA[agents represent this delayed benefit by learn- ]]></tbox></line>
+<line><tbox llx="320" lly="283" urx="566" ury="299" f="4"><![CDATA[ing a mapping from each available action to a ]]></tbox></line>
+<line><tbox llx="320" lly="269" urx="566" ury="284" f="4"><![CDATA[scalar value indicating the sum of future dis- ]]></tbox></line>
+<line><tbox llx="320" lly="254" urx="566" ury="270" f="4"><![CDATA[counted rewards expected for executing that ]]></tbox></line>
+<line><tbox llx="320" lly="240" urx="566" ury="255" f="4"><![CDATA[action. The \discount" makes later rewards ]]></tbox></line>
+<line><tbox llx="320" lly="225" urx="566" ury="241" f="4"><![CDATA[less valuable than sooner rewards, thus encour- ]]></tbox></line>
+<line><tbox llx="320" lly="211" urx="421" ury="226" f="4"><![CDATA[aging expediency. ]]></tbox></line>
+<line><tbox llx="330" lly="194" urx="566" ury="210" f="4"><![CDATA[In our current instantiation of a reinforce- ]]></tbox></line>
+<line><tbox llx="320" lly="180" urx="566" ury="195" f="4"><![CDATA[ment learning spider, we learn a mapping from ]]></tbox></line>
+<line><tbox llx="320" lly="165" urx="566" ury="181" f="4"><![CDATA[text in the neighborhood of a hyperlink to the ]]></tbox></line>
+<line><tbox llx="320" lly="151" urx="566" ury="166" f="4"><![CDATA[future discounted count of relevant pages avail- ]]></tbox></line>
+<line><tbox llx="320" lly="136" urx="566" ury="152" f="4"><![CDATA[able as a result of retrieving the page on the ]]></tbox></line>
+<line><tbox llx="320" lly="122" urx="566" ury="137" f="4"><![CDATA[other side of the hyperlink. The mapping from ]]></tbox></line>
+<line><tbox llx="320" lly="108" urx="566" ury="123" f="4"><![CDATA[text to a scalar is performed casting regression ]]></tbox></line>
+<line><tbox llx="320" lly="93" urx="566" ury="108" f="4"><![CDATA[as text classification. Specifically, we discretize ]]></tbox></line>
+<pbox llx="58.00" lly="93.00" urx="566.00" ury="737.00"/></page>
+<page n="2">
+<line><tbox llx="58" lly="722" urx="304" ury="737" f="1"><![CDATA[the scalar values into a finite number of bins, ]]></tbox></line>
+<line><tbox llx="58" lly="708" urx="304" ury="723" f="1"><![CDATA[and use naive Bayes to classify the text into a ]]></tbox></line>
+<line><tbox llx="58" lly="693" urx="304" ury="708" f="1"><![CDATA[finite number of classes; the value assigned to a ]]></tbox></line>
+<line><tbox llx="58" lly="679" urx="304" ury="694" f="1"><![CDATA[particular hyperlink is then a weighted average ]]></tbox></line>
+<line><tbox llx="58" lly="664" urx="254" ury="680" f="1"><![CDATA[of the values of the top-ranked bins. ]]></tbox></line>
+<line><tbox llx="68" lly="648" urx="304" ury="663" f="1"><![CDATA[Our research in eÆcient spidering is part ]]></tbox></line>
+<line><tbox llx="58" lly="633" urx="260" ury="649" f="1"><![CDATA[of a larger project that has created ]]></tbox><tbox llx="255" lly="634" urx="289" ury="646" f="2"><![CDATA[Cora, ]]></tbox><tbox llx="287" lly="633" urx="304" ury="649" f="1"><![CDATA[a ]]></tbox></line>
+<line><tbox llx="58" lly="619" urx="304" ury="634" f="1"><![CDATA[domain-specific search engine containing com- ]]></tbox></line>
+<line><tbox llx="58" lly="604" urx="276" ury="620" f="1"><![CDATA[puter science research papers (McCallum ]]></tbox><tbox llx="268" lly="605" urx="304" ury="619" f="3"><![CDATA[et al. ]]></tbox></line>
+<line><tbox llx="58" lly="590" urx="304" ury="605" f="1"><![CDATA[1999). We have spidered computer science de- ]]></tbox></line>
+<line><tbox llx="58" lly="576" urx="304" ury="591" f="1"><![CDATA[partments and labs, so far finding over 50,000 ]]></tbox></line>
+<line><tbox llx="58" lly="561" urx="304" ury="576" f="1"><![CDATA[research papers in postscript format. Each of ]]></tbox></line>
+<line><tbox llx="58" lly="547" urx="304" ury="562" f="1"><![CDATA[these papers is transformed into ASCII, then ]]></tbox></line>
+<line><tbox llx="58" lly="532" urx="304" ury="548" f="1"><![CDATA[run through a specially-trained hidden Markov ]]></tbox></line>
+<line><tbox llx="58" lly="518" urx="304" ury="533" f="1"><![CDATA[model to automatically find the title, authors, ]]></tbox></line>
+<line><tbox llx="58" lly="503" urx="304" ury="519" f="1"><![CDATA[abstract, references, etc. Forward and back- ]]></tbox></line>
+<line><tbox llx="58" lly="489" urx="304" ury="504" f="1"><![CDATA[ward references between papers are resolved. ]]></tbox></line>
+<line><tbox llx="58" lly="474" urx="304" ury="490" f="1"><![CDATA[Finally, all this information is made avail- ]]></tbox></line>
+<line><tbox llx="58" lly="460" urx="304" ury="475" f="1"><![CDATA[able in a searchable, public web interface at ]]></tbox></line>
+<line><tbox llx="58" lly="446" urx="207" ury="461" f="3"><![CDATA[www.cora.justresearch.com. ]]></tbox></line>
+<line><tbox llx="68" lly="429" urx="89" ury="445" f="1"><![CDATA[In ]]></tbox><tbox llx="84" lly="430" urx="118" ury="442" f="2"><![CDATA[Cora, ]]></tbox><tbox llx="115" lly="429" urx="304" ury="445" f="1"><![CDATA[eÆcient spidering is a major con- ]]></tbox></line>
+<line><tbox llx="58" lly="415" urx="304" ury="430" f="1"><![CDATA[cern. The majority of the pages in many ]]></tbox></line>
+<line><tbox llx="58" lly="400" urx="304" ury="416" f="1"><![CDATA[computer science department web sites do ]]></tbox></line>
+<line><tbox llx="58" lly="386" urx="304" ury="401" f="1"><![CDATA[not contain links to research papers, but in- ]]></tbox></line>
+<line><tbox llx="58" lly="371" urx="304" ury="387" f="1"><![CDATA[stead are about courses, homework, schedules ]]></tbox></line>
+<line><tbox llx="58" lly="357" urx="304" ury="372" f="1"><![CDATA[and admissions information. Avoiding whole ]]></tbox></line>
+<line><tbox llx="58" lly="342" urx="304" ury="358" f="1"><![CDATA[branches and neighborhoods of departmental ]]></tbox></line>
+<line><tbox llx="58" lly="328" urx="304" ury="343" f="1"><![CDATA[web graphs can significantly improve eÆciency ]]></tbox></line>
+<line><tbox llx="58" lly="314" urx="304" ury="329" f="1"><![CDATA[and increase the number of research papers ]]></tbox></line>
+<line><tbox llx="58" lly="299" urx="300" ury="315" f="1"><![CDATA[found given a finite amount of crawling time. ]]></tbox></line>
+<line><tbox llx="68" lly="283" urx="304" ury="298" f="1"><![CDATA[We report on a series of experiments us- ]]></tbox></line>
+<line><tbox llx="58" lly="268" urx="304" ury="284" f="1"><![CDATA[ing the complete set of web pages and hy- ]]></tbox></line>
+<line><tbox llx="58" lly="254" urx="304" ury="269" f="1"><![CDATA[perlinks from four university computer sci- ]]></tbox></line>
+<line><tbox llx="58" lly="240" urx="304" ury="255" f="1"><![CDATA[ence departments|a total of more than 53,000 ]]></tbox></line>
+<line><tbox llx="58" lly="225" urx="304" ury="240" f="1"><![CDATA[pages and 592,000 hyperlinks. The specific spi- ]]></tbox></line>
+<line><tbox llx="58" lly="211" urx="196" ury="226" f="1"><![CDATA[dering task, based on the ]]></tbox><tbox llx="188" lly="211" urx="219" ury="223" f="2"><![CDATA[Cora ]]></tbox><tbox llx="215" lly="211" urx="304" ury="226" f="1"><![CDATA[domain-specific ]]></tbox></line>
+<line><tbox llx="58" lly="196" urx="304" ury="212" f="1"><![CDATA[search engine, is to find research papers as ef- ]]></tbox></line>
+<line><tbox llx="58" lly="182" urx="304" ury="197" f="1"><![CDATA[#ciently as possible. The results show that a ]]></tbox></line>
+<line><tbox llx="58" lly="167" urx="304" ury="183" f="1"><![CDATA[reinforcement learning spider finds half of the ]]></tbox></line>
+<line><tbox llx="58" lly="153" urx="304" ury="168" f="1"><![CDATA[available research papers with only one-third ]]></tbox></line>
+<line><tbox llx="58" lly="138" urx="304" ury="154" f="1"><![CDATA[the number of page retrievals as a competing ]]></tbox></line>
+<line><tbox llx="58" lly="124" urx="254" ury="139" f="1"><![CDATA[spider based on breadth-first search. ]]></tbox></line>
+<line><tbox llx="68" lly="108" urx="304" ury="123" f="1"><![CDATA[However, the experiments indicate that our ]]></tbox></line>
+<line><tbox llx="58" lly="93" urx="304" ury="108" f="1"><![CDATA[spider is not yet taking full advantage of rep- ]]></tbox></line>
+<line><tbox llx="320" lly="722" urx="566" ury="737" f="1"><![CDATA[resenting delayed reward. A reinforcement ]]></tbox></line>
+<line><tbox llx="320" lly="708" urx="566" ury="723" f="1"><![CDATA[learning spider that uses delayed reward per- ]]></tbox></line>
+<line><tbox llx="320" lly="693" urx="566" ury="708" f="1"><![CDATA[forms slightly worse overall than a spider that ]]></tbox></line>
+<line><tbox llx="320" lly="679" urx="566" ury="694" f="1"><![CDATA[uses immediate reward only|although it per- ]]></tbox></line>
+<line><tbox llx="320" lly="664" urx="566" ury="680" f="1"><![CDATA[forms dramatically better in the beginning. ]]></tbox></line>
+<line><tbox llx="320" lly="650" urx="566" ury="665" f="1"><![CDATA[Our analysis indicates that this is caused by ]]></tbox></line>
+<line><tbox llx="320" lly="635" urx="566" ury="651" f="1"><![CDATA[decreased text classification accuracy in the ]]></tbox></line>
+<line><tbox llx="320" lly="621" urx="566" ury="636" f="1"><![CDATA[delayed-reward case, where the number of dis- ]]></tbox></line>
+<line><tbox llx="320" lly="606" urx="566" ury="622" f="1"><![CDATA[cretized bins is larger and the training data ]]></tbox></line>
+<line><tbox llx="320" lly="592" urx="566" ury="607" f="1"><![CDATA[is more noisy. Improving classification accu- ]]></tbox></line>
+<line><tbox llx="320" lly="578" urx="566" ury="593" f="1"><![CDATA[racy should allow the delayed-reward spider to ]]></tbox></line>
+<line><tbox llx="320" lly="563" urx="566" ury="578" f="1"><![CDATA[dominate the immediate-reward spider every- ]]></tbox></line>
+<line><tbox llx="320" lly="549" urx="566" ury="564" f="1"><![CDATA[where, (not just at the beginning), and thus ]]></tbox></line>
+<line><tbox llx="320" lly="534" urx="566" ury="549" f="1"><![CDATA[out-perform the breadth-#rst-search spider by ]]></tbox></line>
+<line><tbox llx="320" lly="520" urx="566" ury="535" f="1"><![CDATA[even more than the current factor of three. ]]></tbox></line>
+<line><tbox llx="320" lly="505" urx="566" ury="521" f="1"><![CDATA[The last sections present ideas for increasing ]]></tbox></line>
+<line><tbox llx="320" lly="491" urx="401" ury="506" f="1"><![CDATA[this accuracy. ]]></tbox></line>
+<line><tbox llx="320" lly="462" urx="495" ury="480" f="4"><![CDATA[2 Reinforcement Learning ]]></tbox></line>
+<line><tbox llx="320" lly="442" urx="566" ury="457" f="1"><![CDATA[Here, we give a short description of reinforce- ]]></tbox></line>
+<line><tbox llx="320" lly="428" urx="566" ury="443" f="1"><![CDATA[ment learning, explain why it is an appropriate ]]></tbox></line>
+<line><tbox llx="320" lly="413" urx="566" ury="429" f="1"><![CDATA[framework for spidering and describe the ap- ]]></tbox></line>
+<line><tbox llx="320" lly="399" urx="566" ury="414" f="1"><![CDATA[proach we use to apply reinforcement learning ]]></tbox></line>
+<line><tbox llx="320" lly="384" urx="395" ury="400" f="1"><![CDATA[to spidering. ]]></tbox></line>
+<line><tbox llx="330" lly="369" urx="566" ury="384" f="1"><![CDATA[In machine learning, the term \reinforce- ]]></tbox></line>
+<line><tbox llx="320" lly="354" urx="566" ury="370" f="1"><![CDATA[ment learning" refers to a framework for learn- ]]></tbox></line>
+<line><tbox llx="320" lly="340" urx="566" ury="355" f="1"><![CDATA[ing optimal decision making from rewards or ]]></tbox></line>
+<line><tbox llx="320" lly="325" urx="566" ury="341" f="1"><![CDATA[punishment (Kaelbling, Littman, & Moore ]]></tbox></line>
+<line><tbox llx="320" lly="311" urx="566" ury="326" f="1"><![CDATA[1996). Upon taking an action, the learner is ]]></tbox></line>
+<line><tbox llx="320" lly="296" urx="566" ury="312" f="1"><![CDATA[never told the correct action for a particular ]]></tbox></line>
+<line><tbox llx="320" lly="282" urx="566" ury="297" f="1"><![CDATA[state, but is simply told how good or bad the ]]></tbox></line>
+<line><tbox llx="320" lly="268" urx="566" ury="283" f="1"><![CDATA[selected action was, expressed in the form of a ]]></tbox></line>
+<line><tbox llx="320" lly="253" urx="414" ury="268" f="1"><![CDATA[scalar \reward." ]]></tbox></line>
+<line><tbox llx="330" lly="238" urx="521" ury="253" f="1"><![CDATA[A task is defined by a set of states, ]]></tbox><tbox llx="514" lly="238" urx="528" ury="251" f="5"><![CDATA[s ]]></tbox><tbox llx="523" lly="238" urx="556" ury="253" f="6"><![CDATA[2 S, ]]></tbox><tbox llx="549" lly="238" urx="566" ury="253" f="1"><![CDATA[a ]]></tbox></line>
+<line><tbox llx="320" lly="223" urx="402" ury="238" f="1"><![CDATA[set of actions, ]]></tbox><tbox llx="395" lly="224" urx="410" ury="236" f="5"><![CDATA[a ]]></tbox><tbox llx="404" lly="223" urx="439" ury="238" f="6"><![CDATA[2 A, ]]></tbox><tbox llx="432" lly="223" urx="566" ury="238" f="1"><![CDATA[a state-action transition ]]></tbox></line>
+<line><tbox llx="320" lly="209" urx="376" ury="224" f="1"><![CDATA[function, ]]></tbox><tbox llx="369" lly="209" urx="385" ury="222" f="5"><![CDATA[T ]]></tbox><tbox llx="382" lly="209" urx="396" ury="224" f="1"><![CDATA[: ]]></tbox><tbox llx="389" lly="209" urx="464" ury="224" f="6"><![CDATA[S # A ! S, ]]></tbox><tbox llx="457" lly="209" urx="566" ury="224" f="1"><![CDATA[and a reward func- ]]></tbox></line>
+<line><tbox llx="320" lly="194" urx="355" ury="210" f="1"><![CDATA[tion, ]]></tbox><tbox llx="348" lly="195" urx="365" ury="208" f="5"><![CDATA[R ]]></tbox><tbox llx="361" lly="194" urx="375" ury="210" f="1"><![CDATA[: ]]></tbox><tbox llx="368" lly="194" urx="444" ury="210" f="6"><![CDATA[S # A ! <. ]]></tbox><tbox llx="439" lly="194" urx="566" ury="210" f="1"><![CDATA[At each time step, the ]]></tbox></line>
+<line><tbox llx="320" lly="180" urx="444" ury="195" f="1"><![CDATA[learner (also called the ]]></tbox><tbox llx="436" lly="180" urx="478" ury="195" f="3"><![CDATA[agent) ]]></tbox><tbox llx="470" lly="180" urx="566" ury="195" f="1"><![CDATA[selects an action, ]]></tbox></line>
+<line><tbox llx="320" lly="165" urx="566" ury="181" f="1"><![CDATA[and then as a result is given a reward and its ]]></tbox></line>
+<line><tbox llx="320" lly="151" urx="566" ury="166" f="1"><![CDATA[new state. The goal of reinforcement learning ]]></tbox></line>
+<line><tbox llx="320" lly="136" urx="394" ury="152" f="1"><![CDATA[is to learn a ]]></tbox><tbox llx="387" lly="137" urx="430" ury="151" f="3"><![CDATA[policy, ]]></tbox><tbox llx="424" lly="136" urx="566" ury="152" f="1"><![CDATA[a mapping from states to ]]></tbox></line>
+<line><tbox llx="320" lly="122" urx="370" ury="137" f="1"><![CDATA[actions, ]]></tbox><tbox llx="362" lly="123" urx="378" ury="135" f="5"><![CDATA[# ]]></tbox><tbox llx="373" lly="122" urx="387" ury="137" f="1"><![CDATA[: ]]></tbox><tbox llx="379" lly="122" urx="430" ury="137" f="6"><![CDATA[S ! A, ]]></tbox><tbox llx="422" lly="122" urx="566" ury="137" f="1"><![CDATA[that maximizes the sum of ]]></tbox></line>
+<line><tbox llx="320" lly="108" urx="566" ury="123" f="1"><![CDATA[its reward over time. The most common for- ]]></tbox></line>
+<line><tbox llx="320" lly="93" urx="566" ury="108" f="1"><![CDATA[mulation of \reward over time" is a discounted ]]></tbox></line>
+<pbox llx="58.00" lly="93.00" urx="566.00" ury="737.00"/></page>
+<page n="3">
+<line><tbox llx="58" lly="722" urx="281" ury="737" f="1"><![CDATA[sum of rewards into an infinite future. A ]]></tbox><tbox llx="274" lly="722" urx="304" ury="737" f="2"><![CDATA[dis- ]]></tbox></line>
+<line><tbox llx="58" lly="708" urx="134" ury="723" f="2"><![CDATA[count factor, ]]></tbox><tbox llx="128" lly="708" urx="147" ury="721" f="3"><![CDATA[#; ]]></tbox><tbox llx="145" lly="708" urx="162" ury="723" f="1"><![CDATA[0 ]]></tbox><tbox llx="156" lly="708" urx="176" ury="723" f="4"><![CDATA[# ]]></tbox><tbox llx="170" lly="708" urx="199" ury="721" f="3"><![CDATA[# < ]]></tbox><tbox llx="195" lly="708" urx="304" ury="723" f="1"><![CDATA[1, expresses \in#a- ]]></tbox></line>
+<line><tbox llx="58" lly="693" urx="304" ury="708" f="1"><![CDATA[tion," making sooner rewards more valuable ]]></tbox></line>
+<line><tbox llx="58" lly="679" urx="304" ury="694" f="1"><![CDATA[than later rewards. In addition to preventing ]]></tbox></line>
+<line><tbox llx="58" lly="664" urx="304" ury="680" f="1"><![CDATA[the sum of future rewards from blowing up to ]]></tbox></line>
+<line><tbox llx="58" lly="650" urx="304" ury="665" f="1"><![CDATA[infinity, this also encourages the agent to solve ]]></tbox></line>
+<line><tbox llx="58" lly="635" urx="304" ury="651" f="1"><![CDATA[the task in as few steps as possible. Accord- ]]></tbox></line>
+<line><tbox llx="58" lly="621" urx="214" ury="636" f="1"><![CDATA[ingly, when following policy ]]></tbox><tbox llx="207" lly="622" urx="226" ury="634" f="3"><![CDATA[#, ]]></tbox><tbox llx="223" lly="621" urx="304" ury="636" f="1"><![CDATA[we can define ]]></tbox></line>
+<line><tbox llx="58" lly="606" urx="85" ury="622" f="1"><![CDATA[the ]]></tbox><tbox llx="78" lly="606" urx="115" ury="621" f="2"><![CDATA[value ]]></tbox><tbox llx="108" lly="606" urx="217" ury="622" f="1"><![CDATA[of each state to be: ]]></tbox></line>
+<line><tbox llx="133" lly="580" urx="149" ury="593" f="3"><![CDATA[V ]]></tbox><tbox llx="143" lly="586" urx="152" ury="593" f="5"><![CDATA[# ]]></tbox><tbox llx="148" lly="579" urx="186" ury="595" f="1"><![CDATA[(s) = ]]></tbox></line>
+<line><tbox llx="182" lly="593" urx="198" ury="604" f="6"><![CDATA[1 ]]></tbox></line>
+<line><tbox llx="179" lly="588" urx="206" ury="607" f="7"><![CDATA[X ]]></tbox></line>
+<line><tbox llx="179" lly="570" urx="197" ury="576" f="5"><![CDATA[t=0 ]]></tbox></line>
+<line><tbox llx="195" lly="580" urx="210" ury="593" f="3"><![CDATA[# ]]></tbox><tbox llx="202" lly="586" urx="209" ury="593" f="5"><![CDATA[t ]]></tbox><tbox llx="205" lly="580" urx="219" ury="593" f="3"><![CDATA[r ]]></tbox><tbox llx="211" lly="580" urx="218" ury="586" f="5"><![CDATA[t ]]></tbox><tbox llx="214" lly="580" urx="226" ury="593" f="3"><![CDATA[; ]]></tbox><tbox llx="278" lly="579" urx="304" ury="595" f="1"><![CDATA[(1) ]]></tbox></line>
+<line><tbox llx="58" lly="551" urx="98" ury="567" f="1"><![CDATA[where ]]></tbox><tbox llx="93" lly="552" urx="107" ury="565" f="3"><![CDATA[r ]]></tbox><tbox llx="98" lly="552" urx="105" ury="559" f="5"><![CDATA[t ]]></tbox><tbox llx="108" lly="551" urx="235" ury="567" f="1"><![CDATA[is the reward received ]]></tbox><tbox llx="229" lly="552" urx="242" ury="565" f="3"><![CDATA[t ]]></tbox><tbox llx="239" lly="551" urx="304" ury="567" f="1"><![CDATA[time steps ]]></tbox></line>
+<line><tbox llx="58" lly="537" urx="181" ury="552" f="1"><![CDATA[after starting in state ]]></tbox><tbox llx="175" lly="538" urx="192" ury="550" f="3"><![CDATA[s. ]]></tbox><tbox llx="191" lly="537" urx="304" ury="552" f="1"><![CDATA[The optimal policy, ]]></tbox></line>
+<line><tbox llx="58" lly="523" urx="106" ury="538" f="1"><![CDATA[written ]]></tbox><tbox llx="97" lly="523" urx="113" ury="536" f="3"><![CDATA[# ]]></tbox><tbox llx="105" lly="529" urx="113" ury="536" f="5"><![CDATA[? ]]></tbox><tbox llx="109" lly="523" urx="304" ury="538" f="1"><![CDATA[, is the one that maximizes the value, ]]></tbox></line>
+<line><tbox llx="58" lly="509" urx="73" ury="521" f="3"><![CDATA[V ]]></tbox><tbox llx="67" lly="515" urx="76" ury="522" f="5"><![CDATA[# ]]></tbox><tbox llx="73" lly="508" urx="169" ury="523" f="1"><![CDATA[(s), for all states ]]></tbox><tbox llx="162" lly="509" urx="179" ury="521" f="3"><![CDATA[s. ]]></tbox></line>
+<line><tbox llx="68" lly="494" urx="304" ury="509" f="1"><![CDATA[In order to learn the optimal policy, we learn ]]></tbox></line>
+<line><tbox llx="58" lly="479" urx="164" ury="495" f="1"><![CDATA[its value function, ]]></tbox><tbox llx="159" lly="480" urx="175" ury="493" f="3"><![CDATA[V ]]></tbox><tbox llx="168" lly="486" urx="177" ury="493" f="5"><![CDATA[? ]]></tbox><tbox llx="173" lly="479" urx="304" ury="495" f="1"><![CDATA[, and its more specific ]]></tbox></line>
+<line><tbox llx="58" lly="465" urx="149" ury="480" f="1"><![CDATA[correlate, called ]]></tbox><tbox llx="140" lly="465" urx="161" ury="478" f="3"><![CDATA[Q. ]]></tbox><tbox llx="158" lly="465" urx="186" ury="480" f="1"><![CDATA[Let ]]></tbox><tbox llx="178" lly="465" urx="196" ury="478" f="3"><![CDATA[Q ]]></tbox><tbox llx="187" lly="471" urx="195" ury="478" f="5"><![CDATA[? ]]></tbox><tbox llx="192" lly="465" urx="216" ury="480" f="1"><![CDATA[(s; ]]></tbox><tbox llx="207" lly="465" urx="226" ury="478" f="3"><![CDATA[a) ]]></tbox><tbox llx="220" lly="465" urx="304" ury="480" f="1"><![CDATA[be the value of ]]></tbox></line>
+<line><tbox llx="58" lly="450" urx="148" ury="466" f="1"><![CDATA[selecting action ]]></tbox><tbox llx="141" lly="451" urx="155" ury="464" f="3"><![CDATA[a ]]></tbox><tbox llx="151" lly="450" urx="214" ury="466" f="1"><![CDATA[from state ]]></tbox><tbox llx="207" lly="451" urx="225" ury="464" f="3"><![CDATA[s, ]]></tbox><tbox llx="220" lly="450" urx="304" ury="466" f="1"><![CDATA[and thereafter ]]></tbox></line>
+<line><tbox llx="58" lly="436" urx="304" ury="451" f="1"><![CDATA[following the optimal policy. This is expressed ]]></tbox></line>
+<line><tbox llx="58" lly="421" urx="82" ury="437" f="1"><![CDATA[as: ]]></tbox></line>
+<line><tbox llx="78" lly="389" urx="96" ury="401" f="3"><![CDATA[Q ]]></tbox><tbox llx="88" lly="395" urx="96" ury="402" f="5"><![CDATA[? ]]></tbox><tbox llx="93" lly="388" urx="117" ury="403" f="1"><![CDATA[(s; ]]></tbox><tbox llx="108" lly="389" urx="127" ury="401" f="3"><![CDATA[a) ]]></tbox><tbox llx="122" lly="388" urx="142" ury="403" f="1"><![CDATA[= ]]></tbox><tbox llx="134" lly="389" urx="178" ury="401" f="3"><![CDATA[R(s; a) ]]></tbox><tbox llx="172" lly="388" urx="192" ury="403" f="1"><![CDATA[+ ]]></tbox><tbox llx="184" lly="389" urx="212" ury="401" f="3"><![CDATA[p#V ]]></tbox><tbox llx="206" lly="395" urx="214" ury="402" f="5"><![CDATA[? ]]></tbox><tbox llx="210" lly="388" urx="248" ury="403" f="1"><![CDATA[(T (s; ]]></tbox><tbox llx="239" lly="389" urx="266" ury="401" f="3"><![CDATA[a)): ]]></tbox><tbox llx="278" lly="388" urx="304" ury="403" f="1"><![CDATA[(2) ]]></tbox></line>
+<line><tbox llx="58" lly="363" urx="304" ury="379" f="1"><![CDATA[We can now define the optimal policy in terms ]]></tbox></line>
+<line><tbox llx="58" lly="349" urx="78" ury="364" f="1"><![CDATA[of ]]></tbox><tbox llx="74" lly="350" urx="92" ury="362" f="3"><![CDATA[Q ]]></tbox><tbox llx="91" lly="349" urx="304" ury="364" f="1"><![CDATA[by selecting from each state the ac- ]]></tbox></line>
+<line><tbox llx="58" lly="335" urx="304" ury="350" f="1"><![CDATA[tion with the highest expected future reward: ]]></tbox></line>
+<line><tbox llx="58" lly="321" urx="73" ury="333" f="3"><![CDATA[# ]]></tbox><tbox llx="65" lly="327" urx="73" ury="333" f="5"><![CDATA[? ]]></tbox><tbox llx="69" lly="320" urx="154" ury="335" f="1"><![CDATA[(s) = arg max ]]></tbox><tbox llx="143" lly="320" urx="151" ury="327" f="5"><![CDATA[a ]]></tbox><tbox llx="150" lly="321" urx="168" ury="333" f="3"><![CDATA[Q ]]></tbox><tbox llx="159" lly="327" urx="167" ury="333" f="5"><![CDATA[? ]]></tbox><tbox llx="164" lly="320" urx="188" ury="335" f="1"><![CDATA[(s; ]]></tbox><tbox llx="179" lly="321" urx="202" ury="333" f="3"><![CDATA[a). ]]></tbox><tbox llx="200" lly="320" urx="304" ury="335" f="1"><![CDATA[The seminal work ]]></tbox></line>
+<line><tbox llx="58" lly="306" urx="304" ury="321" f="1"><![CDATA[by Bellman (1957) shows that the optimal pol- ]]></tbox></line>
+<line><tbox llx="58" lly="291" urx="304" ury="307" f="1"><![CDATA[icy can be straightforwardly found by dynamic ]]></tbox></line>
+<line><tbox llx="58" lly="277" urx="141" ury="292" f="1"><![CDATA[programming. ]]></tbox></line>
+<line><tbox llx="58" lly="255" urx="301" ury="270" f="9"><![CDATA[2.1 Spidering as Reinforcement Learning ]]></tbox></line>
+<line><tbox llx="58" lly="238" urx="304" ury="253" f="1"><![CDATA[As an aid to understanding how reinforcement ]]></tbox></line>
+<line><tbox llx="58" lly="223" urx="304" ury="238" f="1"><![CDATA[learning relates to spidering, consider the task ]]></tbox></line>
+<line><tbox llx="58" lly="209" urx="304" ury="224" f="1"><![CDATA[of a mouse exploring a maze to find several ]]></tbox></line>
+<line><tbox llx="58" lly="194" urx="304" ury="210" f="1"><![CDATA[pieces of cheese. The agent's actions are mov- ]]></tbox></line>
+<line><tbox llx="58" lly="180" urx="304" ury="195" f="1"><![CDATA[ing among the grid squares of the maze. The ]]></tbox></line>
+<line><tbox llx="58" lly="165" urx="304" ury="181" f="1"><![CDATA[agent receives a reward for finding each piece ]]></tbox></line>
+<line><tbox llx="58" lly="151" urx="304" ury="166" f="1"><![CDATA[of cheese. The state is the position of the ]]></tbox></line>
+<line><tbox llx="58" lly="136" urx="304" ury="152" f="1"><![CDATA[mouse and the locations of the cheese pieces re- ]]></tbox></line>
+<line><tbox llx="58" lly="122" urx="304" ury="137" f="1"><![CDATA[maining to be consumed (since the cheese can ]]></tbox></line>
+<line><tbox llx="58" lly="108" urx="304" ury="123" f="1"><![CDATA[only be consumed and provide reward once). ]]></tbox></line>
+<line><tbox llx="58" lly="93" urx="304" ury="108" f="1"><![CDATA[Note that the agent only receives immediate ]]></tbox></line>
+<line><tbox llx="320" lly="722" urx="566" ury="737" f="1"><![CDATA[reward for finding a maze square containing ]]></tbox></line>
+<line><tbox llx="320" lly="708" urx="566" ury="723" f="1"><![CDATA[cheese, but that in order to act optimally it ]]></tbox></line>
+<line><tbox llx="320" lly="693" urx="566" ury="708" f="1"><![CDATA[must choose actions considering future rewards ]]></tbox></line>
+<line><tbox llx="320" lly="679" urx="368" ury="694" f="1"><![CDATA[as well. ]]></tbox></line>
+<line><tbox llx="330" lly="663" urx="566" ury="678" f="1"><![CDATA[In the spidering task, the on-topic docu- ]]></tbox></line>
+<line><tbox llx="320" lly="648" urx="566" ury="664" f="1"><![CDATA[ments are immediate rewards, like the pieces ]]></tbox></line>
+<line><tbox llx="320" lly="634" urx="566" ury="649" f="1"><![CDATA[of cheese. The actions are following a partic- ]]></tbox></line>
+<line><tbox llx="320" lly="620" urx="566" ury="635" f="1"><![CDATA[ular hyperlink. The state is the locations of ]]></tbox></line>
+<line><tbox llx="320" lly="605" urx="566" ury="620" f="1"><![CDATA[the on-topic documents remaining to be con- ]]></tbox></line>
+<line><tbox llx="320" lly="591" urx="566" ury="606" f="1"><![CDATA[sumed. The state does not include the current ]]></tbox></line>
+<line><tbox llx="320" lly="576" urx="566" ury="592" f="1"><![CDATA[\position" of the agent since a crawler can re- ]]></tbox></line>
+<line><tbox llx="320" lly="562" urx="566" ury="577" f="1"><![CDATA[trieve any page for which it knows the URL. ]]></tbox></line>
+<line><tbox llx="320" lly="547" urx="566" ury="563" f="1"><![CDATA[The number of actions is large and dynamic, in ]]></tbox></line>
+<line><tbox llx="320" lly="533" urx="566" ury="548" f="1"><![CDATA[that it depends on which documents the spider ]]></tbox></line>
+<line><tbox llx="320" lly="518" urx="421" ury="534" f="1"><![CDATA[has visited so far. ]]></tbox></line>
+<line><tbox llx="330" lly="503" urx="566" ury="518" f="1"><![CDATA[The key features of topic-specific spidering ]]></tbox></line>
+<line><tbox llx="320" lly="488" urx="566" ury="504" f="1"><![CDATA[that make reinforcement learning the proper ]]></tbox></line>
+<line><tbox llx="320" lly="474" urx="566" ury="489" f="1"><![CDATA[framework for defining the optimal solution ]]></tbox></line>
+<line><tbox llx="320" lly="459" urx="566" ury="475" f="1"><![CDATA[are: (1) performance is measured in terms ]]></tbox></line>
+<line><tbox llx="320" lly="445" urx="566" ury="460" f="1"><![CDATA[of reward over time, and (2) the environment ]]></tbox></line>
+<line><tbox llx="320" lly="430" urx="536" ury="446" f="1"><![CDATA[presents situations with delayed reward. ]]></tbox></line>
+<line><tbox llx="320" lly="403" urx="500" ury="419" f="9"><![CDATA[2.2 Practical Approximations ]]></tbox></line>
+<line><tbox llx="320" lly="382" urx="566" ury="397" f="1"><![CDATA[The problem now is how to apply reinforce- ]]></tbox></line>
+<line><tbox llx="320" lly="368" urx="566" ury="383" f="1"><![CDATA[ment learning to spidering in such a way that ]]></tbox></line>
+<line><tbox llx="320" lly="353" urx="566" ury="369" f="1"><![CDATA[it can be practically solved. Unfortunately, the ]]></tbox></line>
+<line><tbox llx="320" lly="339" urx="566" ury="354" f="1"><![CDATA[state space is huge: two to the power of the ]]></tbox></line>
+<line><tbox llx="320" lly="324" urx="566" ury="340" f="1"><![CDATA[number of on-topic documents on the Web. ]]></tbox></line>
+<line><tbox llx="320" lly="310" urx="566" ury="325" f="1"><![CDATA[The action space is also large: the number ]]></tbox></line>
+<line><tbox llx="320" lly="295" urx="566" ury="311" f="1"><![CDATA[of unique URLs with incoming links on the ]]></tbox></line>
+<line><tbox llx="320" lly="281" urx="567" ury="296" f="1"><![CDATA[Web. Thus we need to make some simplify- ]]></tbox></line>
+<line><tbox llx="320" lly="267" urx="566" ury="282" f="1"><![CDATA[ing assumptions in order to make the prob- ]]></tbox></line>
+<line><tbox llx="320" lly="252" urx="566" ury="267" f="1"><![CDATA[lem tractable and to aid generalization. Note, ]]></tbox></line>
+<line><tbox llx="320" lly="238" urx="566" ury="253" f="1"><![CDATA[however, that by defining the exact solution ]]></tbox></line>
+<line><tbox llx="320" lly="223" urx="566" ury="238" f="1"><![CDATA[in terms of the optimal policy, and making ]]></tbox></line>
+<line><tbox llx="320" lly="209" urx="566" ury="224" f="1"><![CDATA[our assumptions explicit, we will better under- ]]></tbox></line>
+<line><tbox llx="320" lly="194" urx="566" ury="210" f="1"><![CDATA[stand what inaccuracies we have introduced, ]]></tbox></line>
+<line><tbox llx="320" lly="180" urx="566" ury="195" f="1"><![CDATA[and how to select areas of future work that will ]]></tbox></line>
+<line><tbox llx="320" lly="165" urx="566" ury="181" f="1"><![CDATA[improve performance further. The assump- ]]></tbox></line>
+<line><tbox llx="320" lly="151" urx="566" ury="166" f="1"><![CDATA[tions we choose initially are the following two: ]]></tbox></line>
+<line><tbox llx="320" lly="136" urx="566" ury="152" f="1"><![CDATA[(1) we assume that the state is independent of ]]></tbox></line>
+<line><tbox llx="320" lly="122" urx="566" ury="137" f="1"><![CDATA[which on-topic documents have already been ]]></tbox></line>
+<line><tbox llx="320" lly="108" urx="566" ury="123" f="1"><![CDATA[consumed; that is, we collapse all states into ]]></tbox></line>
+<line><tbox llx="320" lly="93" urx="566" ury="108" f="1"><![CDATA[one, and (2) we assume that the relevant dis- ]]></tbox></line>
+<pbox llx="58.00" lly="93.00" urx="567.00" ury="737.00"/></page>
+<page n="4">
+<line><tbox llx="58" lly="722" urx="304" ury="737" f="1"><![CDATA[tinctions between the actions can be captured ]]></tbox></line>
+<line><tbox llx="58" lly="708" urx="304" ury="723" f="1"><![CDATA[by the words in the neighborhood of the hy- ]]></tbox></line>
+<line><tbox llx="58" lly="693" urx="259" ury="708" f="1"><![CDATA[perlink corresponding to each action. ]]></tbox></line>
+<line><tbox llx="68" lly="677" urx="225" ury="693" f="1"><![CDATA[With these assumptions, our ]]></tbox><tbox llx="218" lly="678" urx="236" ury="691" f="2"><![CDATA[Q ]]></tbox><tbox llx="231" lly="677" urx="304" ury="693" f="1"><![CDATA[function be- ]]></tbox></line>
+<line><tbox llx="58" lly="663" urx="304" ury="678" f="1"><![CDATA[comes a mapping from a `bag-of-words" to a ]]></tbox></line>
+<line><tbox llx="58" lly="648" urx="304" ury="664" f="1"><![CDATA[scalar (sum of future reward). Learning to per- ]]></tbox></line>
+<line><tbox llx="58" lly="634" urx="304" ury="649" f="1"><![CDATA[form eÆcient spidering then involves only two ]]></tbox></line>
+<line><tbox llx="58" lly="620" urx="304" ury="635" f="1"><![CDATA[remaining sub-problems: (1) assigning appro- ]]></tbox></line>
+<line><tbox llx="58" lly="605" urx="99" ury="620" f="1"><![CDATA[priate ]]></tbox><tbox llx="91" lly="606" urx="109" ury="618" f="2"><![CDATA[Q ]]></tbox><tbox llx="104" lly="605" urx="304" ury="620" f="1"><![CDATA[values to each hyperlink in the train- ]]></tbox></line>
+<line><tbox llx="58" lly="591" urx="304" ury="606" f="1"><![CDATA[ing set, and (2) learning a mapping from text ]]></tbox></line>
+<line><tbox llx="58" lly="576" urx="79" ury="592" f="1"><![CDATA[to ]]></tbox><tbox llx="72" lly="577" urx="90" ury="590" f="2"><![CDATA[Q ]]></tbox><tbox llx="84" lly="576" urx="304" ury="592" f="1"><![CDATA[values using the training data. Assigning ]]></tbox></line>
+<line><tbox llx="58" lly="562" urx="76" ury="575" f="2"><![CDATA[Q ]]></tbox><tbox llx="71" lly="562" urx="304" ury="577" f="1"><![CDATA[values to our training set entails striking a ]]></tbox></line>
+<line><tbox llx="58" lly="547" urx="304" ury="563" f="1"><![CDATA[balance between future and immediate reward ]]></tbox></line>
+<line><tbox llx="58" lly="533" urx="304" ury="548" f="1"><![CDATA[and setting a valuation on various types of fu- ]]></tbox></line>
+<line><tbox llx="58" lly="518" urx="132" ury="534" f="1"><![CDATA[ture reward. ]]></tbox><tbox llx="135" lly="518" urx="304" ury="534" f="1"><![CDATA[We perform the mapping from ]]></tbox></line>
+<line><tbox llx="58" lly="504" urx="103" ury="519" f="1"><![CDATA[text to ]]></tbox><tbox llx="95" lly="505" urx="113" ury="517" f="2"><![CDATA[Q ]]></tbox><tbox llx="107" lly="504" urx="304" ury="519" f="1"><![CDATA[value by casting this regression prob- ]]></tbox></line>
+<line><tbox llx="58" lly="489" urx="304" ury="505" f="1"><![CDATA[lem as classification (Torgo & Gama 1997); ]]></tbox></line>
+<line><tbox llx="58" lly="475" urx="185" ury="490" f="1"><![CDATA[we discretize hyperlink ]]></tbox><tbox llx="178" lly="476" urx="196" ury="488" f="2"><![CDATA[Q ]]></tbox><tbox llx="191" lly="475" urx="304" ury="490" f="1"><![CDATA[values, train a naive ]]></tbox></line>
+<line><tbox llx="58" lly="461" urx="304" ury="476" f="1"><![CDATA[Bayes classifier on the corresponding neighbor- ]]></tbox></line>
+<line><tbox llx="58" lly="446" urx="209" ury="462" f="1"><![CDATA[hood text and compute the ]]></tbox><tbox llx="202" lly="447" urx="220" ury="459" f="2"><![CDATA[Q ]]></tbox><tbox llx="216" lly="446" urx="304" ury="462" f="1"><![CDATA[value of an un- ]]></tbox></line>
+<line><tbox llx="58" lly="432" urx="304" ury="447" f="1"><![CDATA[known hyperlink by computing a weighted av- ]]></tbox></line>
+<line><tbox llx="58" lly="417" urx="214" ury="433" f="1"><![CDATA[erage of classification scores. ]]></tbox></line>
+<line><tbox llx="58" lly="390" urx="182" ury="406" f="3"><![CDATA[2.3 Value Criterion ]]></tbox></line>
+<line><tbox llx="58" lly="369" urx="304" ury="384" f="1"><![CDATA[In order to train an eÆcient spider using rein- ]]></tbox></line>
+<line><tbox llx="58" lly="354" urx="304" ury="370" f="1"><![CDATA[forcement learning, we must first create a map- ]]></tbox></line>
+<line><tbox llx="58" lly="340" urx="190" ury="355" f="1"><![CDATA[ping from hyperlinks to ]]></tbox><tbox llx="182" lly="341" urx="200" ury="353" f="2"><![CDATA[Q ]]></tbox><tbox llx="196" lly="340" urx="304" ury="355" f="1"><![CDATA[values. As we have ]]></tbox></line>
+<line><tbox llx="58" lly="326" urx="304" ury="341" f="1"><![CDATA[assumed a single state to simplify our system, ]]></tbox></line>
+<line><tbox llx="58" lly="311" urx="157" ury="327" f="1"><![CDATA[we will calculate ]]></tbox><tbox llx="152" lly="312" urx="170" ury="324" f="2"><![CDATA[Q ]]></tbox><tbox llx="167" lly="311" urx="304" ury="327" f="1"><![CDATA[values with all on-topic ]]></tbox></line>
+<line><tbox llx="58" lly="297" urx="304" ury="312" f="1"><![CDATA[documents in place. In our mouse and cheese ]]></tbox></line>
+<line><tbox llx="58" lly="282" urx="269" ury="298" f="1"><![CDATA[scenario, this is the same as calculating ]]></tbox><tbox llx="262" lly="283" urx="279" ury="296" f="2"><![CDATA[Q ]]></tbox><tbox llx="274" lly="282" urx="304" ury="298" f="1"><![CDATA[val- ]]></tbox></line>
+<line><tbox llx="58" lly="268" urx="294" ury="283" f="1"><![CDATA[ues before any of the cheese has been eaten. ]]></tbox></line>
+<line><tbox llx="68" lly="252" urx="304" ury="267" f="1"><![CDATA[The simplest mapping gives a value of 1 to ]]></tbox></line>
+<line><tbox llx="58" lly="238" urx="304" ury="253" f="1"><![CDATA[every hyperlink that points directly to a re- ]]></tbox></line>
+<line><tbox llx="58" lly="223" urx="304" ury="238" f="1"><![CDATA[search paper and a value of 0 to all other hy- ]]></tbox></line>
+<line><tbox llx="58" lly="209" urx="304" ury="224" f="1"><![CDATA[perlinks. This is equivalent to using the rein- ]]></tbox></line>
+<line><tbox llx="58" lly="194" urx="249" ury="210" f="1"><![CDATA[forcement learning framework with ]]></tbox><tbox llx="243" lly="195" urx="257" ury="208" f="2"><![CDATA[# ]]></tbox><tbox llx="253" lly="194" urx="304" ury="210" f="1"><![CDATA[= 0. In ]]></tbox></line>
+<line><tbox llx="58" lly="180" urx="304" ury="195" f="1"><![CDATA[many domains, this is not a useful optimiza- ]]></tbox></line>
+<line><tbox llx="58" lly="165" urx="304" ury="181" f="1"><![CDATA[tion criteria because the attributes associated ]]></tbox></line>
+<line><tbox llx="58" lly="151" urx="304" ury="166" f="1"><![CDATA[with an immediate reward action are distinct ]]></tbox></line>
+<line><tbox llx="58" lly="136" urx="304" ury="152" f="1"><![CDATA[from those that identify future reward actions. ]]></tbox></line>
+<line><tbox llx="58" lly="122" urx="304" ury="137" f="1"><![CDATA[In the domain of text, this is not necessarily ]]></tbox></line>
+<line><tbox llx="58" lly="108" urx="304" ury="123" f="1"><![CDATA[the case. Text that is used to describe pointers ]]></tbox></line>
+<line><tbox llx="58" lly="93" urx="304" ury="108" f="1"><![CDATA[to research papers may also be used to point ]]></tbox></line>
+<line><tbox llx="376" lly="700" urx="458" ury="723" f="4"><![CDATA[A B ]]></tbox></line>
+<line><tbox llx="320" lly="588" urx="566" ury="604" f="1"><![CDATA[Figure 1: A representation of spidering space ]]></tbox></line>
+<line><tbox llx="320" lly="574" urx="566" ury="589" f="1"><![CDATA[where arrows are hyperlinks and circles are ]]></tbox></line>
+<line><tbox llx="320" lly="560" urx="566" ury="575" f="1"><![CDATA[web documents. The spider is represented ]]></tbox></line>
+<line><tbox llx="320" lly="545" urx="403" ury="560" f="1"><![CDATA[as a hexagon. ]]></tbox><tbox llx="402" lly="546" urx="419" ury="558" f="2"><![CDATA[A ]]></tbox><tbox llx="416" lly="545" urx="446" ury="560" f="1"><![CDATA[and ]]></tbox><tbox llx="440" lly="546" urx="457" ury="558" f="2"><![CDATA[B ]]></tbox><tbox llx="455" lly="545" urx="566" ury="560" f="1"><![CDATA[are hyperlinks that ]]></tbox></line>
+<line><tbox llx="320" lly="531" urx="566" ury="546" f="1"><![CDATA[the spider may elect to follow; #lled-in circles ]]></tbox></line>
+<line><tbox llx="320" lly="516" urx="566" ury="531" f="1"><![CDATA[denote reward. When a spider is given the ]]></tbox></line>
+<line><tbox llx="320" lly="502" urx="566" ury="517" f="1"><![CDATA[choice between an action that provides imme- ]]></tbox></line>
+<line><tbox llx="320" lly="487" urx="566" ury="503" f="1"><![CDATA[diate reward and one that provides future re- ]]></tbox></line>
+<line><tbox llx="320" lly="473" urx="566" ury="488" f="1"><![CDATA[ward, the spider always achieves the maximum ]]></tbox></line>
+<line><tbox llx="320" lly="458" urx="567" ury="474" f="1"><![CDATA[discounted reward by choosing the immediate ]]></tbox></line>
+<line><tbox llx="320" lly="444" urx="393" ury="459" f="1"><![CDATA[reward first. ]]></tbox></line>
+<line><tbox llx="320" lly="411" urx="530" ury="427" f="1"><![CDATA[toward repositories of such documents. ]]></tbox></line>
+<line><tbox llx="330" lly="397" urx="566" ury="412" f="1"><![CDATA[A slightly more involved criteria is one that ]]></tbox></line>
+<line><tbox llx="320" lly="382" urx="418" ury="398" f="1"><![CDATA[values an action, ]]></tbox><tbox llx="411" lly="383" urx="432" ury="396" f="2"><![CDATA[A, ]]></tbox><tbox llx="427" lly="382" urx="566" ury="398" f="1"><![CDATA[according to the rewards ]]></tbox></line>
+<line><tbox llx="320" lly="368" urx="566" ury="383" f="1"><![CDATA[achievable from the web page that is retrieved ]]></tbox></line>
+<line><tbox llx="320" lly="353" urx="403" ury="369" f="1"><![CDATA[by performing ]]></tbox><tbox llx="395" lly="354" urx="416" ury="367" f="2"><![CDATA[A. ]]></tbox><tbox llx="413" lly="353" urx="566" ury="369" f="1"><![CDATA[This is identical to using re- ]]></tbox></line>
+<line><tbox llx="320" lly="339" urx="466" ury="354" f="1"><![CDATA[inforcement learning with ]]></tbox><tbox llx="461" lly="340" urx="492" ury="352" f="2"><![CDATA[# } ]]></tbox><tbox llx="490" lly="339" urx="566" ury="354" f="1"><![CDATA[0. For each ]]></tbox></line>
+<line><tbox llx="320" lly="324" urx="566" ury="340" f="1"><![CDATA[hyperlink, we use dynamic programming to ]]></tbox></line>
+<line><tbox llx="320" lly="310" urx="566" ury="325" f="1"><![CDATA[calculate a discounted sum over rewards that ]]></tbox></line>
+<line><tbox llx="320" lly="296" urx="566" ury="311" f="1"><![CDATA[can be achieved using the hyperlinks stemming ]]></tbox></line>
+<line><tbox llx="320" lly="281" urx="504" ury="297" f="1"><![CDATA[from the corresponding web page. ]]></tbox></line>
+<line><tbox llx="330" lly="267" urx="566" ury="282" f="1"><![CDATA[A subtle issue comes to bear because of the ]]></tbox></line>
+<line><tbox llx="320" lly="252" urx="566" ury="267" f="1"><![CDATA[nature of spidering. In general reinforcement ]]></tbox></line>
+<line><tbox llx="320" lly="238" urx="566" ury="253" f="1"><![CDATA[learning problems, a future reward action may ]]></tbox></line>
+<line><tbox llx="320" lly="223" urx="566" ury="238" f="1"><![CDATA[be more beneficial than one that provides im- ]]></tbox></line>
+<line><tbox llx="320" lly="209" urx="566" ury="224" f="1"><![CDATA[mediate reward. This is often the case when ]]></tbox></line>
+<line><tbox llx="320" lly="194" urx="566" ury="210" f="1"><![CDATA[reward varies in magnitude or when reward is ]]></tbox></line>
+<line><tbox llx="320" lly="180" urx="566" ury="195" f="1"><![CDATA[highly dependent on the state of the system. ]]></tbox></line>
+<line><tbox llx="320" lly="165" urx="566" ury="181" f="1"><![CDATA[However, for the problem of spidering, this is ]]></tbox></line>
+<line><tbox llx="320" lly="151" urx="566" ury="166" f="1"><![CDATA[not the case. In fact, given the choice between ]]></tbox></line>
+<line><tbox llx="320" lly="136" urx="566" ury="152" f="1"><![CDATA[an action that elicits immediate reward and ]]></tbox></line>
+<line><tbox llx="320" lly="122" urx="505" ury="137" f="1"><![CDATA[one that yields future reward, it is ]]></tbox><tbox llx="498" lly="122" urx="542" ury="137" f="4"><![CDATA[always ]]></tbox><tbox llx="535" lly="122" urx="566" ury="137" f="1"><![CDATA[bet- ]]></tbox></line>
+<line><tbox llx="320" lly="108" urx="566" ury="123" f="1"><![CDATA[ter for the spider to choose the immediate re- ]]></tbox></line>
+<line><tbox llx="320" lly="93" urx="395" ury="108" f="1"><![CDATA[ward action. ]]></tbox></line>
+<pbox llx="58.00" lly="93.00" urx="567.00" ury="737.00"/></page>
+<page n="5">
+<line><tbox llx="68" lly="722" urx="304" ury="737" f="1"><![CDATA[An example, depicted in Figure 1, gives good ]]></tbox></line>
+<line><tbox llx="58" lly="708" urx="304" ury="723" f="1"><![CDATA[intuition for why future rewards never provide ]]></tbox></line>
+<line><tbox llx="58" lly="693" urx="304" ury="708" f="1"><![CDATA[greater benefit. Imagine the case where a spi- ]]></tbox></line>
+<line><tbox llx="58" lly="679" urx="265" ury="694" f="1"><![CDATA[der has two actions that it can take, ]]></tbox><tbox llx="260" lly="679" urx="277" ury="692" f="2"><![CDATA[A ]]></tbox><tbox llx="274" lly="679" urx="304" ury="694" f="1"><![CDATA[and ]]></tbox></line>
+<line><tbox llx="58" lly="665" urx="79" ury="678" f="2"><![CDATA[B. ]]></tbox><tbox llx="80" lly="664" urx="125" ury="680" f="1"><![CDATA[Action ]]></tbox><tbox llx="120" lly="665" urx="137" ury="678" f="2"><![CDATA[A ]]></tbox><tbox llx="134" lly="664" urx="304" ury="680" f="1"><![CDATA[retrieves a research paper and ]]></tbox></line>
+<line><tbox llx="58" lly="650" urx="211" ury="665" f="1"><![CDATA[yields a reward of 1. Action ]]></tbox><tbox llx="204" lly="650" urx="221" ury="663" f="2"><![CDATA[B ]]></tbox><tbox llx="217" lly="650" urx="304" ury="665" f="1"><![CDATA[retrieves a web ]]></tbox></line>
+<line><tbox llx="58" lly="635" urx="304" ury="651" f="1"><![CDATA[page that includes hyperlinks to 1000 research ]]></tbox></line>
+<line><tbox llx="58" lly="621" urx="304" ury="636" f="1"><![CDATA[papers, each of which provides a reward of 1 ]]></tbox></line>
+<line><tbox llx="58" lly="606" urx="291" ury="622" f="1"><![CDATA[when retrieved. When the spider performs ]]></tbox><tbox llx="284" lly="607" urx="302" ury="620" f="2"><![CDATA[A ]]></tbox></line>
+<line><tbox llx="58" lly="592" urx="100" ury="607" f="1"><![CDATA[before ]]></tbox><tbox llx="92" lly="593" urx="114" ury="605" f="2"><![CDATA[B, ]]></tbox><tbox llx="108" lly="592" urx="304" ury="607" f="1"><![CDATA[the sequence of rewards is as follows: ]]></tbox></line>
+<line><tbox llx="68" lly="577" urx="153" ury="592" f="1"><![CDATA[101111111. . . 1 ]]></tbox></line>
+<line><tbox llx="68" lly="562" urx="215" ury="577" f="1"><![CDATA[When the spider performs ]]></tbox><tbox llx="209" lly="563" urx="227" ury="575" f="2"><![CDATA[B ]]></tbox><tbox llx="224" lly="562" urx="266" ury="577" f="1"><![CDATA[before ]]></tbox><tbox llx="259" lly="563" urx="280" ury="575" f="2"><![CDATA[A, ]]></tbox><tbox llx="277" lly="562" urx="304" ury="577" f="1"><![CDATA[the ]]></tbox></line>
+<line><tbox llx="58" lly="548" urx="222" ury="563" f="1"><![CDATA[first two rewards are reversed: ]]></tbox></line>
+<line><tbox llx="68" lly="533" urx="153" ury="548" f="1"><![CDATA[011111111. . . 1 ]]></tbox></line>
+<line><tbox llx="68" lly="518" urx="304" ury="533" f="1"><![CDATA[The only difference between the two is the ]]></tbox></line>
+<line><tbox llx="58" lly="503" urx="304" ury="519" f="1"><![CDATA[time at which the first reward is received. It ]]></tbox></line>
+<line><tbox llx="58" lly="489" urx="304" ury="504" f="1"><![CDATA[is beneficial to achieve rewards as quickly as ]]></tbox></line>
+<line><tbox llx="58" lly="474" urx="304" ury="490" f="1"><![CDATA[possible, hence it is preferable to perform ac- ]]></tbox></line>
+<line><tbox llx="58" lly="460" urx="89" ury="475" f="1"><![CDATA[tion ]]></tbox><tbox llx="82" lly="461" urx="100" ury="473" f="2"><![CDATA[A ]]></tbox><tbox llx="95" lly="460" urx="173" ury="475" f="1"><![CDATA[before action ]]></tbox><tbox llx="166" lly="461" urx="188" ury="473" f="2"><![CDATA[B. ]]></tbox><tbox llx="185" lly="460" urx="304" ury="475" f="1"><![CDATA[As the reinforcement ]]></tbox></line>
+<line><tbox llx="58" lly="445" urx="304" ury="461" f="1"><![CDATA[learning framework allows for the possibility of ]]></tbox></line>
+<line><tbox llx="58" lly="431" urx="304" ury="446" f="1"><![CDATA[future rewards being valued more highly than ]]></tbox></line>
+<line><tbox llx="58" lly="417" urx="304" ury="432" f="1"><![CDATA[immediate rewards, some of our experiments ]]></tbox></line>
+<line><tbox llx="58" lly="402" urx="137" ury="417" f="1"><![CDATA[will calculate ]]></tbox><tbox llx="132" lly="403" urx="150" ury="415" f="2"><![CDATA[Q ]]></tbox><tbox llx="146" lly="402" urx="304" ury="417" f="1"><![CDATA[values so that no future re- ]]></tbox></line>
+<line><tbox llx="58" lly="388" urx="304" ury="403" f="1"><![CDATA[ward hyperlink receives a value higher than an ]]></tbox></line>
+<line><tbox llx="58" lly="373" urx="216" ury="389" f="1"><![CDATA[immediate reward hyperlink. ]]></tbox></line>
+<line><tbox llx="58" lly="349" urx="204" ury="364" f="3"><![CDATA[2.4 Neighborhood Text ]]></tbox></line>
+<line><tbox llx="58" lly="330" urx="304" ury="345" f="1"><![CDATA[With a valuation for the set of known hyper- ]]></tbox></line>
+<line><tbox llx="58" lly="316" urx="304" ury="331" f="1"><![CDATA[links, it is necessary to specify features that ]]></tbox></line>
+<line><tbox llx="58" lly="301" urx="304" ury="317" f="1"><![CDATA[can be used to compare these to unknown hy- ]]></tbox></line>
+<line><tbox llx="58" lly="287" urx="304" ury="302" f="1"><![CDATA[perlinks. For this, we choose the text found in ]]></tbox></line>
+<line><tbox llx="58" lly="272" urx="304" ury="288" f="1"><![CDATA[the neighborhood of a hyperlink. Such text is ]]></tbox></line>
+<line><tbox llx="58" lly="258" urx="304" ury="273" f="1"><![CDATA[commonly used to describe the content of the ]]></tbox></line>
+<line><tbox llx="58" lly="243" urx="304" ury="259" f="1"><![CDATA[page connected to the hyperlink. An example ]]></tbox></line>
+<line><tbox llx="58" lly="229" urx="304" ury="244" f="1"><![CDATA[of this, which is commonly found in computer ]]></tbox></line>
+<line><tbox llx="58" lly="215" urx="304" ury="230" f="1"><![CDATA[science faculty home pages, is a research pa- ]]></tbox></line>
+<line><tbox llx="58" lly="200" urx="304" ury="215" f="1"><![CDATA[per bibliography that contains a hyperlink to ]]></tbox></line>
+<line><tbox llx="58" lly="186" urx="156" ury="201" f="1"><![CDATA[a research paper: ]]></tbox></line>
+<line><tbox llx="68" lly="174" urx="295" ury="186" f="4"><![CDATA[\Using the Future to Sort Out the Present: Rankprop ]]></tbox></line>
+<line><tbox llx="68" lly="162" urx="285" ury="174" f="4"><![CDATA[and Multitask Learning for Medical Risk Analysis," ]]></tbox></line>
+<line><tbox llx="68" lly="150" urx="291" ury="162" f="4"><![CDATA[(postscript) R. Caruana, S. Baluja, and T. Mitchell, ]]></tbox></line>
+<line><tbox llx="68" lly="138" urx="276" ury="150" f="4"><![CDATA[Neural Information Processing 7, December 1995. ]]></tbox></line>
+<line><tbox llx="78" lly="122" urx="304" ury="138" f="1"><![CDATA[Here, the anchor text is the hyperlink and ]]></tbox></line>
+<line><tbox llx="58" lly="108" urx="304" ury="123" f="1"><![CDATA[the text of the bibliography provides a good ]]></tbox></line>
+<line><tbox llx="58" lly="93" urx="304" ury="108" f="1"><![CDATA[description of the document one would find by ]]></tbox></line>
+<line><tbox llx="320" lly="722" urx="566" ury="737" f="1"><![CDATA[following that hyperlink. In the experiments ]]></tbox></line>
+<line><tbox llx="320" lly="707" urx="566" ury="723" f="1"><![CDATA[presented in this paper, we associate with each ]]></tbox></line>
+<line><tbox llx="320" lly="693" urx="566" ury="708" f="1"><![CDATA[hyperlink two sets of words, 1) the anchor text ]]></tbox></line>
+<line><tbox llx="320" lly="678" urx="566" ury="694" f="1"><![CDATA[and tokens from the URL and 2) the full text ]]></tbox></line>
+<line><tbox llx="320" lly="664" urx="566" ury="679" f="1"><![CDATA[of the web page where the hyperlink is lo- ]]></tbox></line>
+<line><tbox llx="320" lly="649" urx="566" ury="665" f="1"><![CDATA[cated. This associates a significant portion of ]]></tbox></line>
+<line><tbox llx="320" lly="635" urx="566" ury="650" f="1"><![CDATA[text with each hyperlink and allows each hy- ]]></tbox></line>
+<line><tbox llx="320" lly="620" urx="566" ury="636" f="1"><![CDATA[perlink to be identified uniquely. Experiments ]]></tbox></line>
+<line><tbox llx="320" lly="606" urx="566" ury="621" f="1"><![CDATA[not presented in this paper show that using a ]]></tbox></line>
+<line><tbox llx="320" lly="591" urx="566" ury="606" f="1"><![CDATA[more restricted set of neighborhood text does ]]></tbox></line>
+<line><tbox llx="320" lly="576" urx="513" ury="592" f="1"><![CDATA[not enhance spidering performance. ]]></tbox></line>
+<line><tbox llx="320" lly="552" urx="427" ury="567" f="3"><![CDATA[2.5 Naive Bayes ]]></tbox></line>
+<line><tbox llx="320" lly="532" urx="566" ury="547" f="1"><![CDATA[We use the text classification algorithm naive ]]></tbox></line>
+<line><tbox llx="320" lly="517" urx="553" ury="533" f="1"><![CDATA[Bayes to perform the mapping from text to ]]></tbox><tbox llx="546" lly="518" urx="564" ury="531" f="2"><![CDATA[Q ]]></tbox></line>
+<line><tbox llx="320" lly="503" urx="566" ury="518" f="1"><![CDATA[values. Here, we describe that algorithm in ]]></tbox></line>
+<line><tbox llx="320" lly="488" urx="363" ury="504" f="1"><![CDATA[detail. ]]></tbox></line>
+<line><tbox llx="340" lly="473" urx="566" ury="488" f="1"><![CDATA[Naive Bayes approaches the task of text ]]></tbox></line>
+<line><tbox llx="320" lly="458" urx="566" ury="474" f="1"><![CDATA[classification from a Bayesian learning frame- ]]></tbox></line>
+<line><tbox llx="320" lly="444" urx="566" ury="459" f="1"><![CDATA[work. It assumes that text data is generated ]]></tbox></line>
+<line><tbox llx="320" lly="429" urx="566" ury="444" f="1"><![CDATA[by a parametric model, and uses training data ]]></tbox></line>
+<line><tbox llx="320" lly="415" urx="566" ury="430" f="1"><![CDATA[to calculate estimates of the model parame- ]]></tbox></line>
+<line><tbox llx="320" lly="400" urx="566" ury="415" f="1"><![CDATA[ters. Equipped with these estimates, it clas- ]]></tbox></line>
+<line><tbox llx="320" lly="386" urx="566" ury="401" f="1"><![CDATA[si#es new test documents using Bayes' rule to ]]></tbox></line>
+<line><tbox llx="320" lly="371" urx="566" ury="386" f="1"><![CDATA[turn the generative model around and calcu- ]]></tbox></line>
+<line><tbox llx="320" lly="356" urx="566" ury="372" f="1"><![CDATA[late the posterior probability that each class ]]></tbox></line>
+<line><tbox llx="320" lly="342" urx="566" ury="357" f="1"><![CDATA[would have generated the test document in ]]></tbox></line>
+<line><tbox llx="320" lly="327" urx="377" ury="343" f="1"><![CDATA[question. ]]></tbox></line>
+<line><tbox llx="340" lly="312" urx="566" ury="327" f="1"><![CDATA[The classifier parameterizes each class sep- ]]></tbox></line>
+<line><tbox llx="320" lly="297" urx="566" ury="313" f="1"><![CDATA[arately with a document frequency, and also ]]></tbox></line>
+<line><tbox llx="320" lly="283" urx="487" ury="298" f="1"><![CDATA[word frequencies. Each class, ]]></tbox><tbox llx="482" lly="284" urx="496" ury="296" f="2"><![CDATA[c ]]></tbox><tbox llx="487" lly="283" urx="494" ury="290" f="5"><![CDATA[j ]]></tbox><tbox llx="491" lly="283" urx="566" ury="298" f="1"><![CDATA[, has a doc- ]]></tbox></line>
+<line><tbox llx="320" lly="268" urx="566" ury="284" f="1"><![CDATA[ument frequency relative to all other classes, ]]></tbox></line>
+<line><tbox llx="320" lly="254" urx="392" ury="269" f="1"><![CDATA[written P(c ]]></tbox><tbox llx="381" lly="254" urx="388" ury="261" f="5"><![CDATA[j ]]></tbox><tbox llx="385" lly="254" urx="566" ury="269" f="1"><![CDATA[). Each class is modeled by a ]]></tbox></line>
+<line><tbox llx="320" lly="239" urx="566" ury="255" f="1"><![CDATA[multinomial over words. That is, for every ]]></tbox></line>
+<line><tbox llx="320" lly="225" urx="359" ury="240" f="1"><![CDATA[word, ]]></tbox><tbox llx="353" lly="225" urx="370" ury="238" f="2"><![CDATA[w ]]></tbox><tbox llx="361" lly="225" urx="368" ury="232" f="5"><![CDATA[t ]]></tbox><tbox llx="364" lly="225" urx="476" ury="240" f="1"><![CDATA[, in the vocabulary, ]]></tbox><tbox llx="469" lly="225" urx="484" ury="238" f="2"><![CDATA[V ]]></tbox><tbox llx="478" lly="225" urx="518" ury="240" f="1"><![CDATA[, P(w ]]></tbox><tbox llx="507" lly="225" urx="514" ury="232" f="5"><![CDATA[t ]]></tbox><tbox llx="510" lly="225" urx="530" ury="240" f="6"><![CDATA[jc ]]></tbox><tbox llx="519" lly="225" urx="526" ury="232" f="5"><![CDATA[j ]]></tbox><tbox llx="523" lly="225" urx="566" ury="240" f="1"><![CDATA[) indi- ]]></tbox></line>
+<line><tbox llx="320" lly="210" urx="566" ury="226" f="1"><![CDATA[cates the frequency that the classifier expects ]]></tbox></line>
+<line><tbox llx="320" lly="196" urx="356" ury="211" f="1"><![CDATA[word ]]></tbox><tbox llx="349" lly="196" urx="366" ury="209" f="2"><![CDATA[w ]]></tbox><tbox llx="357" lly="196" urx="364" ury="203" f="5"><![CDATA[t ]]></tbox><tbox llx="365" lly="196" urx="531" ury="211" f="1"><![CDATA[to occur in documents in class ]]></tbox><tbox llx="524" lly="196" urx="538" ury="209" f="2"><![CDATA[c ]]></tbox><tbox llx="529" lly="196" urx="536" ury="203" f="5"><![CDATA[j ]]></tbox><tbox llx="533" lly="196" urx="548" ury="211" f="1"><![CDATA[. ]]></tbox></line>
+<line><tbox llx="340" lly="180" urx="490" ury="196" f="1"><![CDATA[We represent a document, ]]></tbox><tbox llx="485" lly="181" urx="500" ury="194" f="2"><![CDATA[d ]]></tbox><tbox llx="491" lly="181" urx="498" ury="188" f="5"><![CDATA[i ]]></tbox><tbox llx="495" lly="180" urx="566" ury="196" f="1"><![CDATA[, as an un- ]]></tbox></line>
+<line><tbox llx="320" lly="166" urx="566" ury="181" f="1"><![CDATA[ordered collection of its words. To classify ]]></tbox></line>
+<line><tbox llx="320" lly="151" urx="566" ury="167" f="1"><![CDATA[a new document with this model, we make ]]></tbox></line>
+<line><tbox llx="320" lly="137" urx="566" ury="152" f="1"><![CDATA[the naive Bayes assumption: the words in the ]]></tbox></line>
+<line><tbox llx="320" lly="122" urx="566" ury="138" f="1"><![CDATA[document occur independently of each other ]]></tbox></line>
+<line><tbox llx="320" lly="108" urx="566" ury="123" f="1"><![CDATA[given the class of the document, (and further- ]]></tbox></line>
+<line><tbox llx="320" lly="93" urx="566" ury="108" f="1"><![CDATA[more independently of position). Using this ]]></tbox></line>
+<pbox llx="58.00" lly="93.00" urx="566.00" ury="737.00"/></page>
+<page n="6">
+<line><tbox llx="58" lly="722" urx="304" ury="737" f="1"><![CDATA[assumption, classification becomes straightfor- ]]></tbox></line>
+<line><tbox llx="58" lly="707" urx="304" ury="723" f="1"><![CDATA[ward. We calculate the probability of each ]]></tbox></line>
+<line><tbox llx="58" lly="693" urx="304" ury="708" f="1"><![CDATA[class, given the evidence of the document, ]]></tbox></line>
+<line><tbox llx="58" lly="678" urx="86" ury="694" f="1"><![CDATA[P(c ]]></tbox><tbox llx="75" lly="679" urx="83" ury="686" f="3"><![CDATA[j ]]></tbox><tbox llx="80" lly="678" urx="100" ury="694" f="4"><![CDATA[jd ]]></tbox><tbox llx="89" lly="679" urx="96" ury="686" f="3"><![CDATA[i ]]></tbox><tbox llx="92" lly="678" urx="304" ury="694" f="1"><![CDATA[), and select the class for which this ex- ]]></tbox></line>
+<line><tbox llx="58" lly="664" urx="264" ury="679" f="1"><![CDATA[pression is the maximum. We denote ]]></tbox><tbox llx="257" lly="665" urx="275" ury="677" f="2"><![CDATA[w ]]></tbox><tbox llx="266" lly="664" urx="274" ury="671" f="3"><![CDATA[d ]]></tbox><tbox llx="270" lly="663" urx="280" ury="669" f="5"><![CDATA[ik ]]></tbox></line>
+<line><tbox llx="283" lly="664" urx="304" ury="679" f="1"><![CDATA[to ]]></tbox></line>
+<line><tbox llx="58" lly="649" urx="101" ury="665" f="1"><![CDATA[be the ]]></tbox><tbox llx="95" lly="650" urx="121" ury="663" f="2"><![CDATA[kth ]]></tbox><tbox llx="117" lly="649" urx="222" ury="665" f="1"><![CDATA[word in document ]]></tbox><tbox llx="216" lly="650" urx="230" ury="663" f="2"><![CDATA[d ]]></tbox><tbox llx="222" lly="650" urx="229" ury="656" f="3"><![CDATA[i ]]></tbox></line>
+<line><tbox llx="225" lly="649" urx="304" ury="665" f="1"><![CDATA[. We expand ]]></tbox></line>
+<line><tbox llx="58" lly="635" urx="86" ury="650" f="1"><![CDATA[P(c ]]></tbox><tbox llx="75" lly="635" urx="83" ury="642" f="3"><![CDATA[j ]]></tbox><tbox llx="80" lly="635" urx="100" ury="650" f="4"><![CDATA[jd ]]></tbox><tbox llx="89" lly="635" urx="96" ury="642" f="3"><![CDATA[i ]]></tbox><tbox llx="92" lly="635" urx="304" ury="650" f="1"><![CDATA[) with an application of Bayes' rule, and ]]></tbox></line>
+<line><tbox llx="58" lly="620" urx="304" ury="636" f="1"><![CDATA[then make use of the word independence as- ]]></tbox></line>
+<line><tbox llx="58" lly="606" urx="120" ury="621" f="1"><![CDATA[sumption: ]]></tbox></line>
+<line><tbox llx="91" lly="577" urx="120" ury="592" f="1"><![CDATA[P(c ]]></tbox><tbox llx="109" lly="577" urx="116" ury="584" f="3"><![CDATA[j ]]></tbox><tbox llx="113" lly="577" urx="134" ury="592" f="4"><![CDATA[jd ]]></tbox><tbox llx="123" lly="577" urx="130" ury="584" f="3"><![CDATA[i ]]></tbox><tbox llx="126" lly="577" urx="142" ury="592" f="1"><![CDATA[) ]]></tbox><tbox llx="141" lly="577" urx="161" ury="592" f="4"><![CDATA[/ ]]></tbox><tbox llx="160" lly="577" urx="188" ury="592" f="1"><![CDATA[P(c ]]></tbox><tbox llx="177" lly="577" urx="185" ury="584" f="3"><![CDATA[j ]]></tbox><tbox llx="182" lly="577" urx="216" ury="592" f="1"><![CDATA[)P(d ]]></tbox><tbox llx="205" lly="577" urx="212" ury="584" f="3"><![CDATA[i ]]></tbox><tbox llx="208" lly="577" urx="228" ury="592" f="4"><![CDATA[jc ]]></tbox><tbox llx="217" lly="577" urx="224" ury="584" f="3"><![CDATA[j ]]></tbox><tbox llx="221" lly="577" urx="237" ury="592" f="1"><![CDATA[) ]]></tbox></line>
+<line><tbox llx="141" lly="549" urx="161" ury="564" f="4"><![CDATA[/ ]]></tbox><tbox llx="160" lly="549" urx="188" ury="564" f="1"><![CDATA[P(c ]]></tbox><tbox llx="177" lly="549" urx="185" ury="556" f="3"><![CDATA[j ]]></tbox><tbox llx="182" lly="549" urx="197" ury="564" f="1"><![CDATA[) ]]></tbox></line>
+<line><tbox llx="190" lly="564" urx="204" ury="575" f="6"><![CDATA[jd ]]></tbox><tbox llx="197" lly="564" urx="202" ury="570" f="5"><![CDATA[i ]]></tbox><tbox llx="200" lly="564" urx="210" ury="575" f="6"><![CDATA[j ]]></tbox></line>
+<line><tbox llx="190" lly="558" urx="216" ury="576" f="7"><![CDATA[Y ]]></tbox></line>
+<line><tbox llx="188" lly="539" urx="208" ury="546" f="3"><![CDATA[k=1 ]]></tbox></line>
+<line><tbox llx="206" lly="549" urx="238" ury="564" f="1"><![CDATA[P(w ]]></tbox><tbox llx="227" lly="549" urx="235" ury="556" f="3"><![CDATA[d ]]></tbox><tbox llx="231" lly="548" urx="241" ury="554" f="5"><![CDATA[ik ]]></tbox></line>
+<line><tbox llx="239" lly="549" urx="258" ury="564" f="4"><![CDATA[jc ]]></tbox><tbox llx="247" lly="549" urx="255" ury="556" f="3"><![CDATA[j ]]></tbox><tbox llx="252" lly="549" urx="304" ury="564" f="1"><![CDATA[): (3) ]]></tbox></line>
+<line><tbox llx="78" lly="520" urx="267" ury="536" f="1"><![CDATA[Learning these parameters (P(c ]]></tbox><tbox llx="256" lly="521" urx="263" ury="528" f="3"><![CDATA[j ]]></tbox><tbox llx="260" lly="520" urx="304" ury="536" f="1"><![CDATA[) and ]]></tbox></line>
+<line><tbox llx="58" lly="506" urx="90" ury="521" f="1"><![CDATA[P(w ]]></tbox><tbox llx="79" lly="506" urx="86" ury="513" f="3"><![CDATA[t ]]></tbox><tbox llx="82" lly="506" urx="102" ury="521" f="4"><![CDATA[jc ]]></tbox><tbox llx="91" lly="506" urx="98" ury="513" f="3"><![CDATA[j ]]></tbox><tbox llx="95" lly="506" urx="304" ury="521" f="1"><![CDATA[)) for classification is accomplished us- ]]></tbox></line>
+<line><tbox llx="58" lly="491" urx="284" ury="507" f="1"><![CDATA[ing a set of labeled training documents, ]]></tbox><tbox llx="280" lly="491" urx="304" ury="507" f="4"><![CDATA[D. ]]></tbox></line>
+<line><tbox llx="58" lly="477" urx="304" ury="492" f="1"><![CDATA[To estimate the word probability parameters, ]]></tbox></line>
+<line><tbox llx="58" lly="462" urx="90" ury="477" f="1"><![CDATA[P(w ]]></tbox><tbox llx="79" lly="462" urx="86" ury="469" f="3"><![CDATA[t ]]></tbox><tbox llx="82" lly="462" urx="102" ury="477" f="4"><![CDATA[jc ]]></tbox><tbox llx="91" lly="462" urx="98" ury="469" f="3"><![CDATA[j ]]></tbox><tbox llx="95" lly="462" urx="304" ury="477" f="1"><![CDATA[), we count over all word occurrences ]]></tbox></line>
+<line><tbox llx="58" lly="448" urx="109" ury="463" f="1"><![CDATA[for class ]]></tbox><tbox llx="101" lly="448" urx="115" ury="461" f="2"><![CDATA[c ]]></tbox><tbox llx="106" lly="448" urx="113" ury="455" f="3"><![CDATA[j ]]></tbox><tbox llx="113" lly="448" urx="217" ury="463" f="1"><![CDATA[the frequency that ]]></tbox><tbox llx="209" lly="448" urx="226" ury="461" f="2"><![CDATA[w ]]></tbox><tbox llx="217" lly="448" urx="224" ury="455" f="3"><![CDATA[t ]]></tbox><tbox llx="223" lly="448" urx="304" ury="463" f="1"><![CDATA[occurs in doc- ]]></tbox></line>
+<line><tbox llx="58" lly="433" urx="304" ury="448" f="1"><![CDATA[uments from that class. We supplement this ]]></tbox></line>
+<line><tbox llx="58" lly="419" urx="304" ury="434" f="1"><![CDATA[with Laplace `smoothing' that primes each es- ]]></tbox></line>
+<line><tbox llx="58" lly="404" urx="304" ury="419" f="1"><![CDATA[timate with a count of one to avoid probabili- ]]></tbox></line>
+<line><tbox llx="58" lly="389" urx="163" ury="405" f="1"><![CDATA[ties of zero. Define ]]></tbox><tbox llx="155" lly="390" urx="187" ury="403" f="2"><![CDATA[N(w ]]></tbox><tbox llx="179" lly="390" urx="186" ury="397" f="3"><![CDATA[t ]]></tbox><tbox llx="182" lly="390" urx="202" ury="403" f="2"><![CDATA[; d ]]></tbox><tbox llx="194" lly="390" urx="200" ury="397" f="3"><![CDATA[i ]]></tbox><tbox llx="197" lly="389" urx="304" ury="405" f="1"><![CDATA[) to be the count of ]]></tbox></line>
+<line><tbox llx="58" lly="375" urx="204" ury="390" f="1"><![CDATA[the number of times word ]]></tbox><tbox llx="197" lly="376" urx="214" ury="388" f="2"><![CDATA[w ]]></tbox><tbox llx="206" lly="375" urx="212" ury="382" f="3"><![CDATA[t ]]></tbox><tbox llx="214" lly="375" urx="304" ury="390" f="1"><![CDATA[occurs in docu- ]]></tbox></line>
+<line><tbox llx="58" lly="360" urx="94" ury="376" f="1"><![CDATA[ment ]]></tbox><tbox llx="87" lly="361" urx="102" ury="374" f="2"><![CDATA[d ]]></tbox><tbox llx="94" lly="361" urx="100" ury="368" f="3"><![CDATA[i ]]></tbox><tbox llx="97" lly="360" urx="190" ury="376" f="1"><![CDATA[, and define P(c ]]></tbox><tbox llx="179" lly="361" urx="186" ury="368" f="3"><![CDATA[j ]]></tbox><tbox llx="183" lly="360" urx="204" ury="376" f="4"><![CDATA[jd ]]></tbox><tbox llx="193" lly="361" urx="199" ury="368" f="3"><![CDATA[i ]]></tbox><tbox llx="196" lly="360" urx="211" ury="376" f="1"><![CDATA[) ]]></tbox><tbox llx="204" lly="360" urx="242" ury="376" f="4"><![CDATA[2 f0; ]]></tbox><tbox llx="233" lly="360" urx="304" ury="376" f="1"><![CDATA[1g, as given ]]></tbox></line>
+<line><tbox llx="58" lly="346" urx="304" ury="361" f="1"><![CDATA[by the document's class label. Then, the esti- ]]></tbox></line>
+<line><tbox llx="58" lly="331" urx="232" ury="347" f="1"><![CDATA[mate of the probability of word ]]></tbox><tbox llx="225" lly="332" urx="242" ury="345" f="2"><![CDATA[w ]]></tbox><tbox llx="234" lly="332" urx="241" ury="339" f="3"><![CDATA[t ]]></tbox><tbox llx="242" lly="331" urx="290" ury="347" f="1"><![CDATA[in class ]]></tbox><tbox llx="284" lly="332" urx="297" ury="345" f="2"><![CDATA[c ]]></tbox><tbox llx="289" lly="332" urx="296" ury="339" f="3"><![CDATA[j ]]></tbox></line>
+<line><tbox llx="58" lly="317" urx="80" ury="332" f="1"><![CDATA[is: ]]></tbox></line>
+<line><tbox llx="58" lly="285" urx="90" ury="300" f="1"><![CDATA[P(w ]]></tbox><tbox llx="79" lly="285" urx="86" ury="292" f="3"><![CDATA[t ]]></tbox><tbox llx="82" lly="285" urx="102" ury="300" f="4"><![CDATA[jc ]]></tbox><tbox llx="91" lly="285" urx="98" ury="292" f="3"><![CDATA[j ]]></tbox><tbox llx="95" lly="285" urx="122" ury="300" f="1"><![CDATA[) = ]]></tbox><tbox llx="133" lly="293" urx="162" ury="308" f="1"><![CDATA[1 + ]]></tbox></line>
+<line><tbox llx="153" lly="300" urx="177" ury="318" f="7"><![CDATA[P ]]></tbox></line>
+<line><tbox llx="164" lly="292" urx="172" ury="299" f="3"><![CDATA[d ]]></tbox><tbox llx="168" lly="291" urx="174" ury="297" f="5"><![CDATA[i ]]></tbox><tbox llx="171" lly="291" urx="191" ury="303" f="6"><![CDATA[2D ]]></tbox><tbox llx="186" lly="293" urx="218" ury="306" f="2"><![CDATA[N(w ]]></tbox><tbox llx="210" lly="293" urx="217" ury="300" f="3"><![CDATA[t ]]></tbox><tbox llx="213" lly="293" urx="233" ury="306" f="2"><![CDATA[; d ]]></tbox><tbox llx="225" lly="293" urx="231" ury="300" f="3"><![CDATA[i ]]></tbox><tbox llx="228" lly="293" urx="261" ury="308" f="1"><![CDATA[)P(c ]]></tbox><tbox llx="250" lly="293" urx="257" ury="300" f="3"><![CDATA[j ]]></tbox><tbox llx="255" lly="293" urx="275" ury="308" f="4"><![CDATA[jd ]]></tbox><tbox llx="264" lly="293" urx="271" ury="300" f="3"><![CDATA[i ]]></tbox><tbox llx="267" lly="293" urx="283" ury="308" f="1"><![CDATA[) ]]></tbox></line>
+<line><tbox llx="114" lly="274" urx="141" ury="289" f="4"><![CDATA[jV j ]]></tbox><tbox llx="132" lly="274" urx="152" ury="289" f="1"><![CDATA[+ ]]></tbox></line>
+<line><tbox llx="144" lly="281" urx="168" ury="300" f="7"><![CDATA[P ]]></tbox><tbox llx="155" lly="281" urx="174" ury="292" f="6"><![CDATA[jV j ]]></tbox></line>
+<line><tbox llx="155" lly="274" urx="173" ury="281" f="3"><![CDATA[s=1 ]]></tbox></line>
+<line><tbox llx="172" lly="281" urx="196" ury="300" f="7"><![CDATA[P ]]></tbox></line>
+<line><tbox llx="182" lly="274" urx="191" ury="281" f="3"><![CDATA[d ]]></tbox><tbox llx="187" lly="273" urx="192" ury="279" f="5"><![CDATA[i ]]></tbox><tbox llx="190" lly="273" urx="210" ury="284" f="6"><![CDATA[2D ]]></tbox><tbox llx="205" lly="275" urx="237" ury="287" f="2"><![CDATA[N(w ]]></tbox><tbox llx="228" lly="274" urx="236" ury="281" f="3"><![CDATA[s ]]></tbox><tbox llx="233" lly="275" urx="253" ury="287" f="2"><![CDATA[; d ]]></tbox><tbox llx="244" lly="274" urx="251" ury="281" f="3"><![CDATA[i ]]></tbox><tbox llx="247" lly="274" urx="281" ury="289" f="1"><![CDATA[)P(c ]]></tbox><tbox llx="270" lly="274" urx="277" ury="281" f="3"><![CDATA[j ]]></tbox><tbox llx="274" lly="274" urx="294" ury="289" f="4"><![CDATA[jd ]]></tbox><tbox llx="283" lly="274" urx="290" ury="281" f="3"><![CDATA[i ]]></tbox><tbox llx="287" lly="274" urx="302" ury="289" f="1"><![CDATA[) ]]></tbox></line>
+<line><tbox llx="292" lly="285" urx="304" ury="298" f="2"><![CDATA[: ]]></tbox></line>
+<line><tbox llx="278" lly="261" urx="304" ury="276" f="1"><![CDATA[(4) ]]></tbox></line>
+<line><tbox llx="58" lly="246" urx="304" ury="261" f="1"><![CDATA[The class frequency parameters are set in the ]]></tbox></line>
+<line><tbox llx="58" lly="231" urx="156" ury="247" f="1"><![CDATA[same way, where ]]></tbox><tbox llx="150" lly="231" urx="175" ury="247" f="4"><![CDATA[jCj ]]></tbox><tbox llx="169" lly="231" urx="304" ury="247" f="1"><![CDATA[indicates the number of ]]></tbox></line>
+<line><tbox llx="58" lly="217" urx="105" ury="232" f="1"><![CDATA[classes: ]]></tbox></line>
+<line><tbox llx="105" lly="190" urx="134" ury="205" f="1"><![CDATA[P(c ]]></tbox><tbox llx="123" lly="190" urx="130" ury="197" f="3"><![CDATA[j ]]></tbox><tbox llx="127" lly="190" urx="177" ury="213" f="1"><![CDATA[) = 1 + ]]></tbox></line>
+<line><tbox llx="169" lly="205" urx="193" ury="223" f="7"><![CDATA[P ]]></tbox></line>
+<line><tbox llx="179" lly="198" urx="188" ury="204" f="3"><![CDATA[d ]]></tbox><tbox llx="184" lly="197" urx="189" ury="202" f="5"><![CDATA[i ]]></tbox><tbox llx="187" lly="197" urx="207" ury="208" f="6"><![CDATA[2D ]]></tbox><tbox llx="202" lly="198" urx="230" ury="213" f="1"><![CDATA[P(c ]]></tbox><tbox llx="219" lly="198" urx="227" ury="205" f="3"><![CDATA[j ]]></tbox><tbox llx="224" lly="198" urx="244" ury="213" f="4"><![CDATA[jd ]]></tbox><tbox llx="233" lly="198" urx="240" ury="205" f="3"><![CDATA[i ]]></tbox><tbox llx="237" lly="198" urx="252" ury="213" f="1"><![CDATA[) ]]></tbox></line>
+<line><tbox llx="173" lly="182" urx="197" ury="197" f="4"><![CDATA[jCj ]]></tbox><tbox llx="189" lly="182" urx="209" ury="197" f="1"><![CDATA[+ ]]></tbox><tbox llx="201" lly="182" urx="228" ury="197" f="4"><![CDATA[jDj ]]></tbox><tbox llx="242" lly="191" urx="254" ury="203" f="2"><![CDATA[: ]]></tbox><tbox llx="278" lly="190" urx="304" ury="205" f="1"><![CDATA[(5) ]]></tbox></line>
+<line><tbox llx="78" lly="166" urx="304" ury="181" f="1"><![CDATA[Empirically, when given a large number of ]]></tbox></line>
+<line><tbox llx="58" lly="151" urx="304" ury="167" f="1"><![CDATA[training documents, naive Bayes does a good ]]></tbox></line>
+<line><tbox llx="58" lly="137" urx="304" ury="152" f="1"><![CDATA[job of classifying text documents (Lewis 1998). ]]></tbox></line>
+<line><tbox llx="58" lly="122" urx="304" ury="138" f="1"><![CDATA[More complete presentations of naive Bayes ]]></tbox></line>
+<line><tbox llx="58" lly="108" urx="304" ury="123" f="1"><![CDATA[for text classification are provided by Mitchell ]]></tbox></line>
+<line><tbox llx="58" lly="93" urx="162" ury="108" f="1"><![CDATA[(1997) and Nigam ]]></tbox><tbox llx="154" lly="93" urx="191" ury="108" f="9"><![CDATA[et al. ]]></tbox><tbox llx="185" lly="93" urx="232" ury="108" f="1"><![CDATA[(1999). ]]></tbox></line>
+<line><tbox llx="320" lly="722" urx="510" ury="737" f="10"><![CDATA[2.6 Regression as Classification ]]></tbox></line>
+<line><tbox llx="320" lly="703" urx="566" ury="719" f="1"><![CDATA[Now that we have specified methods for assign- ]]></tbox></line>
+<line><tbox llx="320" lly="689" urx="442" ury="704" f="1"><![CDATA[ing known hyperlinks ]]></tbox><tbox llx="435" lly="690" urx="453" ury="702" f="2"><![CDATA[Q ]]></tbox><tbox llx="449" lly="689" urx="566" ury="704" f="1"><![CDATA[values, choosing fea- ]]></tbox></line>
+<line><tbox llx="320" lly="674" urx="566" ury="690" f="1"><![CDATA[tures from each hyperlink for comparison and ]]></tbox></line>
+<line><tbox llx="320" lly="660" urx="566" ury="675" f="1"><![CDATA[classifying such features into a discrete set of ]]></tbox></line>
+<line><tbox llx="320" lly="645" urx="566" ury="661" f="1"><![CDATA[classes, we can now describe the full process of ]]></tbox></line>
+<line><tbox llx="320" lly="631" urx="566" ury="646" f="1"><![CDATA[regression we use to map unknown hyperlinks ]]></tbox></line>
+<line><tbox llx="320" lly="616" urx="341" ury="632" f="1"><![CDATA[to ]]></tbox><tbox llx="334" lly="617" urx="352" ury="630" f="2"><![CDATA[Q ]]></tbox><tbox llx="348" lly="616" urx="393" ury="632" f="1"><![CDATA[values. ]]></tbox></line>
+<line><tbox llx="340" lly="601" urx="566" ury="617" f="1"><![CDATA[We perform the mapping by casting this ]]></tbox></line>
+<line><tbox llx="320" lly="587" urx="566" ury="602" f="1"><![CDATA[regression problem as classification (Torgo & ]]></tbox></line>
+<line><tbox llx="320" lly="572" urx="566" ury="588" f="1"><![CDATA[Gama 1997). We discretize the discounted sum ]]></tbox></line>
+<line><tbox llx="320" lly="558" urx="566" ury="573" f="1"><![CDATA[of future reward values of our training data, ]]></tbox></line>
+<line><tbox llx="320" lly="543" urx="566" ury="558" f="1"><![CDATA[place the hyperlinks into the bin corresponding ]]></tbox></line>
+<line><tbox llx="320" lly="528" urx="369" ury="544" f="1"><![CDATA[to their ]]></tbox><tbox llx="362" lly="529" urx="380" ury="542" f="2"><![CDATA[Q ]]></tbox><tbox llx="375" lly="528" urx="566" ury="544" f="1"><![CDATA[values as calculated above, and use ]]></tbox></line>
+<line><tbox llx="320" lly="514" urx="566" ury="529" f="1"><![CDATA[the hyperlinks' text as training data for a naive ]]></tbox></line>
+<line><tbox llx="320" lly="499" urx="435" ury="515" f="1"><![CDATA[Bayes text classifier. ]]></tbox></line>
+<line><tbox llx="340" lly="485" urx="566" ury="500" f="1"><![CDATA[In order to determine the value of an un- ]]></tbox></line>
+<line><tbox llx="320" lly="470" urx="567" ury="485" f="1"><![CDATA[known hyperlink, we calculate the probabilis- ]]></tbox></line>
+<line><tbox llx="320" lly="456" urx="566" ury="471" f="1"><![CDATA[tic class membership for each bin and compute ]]></tbox></line>
+<line><tbox llx="320" lly="441" urx="531" ury="456" f="1"><![CDATA[a weighted average of the bins' average ]]></tbox><tbox llx="523" lly="442" urx="541" ury="454" f="2"><![CDATA[Q ]]></tbox><tbox llx="537" lly="441" urx="566" ury="456" f="1"><![CDATA[val- ]]></tbox></line>
+<line><tbox llx="320" lly="426" urx="566" ury="442" f="1"><![CDATA[ues. The probabilistic class membership values ]]></tbox></line>
+<line><tbox llx="320" lly="412" urx="566" ury="427" f="1"><![CDATA[are generated by naive Bayes and are used as ]]></tbox></line>
+<line><tbox llx="320" lly="397" urx="457" ury="413" f="1"><![CDATA[the weights in averaging ]]></tbox><tbox llx="450" lly="398" urx="468" ury="411" f="2"><![CDATA[Q ]]></tbox><tbox llx="464" lly="397" urx="566" ury="413" f="1"><![CDATA[values. Thus, the ]]></tbox></line>
+<line><tbox llx="320" lly="383" urx="566" ury="398" f="1"><![CDATA[problem of learning a mapping is reduced to ]]></tbox></line>
+<line><tbox llx="320" lly="368" urx="566" ury="384" f="1"><![CDATA[the problem of partitioning the set of known ]]></tbox></line>
+<line><tbox llx="320" lly="354" urx="566" ury="369" f="1"><![CDATA[hyperlinks and assigning each of those classes ]]></tbox></line>
+<line><tbox llx="320" lly="339" urx="385" ury="354" f="1"><![CDATA[an average ]]></tbox><tbox llx="378" lly="340" urx="396" ury="352" f="2"><![CDATA[Q ]]></tbox><tbox llx="391" lly="339" urx="432" ury="354" f="1"><![CDATA[value. ]]></tbox></line>
+<line><tbox llx="320" lly="313" urx="470" ury="331" f="11"><![CDATA[3 Experimental Setup ]]></tbox></line>
+<line><tbox llx="320" lly="295" urx="566" ury="310" f="1"><![CDATA[This section describes the experimental ]]></tbox></line>
+<line><tbox llx="320" lly="281" urx="566" ury="296" f="1"><![CDATA[methodology used to evaluate our spiders' abil- ]]></tbox></line>
+<line><tbox llx="320" lly="266" urx="566" ury="281" f="1"><![CDATA[ity to locate research papers within computer ]]></tbox></line>
+<line><tbox llx="320" lly="252" urx="482" ury="267" f="1"><![CDATA[science department web sites. ]]></tbox></line>
+<line><tbox llx="320" lly="228" urx="386" ury="243" f="10"><![CDATA[3.1 Data ]]></tbox></line>
+<line><tbox llx="320" lly="210" urx="566" ury="225" f="1"><![CDATA[In August 1998 we completely mapped the ]]></tbox></line>
+<line><tbox llx="320" lly="195" urx="566" ury="210" f="1"><![CDATA[documents and hyperlinks of the web sites of ]]></tbox></line>
+<line><tbox llx="320" lly="180" urx="566" ury="196" f="1"><![CDATA[computer science departments at Brown Uni- ]]></tbox></line>
+<line><tbox llx="320" lly="166" urx="566" ury="181" f="1"><![CDATA[versity, Cornell University, University of Pitts- ]]></tbox></line>
+<line><tbox llx="320" lly="151" urx="566" ury="167" f="1"><![CDATA[burgh and University of Texas at Austin. They ]]></tbox></line>
+<line><tbox llx="320" lly="137" urx="566" ury="152" f="1"><![CDATA[include 53,012 web pages and postscript files ]]></tbox></line>
+<line><tbox llx="320" lly="122" urx="566" ury="138" f="1"><![CDATA[and 592,216 hyperlinks. The target pages (for ]]></tbox></line>
+<line><tbox llx="320" lly="108" urx="566" ury="123" f="1"><![CDATA[which a reward of 1 is given) are computer sci- ]]></tbox></line>
+<line><tbox llx="320" lly="93" urx="566" ury="108" f="1"><![CDATA[ence research papers. We identify research pa- ]]></tbox></line>
+<pbox llx="58.00" lly="93.00" urx="567.00" ury="737.00"/></page>
+<page n="7">
+<line><tbox llx="58" lly="722" urx="304" ury="737" f="1"><![CDATA[pers by converting postscript files to text and ]]></tbox></line>
+<line><tbox llx="58" lly="707" urx="304" ury="723" f="1"><![CDATA[searching for an abstract or introduction sec- ]]></tbox></line>
+<line><tbox llx="58" lly="693" urx="304" ury="708" f="1"><![CDATA[tion in addition to a references or bibliography ]]></tbox></line>
+<line><tbox llx="58" lly="678" urx="304" ury="694" f="1"><![CDATA[section. An experiment using a random sam- ]]></tbox></line>
+<line><tbox llx="58" lly="664" urx="304" ury="679" f="1"><![CDATA[pling of 200 postscript files shows that this al- ]]></tbox></line>
+<line><tbox llx="58" lly="649" urx="304" ury="665" f="1"><![CDATA[gorithm has approximately 95% precision. A ]]></tbox></line>
+<line><tbox llx="58" lly="635" urx="304" ury="650" f="1"><![CDATA[total of 2,263 postscript research papers were ]]></tbox></line>
+<line><tbox llx="58" lly="620" urx="304" ury="636" f="1"><![CDATA[identified within the webs of the four computer ]]></tbox></line>
+<line><tbox llx="58" lly="606" urx="174" ury="621" f="1"><![CDATA[science departments. ]]></tbox></line>
+<line><tbox llx="58" lly="581" urx="167" ury="596" f="2"><![CDATA[3.2 Experiments ]]></tbox></line>
+<line><tbox llx="58" lly="561" urx="304" ury="576" f="1"><![CDATA[For each spider, we perform a series of four ]]></tbox></line>
+<line><tbox llx="58" lly="546" urx="304" ury="562" f="1"><![CDATA[test/train splits in which the data from three ]]></tbox></line>
+<line><tbox llx="58" lly="532" urx="304" ury="547" f="1"><![CDATA[universities is used to train a spider that is then ]]></tbox></line>
+<line><tbox llx="58" lly="517" urx="304" ury="533" f="1"><![CDATA[tested on the fourth. We create three spiders ]]></tbox></line>
+<line><tbox llx="58" lly="503" urx="304" ury="518" f="1"><![CDATA[based on various forms of reinforcement learn- ]]></tbox></line>
+<line><tbox llx="58" lly="488" urx="304" ury="504" f="1"><![CDATA[ing and compare their performance. In order ]]></tbox></line>
+<line><tbox llx="58" lly="474" urx="304" ury="489" f="1"><![CDATA[to create a baseline for these experiments, we ]]></tbox></line>
+<line><tbox llx="58" lly="459" urx="304" ury="474" f="1"><![CDATA[also perform experiments with a spider that ]]></tbox></line>
+<line><tbox llx="58" lly="444" urx="304" ury="460" f="1"><![CDATA[uses a FIFO action queue; it follows hyper- ]]></tbox></line>
+<line><tbox llx="58" lly="430" urx="304" ury="445" f="1"><![CDATA[links in the order it finds them. We call this ]]></tbox></line>
+<line><tbox llx="58" lly="415" urx="85" ury="431" f="1"><![CDATA[the ]]></tbox><tbox llx="78" lly="416" urx="145" ury="428" f="3"><![CDATA[breadth-first ]]></tbox><tbox llx="141" lly="415" urx="186" ury="431" f="1"><![CDATA[spider. ]]></tbox></line>
+<line><tbox llx="78" lly="400" urx="304" ury="415" f="1"><![CDATA[The first spider is described in section 2.3 ]]></tbox></line>
+<line><tbox llx="58" lly="386" urx="304" ury="401" f="1"><![CDATA[as the degenerate form of a reinforcement ]]></tbox></line>
+<line><tbox llx="58" lly="371" urx="278" ury="386" f="1"><![CDATA[learning spider, that is, the case where ]]></tbox><tbox llx="273" lly="372" urx="288" ury="384" f="4"><![CDATA[# ]]></tbox><tbox llx="285" lly="371" urx="304" ury="386" f="1"><![CDATA[is ]]></tbox></line>
+<line><tbox llx="58" lly="356" urx="304" ury="372" f="1"><![CDATA[set to zero. It partitions documents into two ]]></tbox></line>
+<line><tbox llx="58" lly="342" urx="304" ury="357" f="1"><![CDATA[classes for the regression task. One class is ]]></tbox></line>
+<line><tbox llx="58" lly="327" urx="304" ury="343" f="1"><![CDATA[those hyperlinks that point to research papers; ]]></tbox></line>
+<line><tbox llx="58" lly="313" urx="304" ury="328" f="1"><![CDATA[the other class includes all remaining hyper- ]]></tbox></line>
+<line><tbox llx="58" lly="298" urx="182" ury="314" f="1"><![CDATA[links. We call this the ]]></tbox><tbox llx="175" lly="299" urx="233" ury="311" f="3"><![CDATA[immediate ]]></tbox><tbox llx="229" lly="298" urx="273" ury="314" f="1"><![CDATA[spider. ]]></tbox></line>
+<line><tbox llx="78" lly="283" urx="304" ury="298" f="1"><![CDATA[The second spider is our first attempt to ]]></tbox></line>
+<line><tbox llx="58" lly="268" urx="304" ury="284" f="1"><![CDATA[make use of future reward. It is also described ]]></tbox></line>
+<line><tbox llx="58" lly="254" urx="304" ury="269" f="1"><![CDATA[in section 2.3 and is an application of the rein- ]]></tbox></line>
+<line><tbox llx="58" lly="239" urx="304" ury="255" f="1"><![CDATA[forcement learning framework with a non-zero ]]></tbox></line>
+<line><tbox llx="58" lly="225" urx="73" ury="238" f="4"><![CDATA[# ]]></tbox><tbox llx="68" lly="225" urx="195" ury="240" f="1"><![CDATA[value. We call this the ]]></tbox><tbox llx="188" lly="226" urx="225" ury="238" f="3"><![CDATA[future ]]></tbox><tbox llx="221" lly="225" urx="265" ury="240" f="1"><![CDATA[spider. ]]></tbox></line>
+<line><tbox llx="78" lly="210" urx="304" ury="225" f="1"><![CDATA[We introduce a third spider that attempts ]]></tbox></line>
+<line><tbox llx="58" lly="195" urx="304" ury="210" f="1"><![CDATA[to remedy some of the problems inherent in ]]></tbox></line>
+<line><tbox llx="58" lly="180" urx="85" ury="196" f="1"><![CDATA[the ]]></tbox><tbox llx="77" lly="181" urx="135" ury="193" f="3"><![CDATA[immediate ]]></tbox><tbox llx="130" lly="180" urx="160" ury="196" f="1"><![CDATA[and ]]></tbox><tbox llx="151" lly="181" urx="189" ury="193" f="3"><![CDATA[future ]]></tbox><tbox llx="183" lly="180" urx="304" ury="196" f="1"><![CDATA[spiders. Such a spider ]]></tbox></line>
+<line><tbox llx="58" lly="166" urx="304" ury="181" f="1"><![CDATA[must 1) rank research paper hyperlinks above ]]></tbox></line>
+<line><tbox llx="58" lly="151" urx="304" ury="167" f="1"><![CDATA[all others and 2) appropriately prioritize other ]]></tbox></line>
+<line><tbox llx="58" lly="137" urx="304" ury="152" f="1"><![CDATA[hyperlinks according to their future reward. ]]></tbox></line>
+<line><tbox llx="58" lly="122" urx="89" ury="138" f="1"><![CDATA[The ]]></tbox><tbox llx="81" lly="123" urx="140" ury="135" f="3"><![CDATA[immediate ]]></tbox><tbox llx="135" lly="122" urx="304" ury="138" f="1"><![CDATA[spider only singles out research ]]></tbox></line>
+<line><tbox llx="58" lly="108" urx="304" ury="123" f="1"><![CDATA[paper hyperlinks and does not explicitly rank ]]></tbox></line>
+<line><tbox llx="58" lly="93" urx="304" ury="108" f="1"><![CDATA[other hyperlinks according to their future re- ]]></tbox></line>
+<line><tbox llx="334" lly="717" urx="547" ury="733" f="1"><![CDATA[Max Distance to nearest reward ]]></tbox></line>
+<line><tbox llx="326" lly="703" urx="524" ury="718" f="1"><![CDATA[Reward 0 1{2 3{4 5+ ]]></tbox><tbox llx="539" lly="703" urx="562" ury="718" f="5"><![CDATA[1 ]]></tbox></line>
+<line><tbox llx="342" lly="688" urx="569" ury="704" f="1"><![CDATA[0 0.000 ]]></tbox></line>
+<line><tbox llx="331" lly="673" urx="530" ury="689" f="1"><![CDATA[1{100 1.000 0.250 0.063 0.016 ]]></tbox></line>
+<line><tbox llx="332" lly="658" urx="530" ury="674" f="1"><![CDATA[101+ 0.500 0.125 0.031 ]]></tbox></line>
+<line><tbox llx="320" lly="630" urx="373" ury="645" f="1"><![CDATA[Table 1: ]]></tbox><tbox llx="369" lly="630" urx="387" ury="643" f="4"><![CDATA[Q ]]></tbox><tbox llx="383" lly="630" urx="522" ury="645" f="1"><![CDATA[value assignment for the ]]></tbox><tbox llx="516" lly="630" urx="563" ury="642" f="3"><![CDATA[distance ]]></tbox></line>
+<line><tbox llx="320" lly="615" urx="566" ury="630" f="1"><![CDATA[spider. Note that some boxes are not assigned ]]></tbox></line>
+<line><tbox llx="320" lly="601" urx="566" ury="616" f="1"><![CDATA[values because documents for those cases do ]]></tbox></line>
+<line><tbox llx="320" lly="586" urx="380" ury="602" f="1"><![CDATA[not exist. ]]></tbox><tbox llx="377" lly="587" urx="395" ury="600" f="4"><![CDATA[Q ]]></tbox><tbox llx="391" lly="586" urx="567" ury="602" f="1"><![CDATA[= 1:0 is the class of immediate ]]></tbox></line>
+<line><tbox llx="320" lly="572" urx="396" ury="587" f="1"><![CDATA[reward links. ]]></tbox><tbox llx="390" lly="572" urx="408" ury="585" f="4"><![CDATA[Q ]]></tbox><tbox llx="402" lly="572" urx="566" ury="587" f="1"><![CDATA[= 0:0 is the class of hyperlinks ]]></tbox></line>
+<line><tbox llx="320" lly="557" urx="450" ury="573" f="1"><![CDATA[that lead to no reward. ]]></tbox></line>
+<line><tbox llx="320" lly="526" urx="388" ury="541" f="1"><![CDATA[ward. The ]]></tbox><tbox llx="382" lly="526" urx="420" ury="538" f="3"><![CDATA[future ]]></tbox><tbox llx="416" lly="526" urx="566" ury="541" f="1"><![CDATA[spider does not satisfy #1 ]]></tbox></line>
+<line><tbox llx="320" lly="511" urx="431" ury="526" f="1"><![CDATA[because it assigns a ]]></tbox><tbox llx="424" lly="512" urx="442" ury="524" f="4"><![CDATA[Q ]]></tbox><tbox llx="437" lly="511" urx="566" ury="526" f="1"><![CDATA[value greater than 1 to ]]></tbox></line>
+<line><tbox llx="320" lly="496" urx="566" ury="512" f="1"><![CDATA[some non-immediate reward hyperlinks. How- ]]></tbox></line>
+<line><tbox llx="320" lly="482" urx="566" ury="497" f="1"><![CDATA[ever, it does rank future reward hyperlinks and ]]></tbox></line>
+<line><tbox llx="320" lly="467" urx="443" ury="483" f="1"><![CDATA[thus encapsulates #2. ]]></tbox></line>
+<line><tbox llx="340" lly="453" urx="566" ury="468" f="1"><![CDATA[To describe a mapping from hyperlinks to ]]></tbox></line>
+<line><tbox llx="320" lly="439" urx="338" ury="452" f="4"><![CDATA[Q ]]></tbox><tbox llx="335" lly="438" urx="566" ury="454" f="1"><![CDATA[values that exhibits the properties of the ]]></tbox></line>
+<line><tbox llx="320" lly="424" urx="566" ury="439" f="1"><![CDATA[optimal spider, we construct by hand a set of ]]></tbox></line>
+<line><tbox llx="320" lly="409" urx="566" ury="425" f="1"><![CDATA[hyperlink classes (displayed in Table 1) based ]]></tbox></line>
+<line><tbox llx="320" lly="395" urx="566" ury="410" f="1"><![CDATA[on distance to the nearest reward and the max- ]]></tbox></line>
+<line><tbox llx="320" lly="380" urx="566" ury="395" f="1"><![CDATA[imum attainable reward. In order to avoid as- ]]></tbox></line>
+<line><tbox llx="320" lly="366" urx="367" ury="381" f="1"><![CDATA[signing ]]></tbox><tbox llx="359" lly="366" urx="377" ury="379" f="4"><![CDATA[Q ]]></tbox><tbox llx="371" lly="366" urx="566" ury="381" f="1"><![CDATA[values larger than 1 to future reward ]]></tbox></line>
+<line><tbox llx="320" lly="351" urx="490" ury="366" f="1"><![CDATA[hyperlinks, we do not calculate ]]></tbox><tbox llx="483" lly="352" urx="501" ury="364" f="4"><![CDATA[Q ]]></tbox><tbox llx="497" lly="351" urx="566" ury="366" f="1"><![CDATA[to be a dis- ]]></tbox></line>
+<line><tbox llx="320" lly="336" urx="566" ury="352" f="1"><![CDATA[counted sum of all future reward, but rather ]]></tbox></line>
+<line><tbox llx="320" lly="322" urx="566" ury="337" f="1"><![CDATA[the discounted value of the nearest reward, ]]></tbox></line>
+<line><tbox llx="320" lly="307" urx="566" ury="323" f="1"><![CDATA[modified slightly according to the total amount ]]></tbox></line>
+<line><tbox llx="320" lly="293" urx="501" ury="308" f="1"><![CDATA[of future reward. We call this the ]]></tbox><tbox llx="494" lly="294" urx="541" ury="306" f="3"><![CDATA[distance ]]></tbox><tbox llx="537" lly="293" urx="566" ury="308" f="1"><![CDATA[spi- ]]></tbox></line>
+<line><tbox llx="320" lly="278" urx="350" ury="294" f="1"><![CDATA[der. ]]></tbox></line>
+<line><tbox llx="320" lly="256" urx="464" ury="271" f="2"><![CDATA[3.3 Evaluation Metrics ]]></tbox></line>
+<line><tbox llx="320" lly="239" urx="566" ury="254" f="1"><![CDATA[We use two methods for evaluating the perfor- ]]></tbox></line>
+<line><tbox llx="320" lly="224" urx="566" ury="239" f="1"><![CDATA[mance of our spider. The first is the number of ]]></tbox></line>
+<line><tbox llx="320" lly="210" urx="566" ury="225" f="1"><![CDATA[web pages retrieved before half of the research ]]></tbox></line>
+<line><tbox llx="320" lly="195" urx="566" ury="210" f="1"><![CDATA[papers are retrieved. This provides a simple, ]]></tbox></line>
+<line><tbox llx="320" lly="180" urx="566" ury="196" f="1"><![CDATA[intuitive evaluation of performance, but is not ]]></tbox></line>
+<line><tbox llx="320" lly="166" urx="566" ury="181" f="1"><![CDATA[robust. A spider may be able to find half of the ]]></tbox></line>
+<line><tbox llx="320" lly="151" urx="566" ury="167" f="1"><![CDATA[research papers almost immediately and then ]]></tbox></line>
+<line><tbox llx="320" lly="137" urx="566" ury="152" f="1"><![CDATA[have incredible diÆculty in finding any more. ]]></tbox></line>
+<line><tbox llx="320" lly="122" urx="566" ury="138" f="1"><![CDATA[A preferred method of evaluation is the calcu- ]]></tbox></line>
+<line><tbox llx="320" lly="108" urx="566" ury="123" f="1"><![CDATA[lation of a sum of rewards where each reward ]]></tbox></line>
+<line><tbox llx="320" lly="93" urx="566" ury="108" f="1"><![CDATA[is discounted by one minus the percent of web ]]></tbox></line>
+<pbox llx="58.00" lly="93.00" urx="569.00" ury="737.00"/></page>
+<page n="8">
+<line><tbox llx="58" lly="722" urx="304" ury="737" f="1"><![CDATA[pages yet to be retrieved. This has the effect ]]></tbox></line>
+<line><tbox llx="58" lly="707" urx="304" ury="723" f="1"><![CDATA[of calculating the area under the curve when ]]></tbox></line>
+<line><tbox llx="58" lly="693" urx="304" ury="708" f="1"><![CDATA[research papers retrieved is plotted against the ]]></tbox></line>
+<line><tbox llx="58" lly="678" urx="304" ury="694" f="1"><![CDATA[number of web pages retrieved. When present- ]]></tbox></line>
+<line><tbox llx="58" lly="664" urx="304" ury="679" f="1"><![CDATA[ing these \integral" scores, we normalize scores ]]></tbox></line>
+<line><tbox llx="58" lly="649" urx="304" ury="665" f="1"><![CDATA[so that a spider that retrieves all research pa- ]]></tbox></line>
+<line><tbox llx="58" lly="635" urx="304" ury="650" f="1"><![CDATA[pers before its first action (an impossible sce- ]]></tbox></line>
+<line><tbox llx="58" lly="620" urx="222" ury="636" f="1"><![CDATA[nario) achieves a score of 100. ]]></tbox></line>
+<line><tbox llx="58" lly="593" urx="134" ury="611" f="2"><![CDATA[4 Results ]]></tbox></line>
+<line><tbox llx="58" lly="574" urx="304" ury="590" f="1"><![CDATA[In our experiments, we provide evidence that ]]></tbox></line>
+<line><tbox llx="58" lly="560" urx="304" ury="575" f="1"><![CDATA[reinforcement learning-based spiders perform ]]></tbox></line>
+<line><tbox llx="58" lly="545" urx="191" ury="561" f="1"><![CDATA[significantly better than ]]></tbox><tbox llx="183" lly="546" urx="254" ury="558" f="3"><![CDATA[breadth-first, ]]></tbox><tbox llx="249" lly="545" urx="304" ury="561" f="1"><![CDATA[reducing ]]></tbox></line>
+<line><tbox llx="58" lly="531" urx="304" ury="546" f="1"><![CDATA[the amount of required effort by as much as ]]></tbox></line>
+<line><tbox llx="58" lly="516" urx="304" ury="531" f="1"><![CDATA[two-thirds. We also show that a spider that ]]></tbox></line>
+<line><tbox llx="58" lly="502" urx="304" ury="517" f="1"><![CDATA[does not distinguish between future and zero ]]></tbox></line>
+<line><tbox llx="58" lly="487" urx="304" ury="502" f="1"><![CDATA[reward hyperlinks can perform well over the ]]></tbox></line>
+<line><tbox llx="58" lly="473" urx="304" ury="488" f="1"><![CDATA[lifetime of the spider. However, we note that ]]></tbox></line>
+<line><tbox llx="58" lly="458" urx="304" ury="473" f="1"><![CDATA[such a spider does not perform well at the be- ]]></tbox></line>
+<line><tbox llx="58" lly="443" urx="304" ury="459" f="1"><![CDATA[ginning stages and is outperformed by a spider ]]></tbox></line>
+<line><tbox llx="58" lly="429" urx="304" ury="444" f="1"><![CDATA[that distinguishes between different amounts ]]></tbox></line>
+<line><tbox llx="58" lly="414" urx="304" ury="430" f="1"><![CDATA[of future reward. Additionally, we show that a ]]></tbox></line>
+<line><tbox llx="58" lly="400" urx="304" ury="415" f="1"><![CDATA[spider that inappropriately weights future re- ]]></tbox></line>
+<line><tbox llx="58" lly="385" urx="304" ury="401" f="1"><![CDATA[ward hyperlinks above immediate reward hy- ]]></tbox></line>
+<line><tbox llx="58" lly="371" urx="304" ury="386" f="1"><![CDATA[perlinks is outperformed by one that values im- ]]></tbox></line>
+<line><tbox llx="58" lly="356" urx="271" ury="372" f="1"><![CDATA[mediate reward hyperlinks most highly. ]]></tbox></line>
+<line><tbox llx="78" lly="341" urx="304" ury="356" f="1"><![CDATA[We present empirical findings from our ]]></tbox></line>
+<line><tbox llx="58" lly="326" urx="304" ury="342" f="1"><![CDATA[four university data set; each experiment is an ]]></tbox></line>
+<line><tbox llx="58" lly="312" urx="304" ury="327" f="1"><![CDATA[average across results from the four universi- ]]></tbox></line>
+<line><tbox llx="58" lly="297" urx="304" ury="313" f="1"><![CDATA[ties. We run our spider on each university web, ]]></tbox></line>
+<line><tbox llx="58" lly="283" urx="304" ury="298" f="1"><![CDATA[using the web from the other three universities ]]></tbox></line>
+<line><tbox llx="58" lly="268" urx="153" ury="284" f="1"><![CDATA[as training data. ]]></tbox></line>
+<line><tbox llx="78" lly="253" urx="304" ury="268" f="1"><![CDATA[Our first graph, shown here in Figure 2, ]]></tbox></line>
+<line><tbox llx="58" lly="239" urx="236" ury="254" f="1"><![CDATA[displays the performance of the ]]></tbox><tbox llx="231" lly="239" urx="301" ury="251" f="3"><![CDATA[distance, fu- ]]></tbox></line>
+<line><tbox llx="58" lly="225" urx="85" ury="237" f="3"><![CDATA[ture ]]></tbox><tbox llx="81" lly="224" urx="111" ury="239" f="1"><![CDATA[and ]]></tbox><tbox llx="104" lly="225" urx="172" ury="237" f="3"><![CDATA[breadth-first ]]></tbox><tbox llx="168" lly="224" urx="304" ury="239" f="1"><![CDATA[spiders. As can be seen, ]]></tbox></line>
+<line><tbox llx="58" lly="210" urx="92" ury="225" f="1"><![CDATA[both ]]></tbox><tbox llx="86" lly="210" urx="134" ury="222" f="3"><![CDATA[distance ]]></tbox><tbox llx="130" lly="210" urx="160" ury="225" f="1"><![CDATA[and ]]></tbox><tbox llx="153" lly="210" urx="190" ury="222" f="3"><![CDATA[future ]]></tbox><tbox llx="187" lly="210" urx="304" ury="225" f="1"><![CDATA[perform significantly ]]></tbox></line>
+<line><tbox llx="58" lly="195" urx="127" ury="210" f="1"><![CDATA[better than ]]></tbox><tbox llx="119" lly="196" urx="190" ury="208" f="3"><![CDATA[breadth-first, ]]></tbox><tbox llx="186" lly="195" urx="304" ury="210" f="1"><![CDATA[showing that there is ]]></tbox></line>
+<line><tbox llx="58" lly="180" urx="304" ury="196" f="1"><![CDATA[significant value in using a reinforcement learn- ]]></tbox></line>
+<line><tbox llx="58" lly="166" urx="304" ury="181" f="1"><![CDATA[ing framework such as we have constructed. ]]></tbox></line>
+<line><tbox llx="58" lly="151" urx="96" ury="167" f="1"><![CDATA[Here, ]]></tbox><tbox llx="88" lly="152" urx="136" ury="164" f="3"><![CDATA[distance ]]></tbox><tbox llx="131" lly="151" urx="304" ury="167" f="1"><![CDATA[must follow only 9.0% of hyper- ]]></tbox></line>
+<line><tbox llx="58" lly="137" urx="304" ury="152" f="1"><![CDATA[links before locating half of the research papers ]]></tbox></line>
+<line><tbox llx="58" lly="122" urx="95" ury="138" f="1"><![CDATA[while ]]></tbox><tbox llx="87" lly="123" urx="155" ury="135" f="3"><![CDATA[breadth-first ]]></tbox><tbox llx="150" lly="122" urx="304" ury="138" f="1"><![CDATA[must traverse 27.3%. This is ]]></tbox></line>
+<line><tbox llx="58" lly="108" urx="304" ury="123" f="1"><![CDATA[a 67% reduction in the amount of work needed ]]></tbox></line>
+<line><tbox llx="58" lly="93" urx="304" ury="108" f="1"><![CDATA[to locate a significant number of research pa- ]]></tbox></line>
+<line><tbox llx="395" lly="594" urx="406" ury="605" f="4"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="392" lly="607" urx="406" ury="618" f="4"><![CDATA[10 ]]></tbox></line>
+<line><tbox llx="392" lly="620" urx="406" ury="631" f="4"><![CDATA[20 ]]></tbox></line>
+<line><tbox llx="392" lly="633" urx="406" ury="644" f="4"><![CDATA[30 ]]></tbox></line>
+<line><tbox llx="392" lly="646" urx="406" ury="657" f="4"><![CDATA[40 ]]></tbox></line>
+<line><tbox llx="392" lly="659" urx="406" ury="670" f="4"><![CDATA[50 ]]></tbox></line>
+<line><tbox llx="392" lly="671" urx="406" ury="683" f="4"><![CDATA[60 ]]></tbox></line>
+<line><tbox llx="392" lly="684" urx="406" ury="695" f="4"><![CDATA[70 ]]></tbox></line>
+<line><tbox llx="392" lly="697" urx="406" ury="708" f="4"><![CDATA[80 ]]></tbox></line>
+<line><tbox llx="392" lly="710" urx="406" ury="721" f="4"><![CDATA[90 ]]></tbox></line>
+<line><tbox llx="388" lly="723" urx="406" ury="734" f="4"><![CDATA[100 ]]></tbox></line>
+<line><tbox llx="401" lly="587" urx="588" ury="598" f="4"><![CDATA[0 10 20 30 40 50 60 70 80 90 100 ]]></tbox></line>
+<line><tbox llx="372" lly="613" urx="373" ury="638" f="5"><![CDATA[Percent ]]></tbox></line>
+<line><tbox llx="372" lly="639" urx="373" ury="669" f="5"><![CDATA[Research ]]></tbox></line>
+<line><tbox llx="372" lly="670" urx="373" ury="692" f="5"><![CDATA[Papers ]]></tbox></line>
+<line><tbox llx="372" lly="693" urx="373" ury="713" f="5"><![CDATA[Found ]]></tbox></line>
+<line><tbox llx="446" lly="580" urx="540" ury="592" f="6"><![CDATA[Percent Hyperlinks Followed ]]></tbox></line>
+<line><tbox llx="449" lly="730" urx="537" ury="741" f="6"><![CDATA[Spidering CS Departments ]]></tbox></line>
+<line><tbox llx="521" lly="633" urx="548" ury="644" f="6"><![CDATA[Future ]]></tbox></line>
+<line><tbox llx="515" lly="626" urx="548" ury="637" f="6"><![CDATA[Distance ]]></tbox></line>
+<line><tbox llx="502" lly="619" urx="548" ury="630" f="6"><![CDATA[Breadth-First ]]></tbox></line>
+<line><tbox llx="320" lly="558" urx="517" ury="574" f="1"><![CDATA[Figure 2: The performance of the ]]></tbox><tbox llx="512" lly="559" urx="563" ury="571" f="3"><![CDATA[distance, ]]></tbox></line>
+<line><tbox llx="320" lly="545" urx="357" ury="557" f="3"><![CDATA[future ]]></tbox><tbox llx="354" lly="544" urx="383" ury="559" f="1"><![CDATA[and ]]></tbox><tbox llx="377" lly="545" urx="445" ury="557" f="3"><![CDATA[breadth-first ]]></tbox><tbox llx="441" lly="544" urx="566" ury="559" f="1"><![CDATA[spiders, averaged over ]]></tbox></line>
+<line><tbox llx="320" lly="530" urx="566" ury="545" f="1"><![CDATA[four test/train splits with data from four de- ]]></tbox></line>
+<line><tbox llx="320" lly="515" urx="566" ury="530" f="1"><![CDATA[partments. The vertical axis shows the per- ]]></tbox></line>
+<line><tbox llx="320" lly="501" urx="566" ury="516" f="1"><![CDATA[centage of on-topic documents found, while ]]></tbox></line>
+<line><tbox llx="320" lly="486" urx="566" ury="502" f="1"><![CDATA[the horizontal axis shows the percentage of hy- ]]></tbox></line>
+<line><tbox llx="320" lly="472" urx="566" ury="487" f="1"><![CDATA[perlinks followed thus far into the spider's ex- ]]></tbox></line>
+<line><tbox llx="320" lly="457" urx="438" ury="473" f="1"><![CDATA[ploration. Note that ]]></tbox><tbox llx="431" lly="458" urx="479" ury="470" f="3"><![CDATA[distance ]]></tbox><tbox llx="475" lly="457" urx="548" ury="473" f="1"><![CDATA[outperforms ]]></tbox><tbox llx="542" lly="458" urx="564" ury="470" f="3"><![CDATA[fu- ]]></tbox></line>
+<line><tbox llx="320" lly="444" urx="348" ury="456" f="3"><![CDATA[ture ]]></tbox><tbox llx="345" lly="443" urx="566" ury="458" f="1"><![CDATA[and both reinforcement learning spiders ]]></tbox></line>
+<line><tbox llx="320" lly="428" urx="566" ury="444" f="1"><![CDATA[find target documents significantly faster than ]]></tbox></line>
+<line><tbox llx="320" lly="415" urx="391" ury="427" f="3"><![CDATA[breadth-first. ]]></tbox></line>
+<line><tbox llx="320" lly="376" urx="355" ury="391" f="1"><![CDATA[pers. ]]></tbox></line>
+<line><tbox llx="340" lly="358" urx="566" ury="373" f="1"><![CDATA[This graph is also useful for comparing the ]]></tbox></line>
+<line><tbox llx="320" lly="344" urx="427" ury="359" f="1"><![CDATA[performance of the ]]></tbox><tbox llx="419" lly="344" urx="467" ury="356" f="3"><![CDATA[distance ]]></tbox><tbox llx="462" lly="344" urx="492" ury="359" f="1"><![CDATA[and ]]></tbox><tbox llx="484" lly="344" urx="521" ury="356" f="3"><![CDATA[future ]]></tbox><tbox llx="517" lly="344" urx="566" ury="359" f="1"><![CDATA[spiders. ]]></tbox></line>
+<line><tbox llx="320" lly="329" urx="440" ury="344" f="1"><![CDATA[As can be seen, the ]]></tbox><tbox llx="435" lly="330" urx="483" ury="342" f="3"><![CDATA[distance ]]></tbox><tbox llx="481" lly="329" urx="566" ury="344" f="1"><![CDATA[spider outper- ]]></tbox></line>
+<line><tbox llx="320" lly="314" urx="381" ury="330" f="1"><![CDATA[forms the ]]></tbox><tbox llx="376" lly="315" urx="413" ury="327" f="3"><![CDATA[future ]]></tbox><tbox llx="411" lly="314" urx="566" ury="330" f="1"><![CDATA[spider at nearly every step ]]></tbox></line>
+<line><tbox llx="320" lly="300" urx="566" ury="315" f="1"><![CDATA[of the way. Our integral metric confirms this ]]></tbox></line>
+<line><tbox llx="320" lly="285" urx="483" ury="301" f="1"><![CDATA[improved performance, rating ]]></tbox><tbox llx="476" lly="286" urx="524" ury="298" f="3"><![CDATA[distance ]]></tbox><tbox llx="520" lly="285" urx="566" ury="301" f="1"><![CDATA[as 85.2 ]]></tbox></line>
+<line><tbox llx="320" lly="271" urx="350" ury="286" f="1"><![CDATA[and ]]></tbox><tbox llx="343" lly="272" urx="380" ury="284" f="3"><![CDATA[future ]]></tbox><tbox llx="376" lly="271" urx="453" ury="286" f="1"><![CDATA[as 82.6. The ]]></tbox><tbox llx="446" lly="272" urx="493" ury="284" f="3"><![CDATA[distance ]]></tbox><tbox llx="490" lly="271" urx="566" ury="286" f="1"><![CDATA[spider comes ]]></tbox></line>
+<line><tbox llx="320" lly="256" urx="566" ury="272" f="1"><![CDATA[15% closer to the upper bound on integral ]]></tbox></line>
+<line><tbox llx="320" lly="242" urx="521" ury="257" f="1"><![CDATA[scores. Both spiders out-perform the ]]></tbox><tbox llx="515" lly="242" urx="563" ury="255" f="3"><![CDATA[breadth- ]]></tbox></line>
+<line><tbox llx="320" lly="228" urx="347" ury="240" f="3"><![CDATA[first ]]></tbox><tbox llx="343" lly="227" urx="421" ury="243" f="1"><![CDATA[score of 69.4. ]]></tbox></line>
+<line><tbox llx="340" lly="210" urx="417" ury="225" f="1"><![CDATA[The fact that ]]></tbox><tbox llx="409" lly="210" urx="456" ury="222" f="3"><![CDATA[distance ]]></tbox><tbox llx="451" lly="210" urx="566" ury="225" f="1"><![CDATA[performs better than ]]></tbox></line>
+<line><tbox llx="320" lly="196" urx="357" ury="208" f="3"><![CDATA[future ]]></tbox><tbox llx="352" lly="195" urx="566" ury="210" f="1"><![CDATA[is significant because the primary differ- ]]></tbox></line>
+<line><tbox llx="320" lly="180" urx="566" ury="196" f="1"><![CDATA[ence between the two spiders their handling of ]]></tbox></line>
+<line><tbox llx="320" lly="166" urx="566" ury="181" f="1"><![CDATA[immediate reward hyperlinks. As was men- ]]></tbox></line>
+<line><tbox llx="320" lly="151" urx="566" ury="167" f="1"><![CDATA[tioned earlier, immediate reward hyperlinks ]]></tbox></line>
+<line><tbox llx="320" lly="137" urx="566" ury="152" f="1"><![CDATA[are always more beneficial than future reward ]]></tbox></line>
+<line><tbox llx="320" lly="122" urx="387" ury="138" f="1"><![CDATA[hyperlinks. ]]></tbox><tbox llx="388" lly="123" urx="438" ury="135" f="3"><![CDATA[Distance ]]></tbox><tbox llx="436" lly="122" urx="566" ury="138" f="1"><![CDATA[explicitly includes this ]]></tbox></line>
+<line><tbox llx="320" lly="108" urx="552" ury="123" f="1"><![CDATA[fact in its model by assigning the highest ]]></tbox><tbox llx="546" lly="108" urx="564" ury="121" f="4"><![CDATA[Q ]]></tbox></line>
+<line><tbox llx="320" lly="93" urx="532" ury="108" f="1"><![CDATA[values to immediate reward hyperlinks. ]]></tbox></line>
+<pbox llx="58.00" lly="93.00" urx="588.00" ury="741.00"/></page>
+<page n="9">
+<line><tbox llx="133" lly="594" urx="144" ury="605" f="1"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="129" lly="607" urx="144" ury="618" f="1"><![CDATA[10 ]]></tbox></line>
+<line><tbox llx="129" lly="620" urx="144" ury="631" f="1"><![CDATA[20 ]]></tbox></line>
+<line><tbox llx="129" lly="633" urx="144" ury="644" f="1"><![CDATA[30 ]]></tbox></line>
+<line><tbox llx="129" lly="646" urx="144" ury="657" f="1"><![CDATA[40 ]]></tbox></line>
+<line><tbox llx="129" lly="659" urx="144" ury="670" f="1"><![CDATA[50 ]]></tbox></line>
+<line><tbox llx="129" lly="671" urx="144" ury="683" f="1"><![CDATA[60 ]]></tbox></line>
+<line><tbox llx="129" lly="684" urx="144" ury="695" f="1"><![CDATA[70 ]]></tbox></line>
+<line><tbox llx="129" lly="697" urx="144" ury="708" f="1"><![CDATA[80 ]]></tbox></line>
+<line><tbox llx="129" lly="710" urx="144" ury="721" f="1"><![CDATA[90 ]]></tbox></line>
+<line><tbox llx="126" lly="723" urx="144" ury="734" f="1"><![CDATA[100 ]]></tbox></line>
+<line><tbox llx="139" lly="587" urx="326" ury="598" f="1"><![CDATA[0 10 20 30 40 50 60 70 80 90 100 ]]></tbox></line>
+<line><tbox llx="109" lly="613" urx="110" ury="638" f="2"><![CDATA[Percent ]]></tbox></line>
+<line><tbox llx="109" lly="639" urx="110" ury="669" f="2"><![CDATA[Research ]]></tbox></line>
+<line><tbox llx="109" lly="670" urx="110" ury="692" f="2"><![CDATA[Papers ]]></tbox></line>
+<line><tbox llx="109" lly="693" urx="110" ury="713" f="2"><![CDATA[Found ]]></tbox></line>
+<line><tbox llx="184" lly="580" urx="278" ury="592" f="3"><![CDATA[Percent Hyperlinks Followed ]]></tbox></line>
+<line><tbox llx="187" lly="730" urx="275" ury="741" f="3"><![CDATA[Spidering CS Departments ]]></tbox></line>
+<line><tbox llx="247" lly="633" urx="286" ury="644" f="3"><![CDATA[Immediate ]]></tbox></line>
+<line><tbox llx="252" lly="626" urx="286" ury="637" f="3"><![CDATA[Distance ]]></tbox></line>
+<line><tbox llx="239" lly="619" urx="286" ury="630" f="3"><![CDATA[Breadth-First ]]></tbox></line>
+<line><tbox llx="58" lly="558" urx="248" ury="574" f="1"><![CDATA[Figure 3: The performance of the ]]></tbox><tbox llx="243" lly="559" urx="301" ury="571" f="2"><![CDATA[immediate ]]></tbox></line>
+<line><tbox llx="58" lly="544" urx="88" ury="559" f="1"><![CDATA[and ]]></tbox><tbox llx="81" lly="545" urx="129" ury="557" f="2"><![CDATA[distance ]]></tbox><tbox llx="126" lly="544" urx="175" ury="559" f="1"><![CDATA[spiders. ]]></tbox><tbox llx="173" lly="545" urx="232" ury="557" f="2"><![CDATA[Immediate ]]></tbox><tbox llx="228" lly="544" urx="304" ury="559" f="1"><![CDATA[has a higher ]]></tbox></line>
+<line><tbox llx="58" lly="530" urx="163" ury="545" f="1"><![CDATA[integral score, but ]]></tbox><tbox llx="157" lly="530" urx="205" ury="542" f="2"><![CDATA[distance ]]></tbox><tbox llx="201" lly="530" urx="304" ury="545" f="1"><![CDATA[has better perfor- ]]></tbox></line>
+<line><tbox llx="58" lly="515" urx="304" ury="530" f="1"><![CDATA[mance through some of the early stages of spi- ]]></tbox></line>
+<line><tbox llx="58" lly="501" urx="104" ury="516" f="1"><![CDATA[dering. ]]></tbox></line>
+<line><tbox llx="78" lly="460" urx="304" ury="475" f="1"><![CDATA[Our second graph, shown in Figure 3, ]]></tbox></line>
+<line><tbox llx="58" lly="445" urx="240" ury="461" f="1"><![CDATA[again displays the performance of ]]></tbox><tbox llx="233" lly="446" urx="301" ury="458" f="2"><![CDATA[breadth-first ]]></tbox></line>
+<line><tbox llx="58" lly="431" urx="88" ury="446" f="1"><![CDATA[and ]]></tbox><tbox llx="81" lly="432" urx="132" ury="444" f="2"><![CDATA[distance, ]]></tbox><tbox llx="129" lly="431" urx="186" ury="446" f="1"><![CDATA[replacing ]]></tbox><tbox llx="180" lly="432" urx="217" ury="444" f="2"><![CDATA[future ]]></tbox><tbox llx="214" lly="431" urx="269" ury="446" f="1"><![CDATA[with the ]]></tbox><tbox llx="262" lly="432" urx="301" ury="444" f="2"><![CDATA[imme- ]]></tbox></line>
+<line><tbox llx="58" lly="417" urx="90" ury="429" f="2"><![CDATA[diate ]]></tbox><tbox llx="86" lly="416" urx="217" ury="432" f="1"><![CDATA[spider. Compared with ]]></tbox><tbox llx="210" lly="417" urx="301" ury="429" f="2"><![CDATA[breadth-first, im- ]]></tbox></line>
+<line><tbox llx="58" lly="403" urx="104" ury="415" f="2"><![CDATA[mediate ]]></tbox><tbox llx="101" lly="402" urx="304" ury="417" f="1"><![CDATA[clearly performs much better, reduc- ]]></tbox></line>
+<line><tbox llx="58" lly="387" urx="304" ury="403" f="1"><![CDATA[ing by two-thirds the amount of work neces- ]]></tbox></line>
+<line><tbox llx="58" lly="373" urx="304" ury="388" f="1"><![CDATA[sary to retrieve half of the available research ]]></tbox></line>
+<line><tbox llx="58" lly="358" urx="105" ury="374" f="1"><![CDATA[papers. ]]></tbox><tbox llx="103" lly="359" urx="162" ury="371" f="2"><![CDATA[Immediate ]]></tbox><tbox llx="159" lly="358" urx="304" ury="374" f="1"><![CDATA[also performs better than ]]></tbox></line>
+<line><tbox llx="58" lly="344" urx="85" ury="359" f="1"><![CDATA[the ]]></tbox><tbox llx="78" lly="344" urx="125" ury="356" f="2"><![CDATA[distance ]]></tbox><tbox llx="121" lly="344" urx="304" ury="359" f="1"><![CDATA[spider, achieving an integral score ]]></tbox></line>
+<line><tbox llx="58" lly="329" urx="304" ury="344" f="1"><![CDATA[of 87.4, 15% closer to the upper bound than ]]></tbox></line>
+<line><tbox llx="58" lly="315" urx="85" ury="330" f="1"><![CDATA[the ]]></tbox><tbox llx="78" lly="315" urx="125" ury="327" f="2"><![CDATA[distance ]]></tbox><tbox llx="121" lly="315" urx="199" ury="330" f="1"><![CDATA[score of 85.2. ]]></tbox></line>
+<line><tbox llx="78" lly="297" urx="142" ury="312" f="1"><![CDATA[Note that ]]></tbox><tbox llx="138" lly="298" urx="196" ury="310" f="2"><![CDATA[immediate ]]></tbox><tbox llx="195" lly="297" urx="304" ury="312" f="1"><![CDATA[is able to achieve ]]></tbox></line>
+<line><tbox llx="58" lly="282" urx="304" ury="298" f="1"><![CDATA[this excellent performance without an explicit ]]></tbox></line>
+<line><tbox llx="58" lly="268" urx="304" ury="283" f="1"><![CDATA[stratification of future reward hyperlinks. This ]]></tbox></line>
+<line><tbox llx="58" lly="253" urx="304" ury="268" f="1"><![CDATA[is somewhat surprising because it does not ex- ]]></tbox></line>
+<line><tbox llx="58" lly="239" urx="304" ury="254" f="1"><![CDATA[plicitly account for one of the necessary prop- ]]></tbox></line>
+<line><tbox llx="58" lly="224" urx="304" ury="239" f="1"><![CDATA[erties of the optimal spider. However, this may ]]></tbox></line>
+<line><tbox llx="58" lly="210" urx="304" ury="225" f="1"><![CDATA[be due to the importance of immediate reward ]]></tbox></line>
+<line><tbox llx="58" lly="195" urx="304" ury="210" f="1"><![CDATA[in the later stages of spidering. In classification ]]></tbox></line>
+<line><tbox llx="58" lly="180" urx="304" ury="196" f="1"><![CDATA[experiments, we find that the classifier used ]]></tbox></line>
+<line><tbox llx="58" lly="166" urx="102" ury="181" f="1"><![CDATA[for the ]]></tbox><tbox llx="95" lly="167" urx="153" ury="179" f="2"><![CDATA[immediate ]]></tbox><tbox llx="149" lly="166" urx="304" ury="181" f="1"><![CDATA[spider achieves 94% recall in ]]></tbox></line>
+<line><tbox llx="58" lly="151" urx="304" ury="167" f="1"><![CDATA[classifying immediate reward hyperlinks. That ]]></tbox></line>
+<line><tbox llx="58" lly="137" urx="304" ury="152" f="1"><![CDATA[is to say that of the hyperlinks that are actu- ]]></tbox></line>
+<line><tbox llx="58" lly="122" urx="304" ury="138" f="1"><![CDATA[ally immediate reward hyperlinks, the classifier ]]></tbox></line>
+<line><tbox llx="58" lly="108" urx="104" ury="123" f="1"><![CDATA[for the ]]></tbox><tbox llx="99" lly="108" urx="157" ury="121" f="2"><![CDATA[immediate ]]></tbox><tbox llx="154" lly="108" urx="304" ury="123" f="1"><![CDATA[spider labels 94% of those ]]></tbox></line>
+<line><tbox llx="58" lly="93" urx="304" ury="108" f="1"><![CDATA[as being immediate reward hyperlinks. After ]]></tbox></line>
+<line><tbox llx="395" lly="594" urx="406" ury="605" f="3"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="390" lly="607" urx="406" ury="618" f="3"><![CDATA[0.5 ]]></tbox></line>
+<line><tbox llx="395" lly="620" urx="406" ury="631" f="3"><![CDATA[1 ]]></tbox></line>
+<line><tbox llx="390" lly="633" urx="406" ury="644" f="3"><![CDATA[1.5 ]]></tbox></line>
+<line><tbox llx="395" lly="646" urx="406" ury="657" f="3"><![CDATA[2 ]]></tbox></line>
+<line><tbox llx="390" lly="659" urx="406" ury="670" f="3"><![CDATA[2.5 ]]></tbox></line>
+<line><tbox llx="395" lly="671" urx="406" ury="683" f="3"><![CDATA[3 ]]></tbox></line>
+<line><tbox llx="390" lly="684" urx="406" ury="695" f="3"><![CDATA[3.5 ]]></tbox></line>
+<line><tbox llx="395" lly="697" urx="406" ury="708" f="3"><![CDATA[4 ]]></tbox></line>
+<line><tbox llx="390" lly="710" urx="406" ury="721" f="3"><![CDATA[4.5 ]]></tbox></line>
+<line><tbox llx="395" lly="723" urx="406" ury="734" f="3"><![CDATA[5 ]]></tbox></line>
+<line><tbox llx="401" lly="587" urx="585" ury="598" f="3"><![CDATA[0 0.5 1 1.5 2 2.5 3 3.5 4 4.5 5 ]]></tbox></line>
+<line><tbox llx="372" lly="613" urx="373" ury="638" f="4"><![CDATA[Percent ]]></tbox></line>
+<line><tbox llx="372" lly="639" urx="373" ury="669" f="4"><![CDATA[Research ]]></tbox></line>
+<line><tbox llx="372" lly="670" urx="373" ury="692" f="4"><![CDATA[Papers ]]></tbox></line>
+<line><tbox llx="372" lly="693" urx="373" ury="713" f="4"><![CDATA[Found ]]></tbox></line>
+<line><tbox llx="446" lly="580" urx="540" ury="592" f="5"><![CDATA[Percent Hyperlinks Followed ]]></tbox></line>
+<line><tbox llx="449" lly="730" urx="537" ury="741" f="5"><![CDATA[Spidering CS Departments ]]></tbox></line>
+<line><tbox llx="520" lly="619" urx="559" ury="630" f="5"><![CDATA[Immediate ]]></tbox></line>
+<line><tbox llx="525" lly="612" urx="559" ury="623" f="5"><![CDATA[Distance ]]></tbox></line>
+<line><tbox llx="512" lly="605" urx="559" ury="616" f="5"><![CDATA[Breadth-First ]]></tbox></line>
+<line><tbox llx="320" lly="558" urx="566" ury="574" f="1"><![CDATA[Figure 4: A close-up view of early perfor- ]]></tbox></line>
+<line><tbox llx="320" lly="544" urx="399" ury="559" f="1"><![CDATA[mance of the ]]></tbox><tbox llx="393" lly="545" urx="451" ury="557" f="2"><![CDATA[immediate ]]></tbox><tbox llx="448" lly="544" urx="478" ury="559" f="1"><![CDATA[and ]]></tbox><tbox llx="472" lly="545" urx="520" ury="557" f="2"><![CDATA[distance ]]></tbox><tbox llx="517" lly="544" urx="566" ury="559" f="1"><![CDATA[spiders. ]]></tbox></line>
+<line><tbox llx="320" lly="530" urx="445" ury="545" f="1"><![CDATA[Note the scaled axes. ]]></tbox><tbox llx="445" lly="530" urx="495" ury="542" f="2"><![CDATA[Distance ]]></tbox><tbox llx="492" lly="530" urx="567" ury="545" f="1"><![CDATA[immediately ]]></tbox></line>
+<line><tbox llx="320" lly="515" urx="531" ury="530" f="1"><![CDATA[begins retrieving research papers while ]]></tbox><tbox llx="525" lly="516" urx="563" ury="528" f="2"><![CDATA[imme- ]]></tbox></line>
+<line><tbox llx="320" lly="501" urx="352" ury="514" f="2"><![CDATA[diate ]]></tbox><tbox llx="347" lly="501" urx="566" ury="516" f="1"><![CDATA[must wade through nearly 100 hyperlinks ]]></tbox></line>
+<line><tbox llx="320" lly="486" urx="537" ury="502" f="1"><![CDATA[before finding its second research paper. ]]></tbox></line>
+<line><tbox llx="320" lly="445" urx="566" ury="461" f="1"><![CDATA[10% of the hyperlinks have been followed, most ]]></tbox></line>
+<line><tbox llx="320" lly="431" urx="566" ury="446" f="1"><![CDATA[hyperlinks have been found and the task is re- ]]></tbox></line>
+<line><tbox llx="320" lly="416" urx="566" ury="432" f="1"><![CDATA[duced to one of identifying immediate reward ]]></tbox></line>
+<line><tbox llx="320" lly="402" urx="387" ury="417" f="1"><![CDATA[hyperlinks. ]]></tbox></line>
+<line><tbox llx="340" lly="384" urx="381" ury="399" f="1"><![CDATA[While ]]></tbox><tbox llx="374" lly="385" urx="432" ury="397" f="2"><![CDATA[immediate ]]></tbox><tbox llx="428" lly="384" urx="545" ury="399" f="1"><![CDATA[performs better than ]]></tbox><tbox llx="538" lly="385" urx="563" ury="397" f="2"><![CDATA[dis- ]]></tbox></line>
+<line><tbox llx="320" lly="370" urx="354" ury="382" f="2"><![CDATA[tance ]]></tbox><tbox llx="351" lly="369" urx="531" ury="385" f="1"><![CDATA[in aggregate, it is not true that ]]></tbox><tbox llx="525" lly="370" urx="563" ury="382" f="2"><![CDATA[imme- ]]></tbox></line>
+<line><tbox llx="320" lly="356" urx="352" ury="368" f="2"><![CDATA[diate ]]></tbox><tbox llx="348" lly="355" urx="566" ury="370" f="1"><![CDATA[has collected more research papers than ]]></tbox></line>
+<line><tbox llx="320" lly="341" urx="368" ury="353" f="2"><![CDATA[distance ]]></tbox><tbox llx="364" lly="340" urx="566" ury="356" f="1"><![CDATA[through the entire spidering run. In ]]></tbox></line>
+<line><tbox llx="320" lly="326" urx="566" ury="341" f="1"><![CDATA[fact, in the early stages of spidering, the per- ]]></tbox></line>
+<line><tbox llx="320" lly="311" urx="411" ury="327" f="1"><![CDATA[formance of the ]]></tbox><tbox llx="404" lly="312" urx="452" ury="324" f="2"><![CDATA[distance ]]></tbox><tbox llx="448" lly="311" urx="566" ury="327" f="1"><![CDATA[spider is significantly ]]></tbox></line>
+<line><tbox llx="320" lly="297" urx="566" ury="312" f="1"><![CDATA[better. In Figure 4, we show the performance ]]></tbox></line>
+<line><tbox llx="320" lly="282" urx="341" ury="298" f="1"><![CDATA[of ]]></tbox><tbox llx="337" lly="283" urx="395" ury="295" f="2"><![CDATA[immediate ]]></tbox><tbox llx="393" lly="282" urx="423" ury="298" f="1"><![CDATA[and ]]></tbox><tbox llx="419" lly="283" urx="466" ury="295" f="2"><![CDATA[distance ]]></tbox><tbox llx="464" lly="282" urx="566" ury="298" f="1"><![CDATA[through their re- ]]></tbox></line>
+<line><tbox llx="320" lly="268" urx="566" ury="283" f="1"><![CDATA[trieval of the first 28, or 5% of research pa- ]]></tbox></line>
+<line><tbox llx="320" lly="253" urx="427" ury="268" f="1"><![CDATA[pers. Compared to ]]></tbox><tbox llx="420" lly="254" urx="525" ury="266" f="2"><![CDATA[immediate, distance ]]></tbox><tbox llx="521" lly="253" urx="566" ury="268" f="1"><![CDATA[follows ]]></tbox></line>
+<line><tbox llx="320" lly="239" urx="566" ury="254" f="1"><![CDATA[61%, or 177 fewer hyperlinks before retrieving ]]></tbox></line>
+<line><tbox llx="320" lly="224" urx="566" ury="239" f="1"><![CDATA[the first 5% of research papers. Even more ]]></tbox></line>
+<line><tbox llx="320" lly="210" urx="464" ury="225" f="1"><![CDATA[significant is the fact that ]]></tbox><tbox llx="458" lly="210" urx="516" ury="222" f="2"><![CDATA[immediate ]]></tbox><tbox llx="512" lly="210" urx="566" ury="225" f="1"><![CDATA[retrieves ]]></tbox></line>
+<line><tbox llx="320" lly="195" urx="566" ury="210" f="1"><![CDATA[only a single paper before having followed 88, ]]></tbox></line>
+<line><tbox llx="320" lly="180" urx="566" ury="196" f="1"><![CDATA[or 0.67% of the available hyperlinks. This ex- ]]></tbox></line>
+<line><tbox llx="320" lly="166" urx="475" ury="181" f="1"><![CDATA[hibits an inadequacy of the ]]></tbox><tbox llx="469" lly="167" urx="528" ury="179" f="2"><![CDATA[immediate ]]></tbox><tbox llx="525" lly="166" urx="566" ury="181" f="1"><![CDATA[spider ]]></tbox></line>
+<line><tbox llx="320" lly="151" urx="410" ury="167" f="1"><![CDATA[and shows that ]]></tbox><tbox llx="404" lly="152" urx="462" ury="164" f="2"><![CDATA[immediate ]]></tbox><tbox llx="458" lly="151" urx="566" ury="167" f="1"><![CDATA[is not fully able to ]]></tbox></line>
+<line><tbox llx="320" lly="137" urx="566" ury="152" f="1"><![CDATA[judge the value of future reward hyperlinks, ]]></tbox></line>
+<line><tbox llx="320" lly="122" urx="566" ury="138" f="1"><![CDATA[even when faced with cases where it is pos- ]]></tbox></line>
+<line><tbox llx="320" lly="108" urx="566" ury="123" f="1"><![CDATA[sible to judge those values using only textual ]]></tbox></line>
+<line><tbox llx="320" lly="93" urx="374" ury="108" f="1"><![CDATA[features. ]]></tbox></line>
+<pbox llx="58.00" lly="93.00" urx="585.00" ury="741.00"/></page>
+<page n="10">
+<line><tbox llx="58" lly="721" urx="258" ury="739" f="1"><![CDATA[5 Discussion and Future Work ]]></tbox></line>
+<line><tbox llx="58" lly="704" urx="304" ury="720" f="2"><![CDATA[Our results section provides strong evidence ]]></tbox></line>
+<line><tbox llx="58" lly="690" urx="304" ury="705" f="2"><![CDATA[that for the task of locating research papers ]]></tbox></line>
+<line><tbox llx="58" lly="675" urx="304" ury="690" f="2"><![CDATA[within computer science department webs, re- ]]></tbox></line>
+<line><tbox llx="58" lly="661" urx="304" ury="676" f="2"><![CDATA[inforcement learning using text-based features ]]></tbox></line>
+<line><tbox llx="58" lly="646" urx="304" ury="661" f="2"><![CDATA[can yield us a substantial win over a more rudi- ]]></tbox></line>
+<line><tbox llx="58" lly="632" urx="304" ury="647" f="2"><![CDATA[mentary method such as breadth-first search. ]]></tbox></line>
+<line><tbox llx="58" lly="617" urx="304" ury="632" f="2"><![CDATA[We also give evidence that there is value in ]]></tbox></line>
+<line><tbox llx="58" lly="602" urx="304" ury="618" f="2"><![CDATA[learning the features of future reward hyper- ]]></tbox></line>
+<line><tbox llx="58" lly="588" urx="189" ury="603" f="2"><![CDATA[links. Even though the ]]></tbox><tbox llx="183" lly="589" urx="241" ury="601" f="3"><![CDATA[immediate ]]></tbox><tbox llx="237" lly="588" urx="304" ury="603" f="2"><![CDATA[spider per- ]]></tbox></line>
+<line><tbox llx="58" lly="573" urx="304" ury="589" f="2"><![CDATA[forms well without taking regard for the fea- ]]></tbox></line>
+<line><tbox llx="58" lly="559" urx="304" ury="574" f="2"><![CDATA[tures found in future reward hyperlinks, it ]]></tbox></line>
+<line><tbox llx="58" lly="544" urx="304" ury="560" f="2"><![CDATA[is not able to eÆciently find research papers ]]></tbox></line>
+<line><tbox llx="58" lly="530" urx="304" ury="545" f="2"><![CDATA[from the beginning. Here we give two reasons ]]></tbox></line>
+<line><tbox llx="58" lly="515" urx="111" ury="531" f="2"><![CDATA[why the ]]></tbox><tbox llx="106" lly="516" urx="164" ury="528" f="3"><![CDATA[immediate ]]></tbox><tbox llx="162" lly="515" urx="304" ury="531" f="2"><![CDATA[spider performs well and ]]></tbox></line>
+<line><tbox llx="58" lly="501" urx="304" ury="516" f="2"><![CDATA[propose ideas for improving spidering perfor- ]]></tbox></line>
+<line><tbox llx="58" lly="486" urx="104" ury="501" f="2"><![CDATA[mance. ]]></tbox></line>
+<line><tbox llx="78" lly="471" urx="304" ury="487" f="2"><![CDATA[In order to gain some understanding of ]]></tbox></line>
+<line><tbox llx="58" lly="457" urx="109" ury="472" f="2"><![CDATA[why the ]]></tbox><tbox llx="102" lly="458" urx="160" ury="470" f="3"><![CDATA[immediate ]]></tbox><tbox llx="156" lly="457" urx="304" ury="472" f="2"><![CDATA[spider performs so well, we ]]></tbox></line>
+<line><tbox llx="58" lly="442" urx="304" ury="458" f="2"><![CDATA[examine the words which are most predictive ]]></tbox></line>
+<line><tbox llx="58" lly="428" urx="261" ury="443" f="2"><![CDATA[of the immediate reward class for the ]]></tbox><tbox llx="254" lly="429" urx="301" ury="441" f="3"><![CDATA[immedi- ]]></tbox></line>
+<line><tbox llx="58" lly="414" urx="81" ury="426" f="3"><![CDATA[ate ]]></tbox><tbox llx="77" lly="413" urx="122" ury="429" f="2"><![CDATA[spider. ]]></tbox></line>
+<line><tbox llx="78" lly="399" urx="304" ury="414" f="2"><![CDATA[As one can see in Table 2, many of the ]]></tbox></line>
+<line><tbox llx="58" lly="384" urx="304" ury="399" f="2"><![CDATA[words are used to uniquely describe Computer ]]></tbox></line>
+<line><tbox llx="58" lly="370" urx="304" ury="385" f="2"><![CDATA[Science research papers. It is common for a ]]></tbox></line>
+<line><tbox llx="58" lly="355" urx="304" ury="370" f="2"><![CDATA[web page containing a link to a research pa- ]]></tbox></line>
+<line><tbox llx="58" lly="341" urx="304" ury="356" f="2"><![CDATA[per to contain a citation or other descriptive ]]></tbox></line>
+<line><tbox llx="58" lly="326" urx="304" ury="341" f="2"><![CDATA[text for that research paper. Hence the rea- ]]></tbox></line>
+<line><tbox llx="58" lly="311" urx="304" ury="327" f="2"><![CDATA[son for such features. It is interesting to note ]]></tbox></line>
+<line><tbox llx="58" lly="297" urx="304" ury="312" f="2"><![CDATA[that some of these words, such as \technical," ]]></tbox></line>
+<line><tbox llx="58" lly="282" urx="304" ury="298" f="2"><![CDATA[\report" and \papers" are commonly used by ]]></tbox></line>
+<line><tbox llx="58" lly="268" urx="304" ury="283" f="2"><![CDATA[computer science departments and professors ]]></tbox></line>
+<line><tbox llx="58" lly="253" urx="304" ury="269" f="2"><![CDATA[to indicate a hyperlink that points to a collec- ]]></tbox></line>
+<line><tbox llx="58" lly="239" urx="215" ury="254" f="2"><![CDATA[tion of research papers. Thus ]]></tbox><tbox llx="207" lly="239" urx="265" ury="252" f="3"><![CDATA[immediate ]]></tbox><tbox llx="260" lly="239" urx="304" ury="254" f="2"><![CDATA[should ]]></tbox></line>
+<line><tbox llx="58" lly="224" urx="287" ury="240" f="2"><![CDATA[rate highly some future reward hyperlinks. ]]></tbox></line>
+<line><tbox llx="78" lly="210" urx="137" ury="222" f="3"><![CDATA[Immediate ]]></tbox><tbox llx="132" lly="210" urx="304" ury="225" f="2"><![CDATA[performs best toward the end of ]]></tbox></line>
+<line><tbox llx="58" lly="195" urx="304" ury="210" f="2"><![CDATA[a run, most likely because of its ability to iden- ]]></tbox></line>
+<line><tbox llx="58" lly="180" urx="304" ury="196" f="2"><![CDATA[tify research papers. Near the end of a run, ]]></tbox></line>
+<line><tbox llx="58" lly="166" urx="304" ury="181" f="2"><![CDATA[most of the immediate reward hyperlinks are ]]></tbox></line>
+<line><tbox llx="58" lly="151" urx="304" ury="167" f="2"><![CDATA[known and the spidering task is reduced to one ]]></tbox></line>
+<line><tbox llx="58" lly="137" urx="304" ury="152" f="2"><![CDATA[of identifying such hyperlinks. As was men- ]]></tbox></line>
+<line><tbox llx="58" lly="122" urx="139" ury="138" f="2"><![CDATA[tioned earlier, ]]></tbox><tbox llx="132" lly="123" urx="190" ury="135" f="3"><![CDATA[immediate ]]></tbox><tbox llx="185" lly="122" urx="304" ury="138" f="2"><![CDATA[performs very well at ]]></tbox></line>
+<line><tbox llx="58" lly="108" urx="261" ury="123" f="2"><![CDATA[this task, achieving a 94% recall rate. ]]></tbox></line>
+<line><tbox llx="78" lly="93" urx="119" ury="108" f="2"><![CDATA[While ]]></tbox><tbox llx="112" lly="94" urx="170" ury="106" f="3"><![CDATA[immediate ]]></tbox><tbox llx="167" lly="93" urx="304" ury="108" f="2"><![CDATA[performs well at the end ]]></tbox></line>
+<line><tbox llx="326" lly="719" urx="535" ury="734" f="2"><![CDATA[0.0238 proceedings 0.0072 report ]]></tbox></line>
+<line><tbox llx="326" lly="704" urx="395" ury="720" f="2"><![CDATA[0.0166 pp ]]></tbox><tbox llx="448" lly="704" urx="538" ury="720" f="2"><![CDATA[0.0069 science ]]></tbox></line>
+<line><tbox llx="326" lly="690" urx="548" ury="705" f="2"><![CDATA[0.0128 postscript 0.0069 technical ]]></tbox></line>
+<line><tbox llx="326" lly="675" urx="512" ury="691" f="2"><![CDATA[0.0120 computer 0.0068 tr ]]></tbox></line>
+<line><tbox llx="326" lly="661" urx="560" ury="676" f="2"><![CDATA[0.0120 international 0.0065 intelligence ]]></tbox></line>
+<line><tbox llx="326" lly="647" urx="531" ury="662" f="2"><![CDATA[0.0117 conference 0.0063 boyer ]]></tbox></line>
+<line><tbox llx="326" lly="632" urx="402" ury="648" f="2"><![CDATA[0.0115 acm ]]></tbox><tbox llx="448" lly="632" urx="551" ury="648" f="2"><![CDATA[0.0061 workshop ]]></tbox></line>
+<line><tbox llx="326" lly="618" urx="404" ury="633" f="2"><![CDATA[0.0105 proc ]]></tbox><tbox llx="448" lly="618" urx="544" ury="633" f="2"><![CDATA[0.0061 springer ]]></tbox></line>
+<line><tbox llx="326" lly="603" urx="524" ury="619" f="2"><![CDATA[0.0104 symposium 0.0061 aaai ]]></tbox></line>
+<line><tbox llx="326" lly="589" urx="421" ury="604" f="2"><![CDATA[0.0098 systems ]]></tbox><tbox llx="448" lly="589" urx="546" ury="604" f="2"><![CDATA[0.0061 artificial ]]></tbox></line>
+<line><tbox llx="326" lly="574" urx="410" ury="590" f="2"><![CDATA[0.0083 paper ]]></tbox><tbox llx="448" lly="574" urx="558" ury="590" f="2"><![CDATA[0.0061 algorithms ]]></tbox></line>
+<line><tbox llx="326" lly="560" urx="551" ury="575" f="2"><![CDATA[0.0078 computing 0.0060 reasoning ]]></tbox></line>
+<line><tbox llx="326" lly="546" urx="405" ury="561" f="2"><![CDATA[0.0076 logic ]]></tbox><tbox llx="448" lly="546" urx="542" ury="561" f="2"><![CDATA[0.0060 lifschitz ]]></tbox></line>
+<line><tbox llx="326" lly="531" urx="423" ury="546" f="2"><![CDATA[0.0072 learning ]]></tbox><tbox llx="448" lly="531" urx="537" ury="546" f="2"><![CDATA[0.0060 papers ]]></tbox></line>
+<line><tbox llx="326" lly="517" urx="400" ury="532" f="2"><![CDATA[0.0072 ieee ]]></tbox><tbox llx="448" lly="517" urx="518" ury="532" f="2"><![CDATA[0.0058 vol ]]></tbox></line>
+<line><tbox llx="320" lly="488" urx="566" ury="503" f="2"><![CDATA[Table 2: Most predictive words in class model ]]></tbox></line>
+<line><tbox llx="320" lly="474" urx="372" ury="489" f="2"><![CDATA[used for ]]></tbox><tbox llx="364" lly="474" urx="423" ury="486" f="3"><![CDATA[immediate ]]></tbox><tbox llx="418" lly="474" urx="566" ury="489" f="2"><![CDATA[for class of documents per- ]]></tbox></line>
+<line><tbox llx="320" lly="459" urx="566" ury="474" f="2"><![CDATA[taining to hyperlinks that point to research ]]></tbox></line>
+<line><tbox llx="320" lly="445" urx="566" ury="460" f="2"><![CDATA[papers. Scores shown are weighted log like- ]]></tbox></line>
+<line><tbox llx="320" lly="430" urx="566" ury="446" f="2"><![CDATA[lihood ratios (Cover & Thomas 1991). Note ]]></tbox></line>
+<line><tbox llx="320" lly="416" urx="566" ury="431" f="2"><![CDATA[that these words are, intuitively, words that ]]></tbox></line>
+<line><tbox llx="320" lly="401" urx="566" ury="417" f="2"><![CDATA[are likely to be used to describe hyperlinks that ]]></tbox></line>
+<line><tbox llx="320" lly="387" urx="566" ury="402" f="2"><![CDATA[point directly to Computer Science research ]]></tbox></line>
+<line><tbox llx="320" lly="372" urx="368" ury="388" f="2"><![CDATA[papers. ]]></tbox></line>
+<line><tbox llx="320" lly="330" urx="427" ury="345" f="2"><![CDATA[of a spidering run, ]]></tbox><tbox llx="421" lly="331" urx="469" ury="343" f="3"><![CDATA[distance ]]></tbox><tbox llx="465" lly="330" urx="566" ury="345" f="2"><![CDATA[performs best to- ]]></tbox></line>
+<line><tbox llx="320" lly="315" urx="566" ury="331" f="2"><![CDATA[ward the beginning|when identification of ]]></tbox></line>
+<line><tbox llx="320" lly="301" urx="566" ury="316" f="2"><![CDATA[high value future reward links is most impor- ]]></tbox></line>
+<line><tbox llx="320" lly="286" urx="566" ury="302" f="2"><![CDATA[tant. As each of these two spiders perform best ]]></tbox></line>
+<line><tbox llx="320" lly="272" urx="566" ury="287" f="2"><![CDATA[at two different tasks, an area for future work ]]></tbox></line>
+<line><tbox llx="320" lly="257" urx="566" ury="273" f="2"><![CDATA[is experimenting with combinations of these ]]></tbox></line>
+<line><tbox llx="320" lly="243" urx="566" ury="258" f="2"><![CDATA[spiders. If it is possible to select future reward ]]></tbox></line>
+<line><tbox llx="320" lly="228" urx="406" ury="243" f="2"><![CDATA[links as well as ]]></tbox><tbox llx="399" lly="229" urx="450" ury="241" f="3"><![CDATA[distance, ]]></tbox><tbox llx="445" lly="228" urx="532" ury="243" f="2"><![CDATA[while retaining ]]></tbox><tbox llx="525" lly="229" urx="563" ury="241" f="3"><![CDATA[imme- ]]></tbox></line>
+<line><tbox llx="320" lly="214" urx="360" ury="226" f="3"><![CDATA[diate's ]]></tbox><tbox llx="357" lly="214" urx="566" ury="229" f="2"><![CDATA[ability to identify immediate rewards, ]]></tbox></line>
+<line><tbox llx="320" lly="199" urx="566" ury="214" f="2"><![CDATA[then it may be possible to construct a spider ]]></tbox></line>
+<line><tbox llx="320" lly="185" urx="492" ury="200" f="2"><![CDATA[that outperforms both of them. ]]></tbox></line>
+<line><tbox llx="340" lly="166" urx="566" ury="181" f="2"><![CDATA[One of the assumptions that we made ]]></tbox></line>
+<line><tbox llx="320" lly="151" urx="566" ury="167" f="2"><![CDATA[about our application of reinforcement learn- ]]></tbox></line>
+<line><tbox llx="320" lly="137" urx="566" ury="152" f="2"><![CDATA[ing to spidering is that the state of a spider ]]></tbox></line>
+<line><tbox llx="320" lly="122" urx="566" ury="138" f="2"><![CDATA[is not important for identifying the value of ]]></tbox></line>
+<line><tbox llx="320" lly="108" urx="566" ury="123" f="2"><![CDATA[an action. While our assumption is not true, ]]></tbox></line>
+<line><tbox llx="320" lly="93" urx="566" ury="108" f="2"><![CDATA[it is diÆcult to compare two different states, ]]></tbox></line>
+<pbox llx="58.00" lly="93.00" urx="566.00" ury="739.00"/></page>
+<page n="11">
+<line><tbox llx="200" lly="684" urx="229" ury="707" f="1"><![CDATA[B ]]></tbox></line>
+<line><tbox llx="149" lly="624" urx="178" ury="647" f="1"><![CDATA[D ]]></tbox></line>
+<line><tbox llx="222" lly="600" urx="249" ury="623" f="1"><![CDATA[F ]]></tbox></line>
+<line><tbox llx="109" lly="600" urx="138" ury="623" f="1"><![CDATA[C ]]></tbox></line>
+<line><tbox llx="131" lly="684" urx="161" ury="707" f="1"><![CDATA[A ]]></tbox></line>
+<line><tbox llx="187" lly="625" urx="208" ury="640" f="1"><![CDATA[E ]]></tbox></line>
+<line><tbox llx="58" lly="537" urx="304" ury="552" f="1"><![CDATA[Figure 5: A representation of spidering space ]]></tbox></line>
+<line><tbox llx="58" lly="522" urx="304" ury="537" f="1"><![CDATA[where arrows are hyperlinks and circles are ]]></tbox></line>
+<line><tbox llx="58" lly="508" urx="304" ury="523" f="1"><![CDATA[web documents. Hyperlinks are labeled with ]]></tbox></line>
+<line><tbox llx="58" lly="493" urx="304" ury="509" f="1"><![CDATA[letters of the alphabet; the spider is denoted ]]></tbox></line>
+<line><tbox llx="58" lly="479" urx="304" ury="494" f="1"><![CDATA[as a hexagon; circles denote web documents; ]]></tbox></line>
+<line><tbox llx="58" lly="464" urx="226" ury="480" f="1"><![CDATA[#lled-in circles denote reward. ]]></tbox><tbox llx="224" lly="465" urx="242" ury="478" f="2"><![CDATA[A ]]></tbox><tbox llx="238" lly="464" urx="268" ury="480" f="1"><![CDATA[and ]]></tbox><tbox llx="262" lly="465" urx="280" ury="478" f="2"><![CDATA[B ]]></tbox><tbox llx="277" lly="464" urx="304" ury="480" f="1"><![CDATA[are ]]></tbox></line>
+<line><tbox llx="58" lly="450" urx="304" ury="465" f="1"><![CDATA[hyperlinks that the spider may elect to follow. ]]></tbox></line>
+<line><tbox llx="58" lly="435" urx="304" ury="451" f="1"><![CDATA[The actions selected by the spider may change ]]></tbox></line>
+<line><tbox llx="58" lly="421" urx="218" ury="436" f="1"><![CDATA[the value of some hyperlinks. ]]></tbox></line>
+<line><tbox llx="58" lly="385" urx="304" ury="401" f="1"><![CDATA[especially when much of the search space is un- ]]></tbox></line>
+<line><tbox llx="58" lly="371" urx="304" ury="386" f="1"><![CDATA[known. Figure 5 shows an example of such a ]]></tbox></line>
+<line><tbox llx="58" lly="356" urx="117" ury="372" f="1"><![CDATA[situation. ]]></tbox></line>
+<line><tbox llx="78" lly="341" urx="304" ury="356" f="1"><![CDATA[Here, the spider may elect to follow hyper- ]]></tbox></line>
+<line><tbox llx="58" lly="327" urx="93" ury="342" f="1"><![CDATA[links ]]></tbox><tbox llx="85" lly="327" urx="103" ury="340" f="2"><![CDATA[A ]]></tbox><tbox llx="98" lly="327" urx="119" ury="342" f="1"><![CDATA[or ]]></tbox><tbox llx="112" lly="327" urx="133" ury="340" f="2"><![CDATA[B. ]]></tbox><tbox llx="130" lly="327" urx="211" ury="342" f="1"><![CDATA[Initially, both ]]></tbox><tbox llx="204" lly="327" urx="221" ury="340" f="2"><![CDATA[A ]]></tbox><tbox llx="216" lly="327" urx="246" ury="342" f="1"><![CDATA[and ]]></tbox><tbox llx="239" lly="327" urx="256" ury="340" f="2"><![CDATA[B ]]></tbox><tbox llx="252" lly="327" urx="304" ury="342" f="1"><![CDATA[have fu- ]]></tbox></line>
+<line><tbox llx="58" lly="312" urx="304" ury="327" f="1"><![CDATA[ture reward as their children point to research ]]></tbox></line>
+<line><tbox llx="58" lly="297" urx="304" ury="313" f="1"><![CDATA[papers. However, if the spider were to select ]]></tbox></line>
+<line><tbox llx="58" lly="283" urx="105" ury="298" f="1"><![CDATA[actions ]]></tbox><tbox llx="99" lly="284" urx="135" ury="296" f="2"><![CDATA[A, C ]]></tbox><tbox llx="132" lly="283" urx="162" ury="298" f="1"><![CDATA[and ]]></tbox><tbox llx="157" lly="284" urx="179" ury="296" f="2"><![CDATA[D, ]]></tbox><tbox llx="176" lly="283" urx="289" ury="298" f="1"><![CDATA[in that order, then ]]></tbox><tbox llx="283" lly="284" urx="301" ury="296" f="2"><![CDATA[B ]]></tbox></line>
+<line><tbox llx="58" lly="268" urx="304" ury="284" f="1"><![CDATA[would no longer be of value. Of course, one ]]></tbox></line>
+<line><tbox llx="58" lly="254" urx="304" ury="269" f="1"><![CDATA[cannot use text features to account for these ]]></tbox></line>
+<line><tbox llx="58" lly="239" urx="304" ury="255" f="1"><![CDATA[changing states. However, it is true that there ]]></tbox></line>
+<line><tbox llx="58" lly="225" urx="304" ury="240" f="1"><![CDATA[exist certain hyperlinks near reward that are ]]></tbox></line>
+<line><tbox llx="58" lly="210" urx="304" ury="225" f="1"><![CDATA[worthless because discovering those hyperlinks ]]></tbox></line>
+<line><tbox llx="58" lly="196" urx="304" ury="211" f="1"><![CDATA[necessitates traversing the page to which the ]]></tbox></line>
+<line><tbox llx="58" lly="181" urx="304" ury="196" f="1"><![CDATA[hyperlink points. We may be able increase ]]></tbox></line>
+<line><tbox llx="58" lly="167" urx="304" ury="182" f="1"><![CDATA[spidering performance by rating these links ac- ]]></tbox></line>
+<line><tbox llx="58" lly="152" urx="304" ury="167" f="1"><![CDATA[cording to the state of the spider once it finds ]]></tbox></line>
+<line><tbox llx="58" lly="137" urx="156" ury="153" f="1"><![CDATA[such a hyperlink. ]]></tbox></line>
+<line><tbox llx="78" lly="122" urx="304" ury="138" f="1"><![CDATA[In selecting a feature set to represent a hy- ]]></tbox></line>
+<line><tbox llx="58" lly="108" urx="304" ury="123" f="1"><![CDATA[perlink, we ignored much of the information ]]></tbox></line>
+<line><tbox llx="58" lly="93" urx="304" ury="108" f="1"><![CDATA[available to us and restricted ourselves to us- ]]></tbox></line>
+<line><tbox llx="320" lly="722" urx="566" ury="737" f="1"><![CDATA[ing unstructured, plain text. We believe that ]]></tbox></line>
+<line><tbox llx="320" lly="707" urx="566" ury="723" f="1"><![CDATA[performance increases may be found using fea- ]]></tbox></line>
+<line><tbox llx="320" lly="693" urx="566" ury="708" f="1"><![CDATA[tures of a hyperlink that we have neglected, ]]></tbox></line>
+<line><tbox llx="320" lly="678" urx="566" ury="694" f="1"><![CDATA[such as HTML markup and the graph struc- ]]></tbox></line>
+<line><tbox llx="320" lly="664" urx="566" ury="679" f="1"><![CDATA[ture of the web around the hyperlink. Such ad- ]]></tbox></line>
+<line><tbox llx="320" lly="649" urx="566" ury="665" f="1"><![CDATA[ditions are likely to improve classification ac- ]]></tbox></line>
+<line><tbox llx="320" lly="635" urx="566" ury="650" f="1"><![CDATA[curacy and thus increase performance of the ]]></tbox></line>
+<line><tbox llx="320" lly="620" urx="365" ury="636" f="1"><![CDATA[spider. ]]></tbox></line>
+<line><tbox llx="320" lly="593" urx="435" ury="611" f="3"><![CDATA[6 Related Work ]]></tbox></line>
+<line><tbox llx="320" lly="575" urx="566" ury="590" f="1"><![CDATA[Several other studies have explored eÆcient in- ]]></tbox></line>
+<line><tbox llx="320" lly="560" urx="510" ury="576" f="1"><![CDATA[formation gathering from the Web. ]]></tbox></line>
+<line><tbox llx="340" lly="545" urx="566" ury="561" f="1"><![CDATA[ARACHNID (Menczer 1997) is a system ]]></tbox></line>
+<line><tbox llx="320" lly="531" urx="566" ury="546" f="1"><![CDATA[that uses a collection of agents for finding in- ]]></tbox></line>
+<line><tbox llx="320" lly="516" urx="566" ury="531" f="1"><![CDATA[formation on the Web. Each agent competes ]]></tbox></line>
+<line><tbox llx="320" lly="501" urx="566" ury="517" f="1"><![CDATA[for limited computation resources, procreating ]]></tbox></line>
+<line><tbox llx="320" lly="487" urx="566" ury="502" f="1"><![CDATA[and mutating proportionally to its success in ]]></tbox></line>
+<line><tbox llx="320" lly="472" urx="566" ury="488" f="1"><![CDATA[finding relevant documents. Information gath- ]]></tbox></line>
+<line><tbox llx="320" lly="458" urx="566" ury="473" f="1"><![CDATA[ering experiments are demonstrated on the En- ]]></tbox></line>
+<line><tbox llx="320" lly="443" urx="566" ury="459" f="1"><![CDATA[cyclopedia Britannica Propaidia tree and syn- ]]></tbox></line>
+<line><tbox llx="320" lly="429" urx="566" ury="444" f="1"><![CDATA[thetic data. By contrast, our spider has roots ]]></tbox></line>
+<line><tbox llx="320" lly="414" urx="566" ury="430" f="1"><![CDATA[in optimal decision theory, and searches un- ]]></tbox></line>
+<line><tbox llx="320" lly="400" urx="540" ury="415" f="1"><![CDATA[structured web pages from the real Web. ]]></tbox></line>
+<line><tbox llx="340" lly="385" urx="566" ury="400" f="1"><![CDATA[WebWatcher (Joachims, Freitag, ]]></tbox></line>
+<line><tbox llx="320" lly="370" urx="566" ury="385" f="1"><![CDATA[& Mitchell 1997) is a browsing assistant that ]]></tbox></line>
+<line><tbox llx="320" lly="355" urx="566" ury="371" f="1"><![CDATA[helps a user find information by recommending ]]></tbox></line>
+<line><tbox llx="320" lly="341" urx="566" ury="356" f="1"><![CDATA[which hyperlinks to choose. It thus restricts ]]></tbox></line>
+<line><tbox llx="320" lly="326" urx="566" ury="342" f="1"><![CDATA[its action space to only hyperlinks from the ]]></tbox></line>
+<line><tbox llx="320" lly="312" urx="566" ury="327" f="1"><![CDATA[current page. WebWatcher uses reinforcement ]]></tbox></line>
+<line><tbox llx="320" lly="297" urx="566" ury="313" f="1"><![CDATA[learning to learn the value of each word on ]]></tbox></line>
+<line><tbox llx="320" lly="283" urx="566" ury="298" f="1"><![CDATA[a hyperlink. Our work is not user-centric and ]]></tbox></line>
+<line><tbox llx="320" lly="268" urx="567" ury="284" f="1"><![CDATA[strives to find a method for learning an optimal ]]></tbox></line>
+<line><tbox llx="320" lly="254" urx="566" ury="269" f="1"><![CDATA[decision policy for locating relevant documents ]]></tbox></line>
+<line><tbox llx="320" lly="239" urx="525" ury="255" f="1"><![CDATA[when hyperlink selection is unlimited. ]]></tbox></line>
+<line><tbox llx="340" lly="224" urx="566" ury="239" f="1"><![CDATA[Laser (Boyan, Freitag, & Joachims 1996) ]]></tbox></line>
+<line><tbox llx="320" lly="210" urx="566" ury="225" f="1"><![CDATA[is a search engine that automatically opti- ]]></tbox></line>
+<line><tbox llx="320" lly="195" urx="566" ury="210" f="1"><![CDATA[mizes a number of parameters to achieve im- ]]></tbox></line>
+<line><tbox llx="320" lly="180" urx="566" ury="196" f="1"><![CDATA[proved retrieval performance. The CMU CS ]]></tbox></line>
+<line><tbox llx="320" lly="166" urx="566" ury="181" f="1"><![CDATA[Web is used as the test bed and evaluation is ]]></tbox></line>
+<line><tbox llx="320" lly="151" urx="566" ury="167" f="1"><![CDATA[based on the user's selection of links presented ]]></tbox></line>
+<line><tbox llx="320" lly="137" urx="566" ury="152" f="1"><![CDATA[by Laser. The work finds that incorporat- ]]></tbox></line>
+<line><tbox llx="320" lly="122" urx="566" ury="138" f="1"><![CDATA[ing HTML markup into the TFIDF weighting ]]></tbox></line>
+<line><tbox llx="320" lly="108" urx="566" ury="123" f="1"><![CDATA[scheme improves retrieval performance. Uti- ]]></tbox></line>
+<line><tbox llx="320" lly="93" urx="566" ury="108" f="1"><![CDATA[lizing such markup may also be effective for ]]></tbox></line>
+<pbox llx="58.00" lly="93.00" urx="567.00" ury="737.00"/></page>
+<page n="12">
+<line><tbox llx="58" lly="722" urx="240" ury="737" f="1"><![CDATA[improving spidering performance. ]]></tbox></line>
+<line><tbox llx="78" lly="707" urx="304" ury="722" f="1"><![CDATA[Cho, Garcia-Molina, & Page (1998) intro- ]]></tbox></line>
+<line><tbox llx="58" lly="692" urx="304" ury="708" f="1"><![CDATA[duce a metric, PageRank, for valuing a web ]]></tbox></line>
+<line><tbox llx="58" lly="678" urx="304" ury="693" f="1"><![CDATA[page based on its linkage properties. They ]]></tbox></line>
+<line><tbox llx="58" lly="663" urx="304" ury="679" f="1"><![CDATA[show that PageRank is an effective spidering ]]></tbox></line>
+<line><tbox llx="58" lly="649" urx="304" ury="664" f="1"><![CDATA[metric for locating pages with high PageRank ]]></tbox></line>
+<line><tbox llx="58" lly="634" urx="304" ury="650" f="1"><![CDATA[counts or back link counts. However, these ]]></tbox></line>
+<line><tbox llx="58" lly="620" urx="304" ury="635" f="1"><![CDATA[metrics perform poorly when the task is to ]]></tbox></line>
+<line><tbox llx="58" lly="605" urx="304" ury="620" f="1"><![CDATA[locate pages that are relevant to a particular ]]></tbox></line>
+<line><tbox llx="58" lly="591" urx="304" ury="606" f="1"><![CDATA[topic or query. Our research focuses on exactly ]]></tbox></line>
+<line><tbox llx="58" lly="576" urx="304" ury="591" f="1"><![CDATA[that aspect: creating a framework to locate ]]></tbox></line>
+<line><tbox llx="58" lly="561" urx="304" ury="577" f="1"><![CDATA[web documents that are related to a particu- ]]></tbox></line>
+<line><tbox llx="58" lly="547" urx="115" ury="562" f="1"><![CDATA[lar topic. ]]></tbox></line>
+<line><tbox llx="78" lly="532" urx="304" ury="547" f="1"><![CDATA[Balabanovic & Shoham (1995) describes a ]]></tbox></line>
+<line><tbox llx="58" lly="517" urx="304" ury="533" f="1"><![CDATA[system that gathers interesting web pages for ]]></tbox></line>
+<line><tbox llx="58" lly="503" urx="304" ury="518" f="1"><![CDATA[a user. They use a TFIDF metric to compare ]]></tbox></line>
+<line><tbox llx="58" lly="488" urx="304" ury="504" f="1"><![CDATA[documents based on their textual features and ]]></tbox></line>
+<line><tbox llx="58" lly="474" urx="304" ury="489" f="1"><![CDATA[use a best-first search technique to find such ]]></tbox></line>
+<line><tbox llx="58" lly="459" urx="304" ury="474" f="1"><![CDATA[documents. Weights are modified daily based ]]></tbox></line>
+<line><tbox llx="58" lly="444" urx="304" ury="460" f="1"><![CDATA[on user evaluation of gathered web pages. Re- ]]></tbox></line>
+<line><tbox llx="58" lly="430" urx="304" ury="445" f="1"><![CDATA[sults are positive, outperforming random selec- ]]></tbox></line>
+<line><tbox llx="58" lly="415" urx="304" ury="431" f="1"><![CDATA[tion and performing as well as human selected ]]></tbox></line>
+<line><tbox llx="58" lly="401" urx="136" ury="416" f="1"><![CDATA[\cool" pages. ]]></tbox></line>
+<line><tbox llx="58" lly="374" urx="161" ury="392" f="2"><![CDATA[7 Conclusions ]]></tbox></line>
+<line><tbox llx="58" lly="355" urx="304" ury="371" f="1"><![CDATA[Reinforcement learning is an effective frame- ]]></tbox></line>
+<line><tbox llx="58" lly="341" urx="304" ury="356" f="1"><![CDATA[work for spidering. We have shown that, for ]]></tbox></line>
+<line><tbox llx="58" lly="326" urx="304" ury="342" f="1"><![CDATA[the task of finding research papers, a reinforce- ]]></tbox></line>
+<line><tbox llx="58" lly="312" urx="304" ury="327" f="1"><![CDATA[ment learning spider is able to reduce effort by ]]></tbox></line>
+<line><tbox llx="58" lly="297" urx="247" ury="313" f="1"><![CDATA[one-third over breadth-first search. ]]></tbox></line>
+<line><tbox llx="78" lly="282" urx="304" ury="298" f="1"><![CDATA[The most important next step after these ]]></tbox></line>
+<line><tbox llx="58" lly="268" urx="304" ury="283" f="1"><![CDATA[preliminary results is to relax some of the re- ]]></tbox></line>
+<line><tbox llx="58" lly="253" urx="304" ury="268" f="1"><![CDATA[strictive assumptions made thus far. Towards ]]></tbox></line>
+<line><tbox llx="58" lly="239" urx="304" ury="254" f="1"><![CDATA[this goal, experiments aim to show that rep- ]]></tbox></line>
+<line><tbox llx="58" lly="224" urx="304" ury="239" f="1"><![CDATA[resenting delayed reward can further improve ]]></tbox></line>
+<line><tbox llx="58" lly="210" urx="304" ury="225" f="1"><![CDATA[the eÆciency of a directed spider. We be- ]]></tbox></line>
+<line><tbox llx="58" lly="195" urx="304" ury="210" f="1"><![CDATA[lieve that there are many features that are ]]></tbox></line>
+<line><tbox llx="58" lly="180" urx="304" ury="196" f="1"><![CDATA[not indicative of immediate reward but are ]]></tbox></line>
+<line><tbox llx="58" lly="166" urx="304" ury="181" f="1"><![CDATA[predictive of future reward; following them ]]></tbox></line>
+<line><tbox llx="58" lly="151" urx="304" ury="167" f="1"><![CDATA[should improve performance further. We are ]]></tbox></line>
+<line><tbox llx="58" lly="137" urx="304" ury="152" f="1"><![CDATA[also studying enlarged feature sets to repre- ]]></tbox></line>
+<line><tbox llx="58" lly="122" urx="262" ury="138" f="1"><![CDATA[sent a hyperlink for the purpose of the ]]></tbox><tbox llx="255" lly="123" urx="273" ury="135" f="3"><![CDATA[Q ]]></tbox><tbox llx="267" lly="122" urx="304" ury="138" f="1"><![CDATA[func- ]]></tbox></line>
+<line><tbox llx="58" lly="108" urx="304" ury="123" f="1"><![CDATA[tion: namely, we are working on using word ]]></tbox></line>
+<line><tbox llx="58" lly="93" urx="304" ury="108" f="1"><![CDATA[neighborhoods, headers, titles, and words from ]]></tbox></line>
+<line><tbox llx="320" lly="722" urx="478" ury="737" f="1"><![CDATA[hyperlink-neighboring pages. ]]></tbox></line>
+<line><tbox llx="320" lly="697" urx="435" ury="713" f="4"><![CDATA[Acknowledgements ]]></tbox></line>
+<line><tbox llx="320" lly="678" urx="566" ury="693" f="1"><![CDATA[Much of the work for this paper has been done ]]></tbox></line>
+<line><tbox llx="320" lly="663" urx="452" ury="679" f="1"><![CDATA[in conjunction with the ]]></tbox><tbox llx="446" lly="664" urx="477" ury="676" f="5"><![CDATA[Cora ]]></tbox><tbox llx="473" lly="663" urx="566" ury="679" f="1"><![CDATA[project, a Com- ]]></tbox></line>
+<line><tbox llx="320" lly="649" urx="566" ury="664" f="1"><![CDATA[puter Science research paper search engine, ]]></tbox></line>
+<line><tbox llx="320" lly="634" urx="403" ury="650" f="1"><![CDATA[available from ]]></tbox><tbox llx="395" lly="634" urx="504" ury="649" f="6"><![CDATA[www.cora.jprc.com. ]]></tbox><tbox llx="498" lly="634" urx="566" ury="650" f="1"><![CDATA[We wish to ]]></tbox></line>
+<line><tbox llx="320" lly="620" urx="566" ury="635" f="1"><![CDATA[thank Kamal Nigam and Kristie Seymore for ]]></tbox></line>
+<line><tbox llx="320" lly="605" urx="433" ury="621" f="1"><![CDATA[their involvement in ]]></tbox><tbox llx="426" lly="606" urx="457" ury="618" f="5"><![CDATA[Cora ]]></tbox><tbox llx="452" lly="605" urx="566" ury="621" f="1"><![CDATA[and for their helpful ]]></tbox></line>
+<line><tbox llx="320" lly="591" urx="566" ury="606" f="1"><![CDATA[comments and observations relating to this re- ]]></tbox></line>
+<line><tbox llx="320" lly="576" urx="566" ury="591" f="1"><![CDATA[search. We also wish to thank Tom Mitchell ]]></tbox></line>
+<line><tbox llx="320" lly="561" urx="513" ury="577" f="1"><![CDATA[and Mark Craven for their insights. ]]></tbox></line>
+<line><tbox llx="320" lly="534" urx="396" ury="552" f="2"><![CDATA[References ]]></tbox></line>
+<line><tbox llx="325" lly="515" urx="566" ury="531" f="1"><![CDATA[Balabanovic, M., and Shoham, Y. 1995. ]]></tbox></line>
+<line><tbox llx="325" lly="501" urx="566" ury="516" f="1"><![CDATA[Learning information retrieval agents: Ex- ]]></tbox></line>
+<line><tbox llx="325" lly="486" urx="566" ury="502" f="1"><![CDATA[periments with automated web browsing. ]]></tbox></line>
+<line><tbox llx="325" lly="472" urx="347" ury="487" f="1"><![CDATA[In ]]></tbox><tbox llx="344" lly="472" urx="566" ury="487" f="6"><![CDATA[AAAI-95 Spring Symposium on Infor- ]]></tbox></line>
+<line><tbox llx="325" lly="457" urx="566" ury="472" f="6"><![CDATA[mation Gathering from Heterogenous, Dis- ]]></tbox></line>
+<line><tbox llx="325" lly="443" urx="452" ury="458" f="6"><![CDATA[tributed Environments. ]]></tbox></line>
+<line><tbox llx="325" lly="421" urx="442" ury="436" f="1"><![CDATA[Bellman, R. E. 1957. ]]></tbox><tbox llx="435" lly="421" urx="566" ury="436" f="6"><![CDATA[Dynamic Programming. ]]></tbox></line>
+<line><tbox llx="325" lly="406" urx="554" ury="422" f="1"><![CDATA[Princeton, NJ: Princeton University Press. ]]></tbox></line>
+<line><tbox llx="325" lly="384" urx="566" ury="400" f="1"><![CDATA[Boyan, J.; Freitag, D.; and Joachims, T. 1996. ]]></tbox></line>
+<line><tbox llx="325" lly="370" urx="567" ury="385" f="1"><![CDATA[A machine learning architecture for optimiz- ]]></tbox></line>
+<line><tbox llx="325" lly="355" urx="478" ury="371" f="1"><![CDATA[ing web search engines. In ]]></tbox><tbox llx="473" lly="355" urx="566" ury="370" f="6"><![CDATA[AAAI workshop ]]></tbox></line>
+<line><tbox llx="325" lly="341" urx="541" ury="356" f="6"><![CDATA[on Internet-Based Information Systems. ]]></tbox></line>
+<line><tbox llx="325" lly="319" urx="566" ury="334" f="1"><![CDATA[Cho, J.; Garcia-Molina, H.; and Page, L. ]]></tbox></line>
+<line><tbox llx="325" lly="304" urx="566" ury="320" f="1"><![CDATA[1998. EÆcient crawling through URL order- ]]></tbox></line>
+<line><tbox llx="325" lly="290" urx="374" ury="305" f="1"><![CDATA[ing. In ]]></tbox><tbox llx="369" lly="290" urx="566" ury="305" f="6"><![CDATA[Computer Networks and ISDN Sys- ]]></tbox></line>
+<line><tbox llx="325" lly="275" urx="417" ury="290" f="6"><![CDATA[tems (WWW7), ]]></tbox><tbox llx="410" lly="275" urx="477" ury="291" f="1"><![CDATA[volume 30. ]]></tbox></line>
+<line><tbox llx="325" lly="253" urx="544" ury="269" f="1"><![CDATA[Cover, T. M., and Thomas, J. A. 1991. ]]></tbox><tbox llx="540" lly="253" urx="566" ury="268" f="6"><![CDATA[El- ]]></tbox></line>
+<line><tbox llx="325" lly="239" urx="499" ury="254" f="6"><![CDATA[ements of Information Theory. ]]></tbox><tbox llx="499" lly="239" urx="566" ury="254" f="1"><![CDATA[New York: ]]></tbox></line>
+<line><tbox llx="325" lly="224" urx="448" ury="240" f="1"><![CDATA[John Wiley and Sons. ]]></tbox></line>
+<line><tbox llx="325" lly="202" urx="566" ury="218" f="1"><![CDATA[Joachims, T.; Freitag, D.; and Mitchell, T. ]]></tbox></line>
+<line><tbox llx="325" lly="188" urx="566" ury="203" f="1"><![CDATA[1997. Webwatcher: A tour guide for the ]]></tbox></line>
+<line><tbox llx="325" lly="173" urx="448" ury="189" f="1"><![CDATA[World Wide Web. In ]]></tbox><tbox llx="442" lly="173" urx="566" ury="188" f="6"><![CDATA[Proceedings of IJCAI- ]]></tbox></line>
+<line><tbox llx="325" lly="159" urx="351" ury="174" f="6"><![CDATA[97. ]]></tbox></line>
+<line><tbox llx="325" lly="137" urx="566" ury="152" f="1"><![CDATA[Kaelbling, L. P.; Littman, M. L.; and Moore, ]]></tbox></line>
+<line><tbox llx="325" lly="122" urx="566" ury="138" f="1"><![CDATA[A. W. 1996. Reinforcement learning: A ]]></tbox></line>
+<line><tbox llx="325" lly="108" urx="371" ury="123" f="1"><![CDATA[survey. ]]></tbox><tbox llx="367" lly="108" urx="566" ury="123" f="6"><![CDATA[Journal of Artificial Intelligence Re- ]]></tbox></line>
+<line><tbox llx="325" lly="93" urx="367" ury="108" f="6"><![CDATA[search ]]></tbox><tbox llx="360" lly="93" urx="416" ury="108" f="1"><![CDATA[237{285. ]]></tbox></line>
+<pbox llx="58.00" lly="93.00" urx="567.00" ury="737.00"/></page>
+<page n="13">
+<line><tbox llx="63" lly="722" urx="304" ury="737" f="1"><![CDATA[Lewis, D. D. 1998. Naive (Bayes) at forty: ]]></tbox></line>
+<line><tbox llx="63" lly="707" urx="304" ury="723" f="1"><![CDATA[The independence assumption in information ]]></tbox></line>
+<line><tbox llx="63" lly="693" urx="135" ury="708" f="1"><![CDATA[retrieval. In ]]></tbox><tbox llx="128" lly="693" urx="192" ury="708" f="2"><![CDATA[ECML-98. ]]></tbox></line>
+<line><tbox llx="63" lly="673" urx="304" ury="688" f="1"><![CDATA[McCallum, A.; Nigam, K.; Rennie, J.; and ]]></tbox></line>
+<line><tbox llx="63" lly="658" urx="304" ury="673" f="1"><![CDATA[Seymore, K. 1999. Building domain-specific ]]></tbox></line>
+<line><tbox llx="63" lly="644" urx="304" ury="659" f="1"><![CDATA[search engines with machine learning tech- ]]></tbox></line>
+<line><tbox llx="63" lly="629" urx="131" ury="644" f="1"><![CDATA[niques. In ]]></tbox><tbox llx="126" lly="629" urx="304" ury="644" f="2"><![CDATA[AAAI-99 Spring Symposium on ]]></tbox></line>
+<line><tbox llx="63" lly="614" urx="241" ury="629" f="2"><![CDATA[Intelligent Agents in Cyberspace. ]]></tbox></line>
+<line><tbox llx="63" lly="594" urx="304" ury="610" f="1"><![CDATA[Menczer, F. 1997. ARACHNID: Adaptive ]]></tbox></line>
+<line><tbox llx="63" lly="580" urx="304" ury="595" f="1"><![CDATA[retrieval agents choosing heuristic neighbor- ]]></tbox></line>
+<line><tbox llx="63" lly="565" urx="249" ury="580" f="1"><![CDATA[hoods for information discovery. In ]]></tbox><tbox llx="240" lly="565" urx="304" ury="580" f="2"><![CDATA[ICML '97. ]]></tbox></line>
+<line><tbox llx="63" lly="545" urx="180" ury="560" f="1"><![CDATA[Mitchell, T. M. 1997. ]]></tbox><tbox llx="173" lly="545" urx="278" ury="560" f="2"><![CDATA[Machine Learning. ]]></tbox><tbox llx="271" lly="545" urx="304" ury="560" f="1"><![CDATA[New ]]></tbox></line>
+<line><tbox llx="63" lly="530" urx="176" ury="546" f="1"><![CDATA[York: McGraw-Hill. ]]></tbox></line>
+<line><tbox llx="63" lly="510" urx="304" ury="525" f="1"><![CDATA[Nigam, K.; McCallum, A.; Thrun, S.; and ]]></tbox></line>
+<line><tbox llx="63" lly="495" urx="304" ury="511" f="1"><![CDATA[Mitchell, T. 1999. Text classification from ]]></tbox></line>
+<line><tbox llx="63" lly="481" urx="304" ury="496" f="1"><![CDATA[labeled and unlabeled documents using EM. ]]></tbox></line>
+<line><tbox llx="63" lly="467" urx="169" ury="481" f="2"><![CDATA[Machine Learning. ]]></tbox><tbox llx="163" lly="466" urx="229" ury="482" f="1"><![CDATA[To appear. ]]></tbox></line>
+<line><tbox llx="63" lly="446" urx="304" ury="462" f="1"><![CDATA[Torgo, L., and Gama, J. 1997. Regression us- ]]></tbox></line>
+<line><tbox llx="63" lly="432" urx="219" ury="447" f="1"><![CDATA[ing classification algorithms. ]]></tbox><tbox llx="212" lly="432" urx="304" ury="447" f="2"><![CDATA[Intelligent Data ]]></tbox></line>
+<line><tbox llx="63" lly="417" urx="116" ury="432" f="2"><![CDATA[Analysis ]]></tbox><tbox llx="109" lly="417" urx="144" ury="432" f="1"><![CDATA[1(4).]]></tbox></line>
+<pbox llx="63.00" lly="417.00" urx="304.00" ury="737.00"/></page>
+<fonts>
+<font name="Unknown" h="14.40" n="1"/>
+<font name="Unknown" h="13.96" n="2"/>
+<font name="Unknown" h="11.66" n="3"/>
+<font name="Unknown" h="14.25" n="4"/>
+<font name="Unknown" h="11.09" n="5"/>
+<font name="Unknown" h="13.96" n="6"/>
+<font name="Unknown" h="17.28" n="7"/>
+<font name="Unknown" h="7.92" n="8"/>
+<font name="Unknown" h="13.96" n="9"/>
+<font name="Unknown" h="14.25" n="10"/>
+<font name="Unknown" h="16.70" n="11"/>
+</fonts>
+</document>

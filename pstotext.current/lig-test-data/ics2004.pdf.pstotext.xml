@@ -1,0 +1,1027 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+<page n="1">
+<line><tbox llx="85" lly="701" urx="541" ury="729" f="1"><![CDATA[Cluster Scheduling for Explicitly-Speculative Tasks ]]></tbox></line>
+<line><tbox llx="123" lly="661" urx="204" ury="680" f="2"><![CDATA[David Petrou ]]></tbox></line>
+<line><tbox llx="98" lly="652" urx="228" ury="667" f="3"><![CDATA[Electrical & Computer Eng. ]]></tbox></line>
+<line><tbox llx="98" lly="641" urx="228" ury="657" f="3"><![CDATA[Carnegie Mellon University ]]></tbox></line>
+<line><tbox llx="97" lly="625" urx="230" ury="643" f="2"><![CDATA[dpetrou@ece.cmu.edu ]]></tbox></line>
+<line><tbox llx="252" lly="661" urx="367" ury="680" f="2"><![CDATA[Gregory R. Ganger ]]></tbox></line>
+<line><tbox llx="244" lly="652" urx="374" ury="667" f="3"><![CDATA[Electrical & Computer Eng. ]]></tbox></line>
+<line><tbox llx="244" lly="641" urx="374" ury="657" f="3"><![CDATA[Carnegie Mellon University ]]></tbox></line>
+<line><tbox llx="245" lly="625" urx="375" ury="643" f="2"><![CDATA[ganger@ece.cmu.edu ]]></tbox></line>
+<line><tbox llx="406" lly="661" urx="506" ury="680" f="2"><![CDATA[Garth A. Gibson ]]></tbox></line>
+<line><tbox llx="404" lly="652" urx="506" ury="667" f="3"><![CDATA[Comp. Sci. and ECE ]]></tbox></line>
+<line><tbox llx="390" lly="641" urx="520" ury="657" f="3"><![CDATA[Carnegie Mellon University ]]></tbox></line>
+<line><tbox llx="399" lly="625" urx="513" ury="643" f="2"><![CDATA[garth@cs.cmu.edu ]]></tbox></line>
+<line><tbox llx="52" lly="571" urx="131" ury="590" f="4"><![CDATA[ABSTRACT ]]></tbox></line>
+<line><tbox llx="54" lly="562" urx="301" ury="572" f="5"><![CDATA[Large-scale computing often consists of many speculative ]]></tbox></line>
+<line><tbox llx="54" lly="552" urx="302" ury="562" f="5"><![CDATA[tasks to test hypotheses, search for insights, and review po- ]]></tbox></line>
+<line><tbox llx="54" lly="541" urx="302" ury="551" f="5"><![CDATA[tentially finished products. E.g., speculative tasks are issued ]]></tbox></line>
+<line><tbox llx="54" lly="531" urx="185" ury="541" f="5"><![CDATA[by bioinformaticists comparing ]]></tbox><tbox llx="179" lly="533" urx="201" ury="539" f="6"><![CDATA[dna ]]></tbox><tbox llx="198" lly="531" urx="302" ury="541" f="5"><![CDATA[sequences and computer ]]></tbox></line>
+<line><tbox llx="54" lly="520" urx="301" ury="530" f="5"><![CDATA[graphics artists adjusting scene properties. We promote a ]]></tbox></line>
+<line><tbox llx="54" lly="510" urx="302" ury="520" f="5"><![CDATA[way of working that exploits the inherent speculation in ]]></tbox></line>
+<line><tbox llx="54" lly="499" urx="302" ury="509" f="5"><![CDATA[application-level search made more common by the cost- ]]></tbox></line>
+<line><tbox llx="54" lly="489" urx="302" ury="499" f="5"><![CDATA[effectiveness of grid and cluster computing. Researchers and ]]></tbox></line>
+<line><tbox llx="54" lly="478" urx="302" ury="488" f="5"><![CDATA[end-users disclose sets of speculative tasks that search an ap- ]]></tbox></line>
+<line><tbox llx="54" lly="468" urx="302" ury="478" f="5"><![CDATA[plication space, request specific results as needed, and cancel ]]></tbox></line>
+<line><tbox llx="54" lly="457" urx="302" ury="467" f="5"><![CDATA[unfinished tasks if early results suggest no need to continue. ]]></tbox></line>
+<line><tbox llx="54" lly="447" urx="301" ury="457" f="5"><![CDATA[Doing so matches natural usage patterns, making users more ]]></tbox></line>
+<line><tbox llx="54" lly="437" urx="271" ury="447" f="5"><![CDATA[effective, and also enables a new class of schedulers. ]]></tbox></line>
+<line><tbox llx="54" lly="416" urx="178" ury="426" f="5"><![CDATA[In simulation, we show how ]]></tbox><tbox llx="174" lly="416" urx="271" ury="425" f="7"><![CDATA[batchactive schedulers ]]></tbox><tbox llx="267" lly="416" urx="302" ury="426" f="5"><![CDATA[reduce ]]></tbox></line>
+<line><tbox llx="54" lly="405" urx="302" ury="415" f="5"><![CDATA[user-observed response times relative to conventional mod- ]]></tbox></line>
+<line><tbox llx="54" lly="395" urx="302" ury="405" f="5"><![CDATA[els in which tasks are requested one at a time (interactively) ]]></tbox></line>
+<line><tbox llx="54" lly="384" urx="302" ury="394" f="5"><![CDATA[or in batches without specifying which tasks are speculative. ]]></tbox></line>
+<line><tbox llx="54" lly="374" urx="301" ury="384" f="5"><![CDATA[Over a range of situations, user-observed response time is ]]></tbox></line>
+<line><tbox llx="54" lly="363" urx="302" ury="373" f="5"><![CDATA[about 50% better on average and at least two times bet- ]]></tbox></line>
+<line><tbox llx="54" lly="353" urx="302" ury="363" f="5"><![CDATA[ter for 20% of our simulations. Moreover, we show how user ]]></tbox></line>
+<line><tbox llx="54" lly="342" urx="302" ury="352" f="5"><![CDATA[costs can be reduced under an incentive cost model of charg- ]]></tbox></line>
+<line><tbox llx="54" lly="332" urx="248" ury="342" f="5"><![CDATA[ing only for tasks whose results are requested. ]]></tbox></line>
+<line><tbox llx="54" lly="319" urx="216" ury="327" f="8"><![CDATA[Categories and Subject Descriptors: ]]></tbox><tbox llx="212" lly="319" urx="301" ury="328" f="9"><![CDATA[D.4.1 [Operating Sys- ]]></tbox></line>
+<line><tbox llx="54" lly="308" urx="165" ury="317" f="9"><![CDATA[tems]: Process Management ]]></tbox></line>
+<line><tbox llx="54" lly="298" urx="127" ury="307" f="8"><![CDATA[General Terms: ]]></tbox><tbox llx="123" lly="298" urx="253" ury="307" f="9"><![CDATA[Algorithms, Design, Performance ]]></tbox></line>
+<line><tbox llx="54" lly="288" urx="106" ury="296" f="8"><![CDATA[Keywords: ]]></tbox><tbox llx="102" lly="288" urx="283" ury="297" f="9"><![CDATA[speculative, optimistic, cluster, grid scheduling ]]></tbox></line>
+<line><tbox llx="52" lly="257" urx="183" ury="276" f="4"><![CDATA[1. INTRODUCTION ]]></tbox></line>
+<line><tbox llx="54" lly="248" urx="301" ury="258" f="5"><![CDATA[Large-scale computing often consists of many speculative ]]></tbox></line>
+<line><tbox llx="54" lly="237" urx="302" ury="247" f="5"><![CDATA[tasks to test hypotheses, search for insights, and review po- ]]></tbox></line>
+<line><tbox llx="54" lly="227" urx="302" ury="237" f="5"><![CDATA[tentially finished products. This work addresses how to re- ]]></tbox></line>
+<line><tbox llx="54" lly="217" urx="302" ury="227" f="5"><![CDATA[duce or eliminate user-observed response time by prioritizing ]]></tbox></line>
+<line><tbox llx="54" lly="206" urx="301" ury="216" f="5"><![CDATA[work that the user is waiting on and wasting fewer resources ]]></tbox></line>
+<line><tbox llx="54" lly="196" urx="260" ury="206" f="5"><![CDATA[on speculative tasks that might be canceled. This ]]></tbox><tbox llx="255" lly="196" urx="303" ury="205" f="7"><![CDATA[visible re- ]]></tbox></line>
+<line><tbox llx="54" lly="186" urx="110" ury="195" f="7"><![CDATA[sponse time ]]></tbox><tbox llx="103" lly="185" urx="302" ury="195" f="5"><![CDATA[is the time that a user actually waits for a result, ]]></tbox></line>
+<line><tbox llx="54" lly="175" urx="301" ury="185" f="5"><![CDATA[which is often less than the time that a speculative task has ]]></tbox></line>
+<line><tbox llx="53" lly="133" urx="301" ury="144" f="10"><![CDATA[Permission to make digital or hard copies of all or part of this work for ]]></tbox></line>
+<line><tbox llx="53" lly="124" urx="301" ury="135" f="10"><![CDATA[personal or classroom use is granted without fee provided that copies are ]]></tbox></line>
+<line><tbox llx="53" lly="115" urx="300" ury="127" f="10"><![CDATA[not made or distributed for profit or commercial advantage and that copies ]]></tbox></line>
+<line><tbox llx="53" lly="106" urx="301" ury="118" f="10"><![CDATA[bear this notice and the full citation on the first page. To copy otherwise, to ]]></tbox></line>
+<line><tbox llx="53" lly="97" urx="301" ury="109" f="10"><![CDATA[republish, to post on servers or to redistribute to lists, requires prior specific ]]></tbox></line>
+<line><tbox llx="53" lly="88" urx="138" ury="100" f="10"><![CDATA[permission and/or a fee. ]]></tbox></line>
+<line><tbox llx="53" lly="79" urx="87" ury="91" f="11"><![CDATA[ICS'04, ]]></tbox><tbox llx="80" lly="79" urx="204" ury="91" f="10"><![CDATA[June 26--July 1, 2004, Malo, France. ]]></tbox></line>
+<line><tbox llx="53" lly="70" urx="236" ury="82" f="10"><![CDATA[Copyright 2004 ACM 1-58113-839-3/04/0006 ...$5.00 ]]></tbox></line>
+<line><tbox llx="317" lly="573" urx="565" ury="583" f="5"><![CDATA[been in the system. Our target architecture is a computa- ]]></tbox></line>
+<line><tbox llx="317" lly="563" urx="565" ury="573" f="5"><![CDATA[tional grid [5] or shared cluster [3, 25]. Our deployment plan ]]></tbox></line>
+<line><tbox llx="317" lly="552" urx="565" ury="562" f="5"><![CDATA[is to replace or augment the extensible scheduling policies in ]]></tbox></line>
+<line><tbox llx="317" lly="542" urx="545" ury="552" f="5"><![CDATA[clustering software such as Condor, Beowulf, Platform ]]></tbox><tbox llx="540" lly="544" urx="562" ury="550" f="6"><![CDATA[lsf, ]]></tbox></line>
+<line><tbox llx="317" lly="531" urx="487" ury="541" f="5"><![CDATA[Globus, and the Sun ONE Grid Engine. ]]></tbox></line>
+<line><tbox llx="317" lly="510" urx="565" ury="520" f="5"><![CDATA[Speculative tasks are pervasive and intelligently scheduling ]]></tbox></line>
+<line><tbox llx="317" lly="500" urx="564" ury="510" f="5"><![CDATA[them is increasingly important in supercomputing and grid ]]></tbox></line>
+<line><tbox llx="317" lly="489" urx="565" ury="499" f="5"><![CDATA[architectures. A speculative task is one not yet known to be ]]></tbox></line>
+<line><tbox llx="317" lly="479" urx="387" ury="489" f="5"><![CDATA[required [12]. A ]]></tbox><tbox llx="380" lly="479" urx="419" ury="489" f="7"><![CDATA[task set ]]></tbox><tbox llx="412" lly="479" urx="565" ury="489" f="5"><![CDATA[is a collection of such tasks. The user ]]></tbox></line>
+<line><tbox llx="317" lly="468" urx="565" ury="478" f="5"><![CDATA[may want one, all, or some of these tasks. After requesting ]]></tbox></line>
+<line><tbox llx="317" lly="458" urx="565" ury="468" f="5"><![CDATA[a needed task, receiving the output, and considering this ]]></tbox></line>
+<line><tbox llx="317" lly="447" urx="565" ury="457" f="5"><![CDATA[output, the user decides whether to request the next task in ]]></tbox></line>
+<line><tbox llx="317" lly="437" urx="519" ury="447" f="5"><![CDATA[the set. This approach is commonly known as a ]]></tbox><tbox llx="514" lly="437" urx="566" ury="447" f="7"><![CDATA[speculative ]]></tbox></line>
+<line><tbox llx="317" lly="427" urx="419" ury="436" f="7"><![CDATA[search, speculative test, ]]></tbox><tbox llx="413" lly="427" urx="430" ury="437" f="5"><![CDATA[or ]]></tbox><tbox llx="424" lly="427" urx="501" ury="436" f="7"><![CDATA[parameter study. ]]></tbox></line>
+<line><tbox llx="317" lly="406" urx="565" ury="416" f="5"><![CDATA[Imagine a scientist using shared resources to validate a hy- ]]></tbox></line>
+<line><tbox llx="317" lly="395" urx="564" ury="405" f="5"><![CDATA[pothesis. She issues a task set that could keep the system ]]></tbox></line>
+<line><tbox llx="317" lly="385" urx="564" ury="395" f="5"><![CDATA[busy for hours or longer. Tasks listed earlier are to answer ]]></tbox></line>
+<line><tbox llx="317" lly="374" urx="565" ury="384" f="5"><![CDATA[pressing questions while those later are more speculative. ]]></tbox></line>
+<line><tbox llx="317" lly="364" urx="565" ury="374" f="5"><![CDATA[Early results could cause the scientist to reformulate her ]]></tbox></line>
+<line><tbox llx="317" lly="353" urx="565" ury="363" f="5"><![CDATA[line of inquiry; she would then reprioritize tasks, cancel later ]]></tbox></line>
+<line><tbox llx="317" lly="343" urx="565" ury="353" f="5"><![CDATA[tasks, issue new tasks. Moreover, the scientist is not always ]]></tbox></line>
+<line><tbox llx="317" lly="332" urx="565" ury="342" f="5"><![CDATA[waiting for tasks to complete; she spends minutes to hours ]]></tbox></line>
+<line><tbox llx="317" lly="322" urx="487" ury="332" f="5"><![CDATA[studying the output of completed tasks. ]]></tbox></line>
+<line><tbox llx="317" lly="301" urx="564" ury="311" f="5"><![CDATA[We promote a model that exploits the inherent speculation ]]></tbox></line>
+<line><tbox llx="317" lly="291" urx="513" ury="301" f="5"><![CDATA[in such scenarios. Users exploring search spaces ]]></tbox><tbox llx="508" lly="291" urx="548" ury="300" f="7"><![CDATA[disclose ]]></tbox><tbox llx="541" lly="291" urx="565" ury="301" f="5"><![CDATA[sets ]]></tbox></line>
+<line><tbox llx="317" lly="280" urx="408" ury="290" f="5"><![CDATA[of speculative tasks, ]]></tbox><tbox llx="404" lly="281" urx="441" ury="290" f="7"><![CDATA[request ]]></tbox><tbox llx="436" lly="280" urx="537" ury="290" f="5"><![CDATA[results as needed, and ]]></tbox><tbox llx="532" lly="281" urx="566" ury="290" f="7"><![CDATA[cancel ]]></tbox></line>
+<line><tbox llx="317" lly="270" urx="565" ury="280" f="5"><![CDATA[unfinished tasks if early results suggest no need to continue. ]]></tbox></line>
+<line><tbox llx="317" lly="259" urx="389" ury="269" f="5"><![CDATA[We call this the ]]></tbox><tbox llx="384" lly="260" urx="464" ury="269" f="7"><![CDATA[batchactive model ]]></tbox><tbox llx="458" lly="259" urx="565" ury="269" f="5"><![CDATA[in contrast to users that ]]></tbox></line>
+<line><tbox llx="317" lly="249" urx="565" ury="259" f="5"><![CDATA[interactively submit needed tasks one at a time and users ]]></tbox></line>
+<line><tbox llx="317" lly="238" urx="565" ury="248" f="5"><![CDATA[that submit batches of both needed and speculative tasks ]]></tbox></line>
+<line><tbox llx="317" lly="228" urx="497" ury="238" f="5"><![CDATA[without identifying which tasks are which. ]]></tbox></line>
+<line><tbox llx="317" lly="207" urx="440" ury="217" f="5"><![CDATA[In the batchactive model are ]]></tbox><tbox llx="435" lly="207" urx="531" ury="216" f="7"><![CDATA[batchactive schedulers ]]></tbox><tbox llx="525" lly="207" urx="565" ury="217" f="5"><![CDATA[that at- ]]></tbox></line>
+<line><tbox llx="317" lly="196" urx="564" ury="206" f="5"><![CDATA[tempt to maximize human productivity and minimize user ]]></tbox></line>
+<line><tbox llx="317" lly="186" urx="565" ury="196" f="5"><![CDATA[resource costs by scheduling speculative tasks differently. ]]></tbox></line>
+<line><tbox llx="317" lly="176" urx="565" ury="186" f="5"><![CDATA[Our heuristic is to segregate tasks into two queues based on ]]></tbox></line>
+<line><tbox llx="317" lly="165" urx="565" ury="175" f="5"><![CDATA[whether a task is speculative and give the non-speculative ]]></tbox></line>
+<line><tbox llx="317" lly="155" urx="565" ury="165" f="5"><![CDATA[tasks priority, resulting in better response time at lower re- ]]></tbox></line>
+<line><tbox llx="317" lly="144" urx="543" ury="154" f="5"><![CDATA[sources usage. This organization is shown in Figure 1. ]]></tbox></line>
+<line><tbox llx="317" lly="123" urx="565" ury="133" f="5"><![CDATA[Our approach applies best to domains in which several to ]]></tbox></line>
+<line><tbox llx="317" lly="113" urx="564" ury="123" f="5"><![CDATA[a potentially unbounded number of intermediate specula- ]]></tbox></line>
+<line><tbox llx="317" lly="102" urx="564" ury="112" f="5"><![CDATA[tive tasks are submitted and early results are acted on while ]]></tbox></line>
+<line><tbox llx="317" lly="92" urx="565" ury="102" f="5"><![CDATA[unfinished tasks remain. Considerable performance improve- ]]></tbox></line>
+<line><tbox llx="317" lly="81" urx="565" ury="91" f="5"><![CDATA[ments are found even when the average depth across users ]]></tbox></line>
+<line><tbox llx="303" lly="42" urx="316" ury="52" f="5"><![CDATA[1 ]]></tbox></line>
+<pbox llx="52.00" lly="42.00" urx="566.00" ury="729.00"/></page>
+<page n="2">
+<line><tbox llx="54" lly="573" urx="303" ury="583" f="1"><![CDATA[Figure 1: Models of user and scheduler behavior. ]]></tbox></line>
+<line><tbox llx="54" lly="563" urx="303" ury="573" f="1"><![CDATA[Users either request needed tasks one at a time ]]></tbox></line>
+<line><tbox llx="54" lly="553" urx="303" ury="563" f="1"><![CDATA[(interactive), or request needed and disclose spec- ]]></tbox></line>
+<line><tbox llx="54" lly="542" urx="303" ury="552" f="1"><![CDATA[ulative tasks together (batch and batchactive). Our ]]></tbox></line>
+<line><tbox llx="54" lly="532" urx="303" ury="542" f="1"><![CDATA[batchactive policies place requested and disclosed ]]></tbox></line>
+<line><tbox llx="54" lly="521" urx="303" ury="531" f="1"><![CDATA[tasks in different queues, in which the requested ]]></tbox></line>
+<line><tbox llx="54" lly="511" urx="151" ury="521" f="1"><![CDATA[queue has priority. ]]></tbox></line>
+<line><tbox llx="54" lly="480" urx="301" ury="490" f="2"><![CDATA[of disclosed speculative tasks is 3 or 4. The following are ]]></tbox></line>
+<line><tbox llx="54" lly="470" urx="200" ury="480" f="2"><![CDATA[several highly-applicable domains: ]]></tbox></line>
+<line><tbox llx="54" lly="449" urx="123" ury="459" f="3"><![CDATA[Bioinformatics ]]></tbox><tbox llx="116" lly="449" urx="302" ury="459" f="2"><![CDATA[Bioinformaticists explore biological hypothe- ]]></tbox></line>
+<line><tbox llx="54" lly="439" urx="149" ury="449" f="2"><![CDATA[ses, searching among ]]></tbox><tbox llx="145" lly="441" urx="167" ury="447" f="4"><![CDATA[dna ]]></tbox><tbox llx="166" lly="439" urx="301" ury="449" f="2"><![CDATA[fragments with similarity tools ]]></tbox></line>
+<line><tbox llx="54" lly="428" urx="76" ury="438" f="2"><![CDATA[like ]]></tbox><tbox llx="72" lly="430" urx="102" ury="436" f="4"><![CDATA[blast ]]></tbox><tbox llx="101" lly="428" urx="139" ury="438" f="2"><![CDATA[[2] and ]]></tbox><tbox llx="135" lly="430" urx="166" ury="436" f="4"><![CDATA[fasta. ]]></tbox><tbox llx="165" lly="428" urx="301" ury="438" f="2"><![CDATA[These scientists share worksta- ]]></tbox></line>
+<line><tbox llx="54" lly="418" urx="302" ury="428" f="2"><![CDATA[tion farms --- such as the dedicated 30 machines at the ]]></tbox></line>
+<line><tbox llx="54" lly="407" urx="301" ury="417" f="2"><![CDATA[Berkeley Phylogenomics Group [17] --- and issue series of ]]></tbox></line>
+<line><tbox llx="54" lly="397" urx="302" ury="407" f="2"><![CDATA[fast, inaccurate searches (taking from 10 seconds to 10 min- ]]></tbox></line>
+<line><tbox llx="54" lly="386" urx="301" ury="396" f="2"><![CDATA[utes when matching against human genome sequences) fol- ]]></tbox></line>
+<line><tbox llx="54" lly="376" urx="302" ury="386" f="2"><![CDATA[lowed by slow, accurate searches to confirm initial findings. ]]></tbox></line>
+<line><tbox llx="54" lly="365" urx="302" ury="375" f="2"><![CDATA[A batchactive scheduler would enable scientists to explore ]]></tbox></line>
+<line><tbox llx="54" lly="355" urx="302" ury="365" f="2"><![CDATA[ambitious ideas potentially requiring unbounded resources ]]></tbox></line>
+<line><tbox llx="54" lly="345" urx="302" ury="355" f="2"><![CDATA[without fear that resources would be wasted on tasks that ]]></tbox></line>
+<line><tbox llx="54" lly="334" urx="302" ury="344" f="2"><![CDATA[might be canceled after early results were scrutinized. Some ]]></tbox></line>
+<line><tbox llx="54" lly="324" urx="301" ury="334" f="2"><![CDATA[scientists wish to submit 10,000 sequencing tasks because ]]></tbox></line>
+<line><tbox llx="54" lly="313" urx="302" ury="323" f="2"><![CDATA[they `really do not know what [ . . . ] sequences will work.' [14] ]]></tbox></line>
+<line><tbox llx="54" lly="293" urx="139" ury="302" f="3"><![CDATA[Computer graphics ]]></tbox><tbox llx="134" lly="292" urx="302" ury="302" f="2"><![CDATA[Teams of hundreds of artists creating a ]]></tbox></line>
+<line><tbox llx="54" lly="282" urx="301" ury="292" f="2"><![CDATA[computer-animated film, such as at Dreamworks or Pixar, ]]></tbox></line>
+<line><tbox llx="54" lly="271" urx="302" ury="281" f="2"><![CDATA[submit shots for rendering, where each shot has roughly ]]></tbox></line>
+<line><tbox llx="54" lly="261" urx="302" ury="271" f="2"><![CDATA[200 frames, to a cluster of hundreds to thousands of pro- ]]></tbox></line>
+<line><tbox llx="54" lly="250" urx="301" ury="260" f="2"><![CDATA[cessors. Each frame, which consists of independent tasks ]]></tbox></line>
+<line><tbox llx="54" lly="240" urx="302" ury="250" f="2"><![CDATA[(for lighting, shading, animation, etc.) can take from min- ]]></tbox></line>
+<line><tbox llx="54" lly="229" urx="158" ury="239" f="2"><![CDATA[utes to hours to render. ]]></tbox><tbox llx="150" lly="234" urx="157" ury="241" f="5"><![CDATA[1 ]]></tbox><tbox llx="157" lly="229" urx="302" ury="239" f="2"><![CDATA[The artist submits the entire shot ]]></tbox></line>
+<line><tbox llx="54" lly="219" urx="302" ury="229" f="2"><![CDATA[at once. This work is highly speculative: the overwhelm- ]]></tbox></line>
+<line><tbox llx="54" lly="208" urx="302" ury="218" f="2"><![CDATA[ing majority of computation never makes it into the final ]]></tbox></line>
+<line><tbox llx="54" lly="198" urx="301" ury="208" f="2"><![CDATA[film. [13, 21] The artist requests key frames, those with more ]]></tbox></line>
+<line><tbox llx="54" lly="188" urx="302" ury="198" f="2"><![CDATA[action, for example, to decide on the finished product. With ]]></tbox></line>
+<line><tbox llx="54" lly="177" urx="301" ury="187" f="2"><![CDATA[a batchactive scheduler, the key frames would run before ]]></tbox></line>
+<line><tbox llx="54" lly="167" urx="301" ury="177" f="2"><![CDATA[speculative, remaining frames. If upon seeing these frames ]]></tbox></line>
+<line><tbox llx="54" lly="156" urx="302" ury="166" f="2"><![CDATA[the artist changes lighting attributes or moves objects, spec- ]]></tbox></line>
+<line><tbox llx="54" lly="146" urx="302" ury="156" f="2"><![CDATA[ulative frames would be canceled and would not have un- ]]></tbox></line>
+<line><tbox llx="54" lly="135" urx="301" ury="145" f="2"><![CDATA[necessarily competed against the key frames of other team ]]></tbox></line>
+<line><tbox llx="54" lly="125" urx="90" ury="135" f="2"><![CDATA[artists. ]]></tbox></line>
+<line><tbox llx="55" lly="113" urx="62" ury="119" f="5"><![CDATA[1 ]]></tbox><tbox llx="59" lly="108" urx="302" ury="118" f="2"><![CDATA[Over a nine month production period, Weta digital em- ]]></tbox></line>
+<line><tbox llx="54" lly="99" urx="302" ury="109" f="2"><![CDATA[ployed 3,200 processors to create Lord of the Rings: The ]]></tbox></line>
+<line><tbox llx="54" lly="90" urx="301" ury="100" f="2"><![CDATA[Return of the King. In this film there were 1,400 special ]]></tbox></line>
+<line><tbox llx="54" lly="81" urx="302" ury="91" f="2"><![CDATA[effects shots, each containing at least 240 frames, and the ]]></tbox></line>
+<line><tbox llx="54" lly="72" urx="232" ury="82" f="2"><![CDATA[average frame took 2 hours to render. [16] ]]></tbox></line>
+<line><tbox llx="317" lly="726" urx="370" ury="735" f="3"><![CDATA[Simulation ]]></tbox><tbox llx="363" lly="726" urx="565" ury="736" f="2"><![CDATA[Computer scientists routinely use clusters to run ]]></tbox></line>
+<line><tbox llx="317" lly="715" urx="565" ury="725" f="2"><![CDATA[simulations exploring high dimensional spaces. Exploratory ]]></tbox></line>
+<line><tbox llx="317" lly="705" urx="565" ury="715" f="2"><![CDATA[searches, or parameter studies, for feature extraction, search, ]]></tbox></line>
+<line><tbox llx="317" lly="694" urx="565" ury="704" f="2"><![CDATA[or function optimization, can continue indefinitely, homing ]]></tbox></line>
+<line><tbox llx="317" lly="684" urx="565" ury="694" f="2"><![CDATA[in on areas for accuracy or randomly sampling points for cov- ]]></tbox></line>
+<line><tbox llx="317" lly="673" urx="349" ury="683" f="2"><![CDATA[erage. ]]></tbox><tbox llx="341" lly="678" urx="348" ury="685" f="5"><![CDATA[2 ]]></tbox><tbox llx="347" lly="673" urx="565" ury="683" f="2"><![CDATA[In our department, clusters are used for, among other ]]></tbox></line>
+<line><tbox llx="317" lly="663" urx="565" ury="673" f="2"><![CDATA[things, trace-driven simulation for studying microarchitec- ]]></tbox></line>
+<line><tbox llx="317" lly="652" urx="565" ury="662" f="2"><![CDATA[ture, computer virus propagation, and storage patterns re- ]]></tbox></line>
+<line><tbox llx="317" lly="642" urx="565" ury="652" f="2"><![CDATA[lated to I/O caching and file access relationships. With a ]]></tbox></line>
+<line><tbox llx="317" lly="631" urx="565" ury="641" f="2"><![CDATA[batchactive scheduler, such simulations could occur in par- ]]></tbox></line>
+<line><tbox llx="317" lly="621" urx="565" ury="631" f="2"><![CDATA[allel with the experimenter analyzing completed results and ]]></tbox></line>
+<line><tbox llx="317" lly="610" urx="564" ury="620" f="2"><![CDATA[guiding the search in new directions, with the speculative ]]></tbox></line>
+<line><tbox llx="317" lly="600" urx="565" ury="610" f="2"><![CDATA[work operating in the background when pressing tasks are ]]></tbox></line>
+<line><tbox llx="317" lly="589" urx="366" ury="599" f="2"><![CDATA[requested. ]]></tbox></line>
+<line><tbox llx="317" lly="569" urx="565" ury="579" f="2"><![CDATA[The batchactive model requires rethinking metrics and algo- ]]></tbox></line>
+<line><tbox llx="317" lly="558" urx="564" ury="568" f="2"><![CDATA[rithms. In particular, when the system is aware of specula- ]]></tbox></line>
+<line><tbox llx="317" lly="548" urx="565" ury="558" f="2"><![CDATA[tive tasks, the traditional response time metric should be re- ]]></tbox></line>
+<line><tbox llx="317" lly="537" urx="404" ury="547" f="2"><![CDATA[fined. We introduce ]]></tbox><tbox llx="399" lly="538" urx="493" ury="547" f="3"><![CDATA[visible response time, ]]></tbox><tbox llx="487" lly="537" urx="565" ury="547" f="2"><![CDATA[the time between ]]></tbox></line>
+<line><tbox llx="317" lly="527" urx="565" ury="537" f="2"><![CDATA[requesting and receiving task output, or the time `blocked ]]></tbox></line>
+<line><tbox llx="317" lly="516" urx="564" ury="526" f="2"><![CDATA[on' output. Visible response time accrues only after a user ]]></tbox></line>
+<line><tbox llx="317" lly="506" urx="565" ury="516" f="2"><![CDATA[requests a task that may or may not have been already dis- ]]></tbox></line>
+<line><tbox llx="317" lly="495" urx="565" ury="505" f="2"><![CDATA[closed. In contrast, and less usefully, response time accrues ]]></tbox></line>
+<line><tbox llx="317" lly="485" urx="470" ury="495" f="2"><![CDATA[as soon as a task enters the system. ]]></tbox></line>
+<line><tbox llx="317" lly="464" urx="565" ury="474" f="2"><![CDATA[The batchactive model also suggests refining the cost model. ]]></tbox></line>
+<line><tbox llx="317" lly="453" urx="565" ury="463" f="2"><![CDATA[Traditionally, computing centers charge for resource usage ]]></tbox></line>
+<line><tbox llx="317" lly="443" urx="565" ury="453" f="2"><![CDATA[irrespective of whether a task was needed [20]. We introduce ]]></tbox></line>
+<line><tbox llx="317" lly="433" urx="564" ury="443" f="2"><![CDATA[an incentive cost model which charges for only resources ]]></tbox></line>
+<line><tbox llx="317" lly="422" urx="564" ury="432" f="2"><![CDATA[used by tasks whose results are requested. This encourages ]]></tbox></line>
+<line><tbox llx="317" lly="412" urx="565" ury="422" f="2"><![CDATA[users to disclose speculative work deeply, and prevents the ]]></tbox></line>
+<line><tbox llx="317" lly="401" urx="565" ury="411" f="2"><![CDATA[type of gaming in which users mark all tasks as high-priority, ]]></tbox></line>
+<line><tbox llx="317" lly="391" urx="565" ury="401" f="2"><![CDATA[requested tasks. We show that user costs are actually re- ]]></tbox></line>
+<line><tbox llx="317" lly="380" urx="442" ury="390" f="2"><![CDATA[duced under this cost model. ]]></tbox></line>
+<line><tbox llx="317" lly="359" urx="565" ury="369" f="2"><![CDATA[We show in simulation that discriminating between specu- ]]></tbox></line>
+<line><tbox llx="317" lly="349" urx="564" ury="359" f="2"><![CDATA[lative and conventional tasks improves on time and resource ]]></tbox></line>
+<line><tbox llx="317" lly="338" urx="564" ury="348" f="2"><![CDATA[metrics compared to traditional schedulers. Over a broad ]]></tbox></line>
+<line><tbox llx="317" lly="328" urx="565" ury="338" f="2"><![CDATA[range of simulated user behavior, we show that visible re- ]]></tbox></line>
+<line><tbox llx="317" lly="318" urx="565" ury="328" f="2"><![CDATA[sponse time is improved by about 50% on average under a ]]></tbox></line>
+<line><tbox llx="317" lly="307" urx="565" ury="317" f="2"><![CDATA[batchactive scheduler, and is at least two times better for ]]></tbox></line>
+<line><tbox llx="317" lly="297" urx="565" ury="307" f="2"><![CDATA[20% of our simulations. Beyond these benefits, the batchac- ]]></tbox></line>
+<line><tbox llx="317" lly="286" urx="565" ury="296" f="2"><![CDATA[tive computing model creates a new challenge for scheduling ]]></tbox></line>
+<line><tbox llx="317" lly="276" urx="565" ury="286" f="2"><![CDATA[theory and practice: how does one best schedule speculative, ]]></tbox></line>
+<line><tbox llx="317" lly="265" urx="529" ury="275" f="2"><![CDATA[abortable tasks to minimize visible response time? ]]></tbox></line>
+<line><tbox llx="315" lly="238" urx="493" ury="257" f="6"><![CDATA[2. USER AND TASK MODEL ]]></tbox></line>
+<line><tbox llx="317" lly="229" urx="480" ury="239" f="2"><![CDATA[We model a closed loop of a constant ]]></tbox><tbox llx="476" lly="230" urx="550" ury="239" f="3"><![CDATA[number of users ]]></tbox><tbox llx="545" lly="229" urx="565" ury="239" f="2"><![CDATA[in- ]]></tbox></line>
+<line><tbox llx="317" lly="219" urx="459" ury="229" f="2"><![CDATA[teracting with the system. Users ]]></tbox><tbox llx="454" lly="219" urx="494" ury="228" f="3"><![CDATA[disclose ]]></tbox><tbox llx="489" lly="219" urx="565" ury="229" f="2"><![CDATA[speculative work ]]></tbox></line>
+<line><tbox llx="317" lly="208" urx="334" ury="218" f="2"><![CDATA[as ]]></tbox><tbox llx="329" lly="209" urx="376" ury="218" f="3"><![CDATA[task sets, ]]></tbox><tbox llx="370" lly="208" urx="565" ury="218" f="2"><![CDATA[which are ordered lists of tasks. When a user ]]></tbox></line>
+<line><tbox llx="317" lly="198" urx="489" ury="208" f="2"><![CDATA[needs a result from a task set, the user ]]></tbox><tbox llx="484" lly="198" urx="525" ury="207" f="3"><![CDATA[requests ]]></tbox><tbox llx="520" lly="198" urx="565" ury="208" f="2"><![CDATA[the task. ]]></tbox></line>
+<line><tbox llx="317" lly="187" urx="370" ury="197" f="2"><![CDATA[After some ]]></tbox><tbox llx="365" lly="188" urx="419" ury="197" f="3"><![CDATA[think time, ]]></tbox><tbox llx="413" lly="187" urx="565" ury="197" f="2"><![CDATA[the user may request the next task ]]></tbox></line>
+<line><tbox llx="317" lly="177" urx="334" ury="187" f="2"><![CDATA[or ]]></tbox><tbox llx="328" lly="177" urx="361" ury="186" f="3"><![CDATA[cancel ]]></tbox><tbox llx="355" lly="177" urx="565" ury="187" f="2"><![CDATA[all unrequested tasks and issue a new task set. The ]]></tbox></line>
+<line><tbox llx="317" lly="166" urx="565" ury="176" f="2"><![CDATA[act of cancelation models a user that doesn't need any more ]]></tbox></line>
+<line><tbox llx="317" lly="156" urx="426" ury="166" f="2"><![CDATA[results from the task set. ]]></tbox></line>
+<line><tbox llx="317" lly="135" urx="565" ury="145" f="2"><![CDATA[Figure 2 depicts this user interaction with the scheduler, ]]></tbox></line>
+<line><tbox llx="317" lly="125" urx="565" ury="135" f="2"><![CDATA[and the scheduler's interaction with the computing system. ]]></tbox></line>
+<line><tbox llx="318" lly="113" urx="325" ury="119" f="5"><![CDATA[2 ]]></tbox><tbox llx="322" lly="108" urx="565" ury="118" f="2"><![CDATA[The Xfeed agent with the Xgrid clustering software (from ]]></tbox></line>
+<line><tbox llx="317" lly="99" urx="565" ury="109" f="2"><![CDATA[Apple Computer, Inc.) explicitly supports this model. One ]]></tbox></line>
+<line><tbox llx="317" lly="90" urx="565" ury="100" f="2"><![CDATA[specifies a range of arguments (or a random sampling) to ]]></tbox></line>
+<line><tbox llx="317" lly="81" urx="564" ury="91" f="2"><![CDATA[pass to a command. Xfeed generates task specifications for ]]></tbox></line>
+<line><tbox llx="317" lly="72" urx="564" ury="82" f="2"><![CDATA[each possible combination of arguments and submits them. ]]></tbox></line>
+<line><tbox llx="303" lly="42" urx="316" ury="52" f="2"><![CDATA[2 ]]></tbox></line>
+<pbox llx="54.00" lly="42.00" urx="565.00" ury="736.00"/></page>
+<page n="3">
+<line><tbox llx="54" lly="575" urx="303" ury="585" f="1"><![CDATA[Figure 2: Interaction between users, the scheduler, ]]></tbox></line>
+<line><tbox llx="54" lly="564" urx="240" ury="574" f="1"><![CDATA[and the computing center's resources. ]]></tbox></line>
+<line><tbox llx="98" lly="386" urx="256" ury="396" f="1"><![CDATA[Figure 3: Task state transitions. ]]></tbox></line>
+<line><tbox llx="54" lly="354" urx="302" ury="364" f="2"><![CDATA[Any number of users disclose, request, and cancel any num- ]]></tbox></line>
+<line><tbox llx="54" lly="344" urx="301" ury="354" f="2"><![CDATA[ber of tasks. The scheduling policy decides which and when ]]></tbox></line>
+<line><tbox llx="54" lly="333" urx="302" ury="343" f="2"><![CDATA[disclosed and requested tasks run. If a disclosed task is can- ]]></tbox></line>
+<line><tbox llx="54" lly="323" urx="301" ury="333" f="2"><![CDATA[celed, it is no longer a candidate. The scheduler communi- ]]></tbox></line>
+<line><tbox llx="54" lly="312" urx="302" ury="322" f="2"><![CDATA[cates decisions to the conventional clustering software which ]]></tbox></line>
+<line><tbox llx="54" lly="302" urx="268" ury="312" f="2"><![CDATA[handles the details of running tasks on the servers. ]]></tbox></line>
+<line><tbox llx="54" lly="281" urx="302" ury="291" f="2"><![CDATA[Figure 3 details the states that a task can be in. Each task ]]></tbox></line>
+<line><tbox llx="54" lly="271" urx="83" ury="281" f="2"><![CDATA[has a ]]></tbox><tbox llx="77" lly="271" urx="143" ury="280" f="3"><![CDATA[resource usage ]]></tbox><tbox llx="137" lly="271" urx="302" ury="281" f="2"><![CDATA[that increases as the task runs. When a ]]></tbox></line>
+<line><tbox llx="54" lly="260" urx="185" ury="270" f="2"><![CDATA[task's resource usage equals its ]]></tbox><tbox llx="180" lly="261" urx="240" ury="270" f="3"><![CDATA[service time, ]]></tbox><tbox llx="233" lly="260" urx="302" ury="270" f="2"><![CDATA[the task is con- ]]></tbox></line>
+<line><tbox llx="54" lly="250" urx="91" ury="260" f="2"><![CDATA[sidered ]]></tbox><tbox llx="86" lly="250" urx="131" ury="259" f="3"><![CDATA[executed. ]]></tbox><tbox llx="125" lly="250" urx="302" ury="260" f="2"><![CDATA[If a task is both executed and requested, ]]></tbox></line>
+<line><tbox llx="54" lly="239" urx="169" ury="249" f="2"><![CDATA[then the task is considered ]]></tbox><tbox llx="164" lly="240" urx="204" ury="249" f="3"><![CDATA[finished ]]></tbox><tbox llx="198" lly="239" urx="302" ury="249" f="2"><![CDATA[and the task's output is ]]></tbox></line>
+<line><tbox llx="54" lly="229" urx="301" ury="239" f="2"><![CDATA[supplied to the requesting user. If a task executes and was ]]></tbox></line>
+<line><tbox llx="54" lly="218" urx="302" ury="228" f="2"><![CDATA[disclosed but not requested, then the task's output is stored ]]></tbox></line>
+<line><tbox llx="54" lly="208" urx="173" ury="218" f="2"><![CDATA[until requested or canceled. ]]></tbox></line>
+<line><tbox llx="54" lly="187" urx="302" ury="197" f="2"><![CDATA[The probability that a given task's results will cause a user ]]></tbox></line>
+<line><tbox llx="54" lly="177" urx="235" ury="187" f="2"><![CDATA[to cancel and issue a new task set is the ]]></tbox><tbox llx="230" lly="177" urx="302" ury="186" f="3"><![CDATA[task set change ]]></tbox></line>
+<line><tbox llx="54" lly="167" urx="107" ury="176" f="3"><![CDATA[probability. ]]></tbox><tbox llx="100" lly="166" urx="302" ury="176" f="2"><![CDATA[This parameter is modeled by a uniform random ]]></tbox></line>
+<line><tbox llx="54" lly="156" urx="302" ury="166" f="2"><![CDATA[variable whose lower bound is always 0 and whose upper ]]></tbox></line>
+<line><tbox llx="54" lly="145" urx="302" ury="155" f="2"><![CDATA[bound varies across runs. Each user is assigned a change ]]></tbox></line>
+<line><tbox llx="54" lly="135" urx="302" ury="145" f="2"><![CDATA[probability from this distribution for all the user's tasks, so ]]></tbox></line>
+<line><tbox llx="54" lly="124" urx="302" ury="134" f="2"><![CDATA[that we simulate users who are more or less certain about ]]></tbox></line>
+<line><tbox llx="54" lly="114" urx="301" ury="124" f="2"><![CDATA[whether they will request their disclosed, speculative work. ]]></tbox></line>
+<line><tbox llx="54" lly="93" urx="123" ury="103" f="2"><![CDATA[The number of ]]></tbox><tbox llx="118" lly="93" urx="197" ury="102" f="3"><![CDATA[tasks per task set ]]></tbox><tbox llx="191" lly="93" urx="302" ury="103" f="2"><![CDATA[is another simulation pa- ]]></tbox></line>
+<line><tbox llx="54" lly="82" urx="301" ury="92" f="2"><![CDATA[rameter and is also drawn from a uniform random variable ]]></tbox></line>
+<line><tbox llx="54" lly="72" urx="302" ury="82" f="2"><![CDATA[for each user. Here, the lower bound is always 1, meaning no ]]></tbox></line>
+<line><tbox llx="317" lly="726" urx="565" ury="736" f="2"><![CDATA[disclosure. A low upper bound reflects shallow disclosure; a ]]></tbox></line>
+<line><tbox llx="317" lly="715" urx="565" ury="725" f="2"><![CDATA[scientist planning up to five or so experiments ahead. A high ]]></tbox></line>
+<line><tbox llx="317" lly="705" urx="565" ury="715" f="2"><![CDATA[upper bound, deep disclosure in the thousands, reflects task ]]></tbox></line>
+<line><tbox llx="317" lly="694" urx="565" ury="704" f="2"><![CDATA[sets submitted by an automated process for users searching ]]></tbox></line>
+<line><tbox llx="317" lly="684" urx="424" ury="694" f="2"><![CDATA[high-dimensional spaces. ]]></tbox></line>
+<line><tbox llx="317" lly="663" urx="565" ury="673" f="2"><![CDATA[Service time and think time for all tasks, irrespective of user, ]]></tbox></line>
+<line><tbox llx="317" lly="652" urx="490" ury="662" f="2"><![CDATA[drawn from the exponential distribution. ]]></tbox></line>
+<line><tbox llx="315" lly="624" urx="520" ury="642" f="4"><![CDATA[3. BATCHACTIVE SCHEDULING ]]></tbox></line>
+<line><tbox llx="317" lly="614" urx="565" ury="624" f="2"><![CDATA[People wish to batch their planning and submission of tasks ]]></tbox></line>
+<line><tbox llx="317" lly="604" urx="565" ury="614" f="2"><![CDATA[and pipeline the analysis of finished tasks with the execu- ]]></tbox></line>
+<line><tbox llx="317" lly="594" urx="565" ury="604" f="2"><![CDATA[tion of remaining tasks. Conventional interactive and batch ]]></tbox></line>
+<line><tbox llx="317" lly="583" urx="504" ury="593" f="2"><![CDATA[models are obstacles to this way of working. ]]></tbox></line>
+<line><tbox llx="317" lly="562" urx="565" ury="572" f="2"><![CDATA[In the interactive model, users request one task at a time. In ]]></tbox></line>
+<line><tbox llx="317" lly="552" urx="565" ury="562" f="2"><![CDATA[contrast, tasks can execute while task output is consumed in ]]></tbox></line>
+<line><tbox llx="317" lly="541" urx="565" ury="551" f="2"><![CDATA[the batchactive model. Endowing servers with knowledge of ]]></tbox></line>
+<line><tbox llx="317" lly="531" urx="565" ury="541" f="2"><![CDATA[future work in the form of disclosed tasks gives the servers an ]]></tbox></line>
+<line><tbox llx="317" lly="520" urx="565" ury="530" f="2"><![CDATA[early start, rather than being idle. In the batch model, the ]]></tbox></line>
+<line><tbox llx="317" lly="510" urx="565" ury="520" f="2"><![CDATA[scheduler does not discriminate between requests and dis- ]]></tbox></line>
+<line><tbox llx="317" lly="499" urx="565" ury="509" f="2"><![CDATA[closures. In contrast, distinguishing between disclosed and ]]></tbox></line>
+<line><tbox llx="317" lly="489" urx="565" ury="499" f="2"><![CDATA[requested tasks in the batchactive model enables the user to ]]></tbox></line>
+<line><tbox llx="317" lly="478" urx="565" ury="488" f="2"><![CDATA[disclose deeply, knowing that the scheduler will give prece- ]]></tbox></line>
+<line><tbox llx="317" lly="468" urx="565" ury="478" f="2"><![CDATA[dence to users waiting on requested tasks. In contrast to ]]></tbox></line>
+<line><tbox llx="317" lly="458" urx="565" ury="468" f="2"><![CDATA[both common practices, users will observe lower visible re- ]]></tbox></line>
+<line><tbox llx="317" lly="447" urx="565" ury="457" f="2"><![CDATA[sponse times, making them more productive and less frus- ]]></tbox></line>
+<line><tbox llx="317" lly="437" urx="565" ury="447" f="2"><![CDATA[trated. The profound effect on scheduling metrics exhibited ]]></tbox></line>
+<line><tbox llx="317" lly="426" urx="565" ury="436" f="2"><![CDATA[by batchactive scheduling is detailed by the simulation re- ]]></tbox></line>
+<line><tbox llx="317" lly="416" urx="448" ury="426" f="2"><![CDATA[sults in the evaluation section. ]]></tbox></line>
+<line><tbox llx="317" lly="395" urx="565" ury="405" f="2"><![CDATA[Our batchactive cost model charges for only resources used ]]></tbox></line>
+<line><tbox llx="317" lly="384" urx="564" ury="394" f="2"><![CDATA[by tasks whose results are requested. This encourages users ]]></tbox></line>
+<line><tbox llx="317" lly="374" urx="565" ury="384" f="2"><![CDATA[to disclose speculative work deeply, which enables the sched- ]]></tbox></line>
+<line><tbox llx="317" lly="363" urx="564" ury="373" f="2"><![CDATA[uler to best reduce visible response time. Note that if a user ]]></tbox></line>
+<line><tbox llx="317" lly="353" urx="564" ury="363" f="2"><![CDATA[attempts to gain scheduling priority by requesting instead ]]></tbox></line>
+<line><tbox llx="317" lly="342" urx="565" ury="352" f="2"><![CDATA[of disclosing speculative tasks, then the user will be charged ]]></tbox></line>
+<line><tbox llx="317" lly="332" urx="450" ury="342" f="2"><![CDATA[for those speculative resources. ]]></tbox><tbox llx="442" lly="337" urx="449" ury="343" f="5"><![CDATA[3 ]]></tbox></line>
+<line><tbox llx="315" lly="303" urx="395" ury="322" f="4"><![CDATA[3.1 Metrics ]]></tbox></line>
+<line><tbox llx="317" lly="294" urx="348" ury="304" f="2"><![CDATA[Mean ]]></tbox><tbox llx="342" lly="295" urx="434" ury="304" f="3"><![CDATA[visible response time ]]></tbox><tbox llx="428" lly="294" urx="565" ury="304" f="2"><![CDATA[is our main metric. A task with ]]></tbox></line>
+<line><tbox llx="317" lly="284" urx="373" ury="294" f="2"><![CDATA[service time ]]></tbox><tbox llx="368" lly="284" urx="380" ury="293" f="6"><![CDATA[S ]]></tbox><tbox llx="376" lly="284" urx="464" ury="294" f="2"><![CDATA[is requested at time ]]></tbox><tbox llx="459" lly="283" urx="471" ury="293" f="6"><![CDATA[tr ]]></tbox><tbox llx="469" lly="284" urx="565" ury="294" f="2"><![CDATA[and is executed (com- ]]></tbox></line>
+<line><tbox llx="317" lly="273" urx="385" ury="283" f="2"><![CDATA[pletes) at time ]]></tbox><tbox llx="380" lly="273" urx="393" ury="283" f="6"><![CDATA[te ]]></tbox><tbox llx="387" lly="273" urx="565" ury="283" f="2"><![CDATA[. Each requested and executed task has a ]]></tbox></line>
+<line><tbox llx="317" lly="263" urx="516" ury="273" f="2"><![CDATA[corresponding visible response time denoted by ]]></tbox></line>
+<line><tbox llx="379" lly="237" urx="390" ury="246" f="6"><![CDATA[V ]]></tbox><tbox llx="384" lly="237" urx="401" ury="243" f="5"><![CDATA[resp ]]></tbox></line>
+<line><tbox llx="401" lly="243" urx="414" ury="250" f="5"><![CDATA[def ]]></tbox></line>
+<line><tbox llx="401" lly="237" urx="417" ury="247" f="2"><![CDATA[= ]]></tbox><tbox llx="413" lly="228" urx="425" ury="256" f="8"><![CDATA[( ]]></tbox><tbox llx="420" lly="243" urx="469" ury="253" f="2"><![CDATA[0 if ]]></tbox><tbox llx="464" lly="242" urx="500" ury="252" f="6"><![CDATA[tr } te ; ]]></tbox></line>
+<line><tbox llx="0" lly="70" urx="452" ury="240" f="6"><![CDATA[te- tr ]]></tbox><tbox llx="455" lly="230" urx="469" ury="240" f="2"><![CDATA[if ]]></tbox><tbox llx="464" lly="230" urx="477" ury="240" f="6"><![CDATA[tr ]]></tbox><tbox llx="474" lly="231" urx="486" ury="239" f="9"><![CDATA[# ]]></tbox><tbox llx="484" lly="230" urx="500" ury="240" f="6"><![CDATA[te : ]]></tbox></line>
+<line><tbox llx="317" lly="200" urx="565" ury="210" f="2"><![CDATA[Recent work [15] argues that mean slowdown, which ex- ]]></tbox></line>
+<line><tbox llx="317" lly="190" urx="564" ury="200" f="2"><![CDATA[presses the notion that users are willing to wait longer for ]]></tbox></line>
+<line><tbox llx="317" lly="179" urx="545" ury="189" f="2"><![CDATA[larger work, should be minimized. Thus, we also study ]]></tbox><tbox llx="539" lly="180" urx="566" ury="189" f="3"><![CDATA[visi- ]]></tbox></line>
+<line><tbox llx="317" lly="169" urx="378" ury="178" f="3"><![CDATA[ble slowdown ]]></tbox><tbox llx="373" lly="169" urx="426" ury="179" f="2"><![CDATA[denoted by ]]></tbox></line>
+<line><tbox llx="408" lly="147" urx="419" ury="156" f="6"><![CDATA[V ]]></tbox><tbox llx="413" lly="147" urx="431" ury="153" f="5"><![CDATA[slow ]]></tbox></line>
+<line><tbox llx="430" lly="153" urx="444" ury="159" f="5"><![CDATA[def ]]></tbox></line>
+<line><tbox llx="431" lly="147" urx="447" ury="157" f="2"><![CDATA[= ]]></tbox><tbox llx="443" lly="153" urx="455" ury="162" f="6"><![CDATA[V ]]></tbox><tbox llx="449" lly="152" urx="466" ury="159" f="5"><![CDATA[resp ]]></tbox></line>
+<line><tbox llx="450" lly="141" urx="461" ury="150" f="6"><![CDATA[S ]]></tbox></line>
+<line><tbox llx="463" lly="147" urx="472" ury="156" f="6"><![CDATA[: ]]></tbox></line>
+<line><tbox llx="318" lly="131" urx="325" ury="137" f="5"><![CDATA[3 ]]></tbox><tbox llx="322" lly="126" urx="565" ury="136" f="2"><![CDATA[Moreover, a user who discloses a large task set but never re- ]]></tbox></line>
+<line><tbox llx="317" lly="117" urx="565" ury="127" f="2"><![CDATA[quests tasks will lessen the benefit of batchactive scheduling ]]></tbox></line>
+<line><tbox llx="317" lly="108" urx="565" ury="118" f="2"><![CDATA[for others because these unrequested tasks would compete ]]></tbox></line>
+<line><tbox llx="317" lly="99" urx="565" ury="109" f="2"><![CDATA[with speculative tasks that will probably be requested. This ]]></tbox></line>
+<line><tbox llx="317" lly="90" urx="565" ury="100" f="2"><![CDATA[might be unintentional or a denial-of-service. One solution ]]></tbox></line>
+<line><tbox llx="317" lly="81" urx="565" ury="91" f="2"><![CDATA[would be a disclosed task scheduler that favors users who ]]></tbox></line>
+<line><tbox llx="317" lly="72" urx="491" ury="82" f="2"><![CDATA[have historically been better speculators. ]]></tbox></line>
+<line><tbox llx="303" lly="42" urx="316" ury="52" f="2"><![CDATA[3 ]]></tbox></line>
+<pbox llx="0.00" lly="42.00" urx="566.00" ury="738.00"/></page>
+<page n="4">
+<line><tbox llx="62" lly="728" urx="215" ury="738" f="1"><![CDATA[metric description ]]></tbox></line>
+<line><tbox llx="62" lly="717" urx="155" ury="727" f="1"><![CDATA[visible response time ]]></tbox><tbox llx="162" lly="717" urx="222" ury="727" f="1"><![CDATA[blocked time ]]></tbox></line>
+<line><tbox llx="62" lly="707" urx="138" ury="717" f="1"><![CDATA[visible slowdown ]]></tbox><tbox llx="162" lly="707" urx="292" ury="717" f="1"><![CDATA[blocked time over service time ]]></tbox></line>
+<line><tbox llx="62" lly="696" urx="137" ury="706" f="1"><![CDATA[task throughput ]]></tbox><tbox llx="162" lly="696" urx="269" ury="706" f="1"><![CDATA[number of finished tasks ]]></tbox></line>
+<line><tbox llx="62" lly="686" urx="160" ury="696" f="1"><![CDATA[scaled billed resources ]]></tbox><tbox llx="162" lly="686" urx="293" ury="696" f="1"><![CDATA[billed over requested resources ]]></tbox></line>
+<line><tbox llx="62" lly="675" urx="281" ury="685" f="1"><![CDATA[load fraction of server busy time ]]></tbox></line>
+<line><tbox llx="68" lly="655" urx="286" ury="665" f="2"><![CDATA[Table 1: Metrics reported among schedulers. ]]></tbox></line>
+<line><tbox llx="54" lly="624" urx="302" ury="634" f="1"><![CDATA[Note the differences between these two metrics and the tra- ]]></tbox></line>
+<line><tbox llx="54" lly="614" urx="302" ury="624" f="1"><![CDATA[ditional response time and slowdown metrics. Because dis- ]]></tbox></line>
+<line><tbox llx="54" lly="604" urx="302" ury="614" f="1"><![CDATA[closed tasks can run before they are requested, visible re- ]]></tbox></line>
+<line><tbox llx="54" lly="593" urx="301" ury="603" f="1"><![CDATA[sponse time can be less than service time and visible slow- ]]></tbox></line>
+<line><tbox llx="54" lly="583" urx="171" ury="593" f="1"><![CDATA[down can be less than one. ]]></tbox></line>
+<line><tbox llx="54" lly="562" urx="302" ury="572" f="1"><![CDATA[We also measure task throughput: the number of finished ]]></tbox></line>
+<line><tbox llx="54" lly="551" urx="302" ury="561" f="1"><![CDATA[tasks (tasks that were requested and executed) over the du- ]]></tbox></line>
+<line><tbox llx="54" lly="541" urx="302" ury="551" f="1"><![CDATA[ration of our simulation. One of our results is that we im- ]]></tbox></line>
+<line><tbox llx="54" lly="530" urx="302" ury="540" f="1"><![CDATA[prove visible response time without hurting task through- ]]></tbox></line>
+<line><tbox llx="54" lly="520" urx="229" ury="530" f="1"><![CDATA[put, and in many cases we improve both. ]]></tbox></line>
+<line><tbox llx="54" lly="499" urx="301" ury="509" f="1"><![CDATA[We introduce a metric reflecting the billed resources wasted ]]></tbox></line>
+<line><tbox llx="54" lly="489" urx="302" ury="499" f="1"><![CDATA[on disclosed tasks that were never requested. In the in- ]]></tbox></line>
+<line><tbox llx="54" lly="478" urx="301" ury="488" f="1"><![CDATA[teractive and batchactive models, only requested tasks are ]]></tbox></line>
+<line><tbox llx="54" lly="468" urx="301" ury="478" f="1"><![CDATA[billed to the user. However, for the batch model, which does ]]></tbox></line>
+<line><tbox llx="54" lly="457" urx="302" ury="467" f="1"><![CDATA[not discriminate between requested and disclosed tasks, this ]]></tbox></line>
+<line><tbox llx="54" lly="447" urx="140" ury="457" f="1"><![CDATA[waste is significant. ]]></tbox><tbox llx="134" lly="447" urx="230" ury="456" f="3"><![CDATA[Scaled billed resources ]]></tbox><tbox llx="224" lly="447" urx="302" ury="457" f="1"><![CDATA[is the ratio of the ]]></tbox></line>
+<line><tbox llx="54" lly="436" urx="302" ury="446" f="1"><![CDATA[billed resources to the requested resources. For example, if ]]></tbox></line>
+<line><tbox llx="54" lly="426" urx="302" ury="436" f="1"><![CDATA[a scheduler charged for ten seconds of resource time but the ]]></tbox></line>
+<line><tbox llx="54" lly="415" urx="302" ury="425" f="1"><![CDATA[user only requested five seconds of resource time, then the ]]></tbox></line>
+<line><tbox llx="54" lly="405" urx="171" ury="415" f="1"><![CDATA[scaled billed resources is 2. ]]></tbox></line>
+<line><tbox llx="54" lly="384" urx="135" ury="394" f="1"><![CDATA[For any server, its ]]></tbox><tbox llx="130" lly="384" urx="155" ury="393" f="3"><![CDATA[load ]]></tbox><tbox llx="149" lly="384" urx="302" ury="394" f="1"><![CDATA[(also known as device utilization) is ]]></tbox></line>
+<line><tbox llx="54" lly="373" urx="285" ury="383" f="1"><![CDATA[the fraction of time that the server was running a task. ]]></tbox></line>
+<line><tbox llx="54" lly="353" urx="150" ury="363" f="1"><![CDATA[Finally, we report an ]]></tbox><tbox llx="146" lly="353" urx="207" ury="362" f="3"><![CDATA[improvement ]]></tbox><tbox llx="202" lly="353" urx="302" ury="363" f="1"><![CDATA[factor between a new, ]]></tbox></line>
+<line><tbox llx="54" lly="342" urx="301" ury="352" f="1"><![CDATA[batchactive scheduler and some baseline. For example, if a ]]></tbox></line>
+<line><tbox llx="54" lly="332" urx="302" ury="342" f="1"><![CDATA[metric is better when lower and if the baseline scheduler ]]></tbox></line>
+<line><tbox llx="54" lly="321" urx="302" ury="331" f="1"><![CDATA[simulation gave 50 as the metric and the new scheduler sim- ]]></tbox></line>
+<line><tbox llx="54" lly="311" urx="238" ury="321" f="1"><![CDATA[ulation gave 25, then the improvement is 2. ]]></tbox></line>
+<line><tbox llx="54" lly="290" urx="224" ury="300" f="1"><![CDATA[We summarize these metrics in Table 1. ]]></tbox></line>
+<line><tbox llx="52" lly="263" urx="123" ury="282" f="4"><![CDATA[3.2 Scope ]]></tbox></line>
+<line><tbox llx="54" lly="254" urx="301" ury="264" f="1"><![CDATA[We make some simplifying assumptions: A task uses only ]]></tbox></line>
+<line><tbox llx="54" lly="244" urx="302" ury="254" f="1"><![CDATA[one resource significantly. For example, a processor-intensive ]]></tbox></line>
+<line><tbox llx="54" lly="233" urx="302" ury="243" f="1"><![CDATA[task might access the disk to load a dataset, but those ac- ]]></tbox></line>
+<line><tbox llx="54" lly="223" urx="301" ury="233" f="1"><![CDATA[cesses must be an insignificant part of the task's work. More- ]]></tbox></line>
+<line><tbox llx="54" lly="212" urx="301" ury="222" f="1"><![CDATA[over, we assume that preemption costs are low. Our poli- ]]></tbox></line>
+<line><tbox llx="54" lly="202" urx="302" ury="212" f="1"><![CDATA[cies have not been tailored to tasks with out-of-core mem- ]]></tbox></line>
+<line><tbox llx="54" lly="191" urx="302" ury="201" f="1"><![CDATA[ory requirements, for example, although we believe adapting ]]></tbox></line>
+<line><tbox llx="54" lly="181" urx="302" ury="191" f="1"><![CDATA[known techniques would be straightforward. Further, we as- ]]></tbox></line>
+<line><tbox llx="54" lly="170" urx="302" ury="180" f="1"><![CDATA[sume no complex interactions among tasks, like contention ]]></tbox></line>
+<line><tbox llx="54" lly="160" urx="302" ury="170" f="1"><![CDATA[for shared locks. Finally, we assume that there is sufficient ]]></tbox></line>
+<line><tbox llx="54" lly="150" urx="302" ury="160" f="1"><![CDATA[storage to hold speculative output from disclosed tasks that ]]></tbox></line>
+<line><tbox llx="54" lly="139" urx="226" ury="149" f="1"><![CDATA[have not yet been requested or canceled. ]]></tbox></line>
+<line><tbox llx="52" lly="112" urx="132" ury="131" f="4"><![CDATA[3.3 Policies ]]></tbox></line>
+<line><tbox llx="54" lly="103" urx="302" ury="113" f="1"><![CDATA[Any scheduler that behaves differently based on whether ]]></tbox></line>
+<line><tbox llx="54" lly="93" urx="302" ury="103" f="1"><![CDATA[a task is requested or disclosed is a batchactive scheduler. ]]></tbox></line>
+<line><tbox llx="54" lly="82" urx="302" ury="92" f="1"><![CDATA[Thus, there are many possible batchactive schedulers, such ]]></tbox></line>
+<line><tbox llx="54" lly="72" urx="302" ury="82" f="1"><![CDATA[as using any combination of traditional policies separately ]]></tbox></line>
+<line><tbox llx="317" lly="726" urx="565" ury="736" f="1"><![CDATA[for requested and disclosed tasks. We notate batchactive ]]></tbox></line>
+<line><tbox llx="317" lly="715" urx="380" ury="725" f="1"><![CDATA[schedulers by ]]></tbox><tbox llx="376" lly="715" urx="468" ury="725" f="3"><![CDATA[requested task policy ]]></tbox><tbox llx="463" lly="716" urx="476" ury="724" f="5"><![CDATA[× ]]></tbox><tbox llx="475" lly="715" urx="566" ury="725" f="3"><![CDATA[disclosed task policy ]]></tbox></line>
+<line><tbox llx="317" lly="705" urx="379" ury="715" f="1"><![CDATA[(for example, ]]></tbox><tbox llx="374" lly="707" urx="399" ury="713" f="6"><![CDATA[srpt ]]></tbox><tbox llx="396" lly="705" urx="409" ury="714" f="5"><![CDATA[× ]]></tbox><tbox llx="407" lly="707" urx="437" ury="713" f="6"><![CDATA[fcfs). ]]></tbox></line>
+<line><tbox llx="317" lly="684" urx="564" ury="694" f="1"><![CDATA[We wish to minimize mean visible response time across all ]]></tbox></line>
+<line><tbox llx="317" lly="673" urx="564" ury="683" f="1"><![CDATA[tasks. Since requested work is more important than specula- ]]></tbox></line>
+<line><tbox llx="317" lly="663" urx="565" ury="673" f="1"><![CDATA[tive work, our heuristic gives requested tasks priority. That ]]></tbox></line>
+<line><tbox llx="317" lly="652" urx="565" ury="662" f="1"><![CDATA[is, if an idle processor and a pending requested task exist, ]]></tbox></line>
+<line><tbox llx="317" lly="642" urx="565" ury="652" f="1"><![CDATA[this task runs before any pending disclosed tasks. Most of ]]></tbox></line>
+<line><tbox llx="317" lly="631" urx="457" ury="641" f="1"><![CDATA[the time, this is the right choice. ]]></tbox></line>
+<line><tbox llx="317" lly="613" urx="342" ury="618" f="6"><![CDATA[srpt ]]></tbox><tbox llx="339" lly="610" urx="564" ury="620" f="1"><![CDATA[(shortest-remaining-processing-time), which optimally ]]></tbox></line>
+<line><tbox llx="317" lly="600" urx="564" ury="610" f="1"><![CDATA[minimizes response time in non-speculative contexts [10, ]]></tbox></line>
+<line><tbox llx="317" lly="589" urx="565" ury="599" f="1"><![CDATA[ch. 8], is used for requested tasks for most of our batchac- ]]></tbox></line>
+<line><tbox llx="317" lly="579" urx="565" ury="589" f="1"><![CDATA[tive results. We also show that non-size-based policies (fcfs) ]]></tbox></line>
+<line><tbox llx="317" lly="569" urx="565" ury="579" f="1"><![CDATA[provide nearly identical improvements. Thus, knowing ser- ]]></tbox></line>
+<line><tbox llx="317" lly="558" urx="371" ury="568" f="1"><![CDATA[vice time is ]]></tbox><tbox llx="366" lly="559" urx="388" ury="568" f="3"><![CDATA[not ]]></tbox><tbox llx="383" lly="558" urx="535" ury="568" f="1"><![CDATA[required for batchactive scheduling. ]]></tbox><tbox llx="527" lly="563" urx="534" ury="569" f="7"><![CDATA[4 ]]></tbox></line>
+<line><tbox llx="317" lly="537" urx="565" ury="547" f="1"><![CDATA[The disclosed queue from the batchactive scheduler are run ]]></tbox></line>
+<line><tbox llx="317" lly="527" urx="377" ury="537" f="1"><![CDATA[according to ]]></tbox><tbox llx="373" lly="529" urx="397" ury="535" f="6"><![CDATA[fcfs ]]></tbox><tbox llx="396" lly="527" urx="565" ury="537" f="1"><![CDATA[(first-come-first-serve). The motivation ]]></tbox></line>
+<line><tbox llx="317" lly="516" urx="353" ury="526" f="1"><![CDATA[behind ]]></tbox><tbox llx="348" lly="518" urx="372" ury="524" f="6"><![CDATA[fcfs ]]></tbox><tbox llx="370" lly="516" urx="564" ury="526" f="1"><![CDATA[for this queue is to quickly run tasks that will ]]></tbox></line>
+<line><tbox llx="317" lly="506" urx="565" ury="516" f="1"><![CDATA[be requested first. Recall that task sets are ordered lists of ]]></tbox></line>
+<line><tbox llx="317" lly="495" urx="565" ury="505" f="1"><![CDATA[disclosed, speculative tasks. Since our simulated users re- ]]></tbox></line>
+<line><tbox llx="317" lly="485" urx="483" ury="495" f="1"><![CDATA[quest tasks in this order, then applying ]]></tbox><tbox llx="477" lly="487" urx="501" ury="493" f="6"><![CDATA[fcfs ]]></tbox><tbox llx="499" lly="485" urx="565" ury="495" f="1"><![CDATA[to the task set ]]></tbox></line>
+<line><tbox llx="317" lly="474" urx="565" ury="484" f="1"><![CDATA[order is a perfect estimate of request order within one user, ]]></tbox></line>
+<line><tbox llx="317" lly="464" urx="496" ury="474" f="1"><![CDATA[and a reasonable estimate across all users. ]]></tbox></line>
+<line><tbox llx="315" lly="435" urx="428" ury="454" f="4"><![CDATA[4. EVALUATION ]]></tbox></line>
+<line><tbox llx="317" lly="426" urx="564" ury="436" f="1"><![CDATA[We demonstrate that the batchactive user model of disclos- ]]></tbox></line>
+<line><tbox llx="317" lly="415" urx="565" ury="425" f="1"><![CDATA[ing speculative tasks combined with batchactive schedulers ]]></tbox></line>
+<line><tbox llx="317" lly="405" urx="565" ury="415" f="1"><![CDATA[that segregate requested and disclosed tasks into two queues ]]></tbox></line>
+<line><tbox llx="317" lly="394" urx="565" ury="404" f="1"><![CDATA[provides better visible response time, visible slowdown, task ]]></tbox></line>
+<line><tbox llx="317" lly="384" urx="486" ury="394" f="1"><![CDATA[throughput, and scaled billed resources. ]]></tbox></line>
+<line><tbox llx="317" lly="363" urx="564" ury="373" f="1"><![CDATA[Evaluation is a simulation fed the synthetic tasks and user ]]></tbox></line>
+<line><tbox llx="317" lly="353" urx="565" ury="363" f="1"><![CDATA[behaviors described in Section 2. Time, such as service time, ]]></tbox></line>
+<line><tbox llx="317" lly="342" urx="564" ury="352" f="1"><![CDATA[is stated in seconds. We simulate rather than analytically ]]></tbox></line>
+<line><tbox llx="317" lly="332" urx="565" ury="342" f="1"><![CDATA[model due to the complexities of our user model which in- ]]></tbox></line>
+<line><tbox llx="317" lly="321" urx="565" ury="331" f="1"><![CDATA[cludes probabilistic task cancelation motivated by the per- ]]></tbox></line>
+<line><tbox llx="317" lly="311" urx="503" ury="321" f="1"><![CDATA[vasive and important scenarios of Section 1. ]]></tbox></line>
+<line><tbox llx="317" lly="290" urx="565" ury="300" f="1"><![CDATA[Our simulations explore a range of user and task behavior. ]]></tbox></line>
+<line><tbox llx="317" lly="279" urx="565" ury="289" f="1"><![CDATA[Each run simulates two weeks of time after two warmup days ]]></tbox></line>
+<line><tbox llx="317" lly="269" urx="448" ury="279" f="1"><![CDATA[(see Section 4.3) were ignored. ]]></tbox></line>
+<line><tbox llx="317" lly="248" urx="564" ury="258" f="1"><![CDATA[The choice of simulation parameters is key to arguing for ]]></tbox></line>
+<line><tbox llx="317" lly="237" urx="565" ury="247" f="1"><![CDATA[the batchactive computing model. We can make batchactive ]]></tbox></line>
+<line><tbox llx="317" lly="227" urx="565" ury="237" f="1"><![CDATA[computing look arbitrarily better than common practice by ]]></tbox></line>
+<line><tbox llx="317" lly="216" urx="565" ury="226" f="1"><![CDATA[selecting parameters most appropriate to the batchactive ]]></tbox></line>
+<line><tbox llx="317" lly="206" urx="565" ury="216" f="1"><![CDATA[scheduler. However, this would not be a convincing argu- ]]></tbox></line>
+<line><tbox llx="317" lly="196" urx="565" ury="206" f="1"><![CDATA[ment. Instead, we have chosen parameter ranges that not ]]></tbox></line>
+<line><tbox llx="317" lly="185" urx="565" ury="195" f="1"><![CDATA[only include what we believe to be reasonable uses of spec- ]]></tbox></line>
+<line><tbox llx="317" lly="175" urx="565" ury="185" f="1"><![CDATA[ulation for our target applications, but also ranges that in- ]]></tbox></line>
+<line><tbox llx="317" lly="164" urx="565" ury="174" f="1"><![CDATA[clude little or no speculation. We show that under no spec- ]]></tbox></line>
+<line><tbox llx="317" lly="154" urx="529" ury="164" f="1"><![CDATA[ulation, we do no worse than conventional models. ]]></tbox></line>
+<line><tbox llx="318" lly="140" urx="325" ury="146" f="7"><![CDATA[4 ]]></tbox><tbox llx="322" lly="135" urx="565" ury="145" f="1"><![CDATA[Using service time predictions provides better absolute per- ]]></tbox></line>
+<line><tbox llx="317" lly="126" urx="565" ury="136" f="1"><![CDATA[formance for batchactive and non-batchactive schedulers. ]]></tbox></line>
+<line><tbox llx="317" lly="117" urx="527" ury="127" f="1"><![CDATA[Spring, et al. show that the service time of the ]]></tbox><tbox llx="523" lly="117" urx="560" ury="126" f="8"><![CDATA[complib ]]></tbox></line>
+<line><tbox llx="317" lly="108" urx="565" ury="118" f="1"><![CDATA[biological sequencing library is highly predictable from in- ]]></tbox></line>
+<line><tbox llx="317" lly="99" urx="565" ury="109" f="1"><![CDATA[put size [27]. In computer rendering, once a shot is being ]]></tbox></line>
+<line><tbox llx="317" lly="90" urx="564" ury="100" f="1"><![CDATA[processed, the runtimes of individual tasks are `generally ]]></tbox></line>
+<line><tbox llx="317" lly="81" urx="565" ury="91" f="1"><![CDATA[predictable' [13]. Kapadia et al. use regression to predict ]]></tbox></line>
+<line><tbox llx="317" lly="72" urx="530" ury="82" f="1"><![CDATA[the resource requirements of grid applications [18]. ]]></tbox></line>
+<line><tbox llx="303" lly="42" urx="316" ury="52" f="1"><![CDATA[4 ]]></tbox></line>
+<pbox llx="52.00" lly="42.00" urx="566.00" ury="738.00"/></page>
+<page n="5">
+<line><tbox llx="85" lly="728" urx="212" ury="738" f="1"><![CDATA[parameter range ]]></tbox></line>
+<line><tbox llx="85" lly="717" urx="158" ury="727" f="1"><![CDATA[number of users ]]></tbox><tbox llx="182" lly="717" urx="209" ury="727" f="1"><![CDATA[4--16 ]]></tbox></line>
+<line><tbox llx="85" lly="707" urx="180" ury="717" f="1"><![CDATA[task set change prob. ]]></tbox><tbox llx="182" lly="707" urx="270" ury="717" f="1"><![CDATA[0.0 to 0.0--0.4 (uni.) ]]></tbox></line>
+<line><tbox llx="85" lly="696" urx="167" ury="706" f="1"><![CDATA[tasks in a task set ]]></tbox><tbox llx="182" lly="696" urx="253" ury="706" f="1"><![CDATA[1 to 1--19 (uni.) ]]></tbox></line>
+<line><tbox llx="85" lly="686" urx="156" ury="696" f="1"><![CDATA[service time (s) ]]></tbox><tbox llx="182" lly="686" urx="252" ury="696" f="1"><![CDATA[20--3,620 (exp.) ]]></tbox></line>
+<line><tbox llx="85" lly="675" urx="150" ury="685" f="1"><![CDATA[think time (s) ]]></tbox><tbox llx="182" lly="675" urx="257" ury="685" f="1"><![CDATA[20--18,020 (exp.) ]]></tbox></line>
+<line><tbox llx="54" lly="655" urx="303" ury="665" f="2"><![CDATA[Table 2: The parameter ranges used in simulating ]]></tbox></line>
+<line><tbox llx="54" lly="644" urx="303" ury="654" f="2"><![CDATA[users. The parameters were defined in Section 2. ]]></tbox></line>
+<line><tbox llx="54" lly="634" urx="303" ury="644" f="2"><![CDATA[Parentheses indicate random variables (uniform and ]]></tbox></line>
+<line><tbox llx="54" lly="623" urx="303" ury="633" f="2"><![CDATA[exponential). Uniform distributions are notated by ]]></tbox></line>
+<line><tbox llx="54" lly="613" urx="303" ury="623" f="2"><![CDATA[`lower bound to upper bound,' where the upper ]]></tbox></line>
+<line><tbox llx="54" lly="602" urx="145" ury="612" f="2"><![CDATA[bound is a range. ]]></tbox></line>
+<line><tbox llx="52" lly="562" urx="199" ury="581" f="3"><![CDATA[4.1 Summarizing results ]]></tbox></line>
+<line><tbox llx="54" lly="553" urx="301" ury="563" f="1"><![CDATA[We used the parameter ranges listed in Table 2 for the results ]]></tbox></line>
+<line><tbox llx="54" lly="543" urx="301" ury="553" f="1"><![CDATA[in this section unless otherwise noted. For each parameter, ]]></tbox></line>
+<line><tbox llx="54" lly="532" urx="301" ury="542" f="1"><![CDATA[we sampled several points in its range. All told, each sched- ]]></tbox></line>
+<line><tbox llx="54" lly="522" urx="294" ury="532" f="1"><![CDATA[uler was evaluated against 3,168 selections of parameters. ]]></tbox></line>
+<line><tbox llx="54" lly="501" urx="302" ury="511" f="1"><![CDATA[We simulate one server, and restrict to 16 the maximum ]]></tbox></line>
+<line><tbox llx="54" lly="490" urx="302" ury="500" f="1"><![CDATA[number of users concurrently issuing task sets to the server. ]]></tbox></line>
+<line><tbox llx="54" lly="480" urx="302" ury="490" f="1"><![CDATA[The probability after receiving a requested task's output ]]></tbox></line>
+<line><tbox llx="54" lly="469" urx="302" ury="479" f="1"><![CDATA[and thinking about it that the user cancels the rest of the ]]></tbox></line>
+<line><tbox llx="54" lly="459" urx="301" ury="469" f="1"><![CDATA[task set ranges from those who always need their speculative ]]></tbox></line>
+<line><tbox llx="54" lly="449" urx="301" ury="459" f="1"><![CDATA[work to those who cancel task sets 40% of the time. Tasks ]]></tbox></line>
+<line><tbox llx="54" lly="438" urx="302" ury="448" f="1"><![CDATA[per task sets range from no disclosure to about twenty dis- ]]></tbox></line>
+<line><tbox llx="54" lly="428" urx="302" ury="438" f="1"><![CDATA[closures, reflecting those using domain-specific knowledge to ]]></tbox></line>
+<line><tbox llx="54" lly="417" urx="213" ury="427" f="1"><![CDATA[plan small to medium-sized task sets. ]]></tbox></line>
+<line><tbox llx="54" lly="396" urx="302" ury="406" f="1"><![CDATA[Service times, which vary from one third of a minute to ]]></tbox></line>
+<line><tbox llx="54" lly="386" urx="208" ury="396" f="1"><![CDATA[about one hour, are modeled after ]]></tbox><tbox llx="205" lly="388" urx="256" ury="394" f="4"><![CDATA[blast dna ]]></tbox><tbox llx="255" lly="386" urx="301" ury="396" f="1"><![CDATA[similarity ]]></tbox></line>
+<line><tbox llx="54" lly="375" urx="301" ury="385" f="1"><![CDATA[searches [14] and frame rendering [16, 13, 21]. Think times, ]]></tbox></line>
+<line><tbox llx="54" lly="365" urx="301" ury="375" f="1"><![CDATA[which vary from a third of a minute to roughly five hours, ]]></tbox></line>
+<line><tbox llx="54" lly="354" urx="301" ury="364" f="1"><![CDATA[reflect a user who can make a quick decision about a task's ]]></tbox></line>
+<line><tbox llx="54" lly="344" urx="301" ury="354" f="1"><![CDATA[output to one who needs to graph, ponder, or discuss results ]]></tbox></line>
+<line><tbox llx="54" lly="333" urx="301" ury="343" f="1"><![CDATA[with colleagues before deciding to request the next task or ]]></tbox></line>
+<line><tbox llx="54" lly="323" urx="190" ury="333" f="1"><![CDATA[cancel and start a new task set. ]]></tbox></line>
+<line><tbox llx="54" lly="302" urx="301" ury="312" f="1"><![CDATA[The following figures are cumulative improvement graphs ]]></tbox></line>
+<line><tbox llx="54" lly="292" urx="302" ury="302" f="1"><![CDATA[that show the fraction of runs in which the performance of ]]></tbox></line>
+<line><tbox llx="54" lly="281" urx="302" ury="291" f="1"><![CDATA[the batchactive model was at least a certain factor better ]]></tbox></line>
+<line><tbox llx="54" lly="271" urx="301" ury="281" f="1"><![CDATA[than the non-batchactive schedulers. The x-axes are factor ]]></tbox></line>
+<line><tbox llx="54" lly="260" urx="301" ury="270" f="1"><![CDATA[improvements and the y-axes are the metrics. For example, ]]></tbox></line>
+<line><tbox llx="54" lly="250" urx="301" ury="260" f="1"><![CDATA[in Figure 4, the solid line intersection with the x-axis at 3 ]]></tbox></line>
+<line><tbox llx="54" lly="239" urx="301" ury="249" f="1"><![CDATA[says that in 10% of all simulation parameters, the ratio of ]]></tbox></line>
+<line><tbox llx="54" lly="229" urx="250" ury="239" f="1"><![CDATA[the mean visible response time for interactive ]]></tbox><tbox llx="245" lly="231" urx="270" ury="237" f="4"><![CDATA[srpt ]]></tbox><tbox llx="268" lly="229" urx="302" ury="239" f="1"><![CDATA[to the ]]></tbox></line>
+<line><tbox llx="54" lly="218" urx="185" ury="228" f="1"><![CDATA[mean visible response time for ]]></tbox><tbox llx="180" lly="221" urx="205" ury="226" f="4"><![CDATA[srpt ]]></tbox><tbox llx="203" lly="219" urx="215" ury="228" f="5"><![CDATA[× ]]></tbox><tbox llx="213" lly="221" urx="237" ury="226" f="4"><![CDATA[fcfs ]]></tbox><tbox llx="234" lly="218" urx="301" ury="228" f="1"><![CDATA[was at least 3. ]]></tbox></line>
+<line><tbox llx="54" lly="197" urx="144" ury="207" f="1"><![CDATA[Figure 4 shows how ]]></tbox><tbox llx="140" lly="200" urx="165" ury="205" f="4"><![CDATA[srpt ]]></tbox><tbox llx="164" lly="198" urx="176" ury="207" f="5"><![CDATA[× ]]></tbox><tbox llx="175" lly="200" urx="199" ury="205" f="4"><![CDATA[fcfs ]]></tbox><tbox llx="197" lly="197" urx="302" ury="207" f="1"><![CDATA[compares to interactive ]]></tbox></line>
+<line><tbox llx="54" lly="189" urx="79" ury="195" f="4"><![CDATA[srpt ]]></tbox><tbox llx="76" lly="187" urx="125" ury="197" f="1"><![CDATA[and batch ]]></tbox><tbox llx="119" lly="189" urx="144" ury="195" f="4"><![CDATA[srpt ]]></tbox><tbox llx="141" lly="187" urx="248" ury="197" f="1"><![CDATA[for visible response time. ]]></tbox><tbox llx="243" lly="189" urx="268" ury="195" f="4"><![CDATA[srpt ]]></tbox><tbox llx="265" lly="188" urx="277" ury="196" f="5"><![CDATA[× ]]></tbox><tbox llx="275" lly="189" urx="299" ury="195" f="4"><![CDATA[fcfs ]]></tbox></line>
+<line><tbox llx="54" lly="177" urx="122" ury="187" f="1"><![CDATA[and interactive ]]></tbox><tbox llx="117" lly="179" urx="142" ury="185" f="4"><![CDATA[srpt ]]></tbox><tbox llx="139" lly="177" urx="302" ury="187" f="1"><![CDATA[perform the same for about 65% of the ]]></tbox></line>
+<line><tbox llx="54" lly="166" urx="107" ury="176" f="1"><![CDATA[runs, while ]]></tbox><tbox llx="103" lly="168" urx="128" ury="174" f="4"><![CDATA[srpt ]]></tbox><tbox llx="127" lly="167" urx="139" ury="175" f="5"><![CDATA[× ]]></tbox><tbox llx="138" lly="168" urx="162" ury="174" f="4"><![CDATA[fcfs ]]></tbox><tbox llx="160" lly="166" urx="263" ury="176" f="1"><![CDATA[does better than batch ]]></tbox><tbox llx="259" lly="168" urx="284" ury="174" f="4"><![CDATA[srpt ]]></tbox><tbox llx="282" lly="166" urx="302" ury="176" f="1"><![CDATA[for ]]></tbox></line>
+<line><tbox llx="54" lly="156" urx="301" ury="166" f="1"><![CDATA[many more situations. However, there are more situations ]]></tbox></line>
+<line><tbox llx="54" lly="145" urx="301" ury="155" f="1"><![CDATA[where the batchactive scheduler is between two and four ]]></tbox></line>
+<line><tbox llx="54" lly="135" urx="302" ury="145" f="1"><![CDATA[times better than the interactive scheduler. Against both ex- ]]></tbox></line>
+<line><tbox llx="54" lly="124" urx="302" ury="134" f="1"><![CDATA[isting models, batchactive performs at least two times bet- ]]></tbox></line>
+<line><tbox llx="54" lly="114" urx="301" ury="124" f="1"><![CDATA[ter for about 20% of the runs. The mean improvement is ]]></tbox></line>
+<line><tbox llx="54" lly="103" urx="102" ury="113" f="1"><![CDATA[over 50%. ]]></tbox></line>
+<line><tbox llx="54" lly="82" urx="302" ury="92" f="1"><![CDATA[It is important to know whether these results hold using non- ]]></tbox></line>
+<line><tbox llx="54" lly="72" urx="302" ury="82" f="1"><![CDATA[size-based schedulers since size cannot always be obtained ]]></tbox></line>
+<line><tbox llx="317" lly="549" urx="540" ury="559" f="2"><![CDATA[Figure 4: Cumulative factor improvement of ]]></tbox><tbox llx="537" lly="552" urx="562" ury="558" f="4"><![CDATA[srpt ]]></tbox></line>
+<line><tbox llx="317" lly="540" urx="330" ury="548" f="5"><![CDATA[× ]]></tbox><tbox llx="329" lly="541" urx="353" ury="547" f="4"><![CDATA[fcfs ]]></tbox><tbox llx="353" lly="539" urx="489" ury="549" f="2"><![CDATA[over interactive and batch ]]></tbox><tbox llx="484" lly="541" urx="509" ury="547" f="4"><![CDATA[srpt ]]></tbox><tbox llx="509" lly="539" urx="566" ury="549" f="2"><![CDATA[for visible ]]></tbox></line>
+<line><tbox llx="317" lly="529" urx="566" ury="539" f="2"><![CDATA[response time. Against both schedulers, batchactive ]]></tbox></line>
+<line><tbox llx="317" lly="518" urx="566" ury="528" f="2"><![CDATA[performs at least twice as better for about 20% of ]]></tbox></line>
+<line><tbox llx="317" lly="508" urx="566" ury="518" f="2"><![CDATA[the simulated behaviors. The mean improvement is ]]></tbox></line>
+<line><tbox llx="317" lly="497" urx="530" ury="507" f="2"><![CDATA[1.525 over interactive and 1.537 over batch. ]]></tbox></line>
+<line><tbox llx="317" lly="467" urx="565" ury="477" f="1"><![CDATA[or predicted. We find in Figure 5 that the improvements ]]></tbox></line>
+<line><tbox llx="317" lly="456" urx="565" ury="466" f="1"><![CDATA[of batchactive scheduling over interactive and batch using ]]></tbox></line>
+<line><tbox llx="317" lly="448" urx="341" ury="454" f="4"><![CDATA[fcfs ]]></tbox><tbox llx="339" lly="446" urx="544" ury="456" f="1"><![CDATA[scheduling are quite similar to those in Figure 4. ]]></tbox></line>
+<line><tbox llx="317" lly="425" urx="490" ury="435" f="1"><![CDATA[We now compare batchactive with batch ]]></tbox><tbox llx="485" lly="427" urx="509" ury="433" f="4"><![CDATA[fcfs ]]></tbox><tbox llx="504" lly="430" urx="512" ury="436" f="6"><![CDATA[5 ]]></tbox><tbox llx="511" lly="425" urx="565" ury="435" f="1"><![CDATA[in Figure 6 ]]></tbox></line>
+<line><tbox llx="317" lly="414" urx="565" ury="424" f="1"><![CDATA[for scaled billed resources (the ratio of the billed resources ]]></tbox></line>
+<line><tbox llx="317" lly="404" urx="565" ury="414" f="1"><![CDATA[to the requested resources) and find that the user cost for ]]></tbox></line>
+<line><tbox llx="317" lly="393" urx="565" ury="403" f="1"><![CDATA[resources is considerably lower under the batchactive model. ]]></tbox></line>
+<line><tbox llx="317" lly="383" urx="565" ury="393" f="1"><![CDATA[Recall that in the batchactive model, disclosed tasks, which ]]></tbox></line>
+<line><tbox llx="317" lly="372" urx="564" ury="382" f="1"><![CDATA[run when the server would otherwise be idle, are free unless ]]></tbox></line>
+<line><tbox llx="317" lly="362" urx="565" ury="372" f="1"><![CDATA[they eventually are requested. But because the batch model ]]></tbox></line>
+<line><tbox llx="317" lly="352" urx="565" ury="362" f="1"><![CDATA[does not discriminate between requested and disclosed tasks, ]]></tbox></line>
+<line><tbox llx="317" lly="341" urx="565" ury="351" f="1"><![CDATA[it charges for them all. (The interactive model, not shown, ]]></tbox></line>
+<line><tbox llx="317" lly="331" urx="565" ury="341" f="1"><![CDATA[charges the same as the batchactive model because only re- ]]></tbox></line>
+<line><tbox llx="317" lly="320" urx="564" ury="330" f="1"><![CDATA[quested tasks are run.) In sum, batchactive charges at least ]]></tbox></line>
+<line><tbox llx="317" lly="310" urx="493" ury="320" f="1"><![CDATA[four times less for about 40% of the runs. ]]></tbox></line>
+<line><tbox llx="317" lly="289" urx="565" ury="299" f="1"><![CDATA[To the resource provider's benefit, the batchactive model can ]]></tbox></line>
+<line><tbox llx="317" lly="278" urx="565" ury="288" f="1"><![CDATA[provide more total billed resources over the same time period ]]></tbox></line>
+<line><tbox llx="317" lly="268" urx="565" ury="278" f="1"><![CDATA[compared to the interactive model. Both models charge only ]]></tbox></line>
+<line><tbox llx="317" lly="257" urx="565" ury="267" f="1"><![CDATA[for requested resources. But since the batchactive model pro- ]]></tbox></line>
+<line><tbox llx="317" lly="247" urx="565" ury="257" f="1"><![CDATA[vides better task throughput, there can be more requested ]]></tbox></line>
+<line><tbox llx="317" lly="237" urx="463" ury="247" f="1"><![CDATA[tasks completed in the same time. ]]></tbox></line>
+<line><tbox llx="317" lly="216" urx="564" ury="226" f="1"><![CDATA[For a small percentage of the runs, batchactive did slightly ]]></tbox></line>
+<line><tbox llx="317" lly="205" urx="565" ury="215" f="1"><![CDATA[worse. We believe this is not an actual performance drop, ]]></tbox></line>
+<line><tbox llx="317" lly="195" urx="565" ury="205" f="1"><![CDATA[but error introduced due to variations in the number of fin- ]]></tbox></line>
+<line><tbox llx="317" lly="184" urx="565" ury="194" f="1"><![CDATA[ished tasks: different schedulers complete different numbers ]]></tbox></line>
+<line><tbox llx="317" lly="174" urx="564" ury="184" f="1"><![CDATA[of tasks during the same virtual time. Thus, metrics among ]]></tbox></line>
+<line><tbox llx="317" lly="163" urx="564" ury="173" f="1"><![CDATA[two schedulers running with the same parameters are tallied ]]></tbox></line>
+<line><tbox llx="317" lly="153" urx="565" ury="163" f="1"><![CDATA[from a different number of finished tasks. The confidence in- ]]></tbox></line>
+<line><tbox llx="317" lly="142" urx="565" ury="152" f="1"><![CDATA[tervals for a small subset of runs shown in Section 4.3 suggest ]]></tbox></line>
+<line><tbox llx="317" lly="132" urx="565" ury="142" f="1"><![CDATA[that for the cases in which batchactive's mean is worse, the ]]></tbox></line>
+<line><tbox llx="317" lly="121" urx="565" ury="131" f="1"><![CDATA[95% confidence intervals between batchactive and baseline ]]></tbox></line>
+<line><tbox llx="317" lly="111" urx="401" ury="121" f="1"><![CDATA[schedulers overlap. ]]></tbox></line>
+<line><tbox llx="318" lly="95" urx="325" ury="101" f="6"><![CDATA[5 ]]></tbox><tbox llx="322" lly="90" urx="446" ury="100" f="1"><![CDATA[We compared against batch ]]></tbox><tbox llx="442" lly="92" urx="466" ury="98" f="4"><![CDATA[fcfs ]]></tbox><tbox llx="465" lly="90" urx="541" ury="100" f="1"><![CDATA[instead of batch ]]></tbox><tbox llx="537" lly="92" urx="562" ury="98" f="4"><![CDATA[srpt ]]></tbox></line>
+<line><tbox llx="317" lly="81" urx="565" ury="91" f="1"><![CDATA[because it provided better competition against batchactive ]]></tbox></line>
+<line><tbox llx="317" lly="74" urx="342" ury="80" f="4"><![CDATA[srpt ]]></tbox><tbox llx="340" lly="73" urx="353" ury="81" f="5"><![CDATA[× ]]></tbox><tbox llx="350" lly="74" urx="374" ury="80" f="4"><![CDATA[fcfs ]]></tbox><tbox llx="372" lly="72" urx="486" ury="82" f="1"><![CDATA[for scaled billed resources. ]]></tbox></line>
+<line><tbox llx="303" lly="42" urx="316" ury="52" f="1"><![CDATA[5 ]]></tbox></line>
+<pbox llx="52.00" lly="42.00" urx="566.00" ury="738.00"/></page>
+<page n="6">
+<line><tbox llx="54" lly="506" urx="278" ury="516" f="1"><![CDATA[Figure 5: Cumulative factor improvement of ]]></tbox><tbox llx="275" lly="508" urx="299" ury="514" f="2"><![CDATA[fcfs ]]></tbox></line>
+<line><tbox llx="54" lly="496" urx="67" ury="505" f="3"><![CDATA[× ]]></tbox><tbox llx="67" lly="498" urx="91" ury="504" f="2"><![CDATA[fcfs ]]></tbox><tbox llx="90" lly="495" urx="227" ury="505" f="1"><![CDATA[over interactive and batch ]]></tbox><tbox llx="222" lly="498" urx="246" ury="504" f="2"><![CDATA[fcfs ]]></tbox><tbox llx="246" lly="495" urx="303" ury="505" f="1"><![CDATA[for visible ]]></tbox></line>
+<line><tbox llx="54" lly="485" urx="303" ury="495" f="1"><![CDATA[response time. Against both schedulers, batchactive ]]></tbox></line>
+<line><tbox llx="54" lly="475" urx="303" ury="485" f="1"><![CDATA[performs at least twice as better for about 20% of ]]></tbox></line>
+<line><tbox llx="54" lly="464" urx="303" ury="474" f="1"><![CDATA[the simulated behaviors. The mean improvement is ]]></tbox></line>
+<line><tbox llx="54" lly="454" urx="267" ury="464" f="1"><![CDATA[1.615 over interactive and 1.595 over batch. ]]></tbox></line>
+<line><tbox llx="54" lly="171" urx="268" ury="181" f="1"><![CDATA[Figure 6: Cumulative factor improvement of ]]></tbox><tbox llx="263" lly="173" urx="288" ury="179" f="2"><![CDATA[srpt ]]></tbox><tbox llx="286" lly="171" urx="299" ury="180" f="3"><![CDATA[× ]]></tbox></line>
+<line><tbox llx="54" lly="162" urx="78" ury="168" f="2"><![CDATA[fcfs ]]></tbox><tbox llx="77" lly="160" urx="136" ury="170" f="1"><![CDATA[over batch ]]></tbox><tbox llx="130" lly="162" urx="154" ury="168" f="2"><![CDATA[fcfs ]]></tbox><tbox llx="153" lly="160" urx="303" ury="170" f="1"><![CDATA[for scaled billed resources. As ]]></tbox></line>
+<line><tbox llx="54" lly="150" urx="303" ury="160" f="1"><![CDATA[only requested tasks are charged, batchactive per- ]]></tbox></line>
+<line><tbox llx="54" lly="139" urx="303" ury="149" f="1"><![CDATA[forms much better than batch. Batchactive charges ]]></tbox></line>
+<line><tbox llx="54" lly="129" urx="303" ury="139" f="1"><![CDATA[at least four times less for about 40% of the runs. ]]></tbox></line>
+<line><tbox llx="54" lly="118" urx="216" ury="128" f="1"><![CDATA[The mean improvement is 3.647. ]]></tbox></line>
+<line><tbox llx="357" lly="728" urx="489" ury="738" f="4"><![CDATA[parameter setting ]]></tbox></line>
+<line><tbox llx="357" lly="717" urx="429" ury="727" f="4"><![CDATA[number of users ]]></tbox><tbox llx="453" lly="717" urx="466" ury="727" f="4"><![CDATA[8 ]]></tbox></line>
+<line><tbox llx="357" lly="707" urx="451" ury="717" f="4"><![CDATA[task set change prob. ]]></tbox><tbox llx="453" lly="707" urx="525" ury="717" f="4"><![CDATA[0.0 to 0.2 (uni.) ]]></tbox></line>
+<line><tbox llx="357" lly="696" urx="438" ury="706" f="4"><![CDATA[tasks in a task set ]]></tbox><tbox llx="453" lly="696" urx="515" ury="706" f="4"><![CDATA[1 to 15 (uni.) ]]></tbox></line>
+<line><tbox llx="357" lly="686" urx="427" ury="696" f="4"><![CDATA[service time (s) ]]></tbox><tbox llx="453" lly="686" urx="502" ury="696" f="4"><![CDATA[600 (exp.) ]]></tbox></line>
+<line><tbox llx="357" lly="675" urx="421" ury="685" f="4"><![CDATA[think time (s) ]]></tbox><tbox llx="453" lly="675" urx="507" ury="685" f="4"><![CDATA[6000 (exp.) ]]></tbox></line>
+<line><tbox llx="317" lly="655" urx="566" ury="665" f="1"><![CDATA[Table 3: The fixed parameters used to compare ]]></tbox></line>
+<line><tbox llx="317" lly="644" urx="566" ury="654" f="1"><![CDATA[schedulers. For each run, all but one were held ]]></tbox></line>
+<line><tbox llx="317" lly="634" urx="566" ury="644" f="1"><![CDATA[constant at these values. Parentheses indicate ran- ]]></tbox></line>
+<line><tbox llx="317" lly="623" urx="566" ury="633" f="1"><![CDATA[dom variables. Uniform distributions are notated by ]]></tbox></line>
+<line><tbox llx="317" lly="613" urx="437" ury="623" f="1"><![CDATA[`lower to upper bound.' ]]></tbox></line>
+<line><tbox llx="412" lly="446" urx="542" ury="460" f="5"><![CDATA[5 10 15 ]]></tbox></line>
+<line><tbox llx="356" lly="453" urx="371" ury="468" f="5"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="341" lly="480" urx="371" ury="495" f="5"><![CDATA[1000 ]]></tbox></line>
+<line><tbox llx="341" lly="507" urx="371" ury="522" f="5"><![CDATA[2000 ]]></tbox></line>
+<line><tbox llx="341" lly="534" urx="371" ury="549" f="5"><![CDATA[3000 ]]></tbox></line>
+<line><tbox llx="341" lly="561" urx="371" ury="576" f="5"><![CDATA[4000 ]]></tbox></line>
+<line><tbox llx="341" lly="588" urx="371" ury="603" f="5"><![CDATA[5000 ]]></tbox></line>
+<line><tbox llx="422" lly="434" urx="497" ury="449" f="5"><![CDATA[number of users ]]></tbox></line>
+<line><tbox llx="335" lly="487" urx="336" ury="513" f="6"><![CDATA[visible ]]></tbox></line>
+<line><tbox llx="335" lly="514" urx="336" ury="535" f="6"><![CDATA[resp. ]]></tbox></line>
+<line><tbox llx="335" lly="537" urx="336" ury="555" f="6"><![CDATA[time ]]></tbox></line>
+<line><tbox llx="335" lly="556" urx="336" ury="567" f="6"><![CDATA[(µ) ]]></tbox></line>
+<line><tbox llx="395" lly="578" urx="459" ury="592" f="8"><![CDATA[SRPT (batch) ]]></tbox></line>
+<line><tbox llx="395" lly="567" urx="457" ury="582" f="8"><![CDATA[SRPT (inter.) ]]></tbox></line>
+<line><tbox llx="395" lly="557" urx="480" ury="571" f="8"><![CDATA[SRPT x FCFS (ba) ]]></tbox></line>
+<line><tbox llx="317" lly="409" urx="566" ury="419" f="1"><![CDATA[Figure 7: The effect of the number of users on visible ]]></tbox></line>
+<line><tbox llx="317" lly="399" urx="566" ury="409" f="1"><![CDATA[response time. With few users, interactive is better ]]></tbox></line>
+<line><tbox llx="317" lly="388" urx="566" ury="398" f="1"><![CDATA[than batch; with many, batch is better than inter- ]]></tbox></line>
+<line><tbox llx="317" lly="378" urx="566" ury="388" f="1"><![CDATA[active. Almost always, batchactive adapts and wins. ]]></tbox></line>
+<line><tbox llx="315" lly="343" urx="503" ury="362" f="9"><![CDATA[4.2 Per-parameter investigations ]]></tbox></line>
+<line><tbox llx="317" lly="333" urx="565" ury="343" f="4"><![CDATA[Now we look closely at what affects performance. We re- ]]></tbox></line>
+<line><tbox llx="317" lly="323" urx="565" ury="333" f="4"><![CDATA[port metrics for different scheduling models while consider- ]]></tbox></line>
+<line><tbox llx="317" lly="312" urx="554" ury="322" f="4"><![CDATA[ing slices of the user and task behavior parameter space. ]]></tbox></line>
+<line><tbox llx="317" lly="292" urx="565" ury="302" f="4"><![CDATA[The following graphs have the same format. Each set of three ]]></tbox></line>
+<line><tbox llx="317" lly="281" urx="565" ury="291" f="4"><![CDATA[bars corresponds to one selection of parameters. The left bar ]]></tbox></line>
+<line><tbox llx="317" lly="271" urx="564" ury="281" f="4"><![CDATA[is the batch model, the middle bar is the interactive model, ]]></tbox></line>
+<line><tbox llx="317" lly="260" urx="565" ury="270" f="4"><![CDATA[and the right bar is the batchactive model. Each graph varies ]]></tbox></line>
+<line><tbox llx="317" lly="250" urx="564" ury="260" f="4"><![CDATA[one parameter. The fixed parameters are taken from those ]]></tbox></line>
+<line><tbox llx="317" lly="239" urx="487" ury="249" f="4"><![CDATA[listed in Table 3 unless otherwise noted. ]]></tbox></line>
+<line><tbox llx="317" lly="218" urx="565" ury="228" f="4"><![CDATA[Figure 7 shows how the number of users affects visible re- ]]></tbox></line>
+<line><tbox llx="317" lly="208" urx="565" ury="218" f="4"><![CDATA[sponse time. Batch is suited to few users because execu- ]]></tbox></line>
+<line><tbox llx="317" lly="197" urx="565" ury="207" f="4"><![CDATA[tion time and think time are pipelined and the load is suf- ]]></tbox></line>
+<line><tbox llx="317" lly="187" urx="565" ury="197" f="4"><![CDATA[ficiently low that one's disclosed but never requested tasks ]]></tbox></line>
+<line><tbox llx="317" lly="177" urx="565" ury="187" f="4"><![CDATA[don't overly interfere with other requested tasks. Interac- ]]></tbox></line>
+<line><tbox llx="317" lly="166" urx="564" ury="176" f="4"><![CDATA[tive is suited to many users because the server is always ]]></tbox></line>
+<line><tbox llx="317" lly="156" urx="432" ury="166" f="4"><![CDATA[busy with requested tasks. ]]></tbox></line>
+<line><tbox llx="317" lly="135" urx="565" ury="145" f="4"><![CDATA[Nearly always, batchactive performs best, exhibiting adapt- ]]></tbox></line>
+<line><tbox llx="317" lly="124" urx="565" ury="134" f="4"><![CDATA[ability to load. Batchactive is better than batch under many ]]></tbox></line>
+<line><tbox llx="317" lly="114" urx="565" ury="124" f="4"><![CDATA[users because requested tasks never wait for disclosed tasks; ]]></tbox></line>
+<line><tbox llx="317" lly="103" urx="565" ury="113" f="4"><![CDATA[it is better than interactive under few users because it con- ]]></tbox></line>
+<line><tbox llx="317" lly="93" urx="565" ury="103" f="4"><![CDATA[sumes idle time with disclosed tasks. At the busiest part, ]]></tbox></line>
+<line><tbox llx="317" lly="82" urx="565" ury="92" f="4"><![CDATA[interactive and batchactive are equivalent because the re- ]]></tbox></line>
+<line><tbox llx="317" lly="72" urx="466" ury="82" f="4"><![CDATA[quested task queue is never empty. ]]></tbox></line>
+<line><tbox llx="303" lly="42" urx="316" ury="52" f="4"><![CDATA[6 ]]></tbox></line>
+<pbox llx="54.00" lly="42.00" urx="566.00" ury="738.00"/></page>
+<page n="7">
+<line><tbox llx="145" lly="585" urx="275" ury="599" f="1"><![CDATA[5 10 15 ]]></tbox></line>
+<line><tbox llx="89" lly="593" urx="104" ury="607" f="1"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="82" lly="620" urx="104" ury="634" f="1"><![CDATA[0.5 ]]></tbox></line>
+<line><tbox llx="89" lly="647" urx="104" ury="661" f="1"><![CDATA[1 ]]></tbox></line>
+<line><tbox llx="82" lly="674" urx="104" ury="688" f="1"><![CDATA[1.5 ]]></tbox></line>
+<line><tbox llx="89" lly="701" urx="104" ury="715" f="1"><![CDATA[2 ]]></tbox></line>
+<line><tbox llx="82" lly="728" urx="104" ury="742" f="1"><![CDATA[2.5 ]]></tbox></line>
+<line><tbox llx="155" lly="574" urx="230" ury="588" f="1"><![CDATA[number of users ]]></tbox></line>
+<line><tbox llx="75" lly="626" urx="76" ury="652" f="2"><![CDATA[visible ]]></tbox></line>
+<line><tbox llx="75" lly="653" urx="76" ury="694" f="2"><![CDATA[slowdown ]]></tbox></line>
+<line><tbox llx="75" lly="695" urx="76" ury="707" f="2"><![CDATA[(µ) ]]></tbox></line>
+<line><tbox llx="128" lly="717" urx="192" ury="731" f="4"><![CDATA[SRPT (batch) ]]></tbox></line>
+<line><tbox llx="128" lly="706" urx="190" ury="721" f="4"><![CDATA[SRPT (inter.) ]]></tbox></line>
+<line><tbox llx="128" lly="696" urx="213" ury="710" f="4"><![CDATA[SRPT x FCFS (ba) ]]></tbox></line>
+<line><tbox llx="54" lly="549" urx="303" ury="559" f="5"><![CDATA[Figure 8: The effect of the number of users on visi- ]]></tbox></line>
+<line><tbox llx="54" lly="538" urx="303" ury="548" f="5"><![CDATA[ble slowdown. In nearly all cases, batchactive wins. ]]></tbox></line>
+<line><tbox llx="54" lly="528" urx="265" ury="538" f="5"><![CDATA[(Note: visible slowdown can be under one.) ]]></tbox></line>
+<line><tbox llx="148" lly="361" urx="278" ury="376" f="4"><![CDATA[5 10 15 ]]></tbox></line>
+<line><tbox llx="92" lly="369" urx="107" ury="383" f="4"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="82" lly="398" urx="107" ury="413" f="4"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="77" lly="428" urx="107" ury="442" f="4"><![CDATA[1000 ]]></tbox></line>
+<line><tbox llx="77" lly="457" urx="107" ury="471" f="4"><![CDATA[1500 ]]></tbox></line>
+<line><tbox llx="77" lly="486" urx="107" ury="501" f="4"><![CDATA[2000 ]]></tbox></line>
+<line><tbox llx="158" lly="350" urx="233" ury="364" f="4"><![CDATA[number of users ]]></tbox></line>
+<line><tbox llx="71" lly="410" urx="72" ury="442" f="6"><![CDATA[number ]]></tbox></line>
+<line><tbox llx="71" lly="443" urx="72" ury="452" f="6"><![CDATA[of ]]></tbox></line>
+<line><tbox llx="71" lly="453" urx="72" ury="475" f="6"><![CDATA[tasks ]]></tbox></line>
+<line><tbox llx="131" lly="493" urx="195" ury="508" f="7"><![CDATA[SRPT (batch) ]]></tbox></line>
+<line><tbox llx="131" lly="483" urx="193" ury="497" f="7"><![CDATA[SRPT (inter.) ]]></tbox></line>
+<line><tbox llx="131" lly="473" urx="216" ury="487" f="7"><![CDATA[SRPT x FCFS (ba) ]]></tbox></line>
+<line><tbox llx="54" lly="325" urx="303" ury="335" f="5"><![CDATA[Figure 9: The effect of the number of users on ]]></tbox></line>
+<line><tbox llx="54" lly="314" urx="303" ury="324" f="5"><![CDATA[task throughput (number of times requested out- ]]></tbox></line>
+<line><tbox llx="54" lly="304" urx="303" ury="314" f="5"><![CDATA[put was delivered to the user) over the simulation ]]></tbox></line>
+<line><tbox llx="54" lly="294" urx="303" ury="304" f="5"><![CDATA[run. Batchactive provides the best task throughput. ]]></tbox></line>
+<line><tbox llx="54" lly="260" urx="301" ury="270" f="8"><![CDATA[Figure 8 repeats the runs of Figure 7 but plots visible slow- ]]></tbox></line>
+<line><tbox llx="54" lly="250" urx="302" ury="260" f="8"><![CDATA[down instead. Batchactive still outperforms the alternatives. ]]></tbox></line>
+<line><tbox llx="54" lly="239" urx="301" ury="249" f="8"><![CDATA[In contrast to the visible response time results, with many ]]></tbox></line>
+<line><tbox llx="54" lly="229" urx="302" ury="239" f="8"><![CDATA[users the visible slowdowns of batch and interactive con- ]]></tbox></line>
+<line><tbox llx="54" lly="218" urx="302" ury="228" f="8"><![CDATA[verge. This occurs because the visible response times of the ]]></tbox></line>
+<line><tbox llx="54" lly="208" urx="220" ury="218" f="8"><![CDATA[large tasks affect visible slowdown less. ]]></tbox></line>
+<line><tbox llx="54" lly="187" urx="302" ury="197" f="8"><![CDATA[Figure 9 shows how the number of users affects task through- ]]></tbox></line>
+<line><tbox llx="54" lly="177" urx="302" ury="187" f="8"><![CDATA[put (how often a user received requested task output) over ]]></tbox></line>
+<line><tbox llx="54" lly="166" urx="301" ury="176" f="8"><![CDATA[two simulated weeks. Batchactive finishes more tasks while ]]></tbox></line>
+<line><tbox llx="54" lly="156" urx="301" ury="166" f="8"><![CDATA[providing the better visible response times and slowdowns ]]></tbox></line>
+<line><tbox llx="54" lly="145" urx="301" ury="155" f="8"><![CDATA[in Figures 7 and 8. Only toward the highest number of users ]]></tbox></line>
+<line><tbox llx="54" lly="135" urx="275" ury="145" f="8"><![CDATA[does interactive throughput converge to batchactive. ]]></tbox></line>
+<line><tbox llx="54" lly="114" urx="301" ury="124" f="8"><![CDATA[Additional insight is found by comparing Figures 7, 8, and 9 ]]></tbox></line>
+<line><tbox llx="54" lly="103" urx="301" ury="113" f="8"><![CDATA[with Figure 10, which is the same run except that load is ]]></tbox></line>
+<line><tbox llx="54" lly="93" urx="302" ury="103" f="8"><![CDATA[plotted. The load under the batch and batchactive mod- ]]></tbox></line>
+<line><tbox llx="54" lly="82" urx="302" ury="92" f="8"><![CDATA[els are similar. As their loads increase, batchactive provides ]]></tbox></line>
+<line><tbox llx="54" lly="72" urx="302" ury="82" f="8"><![CDATA[better visible response time than batch because batchac- ]]></tbox></line>
+<line><tbox llx="317" lly="549" urx="566" ury="559" f="5"><![CDATA[Figure 10: The effect of the number of users on load ]]></tbox></line>
+<line><tbox llx="317" lly="538" urx="566" ury="548" f="5"><![CDATA[(utilization). The price batchactive schedulers pay ]]></tbox></line>
+<line><tbox llx="317" lly="528" urx="566" ury="538" f="5"><![CDATA[for significantly improving visible response time rel- ]]></tbox></line>
+<line><tbox llx="317" lly="517" urx="566" ury="527" f="5"><![CDATA[ative to interactive schedulers is increased load. In ]]></tbox></line>
+<line><tbox llx="317" lly="507" urx="566" ury="517" f="5"><![CDATA[comparison to batch schedulers, however, batchac- ]]></tbox></line>
+<line><tbox llx="317" lly="496" urx="566" ury="506" f="5"><![CDATA[tive induces little extra load while delivering signif- ]]></tbox></line>
+<line><tbox llx="317" lly="486" urx="566" ury="496" f="5"><![CDATA[icantly better visible response time. (See Figure 7.) ]]></tbox></line>
+<line><tbox llx="317" lly="475" urx="566" ury="485" f="5"><![CDATA[This illustrates that conventional load does not fully ]]></tbox></line>
+<line><tbox llx="317" lly="465" urx="566" ury="475" f="5"><![CDATA[convey batchactive behavior: what matters is the ]]></tbox></line>
+<line><tbox llx="317" lly="454" urx="566" ury="464" f="5"><![CDATA[fraction of load made up of tasks that have been or ]]></tbox></line>
+<line><tbox llx="317" lly="444" urx="409" ury="454" f="5"><![CDATA[will be requested. ]]></tbox></line>
+<line><tbox llx="317" lly="407" urx="565" ury="417" f="8"><![CDATA[tive favors requested tasks. Batchactive provides better vis- ]]></tbox></line>
+<line><tbox llx="317" lly="396" urx="564" ury="406" f="8"><![CDATA[ible response time and slowdown than interactive because ]]></tbox></line>
+<line><tbox llx="317" lly="386" urx="565" ury="396" f="8"><![CDATA[batchactive pipelines disclosed tasks with think time. Coun- ]]></tbox></line>
+<line><tbox llx="317" lly="375" urx="565" ury="385" f="8"><![CDATA[terintuitively, when batchactive's load is higher than interac- ]]></tbox></line>
+<line><tbox llx="317" lly="365" urx="565" ury="375" f="8"><![CDATA[tive, it still performs better than interactive. What matters ]]></tbox></line>
+<line><tbox llx="317" lly="354" urx="565" ury="364" f="8"><![CDATA[isn't merely load, but the fraction of load made up of tasks ]]></tbox></line>
+<line><tbox llx="317" lly="344" urx="565" ury="354" f="8"><![CDATA[that have been or will be requested. Only when the batchac- ]]></tbox></line>
+<line><tbox llx="317" lly="333" urx="565" ury="343" f="8"><![CDATA[tive and interactive loads approach one (near 14 users), do ]]></tbox></line>
+<line><tbox llx="317" lly="323" urx="538" ury="333" f="8"><![CDATA[their visible response times and slowdowns converge. ]]></tbox></line>
+<line><tbox llx="317" lly="302" urx="564" ury="312" f="8"><![CDATA[In Figure 11, we vary the upper bound of the task set change ]]></tbox></line>
+<line><tbox llx="317" lly="292" urx="565" ury="302" f="8"><![CDATA[probability from 0.0--0.4 and plot visible response time. This ]]></tbox></line>
+<line><tbox llx="317" lly="281" urx="565" ury="291" f="8"><![CDATA[parameter does not affect the interactive model, which does ]]></tbox></line>
+<line><tbox llx="317" lly="271" urx="565" ury="281" f="8"><![CDATA[not submit disclosed tasks. We notice a greater dependence ]]></tbox></line>
+<line><tbox llx="317" lly="260" urx="565" ury="270" f="8"><![CDATA[on this parameter with the batch model compared to the ]]></tbox></line>
+<line><tbox llx="317" lly="250" urx="565" ury="260" f="8"><![CDATA[batchactive model because batchactive avoids speculative ]]></tbox></line>
+<line><tbox llx="317" lly="239" urx="471" ury="249" f="8"><![CDATA[tasks when requested work remains. ]]></tbox></line>
+<line><tbox llx="317" lly="218" urx="565" ury="228" f="8"><![CDATA[Now we show large task sets reflecting users searching high- ]]></tbox></line>
+<line><tbox llx="317" lly="208" urx="564" ury="218" f="8"><![CDATA[dimensional spaces. We varied the upper bound of the tasks ]]></tbox></line>
+<line><tbox llx="317" lly="197" urx="565" ury="207" f="8"><![CDATA[per task set uniform distribution from 1--1024 in multiples ]]></tbox></line>
+<line><tbox llx="317" lly="187" urx="565" ury="197" f="8"><![CDATA[of 2. We also set the task set change probability to 0.1 so ]]></tbox></line>
+<line><tbox llx="317" lly="177" urx="486" ury="187" f="8"><![CDATA[that task sets are not canceled as often. ]]></tbox></line>
+<line><tbox llx="317" lly="156" urx="565" ury="166" f="8"><![CDATA[Visible slowdown results are in Figure 12. When all task sets ]]></tbox></line>
+<line><tbox llx="317" lly="145" urx="565" ury="155" f="8"><![CDATA[have only one task, then all models provide the same visi- ]]></tbox></line>
+<line><tbox llx="317" lly="135" urx="564" ury="145" f="8"><![CDATA[ble slowdown. Task sets as small as several tasks --- easily ]]></tbox></line>
+<line><tbox llx="317" lly="124" urx="565" ury="134" f="8"><![CDATA[realizable by users performing exploratory searches --- pro- ]]></tbox></line>
+<line><tbox llx="317" lly="114" urx="565" ury="124" f="8"><![CDATA[vide good improvement over interactive. As the task set size ]]></tbox></line>
+<line><tbox llx="317" lly="103" urx="565" ury="113" f="8"><![CDATA[increases, both batch and batchactive provide visible slow- ]]></tbox></line>
+<line><tbox llx="317" lly="93" urx="564" ury="103" f="8"><![CDATA[downs less than one. This occurs because there is now user ]]></tbox></line>
+<line><tbox llx="317" lly="82" urx="564" ury="92" f="8"><![CDATA[think time that can be leveraged to run disclosed tasks. Soon ]]></tbox></line>
+<line><tbox llx="317" lly="72" urx="564" ury="82" f="8"><![CDATA[batch performance becomes unusable as its single queue is ]]></tbox></line>
+<line><tbox llx="303" lly="42" urx="316" ury="52" f="8"><![CDATA[7 ]]></tbox></line>
+<pbox llx="54.00" lly="42.00" urx="566.00" ury="742.00"/></page>
+<page n="8">
+<line><tbox llx="110" lly="585" urx="286" ury="599" f="1"><![CDATA[0 0.05 0.1 0.15 0.2 ]]></tbox></line>
+<line><tbox llx="93" lly="593" urx="108" ury="607" f="1"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="83" lly="620" urx="108" ury="634" f="1"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="78" lly="647" urx="108" ury="661" f="1"><![CDATA[1000 ]]></tbox></line>
+<line><tbox llx="78" lly="674" urx="108" ury="688" f="1"><![CDATA[1500 ]]></tbox></line>
+<line><tbox llx="78" lly="701" urx="108" ury="715" f="1"><![CDATA[2000 ]]></tbox></line>
+<line><tbox llx="78" lly="728" urx="108" ury="742" f="1"><![CDATA[2500 ]]></tbox></line>
+<line><tbox llx="114" lly="574" urx="279" ury="588" f="1"><![CDATA[task set change prob. (midpoint of uni.) ]]></tbox></line>
+<line><tbox llx="72" lly="626" urx="73" ury="652" f="2"><![CDATA[visible ]]></tbox></line>
+<line><tbox llx="72" lly="653" urx="73" ury="674" f="2"><![CDATA[resp. ]]></tbox></line>
+<line><tbox llx="72" lly="676" urx="73" ury="694" f="2"><![CDATA[time ]]></tbox></line>
+<line><tbox llx="72" lly="695" urx="73" ury="706" f="2"><![CDATA[(µ) ]]></tbox></line>
+<line><tbox llx="132" lly="717" urx="196" ury="731" f="4"><![CDATA[SRPT (batch) ]]></tbox></line>
+<line><tbox llx="132" lly="706" urx="194" ury="721" f="4"><![CDATA[SRPT (inter.) ]]></tbox></line>
+<line><tbox llx="132" lly="696" urx="217" ury="710" f="4"><![CDATA[SRPT x FCFS (ba) ]]></tbox></line>
+<line><tbox llx="54" lly="549" urx="303" ury="559" f="5"><![CDATA[Figure 11: The effect of the task set change prob- ]]></tbox></line>
+<line><tbox llx="54" lly="538" urx="303" ury="548" f="5"><![CDATA[ability on visible response time. The probability is ]]></tbox></line>
+<line><tbox llx="54" lly="528" urx="303" ury="538" f="5"><![CDATA[a uniform random variable and shown on the x-axis ]]></tbox></line>
+<line><tbox llx="54" lly="517" urx="303" ury="527" f="5"><![CDATA[is the average of its lower and upper bounds. The ]]></tbox></line>
+<line><tbox llx="54" lly="507" urx="303" ury="517" f="5"><![CDATA[interactive model is unaffected, while the batchac- ]]></tbox></line>
+<line><tbox llx="54" lly="496" urx="303" ury="506" f="5"><![CDATA[tive model is affected less than the batch model and ]]></tbox></line>
+<line><tbox llx="54" lly="486" urx="149" ury="496" f="5"><![CDATA[outperforms both. ]]></tbox></line>
+<line><tbox llx="54" lly="455" urx="301" ury="465" f="6"><![CDATA[overwhelmed with speculative tasks. The interactive model ]]></tbox></line>
+<line><tbox llx="54" lly="444" urx="302" ury="454" f="6"><![CDATA[is immune to the task set size because each user will have at ]]></tbox></line>
+<line><tbox llx="54" lly="434" urx="302" ury="444" f="6"><![CDATA[most one task (a requested task) in the system. The batchac- ]]></tbox></line>
+<line><tbox llx="54" lly="423" urx="301" ury="433" f="6"><![CDATA[tive model is always best compared to the other models. ]]></tbox></line>
+<line><tbox llx="54" lly="413" urx="302" ury="423" f="6"><![CDATA[Compared to itself, its performance gets worse as the task ]]></tbox></line>
+<line><tbox llx="54" lly="402" urx="301" ury="412" f="6"><![CDATA[set size increases because there is more competition among ]]></tbox></line>
+<line><tbox llx="54" lly="392" urx="300" ury="402" f="6"><![CDATA[speculative tasks, some of which run but are never needed. ]]></tbox></line>
+<line><tbox llx="54" lly="371" urx="301" ury="381" f="6"><![CDATA[Figure 13 shows how service time affects visible response ]]></tbox></line>
+<line><tbox llx="54" lly="361" urx="302" ury="371" f="6"><![CDATA[time. As service time increases, the load increases and the ]]></tbox></line>
+<line><tbox llx="54" lly="350" urx="302" ury="360" f="6"><![CDATA[performance of interactive and batchactive converge. As a ]]></tbox></line>
+<line><tbox llx="54" lly="340" urx="302" ury="350" f="6"><![CDATA[limiting case, when a server is always running requested ]]></tbox></line>
+<line><tbox llx="54" lly="329" urx="289" ury="339" f="6"><![CDATA[work, the batchactive model does not help performance. ]]></tbox></line>
+<line><tbox llx="54" lly="308" urx="302" ury="318" f="6"><![CDATA[Think time, the remaining parameter, works inversely to ser- ]]></tbox></line>
+<line><tbox llx="54" lly="298" urx="302" ury="308" f="6"><![CDATA[vice time: the more think time, the more opportunity for the ]]></tbox></line>
+<line><tbox llx="54" lly="287" urx="302" ury="297" f="6"><![CDATA[batchactive scheduler to reduce visible response time. Once ]]></tbox></line>
+<line><tbox llx="54" lly="277" urx="301" ury="287" f="6"><![CDATA[the ratio of think time to service time is sufficiently high, ]]></tbox></line>
+<line><tbox llx="54" lly="266" urx="302" ury="276" f="6"><![CDATA[which results in a low load, batchactive performs no better ]]></tbox></line>
+<line><tbox llx="54" lly="256" urx="302" ury="266" f="6"><![CDATA[than batch while continuing to outperform interactive. We ]]></tbox></line>
+<line><tbox llx="54" lly="246" urx="168" ury="256" f="6"><![CDATA[omit results to save space. ]]></tbox></line>
+<line><tbox llx="52" lly="217" urx="185" ury="236" f="7"><![CDATA[4.3 Simulation details ]]></tbox></line>
+<line><tbox llx="54" lly="208" urx="126" ury="218" f="8"><![CDATA[Warmup period ]]></tbox><tbox llx="120" lly="208" urx="302" ury="218" f="6"><![CDATA[The queue length near the start of the sim- ]]></tbox></line>
+<line><tbox llx="54" lly="197" urx="302" ury="207" f="6"><![CDATA[ulation is not representative of the behavior of the system ]]></tbox></line>
+<line><tbox llx="54" lly="187" urx="302" ury="197" f="6"><![CDATA[over steady-state. At start, all users begin submitting tasks ]]></tbox></line>
+<line><tbox llx="54" lly="177" urx="302" ury="187" f="6"><![CDATA[and only after task results are received do users enter their ]]></tbox></line>
+<line><tbox llx="54" lly="166" urx="302" ury="176" f="6"><![CDATA[think times. We avoid including warmup time in our re- ]]></tbox></line>
+<line><tbox llx="54" lly="156" urx="302" ury="166" f="6"><![CDATA[ported metrics by conservatively dropping all data in the ]]></tbox></line>
+<line><tbox llx="54" lly="145" urx="302" ury="155" f="6"><![CDATA[first two simulated days. Since each run simulates 16 days, ]]></tbox></line>
+<line><tbox llx="54" lly="135" urx="245" ury="145" f="6"><![CDATA[our metrics reflect two weeks at steady-state. ]]></tbox></line>
+<line><tbox llx="54" lly="114" urx="145" ury="123" f="8"><![CDATA[Confidence intervals ]]></tbox><tbox llx="140" lly="114" urx="302" ury="124" f="6"><![CDATA[Our parameter studies show that the ]]></tbox></line>
+<line><tbox llx="54" lly="103" urx="301" ury="113" f="6"><![CDATA[parameters have a significant effect on scheduling metrics ]]></tbox></line>
+<line><tbox llx="54" lly="93" urx="301" ury="103" f="6"><![CDATA[and that batchactive scheduling performs best nearly all of ]]></tbox></line>
+<line><tbox llx="54" lly="82" urx="301" ury="92" f="6"><![CDATA[the time (Section 4.2). To reinforce these observations, we ]]></tbox></line>
+<line><tbox llx="54" lly="72" urx="301" ury="82" f="6"><![CDATA[took confidence intervals of mean visible response time for a ]]></tbox></line>
+<line><tbox llx="350" lly="534" urx="370" ury="548" f="4"><![CDATA[10 ]]></tbox><tbox llx="361" lly="541" urx="370" ury="550" f="9"><![CDATA[0 ]]></tbox><tbox llx="417" lly="534" urx="436" ury="548" f="4"><![CDATA[10 ]]></tbox><tbox llx="427" lly="541" urx="437" ury="550" f="9"><![CDATA[1 ]]></tbox><tbox llx="483" lly="534" urx="503" ury="548" f="4"><![CDATA[10 ]]></tbox><tbox llx="493" lly="541" urx="503" ury="550" f="9"><![CDATA[2 ]]></tbox></line>
+<line><tbox llx="349" lly="545" urx="364" ury="559" f="4"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="349" lly="572" urx="364" ury="586" f="4"><![CDATA[1 ]]></tbox></line>
+<line><tbox llx="349" lly="599" urx="364" ury="613" f="4"><![CDATA[2 ]]></tbox></line>
+<line><tbox llx="349" lly="626" urx="364" ury="640" f="4"><![CDATA[3 ]]></tbox></line>
+<line><tbox llx="349" lly="653" urx="364" ury="667" f="4"><![CDATA[4 ]]></tbox></line>
+<line><tbox llx="349" lly="680" urx="364" ury="694" f="4"><![CDATA[5 ]]></tbox></line>
+<line><tbox llx="377" lly="523" urx="526" ury="537" f="4"><![CDATA[tasks per task set (midpoint of uni.) ]]></tbox></line>
+<line><tbox llx="342" lly="578" urx="343" ury="604" f="10"><![CDATA[visible ]]></tbox></line>
+<line><tbox llx="342" lly="606" urx="343" ury="646" f="10"><![CDATA[slowdown ]]></tbox></line>
+<line><tbox llx="342" lly="648" urx="343" ury="659" f="10"><![CDATA[(µ) ]]></tbox></line>
+<line><tbox llx="387" lly="669" urx="451" ury="683" f="11"><![CDATA[SRPT (batch) ]]></tbox></line>
+<line><tbox llx="387" lly="659" urx="449" ury="673" f="11"><![CDATA[SRPT (inter.) ]]></tbox></line>
+<line><tbox llx="387" lly="648" urx="472" ury="663" f="11"><![CDATA[SRPT x FCFS (ba) ]]></tbox></line>
+<line><tbox llx="317" lly="498" urx="566" ury="508" f="5"><![CDATA[Figure 12: The effect of the tasks per task set on vis- ]]></tbox></line>
+<line><tbox llx="317" lly="487" urx="566" ury="497" f="5"><![CDATA[ible slowdown. (This graph is log-linear.) The tasks ]]></tbox></line>
+<line><tbox llx="317" lly="477" urx="566" ury="487" f="5"><![CDATA[per task set is a uniform random variable and shown ]]></tbox></line>
+<line><tbox llx="317" lly="466" urx="566" ury="476" f="5"><![CDATA[on the x-axis is the average of its lower and upper ]]></tbox></line>
+<line><tbox llx="317" lly="456" urx="566" ury="466" f="5"><![CDATA[bounds. Batchactive always wins. Batch is unusable ]]></tbox></line>
+<line><tbox llx="317" lly="445" urx="566" ury="455" f="5"><![CDATA[at a task set size with an upper bound of 100. (At ]]></tbox></line>
+<line><tbox llx="317" lly="435" urx="507" ury="445" f="5"><![CDATA[1024, its visible slowdown is over 170.) ]]></tbox></line>
+<line><tbox llx="366" lly="180" urx="537" ury="194" f="11"><![CDATA[200 600 1000 1400 1800 ]]></tbox></line>
+<line><tbox llx="356" lly="188" urx="371" ury="202" f="11"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="341" lly="216" urx="371" ury="230" f="11"><![CDATA[2000 ]]></tbox></line>
+<line><tbox llx="341" lly="244" urx="371" ury="259" f="11"><![CDATA[4000 ]]></tbox></line>
+<line><tbox llx="341" lly="273" urx="371" ury="287" f="11"><![CDATA[6000 ]]></tbox></line>
+<line><tbox llx="341" lly="301" urx="371" ury="316" f="11"><![CDATA[8000 ]]></tbox></line>
+<line><tbox llx="409" lly="169" urx="510" ury="183" f="11"><![CDATA[service time (µ of exp.) ]]></tbox></line>
+<line><tbox llx="335" lly="221" urx="336" ury="247" f="13"><![CDATA[visible ]]></tbox></line>
+<line><tbox llx="335" lly="248" urx="336" ury="269" f="13"><![CDATA[resp. ]]></tbox></line>
+<line><tbox llx="335" lly="271" urx="336" ury="289" f="13"><![CDATA[time ]]></tbox></line>
+<line><tbox llx="335" lly="290" urx="336" ury="301" f="13"><![CDATA[(µ) ]]></tbox></line>
+<line><tbox llx="395" lly="312" urx="459" ury="326" f="15"><![CDATA[SRPT (batch) ]]></tbox></line>
+<line><tbox llx="395" lly="301" urx="457" ury="316" f="15"><![CDATA[SRPT (inter.) ]]></tbox></line>
+<line><tbox llx="395" lly="291" urx="480" ury="305" f="15"><![CDATA[SRPT x FCFS (ba) ]]></tbox></line>
+<line><tbox llx="317" lly="142" urx="566" ury="152" f="5"><![CDATA[Figure 13: The effect of service time on visible re- ]]></tbox></line>
+<line><tbox llx="317" lly="132" urx="566" ury="142" f="5"><![CDATA[sponse time. At the low end, there is more oppor- ]]></tbox></line>
+<line><tbox llx="317" lly="121" urx="546" ury="131" f="5"><![CDATA[tunity for batchactive to improve performance. ]]></tbox></line>
+<line><tbox llx="303" lly="42" urx="316" ury="52" f="6"><![CDATA[8 ]]></tbox></line>
+<pbox llx="52.00" lly="42.00" urx="566.00" ury="742.00"/></page>
+<page n="9">
+<line><tbox llx="113" lly="585" urx="286" ury="600" f="1"><![CDATA[380 1190 2000 2810 3620 ]]></tbox></line>
+<line><tbox llx="96" lly="593" urx="111" ury="607" f="1"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="81" lly="615" urx="111" ury="629" f="1"><![CDATA[2000 ]]></tbox></line>
+<line><tbox llx="81" lly="636" urx="111" ury="651" f="1"><![CDATA[4000 ]]></tbox></line>
+<line><tbox llx="81" lly="658" urx="111" ury="672" f="1"><![CDATA[6000 ]]></tbox></line>
+<line><tbox llx="81" lly="679" urx="111" ury="694" f="1"><![CDATA[8000 ]]></tbox></line>
+<line><tbox llx="76" lly="701" urx="111" ury="715" f="1"><![CDATA[10000 ]]></tbox></line>
+<line><tbox llx="76" lly="723" urx="111" ury="737" f="1"><![CDATA[12000 ]]></tbox></line>
+<line><tbox llx="148" lly="574" urx="250" ury="588" f="1"><![CDATA[service time (µ of exp.) ]]></tbox></line>
+<line><tbox llx="69" lly="626" urx="70" ury="652" f="3"><![CDATA[visible ]]></tbox></line>
+<line><tbox llx="69" lly="654" urx="70" ury="675" f="3"><![CDATA[resp. ]]></tbox></line>
+<line><tbox llx="69" lly="676" urx="70" ury="694" f="3"><![CDATA[time ]]></tbox></line>
+<line><tbox llx="69" lly="696" urx="70" ury="707" f="3"><![CDATA[(µ) ]]></tbox></line>
+<line><tbox llx="54" lly="549" urx="303" ury="559" f="5"><![CDATA[Figure 14: Confidence intervals for a small run sug- ]]></tbox></line>
+<line><tbox llx="54" lly="538" urx="303" ury="548" f="5"><![CDATA[gest that our results are significant. Plotted is the ]]></tbox></line>
+<line><tbox llx="54" lly="528" urx="303" ury="538" f="5"><![CDATA[mean visible response time across ten service times. ]]></tbox></line>
+<line><tbox llx="54" lly="517" urx="303" ury="527" f="5"><![CDATA[The 95% confidence intervals were from 40 runs us- ]]></tbox></line>
+<line><tbox llx="54" lly="507" urx="286" ury="517" f="5"><![CDATA[ing different random seeds at each service time. ]]></tbox></line>
+<line><tbox llx="54" lly="477" urx="129" ury="487" f="6"><![CDATA[small interactive ]]></tbox><tbox llx="124" lly="479" urx="149" ury="485" f="7"><![CDATA[srpt ]]></tbox><tbox llx="146" lly="477" urx="302" ury="487" f="6"><![CDATA[run in which service time was varied ]]></tbox></line>
+<line><tbox llx="54" lly="466" urx="302" ury="476" f="6"><![CDATA[in six minute increments while other parameters were held ]]></tbox></line>
+<line><tbox llx="54" lly="456" urx="301" ury="466" f="6"><![CDATA[constant (Figure 14). Each reported visible response time ]]></tbox></line>
+<line><tbox llx="54" lly="445" urx="301" ury="455" f="6"><![CDATA[mean and confidence interval was the result of 40 simulations ]]></tbox></line>
+<line><tbox llx="54" lly="435" urx="302" ury="445" f="6"><![CDATA[that were started with different random seeds. Out of ten ]]></tbox></line>
+<line><tbox llx="54" lly="424" urx="302" ury="434" f="6"><![CDATA[selections of service times, only one pair of 95% confidence ]]></tbox></line>
+<line><tbox llx="54" lly="414" urx="302" ury="424" f="6"><![CDATA[intervals overlapped, and all confidence intervals were less ]]></tbox></line>
+<line><tbox llx="54" lly="403" urx="301" ury="413" f="6"><![CDATA[than 5% of their respective mean visible response times. A ]]></tbox></line>
+<line><tbox llx="54" lly="393" urx="301" ury="403" f="6"><![CDATA[normal probability plot (not shown) of the response times ]]></tbox></line>
+<line><tbox llx="54" lly="383" urx="301" ury="393" f="6"><![CDATA[for each service time was sufficiently Gaussian to suggest ]]></tbox></line>
+<line><tbox llx="54" lly="372" urx="227" ury="382" f="6"><![CDATA[that the confidence intervals are reliable. ]]></tbox></line>
+<line><tbox llx="54" lly="352" urx="126" ury="361" f="8"><![CDATA[Implementation ]]></tbox><tbox llx="120" lly="351" urx="302" ury="361" f="6"><![CDATA[Our simulator is in C and has modules that ]]></tbox></line>
+<line><tbox llx="54" lly="341" urx="302" ury="351" f="6"><![CDATA[simulate user, task, and server behavior. One Perl script ]]></tbox></line>
+<line><tbox llx="54" lly="330" urx="301" ury="340" f="6"><![CDATA[executes large numbers of this program to explore the simu- ]]></tbox></line>
+<line><tbox llx="54" lly="320" urx="302" ury="330" f="6"><![CDATA[lation parameter space and stores its results into a MySQL ]]></tbox></line>
+<line><tbox llx="54" lly="309" urx="302" ury="319" f="6"><![CDATA[relational database. Other scripts query this database, an- ]]></tbox></line>
+<line><tbox llx="54" lly="299" urx="212" ury="309" f="6"><![CDATA[alyze the results in conjunction with ]]></tbox><tbox llx="207" lly="301" urx="247" ury="307" f="7"><![CDATA[matlab, ]]></tbox><tbox llx="246" lly="299" urx="302" ury="309" f="6"><![CDATA[and process ]]></tbox></line>
+<line><tbox llx="54" lly="288" urx="301" ury="298" f="6"><![CDATA[them for visualization. Roughly 50,000 runs were performed ]]></tbox></line>
+<line><tbox llx="54" lly="278" urx="170" ury="288" f="6"><![CDATA[on a set of shared 2:4 GHz ]]></tbox><tbox llx="165" lly="278" urx="208" ury="288" f="6"><![CDATA[Pentium ]]></tbox><tbox llx="203" lly="280" urx="216" ury="286" f="7"><![CDATA[iv ]]></tbox><tbox llx="214" lly="278" urx="302" ury="288" f="6"><![CDATA[machines each with ]]></tbox></line>
+<line><tbox llx="54" lly="267" urx="302" ury="277" f="6"><![CDATA[512 MB of memory. Most took tens of seconds and less than ]]></tbox></line>
+<line><tbox llx="54" lly="257" urx="301" ury="267" f="6"><![CDATA[100 MB of memory to simulate 16 days of virtual time while ]]></tbox></line>
+<line><tbox llx="54" lly="246" urx="302" ury="256" f="6"><![CDATA[some with parameters causing many more tasks to be cre- ]]></tbox></line>
+<line><tbox llx="54" lly="236" urx="216" ury="246" f="6"><![CDATA[ated took roughly ten minutes to run. ]]></tbox><tbox llx="207" lly="241" urx="215" ury="247" f="10"><![CDATA[6 ]]></tbox></line>
+<line><tbox llx="52" lly="210" urx="186" ury="229" f="11"><![CDATA[5. RELATED WORK ]]></tbox></line>
+<line><tbox llx="54" lly="201" urx="302" ury="211" f="6"><![CDATA[Speculation is a pervasive concept found at the level of I/O ]]></tbox></line>
+<line><tbox llx="54" lly="190" urx="302" ury="200" f="6"><![CDATA[requests, program blocks, and instructions across all areas of ]]></tbox></line>
+<line><tbox llx="54" lly="180" urx="302" ury="190" f="6"><![CDATA[computing including architecture, languages, and systems. ]]></tbox></line>
+<line><tbox llx="54" lly="169" urx="301" ury="179" f="6"><![CDATA[We apply speculation to tasks using the processor resource. ]]></tbox></line>
+<line><tbox llx="54" lly="159" urx="301" ury="169" f="6"><![CDATA[We find great opportunity here for our application domains: ]]></tbox></line>
+<line><tbox llx="54" lly="148" urx="302" ury="158" f="6"><![CDATA[there are negligible costs to storing speculative results and ]]></tbox></line>
+<line><tbox llx="54" lly="138" urx="302" ury="148" f="6"><![CDATA[no need to isolate or rollback such results if not needed. ]]></tbox></line>
+<line><tbox llx="54" lly="127" urx="269" ury="137" f="6"><![CDATA[Here, we focus on the closest related systems work. ]]></tbox></line>
+<line><tbox llx="54" lly="106" urx="301" ury="116" f="6"><![CDATA[Bubenik and Zwaenepoel modeled a cluster of users engaged ]]></tbox></line>
+<line><tbox llx="55" lly="95" urx="62" ury="101" f="10"><![CDATA[6 ]]></tbox><tbox llx="59" lly="90" urx="302" ury="100" f="6"><![CDATA[We desired a batchactive system while exploring our sim- ]]></tbox></line>
+<line><tbox llx="54" lly="81" urx="301" ury="91" f="6"><![CDATA[ulator's large parameter space. The service and think times ]]></tbox></line>
+<line><tbox llx="54" lly="72" urx="277" ury="82" f="6"><![CDATA[of this research were ideal for batchactive scheduling. ]]></tbox></line>
+<line><tbox llx="317" lly="726" urx="494" ury="736" f="6"><![CDATA[in software development using a modified ]]></tbox><tbox llx="489" lly="726" urx="512" ury="734" f="12"><![CDATA[make ]]></tbox><tbox llx="511" lly="726" urx="565" ury="736" f="6"><![CDATA[tool [6]. At ]]></tbox></line>
+<line><tbox llx="317" lly="715" urx="564" ury="725" f="6"><![CDATA[each save of a source code file, their system speculatively ]]></tbox></line>
+<line><tbox llx="317" lly="705" urx="565" ury="715" f="6"><![CDATA[runs the compiler. This is possible because build rules are en- ]]></tbox></line>
+<line><tbox llx="317" lly="694" urx="375" ury="704" f="6"><![CDATA[coded in the ]]></tbox><tbox llx="369" lly="694" urx="412" ury="703" f="12"><![CDATA[Makefile. ]]></tbox><tbox llx="411" lly="694" urx="565" ury="704" f="6"><![CDATA[Their work isolates speculative com- ]]></tbox></line>
+<line><tbox llx="317" lly="684" urx="565" ury="694" f="6"><![CDATA[pilations from the rest of the system. This is not needed in ]]></tbox></line>
+<line><tbox llx="317" lly="673" urx="565" ury="683" f="6"><![CDATA[our system which stores speculative results until requested. ]]></tbox></line>
+<line><tbox llx="317" lly="663" urx="565" ury="673" f="6"><![CDATA[Their simulator models only one task (rebuild) pending per ]]></tbox></line>
+<line><tbox llx="317" lly="652" urx="565" ury="662" f="6"><![CDATA[user. Our user model is broader, encompassing users who ]]></tbox></line>
+<line><tbox llx="317" lly="642" urx="565" ury="652" f="6"><![CDATA[operate interactively or who submit long batches of specu- ]]></tbox></line>
+<line><tbox llx="317" lly="631" urx="565" ury="641" f="6"><![CDATA[lative work for the kinds of important and pervasive param- ]]></tbox></line>
+<line><tbox llx="317" lly="621" urx="565" ury="631" f="6"><![CDATA[eter studies described in Section 1. Beyond their reported ]]></tbox></line>
+<line><tbox llx="317" lly="610" urx="564" ury="620" f="6"><![CDATA[metrics, we also study resource cost, throughput, and slow- ]]></tbox></line>
+<line><tbox llx="317" lly="600" urx="349" ury="610" f="6"><![CDATA[down. ]]></tbox></line>
+<line><tbox llx="317" lly="579" urx="382" ury="589" f="6"><![CDATA[In storage, the ]]></tbox><tbox llx="376" lly="581" urx="394" ury="587" f="7"><![CDATA[tip ]]></tbox><tbox llx="391" lly="579" urx="565" ury="589" f="6"><![CDATA[system showed how performance increases ]]></tbox></line>
+<line><tbox llx="317" lly="569" urx="565" ury="579" f="6"><![CDATA[if the application discloses storage reads in advance of when ]]></tbox></line>
+<line><tbox llx="317" lly="558" urx="565" ury="568" f="6"><![CDATA[data is needed [24]. Their work addressed storage and mem- ]]></tbox></line>
+<line><tbox llx="317" lly="548" urx="565" ury="558" f="6"><![CDATA[ory questions such as how to balance cache space between ]]></tbox></line>
+<line><tbox llx="317" lly="537" urx="383" ury="547" f="6"><![CDATA[prefetches and ]]></tbox><tbox llx="378" lly="539" urx="399" ury="545" f="7"><![CDATA[lru ]]></tbox><tbox llx="396" lly="537" urx="433" ury="547" f="6"><![CDATA[caches. ]]></tbox></line>
+<line><tbox llx="317" lly="516" urx="565" ury="526" f="6"><![CDATA[In networking, the bandwidth-delay product of current and ]]></tbox></line>
+<line><tbox llx="317" lly="506" urx="565" ury="516" f="6"><![CDATA[future grids have spurred speculative approaches to speeding ]]></tbox></line>
+<line><tbox llx="317" lly="495" urx="565" ury="505" f="6"><![CDATA[up tightly-coupled applications [9, 19]. Such work examines ]]></tbox></line>
+<line><tbox llx="317" lly="485" urx="564" ury="495" f="6"><![CDATA[how to rollback unneeded computation and throttle work ]]></tbox></line>
+<line><tbox llx="317" lly="474" urx="565" ury="484" f="6"><![CDATA[so that speculation does not overly consume resources. In ]]></tbox></line>
+<line><tbox llx="317" lly="464" urx="565" ury="474" f="6"><![CDATA[contrast, we speculate among multiple independent (non- ]]></tbox></line>
+<line><tbox llx="317" lly="453" urx="565" ury="463" f="6"><![CDATA[communicating) tasks. Further, we study how to schedule ]]></tbox></line>
+<line><tbox llx="317" lly="443" urx="473" ury="453" f="6"><![CDATA[among task sets from multiple users. ]]></tbox></line>
+<line><tbox llx="317" lly="422" urx="565" ury="432" f="6"><![CDATA[Some work discriminates between speculative and requested ]]></tbox></line>
+<line><tbox llx="317" lly="412" urx="565" ury="422" f="6"><![CDATA[network transmissions. Padmanabhan et al. showed a trade- ]]></tbox></line>
+<line><tbox llx="317" lly="401" urx="565" ury="411" f="6"><![CDATA[off in visible response time and fractional increase in network ]]></tbox></line>
+<line><tbox llx="317" lly="391" urx="564" ury="401" f="6"><![CDATA[usage when varying the depth of their web prefetcher [23]. ]]></tbox></line>
+<line><tbox llx="317" lly="380" urx="565" ury="390" f="6"><![CDATA[In Steere et al.'s system, people manually construct sets of ]]></tbox></line>
+<line><tbox llx="317" lly="370" urx="565" ury="380" f="6"><![CDATA[web prefetch candidates and the browser prefetches candi- ]]></tbox></line>
+<line><tbox llx="317" lly="359" urx="565" ury="369" f="6"><![CDATA[dates simultaneously until all are fetched, or until the person ]]></tbox></line>
+<line><tbox llx="317" lly="349" urx="430" ury="359" f="6"><![CDATA[initiates new activity [28]. ]]></tbox></line>
+<line><tbox llx="317" lly="328" urx="565" ury="338" f="6"><![CDATA[In databases, Polyzotis et al.'s speculator runs queries dur- ]]></tbox></line>
+<line><tbox llx="317" lly="318" urx="564" ury="328" f="6"><![CDATA[ing the think time when one constructs complex queries. [26] ]]></tbox></line>
+<line><tbox llx="317" lly="297" urx="564" ury="307" f="6"><![CDATA[Some speculative approaches require a user or user agent ]]></tbox></line>
+<line><tbox llx="317" lly="286" urx="565" ury="296" f="6"><![CDATA[to disclose speculative work. Others automatically generate ]]></tbox></line>
+<line><tbox llx="317" lly="276" urx="549" ury="286" f="6"><![CDATA[speculative work. In our work, Steere's system, and the ]]></tbox><tbox llx="543" lly="278" urx="562" ury="284" f="7"><![CDATA[tip ]]></tbox></line>
+<line><tbox llx="317" lly="265" urx="565" ury="275" f="6"><![CDATA[system, speculative work is generated by the user. In the sys- ]]></tbox></line>
+<line><tbox llx="317" lly="255" urx="565" ury="265" f="6"><![CDATA[tems of Padmanabhan et al., Polyzotis et al., and Bubenik ]]></tbox></line>
+<line><tbox llx="317" lly="244" urx="565" ury="254" f="6"><![CDATA[and Zwaenepoel, the system queues speculative tasks in ad- ]]></tbox></line>
+<line><tbox llx="317" lly="234" urx="504" ury="244" f="6"><![CDATA[dition to scheduling them. An extension to ]]></tbox><tbox llx="500" lly="236" urx="518" ury="242" f="7"><![CDATA[tip ]]></tbox><tbox llx="516" lly="234" urx="565" ury="244" f="6"><![CDATA[by Chang ]]></tbox></line>
+<line><tbox llx="317" lly="223" urx="564" ury="233" f="6"><![CDATA[et al. introduces automatic I/O disclosure generation [8]. ]]></tbox></line>
+<line><tbox llx="317" lly="213" urx="564" ury="223" f="6"><![CDATA[Other work transforms a single executable into speculative ]]></tbox></line>
+<line><tbox llx="317" lly="202" urx="565" ury="212" f="6"><![CDATA[pieces, yet programmer annotations are needed, and intra- ]]></tbox></line>
+<line><tbox llx="317" lly="192" urx="565" ury="202" f="6"><![CDATA[task speculation has not been considered [7, 11]. It does ]]></tbox></line>
+<line><tbox llx="317" lly="182" urx="564" ury="192" f="6"><![CDATA[not seem possible to automatically speculate computation ]]></tbox></line>
+<line><tbox llx="317" lly="171" urx="565" ury="181" f="6"><![CDATA[in general without domain-specific knowledge or user agents ]]></tbox></line>
+<line><tbox llx="317" lly="161" urx="453" ury="171" f="6"><![CDATA[tailored to specific applications. ]]></tbox></line>
+<line><tbox llx="315" lly="123" urx="431" ury="142" f="11"><![CDATA[6. CONCLUSION ]]></tbox></line>
+<line><tbox llx="317" lly="114" urx="564" ury="124" f="6"><![CDATA[Ideally, a grid scheduler would run speculative tasks while ]]></tbox></line>
+<line><tbox llx="317" lly="103" urx="565" ury="113" f="6"><![CDATA[users were analyzing completed tasks, minimizing the users' ]]></tbox></line>
+<line><tbox llx="317" lly="93" urx="565" ury="103" f="6"><![CDATA[waiting time. The catch is that speculative tasks will take ]]></tbox></line>
+<line><tbox llx="317" lly="82" urx="565" ury="92" f="6"><![CDATA[contended resources from users who are waiting for requested ]]></tbox></line>
+<line><tbox llx="317" lly="72" urx="554" ury="82" f="6"><![CDATA[tasks unless the two types of tasks can be discriminated. ]]></tbox></line>
+<line><tbox llx="303" lly="42" urx="316" ury="52" f="6"><![CDATA[9 ]]></tbox></line>
+<pbox llx="52.00" lly="42.00" urx="565.00" ury="737.00"/></page>
+<page n="10">
+<line><tbox llx="54" lly="726" urx="302" ury="736" f="1"><![CDATA[The solution we promote exploits the inherent speculation in ]]></tbox></line>
+<line><tbox llx="54" lly="715" urx="302" ury="725" f="1"><![CDATA[application-level search: users disclose speculative task sets, ]]></tbox></line>
+<line><tbox llx="54" lly="705" urx="302" ury="715" f="1"><![CDATA[request results as needed, and cancel unfinished tasks if early ]]></tbox></line>
+<line><tbox llx="54" lly="694" urx="301" ury="704" f="1"><![CDATA[results suggest no need to continue. We observe that not all ]]></tbox></line>
+<line><tbox llx="54" lly="684" urx="301" ury="694" f="1"><![CDATA[tasks are equal --- only tasks blocking users matter --- lead- ]]></tbox></line>
+<line><tbox llx="54" lly="673" urx="157" ury="683" f="1"><![CDATA[ing us to introduce the ]]></tbox><tbox llx="153" lly="674" urx="246" ury="683" f="2"><![CDATA[visible response time ]]></tbox><tbox llx="240" lly="673" urx="302" ury="683" f="1"><![CDATA[metric which ]]></tbox></line>
+<line><tbox llx="54" lly="663" urx="302" ury="673" f="1"><![CDATA[measures the time between a task being requested and ex- ]]></tbox></line>
+<line><tbox llx="54" lly="652" urx="302" ury="662" f="1"><![CDATA[ecuted, independent of when it was speculatively disclosed. ]]></tbox></line>
+<line><tbox llx="54" lly="642" urx="79" ury="652" f="1"><![CDATA[Our ]]></tbox><tbox llx="72" lly="642" urx="164" ury="651" f="2"><![CDATA[batchactive scheduler ]]></tbox><tbox llx="158" lly="642" urx="301" ury="652" f="1"><![CDATA[segregates requested and disclosed ]]></tbox></line>
+<line><tbox llx="54" lly="631" urx="302" ury="641" f="1"><![CDATA[tasks into two queues, giving priority to the requested queue, ]]></tbox></line>
+<line><tbox llx="54" lly="621" urx="252" ury="631" f="1"><![CDATA[toward minimizing mean visible response time. ]]></tbox></line>
+<line><tbox llx="54" lly="600" urx="302" ury="610" f="1"><![CDATA[We simulated a variety of user and task behavior and found ]]></tbox></line>
+<line><tbox llx="54" lly="589" urx="301" ury="599" f="1"><![CDATA[that for several important metrics our batchactive model ]]></tbox></line>
+<line><tbox llx="54" lly="579" urx="301" ury="589" f="1"><![CDATA[nearly always does better than conventional models where ]]></tbox></line>
+<line><tbox llx="54" lly="569" urx="302" ury="579" f="1"><![CDATA[tasks are requested one at a time (interactively) or requested ]]></tbox></line>
+<line><tbox llx="54" lly="558" urx="302" ury="568" f="1"><![CDATA[in batches without specifying which are speculative. We have ]]></tbox></line>
+<line><tbox llx="54" lly="548" urx="301" ury="558" f="1"><![CDATA[found that visible response time is improved by about 50% ]]></tbox></line>
+<line><tbox llx="54" lly="537" urx="301" ury="547" f="1"><![CDATA[on average under a batchactive scheduler, and is at least ]]></tbox></line>
+<line><tbox llx="54" lly="527" urx="301" ury="537" f="1"><![CDATA[two times better for 20% of our simulations. These results ]]></tbox></line>
+<line><tbox llx="54" lly="516" urx="302" ury="526" f="1"><![CDATA[hold for both size-based (srpt) and non-size-based (fcfs) ]]></tbox></line>
+<line><tbox llx="54" lly="506" urx="302" ury="516" f="1"><![CDATA[policies. Compared to a batch scheduler, for about 40% of ]]></tbox></line>
+<line><tbox llx="54" lly="495" urx="301" ury="505" f="1"><![CDATA[the runs, the average user pays for a fourth of the resources. ]]></tbox></line>
+<line><tbox llx="54" lly="474" urx="301" ury="484" f="1"><![CDATA[Batchactive scheduling is adaptive: it is at least as good ]]></tbox></line>
+<line><tbox llx="54" lly="464" urx="301" ury="474" f="1"><![CDATA[as interactive or batch as load varies between extremes, ]]></tbox></line>
+<line><tbox llx="54" lly="453" urx="301" ury="463" f="1"><![CDATA[and in the middle ranges it is better than both (Figures 7 ]]></tbox></line>
+<line><tbox llx="54" lly="443" urx="302" ury="453" f="1"><![CDATA[and 8). Many studies show that idle processing time is abun- ]]></tbox></line>
+<line><tbox llx="54" lly="433" urx="302" ury="443" f="1"><![CDATA[dant [22, 4, 1]. Anecdotally, some report that during `crunch ]]></tbox></line>
+<line><tbox llx="54" lly="422" urx="302" ury="432" f="1"><![CDATA[times,' resources are saturated [13, 21]. While this might ]]></tbox></line>
+<line><tbox llx="54" lly="412" urx="302" ury="422" f="1"><![CDATA[occasionally occur now, we believe that once users discrimi- ]]></tbox></line>
+<line><tbox llx="54" lly="401" urx="302" ury="411" f="1"><![CDATA[nate between speculative and demand work, this will be even ]]></tbox></line>
+<line><tbox llx="54" lly="391" urx="302" ury="401" f="1"><![CDATA[rarer: resources will not be saturated with demand work and ]]></tbox></line>
+<line><tbox llx="54" lly="380" urx="302" ury="390" f="1"><![CDATA[batchactive scheduling will provide the benefits shown even ]]></tbox></line>
+<line><tbox llx="54" lly="370" urx="138" ury="380" f="1"><![CDATA[during peak usage. ]]></tbox></line>
+<line><tbox llx="54" lly="349" urx="302" ury="359" f="1"><![CDATA[Our cost model charges for only requested tasks to encour- ]]></tbox></line>
+<line><tbox llx="54" lly="338" urx="302" ury="348" f="1"><![CDATA[age deep speculative disclosure, which enables the scheduler ]]></tbox></line>
+<line><tbox llx="54" lly="328" urx="302" ury="338" f="1"><![CDATA[to best reduce visible response time. Certainly it is true that ]]></tbox></line>
+<line><tbox llx="54" lly="318" urx="302" ury="328" f="1"><![CDATA[not charging for speculative work means that some comput- ]]></tbox></line>
+<line><tbox llx="54" lly="307" urx="302" ury="317" f="1"><![CDATA[ing resources are consumed without being billed. However, ]]></tbox></line>
+<line><tbox llx="54" lly="297" urx="302" ury="307" f="1"><![CDATA[our results suggest that disclosed speculation benefits the ]]></tbox></line>
+<line><tbox llx="54" lly="286" urx="302" ury="296" f="1"><![CDATA[overall effectiveness of the computing resource. When the ]]></tbox></line>
+<line><tbox llx="54" lly="276" urx="301" ury="286" f="1"><![CDATA[system approaches saturation, so that all schemes charge ]]></tbox></line>
+<line><tbox llx="54" lly="265" urx="301" ury="275" f="1"><![CDATA[the same amount, the unexposed speculation in traditional ]]></tbox></line>
+<line><tbox llx="54" lly="255" urx="301" ury="265" f="1"><![CDATA[batch scheduling delivers fewer results per hour (Figures 9 ]]></tbox></line>
+<line><tbox llx="54" lly="244" urx="302" ury="254" f="1"><![CDATA[and 10). And when the system is not saturated, so that ]]></tbox></line>
+<line><tbox llx="54" lly="234" urx="302" ury="244" f="1"><![CDATA[resources are going idle anyway, exposed speculation deliv- ]]></tbox></line>
+<line><tbox llx="54" lly="223" urx="302" ury="233" f="1"><![CDATA[ers significantly reduced visible response time relative to no ]]></tbox></line>
+<line><tbox llx="54" lly="213" urx="302" ury="223" f="1"><![CDATA[speculation at all, so charging only for requested tasks de- ]]></tbox></line>
+<line><tbox llx="54" lly="202" urx="287" ury="212" f="1"><![CDATA[livers better use of unutilized cycles (Figures 7 and 10). ]]></tbox></line>
+<line><tbox llx="52" lly="178" urx="167" ury="197" f="4"><![CDATA[7. REFERENCES ]]></tbox></line>
+<line><tbox llx="58" lly="171" urx="267" ury="180" f="5"><![CDATA[[1] A. Acharya, G. Edjlali, and J. Saltz. The utility of ]]></tbox></line>
+<line><tbox llx="72" lly="162" urx="276" ury="171" f="5"><![CDATA[exploiting idle workstations for parallel computation. ]]></tbox></line>
+<line><tbox llx="72" lly="153" urx="122" ury="162" f="6"><![CDATA[Sigmetrics, ]]></tbox><tbox llx="116" lly="153" urx="143" ury="162" f="5"><![CDATA[1997. ]]></tbox></line>
+<line><tbox llx="58" lly="141" urx="299" ury="150" f="5"><![CDATA[[2] S. Altschul, W. Gish, W. Miller, E. Myers, and D. Lipman. ]]></tbox></line>
+<line><tbox llx="72" lly="132" urx="203" ury="141" f="5"><![CDATA[Basic local alignment search tool. ]]></tbox><tbox llx="199" lly="132" urx="285" ury="141" f="6"><![CDATA[Journal of Molecular ]]></tbox></line>
+<line><tbox llx="72" lly="123" urx="110" ury="132" f="6"><![CDATA[Biology, ]]></tbox><tbox llx="104" lly="123" urx="177" ury="132" f="5"><![CDATA[215:403--10, 1990. ]]></tbox></line>
+<line><tbox llx="58" lly="111" urx="284" ury="120" f="5"><![CDATA[[3] T. E. Anderson, D. E. Culler, D. A. Patterson, and the ]]></tbox></line>
+<line><tbox llx="72" lly="102" urx="296" ury="111" f="5"><![CDATA[NOW team. A case for NOW (Networks of Workstations). ]]></tbox></line>
+<line><tbox llx="72" lly="94" urx="128" ury="102" f="6"><![CDATA[IEEE Micro, ]]></tbox><tbox llx="122" lly="93" urx="216" ury="102" f="5"><![CDATA[15(1):54--64, Feb. 1995. ]]></tbox></line>
+<line><tbox llx="58" lly="81" urx="284" ury="90" f="5"><![CDATA[[4] R. H. Arpaci, A. C. Dusseau, A. M. Vahdat, L. T. Liu, ]]></tbox></line>
+<line><tbox llx="72" lly="72" urx="289" ury="81" f="5"><![CDATA[T. E. Anderson, and D. A. Patterson. The interaction of ]]></tbox></line>
+<line><tbox llx="335" lly="726" urx="528" ury="735" f="5"><![CDATA[parallel and sequential workloads on a Network of ]]></tbox></line>
+<line><tbox llx="335" lly="717" urx="394" ury="726" f="5"><![CDATA[Workstations. ]]></tbox><tbox llx="389" lly="717" urx="439" ury="725" f="6"><![CDATA[Sigmetrics, ]]></tbox><tbox llx="433" lly="717" urx="460" ury="726" f="5"><![CDATA[1995. ]]></tbox></line>
+<line><tbox llx="321" lly="704" urx="461" ury="713" f="5"><![CDATA[[5] F. Berman, G. Fox, and T. Hey. ]]></tbox><tbox llx="457" lly="704" urx="559" ury="712" f="6"><![CDATA[Grid Computing: Making ]]></tbox></line>
+<line><tbox llx="335" lly="695" urx="474" ury="703" f="6"><![CDATA[the Global Infrastructure a Reality. ]]></tbox><tbox llx="468" lly="695" urx="549" ury="704" f="5"><![CDATA[John Wiley & Sons, ]]></tbox></line>
+<line><tbox llx="335" lly="686" urx="362" ury="695" f="5"><![CDATA[2003. ]]></tbox></line>
+<line><tbox llx="321" lly="673" urx="561" ury="682" f="5"><![CDATA[[6] R. Bubenik and W. Zwaenepoel. Performance of optimistic ]]></tbox></line>
+<line><tbox llx="335" lly="664" urx="364" ury="673" f="5"><![CDATA[make. ]]></tbox><tbox llx="359" lly="664" urx="409" ury="673" f="6"><![CDATA[Sigmetrics, ]]></tbox><tbox llx="403" lly="664" urx="430" ury="673" f="5"><![CDATA[1989. ]]></tbox></line>
+<line><tbox llx="321" lly="651" urx="552" ury="660" f="5"><![CDATA[[7] R. Bubenik and W. Zwaenepoel. Semantics of optimistic ]]></tbox></line>
+<line><tbox llx="335" lly="642" urx="391" ury="651" f="5"><![CDATA[computation. ]]></tbox><tbox llx="386" lly="642" urx="424" ury="651" f="6"><![CDATA[ICDCS, ]]></tbox><tbox llx="418" lly="642" urx="445" ury="651" f="5"><![CDATA[1990. ]]></tbox></line>
+<line><tbox llx="321" lly="629" urx="524" ury="638" f="5"><![CDATA[[8] F. Chang and G. A. Gibson. Automatic I/O hint ]]></tbox></line>
+<line><tbox llx="335" lly="620" urx="497" ury="629" f="5"><![CDATA[generation through speculative execution. ]]></tbox><tbox llx="492" lly="621" urx="524" ury="629" f="6"><![CDATA[OSDI, ]]></tbox><tbox llx="518" lly="620" urx="545" ury="629" f="5"><![CDATA[1999. ]]></tbox></line>
+<line><tbox llx="321" lly="607" urx="519" ury="616" f="5"><![CDATA[[9] N. Chrisochoides, A. Fedorov, B. B. Lowekamp, ]]></tbox></line>
+<line><tbox llx="335" lly="598" urx="534" ury="607" f="5"><![CDATA[M. Zangrilli, and C. Lee. A case study of optimistic ]]></tbox></line>
+<line><tbox llx="335" lly="589" urx="524" ury="598" f="5"><![CDATA[computing on the grid: Parallel mesh generation. ]]></tbox><tbox llx="519" lly="590" urx="546" ury="598" f="6"><![CDATA[NGS ]]></tbox></line>
+<line><tbox llx="335" lly="581" urx="422" ury="589" f="6"><![CDATA[Workshop at IPDPS, ]]></tbox><tbox llx="416" lly="580" urx="443" ury="589" f="5"><![CDATA[2003. ]]></tbox></line>
+<line><tbox llx="317" lly="567" urx="527" ury="576" f="5"><![CDATA[[10] R. W. Conway, W. L. Maxwell, and L. W. Miller. ]]></tbox><tbox llx="522" lly="568" urx="557" ury="576" f="6"><![CDATA[Theory ]]></tbox></line>
+<line><tbox llx="335" lly="559" urx="395" ury="567" f="6"><![CDATA[of Scheduling. ]]></tbox><tbox llx="389" lly="558" urx="479" ury="567" f="5"><![CDATA[Addison-Wesley, 1967. ]]></tbox></line>
+<line><tbox llx="317" lly="545" urx="564" ury="554" f="5"><![CDATA[[11] C. Cowan and H. Lutfiyya. Formal semantics for expressing ]]></tbox></line>
+<line><tbox llx="335" lly="536" urx="470" ury="545" f="5"><![CDATA[optimism: The meaning of HOPE. ]]></tbox><tbox llx="465" lly="537" urx="501" ury="545" f="6"><![CDATA[PODC, ]]></tbox><tbox llx="495" lly="536" urx="522" ury="545" f="5"><![CDATA[1995. ]]></tbox></line>
+<line><tbox llx="317" lly="523" urx="533" ury="532" f="5"><![CDATA[[12] D. DeGroot. Throttling and speculating on parallel ]]></tbox></line>
+<line><tbox llx="335" lly="515" urx="392" ury="524" f="5"><![CDATA[architectures. ]]></tbox><tbox llx="387" lly="515" urx="427" ury="523" f="6"><![CDATA[Parbase, ]]></tbox><tbox llx="421" lly="515" urx="554" ury="524" f="5"><![CDATA[1990. Abstract of keynote speech. ]]></tbox></line>
+<line><tbox llx="317" lly="502" urx="557" ury="511" f="5"><![CDATA[[13] D. Epps. Personal communication, 2004. R&D director at ]]></tbox></line>
+<line><tbox llx="335" lly="493" urx="440" ury="502" f="5"><![CDATA[Tippett Studio since 1992. ]]></tbox></line>
+<line><tbox llx="317" lly="480" urx="557" ury="489" f="5"><![CDATA[[14] M. Giddings and D. Knudson. Xgrid-users email list, Feb. ]]></tbox></line>
+<line><tbox llx="335" lly="471" urx="548" ury="480" f="5"><![CDATA[2004. subjects `differing resources' and `What's on your ]]></tbox></line>
+<line><tbox llx="335" lly="462" urx="376" ury="471" f="5"><![CDATA[Xgrid' at ]]></tbox></line>
+<line><tbox llx="335" lly="453" urx="556" ury="461" f="7"><![CDATA[http://lists.apple.com/mailman/listinfo/xgrid-users. ]]></tbox></line>
+<line><tbox llx="317" lly="440" urx="524" ury="449" f="5"><![CDATA[[15] M. Harchol-Balter, K. Sigman, and A. Wierman. ]]></tbox></line>
+<line><tbox llx="335" lly="431" urx="561" ury="440" f="5"><![CDATA[Asymptotic convergence of scheduling policies with respect ]]></tbox></line>
+<line><tbox llx="335" lly="422" urx="390" ury="431" f="5"><![CDATA[to slowdown. ]]></tbox><tbox llx="386" lly="422" urx="444" ury="430" f="6"><![CDATA[Performance, ]]></tbox><tbox llx="438" lly="422" urx="465" ury="431" f="5"><![CDATA[2002. ]]></tbox></line>
+<line><tbox llx="317" lly="409" urx="447" ury="418" f="5"><![CDATA[[16] J. Hillner. The wall of fame. ]]></tbox><tbox llx="442" lly="409" urx="514" ury="418" f="6"><![CDATA[Wired Magazine, ]]></tbox><tbox llx="508" lly="409" urx="563" ury="418" f="5"><![CDATA[11(12), 2003. ]]></tbox></line>
+<line><tbox llx="317" lly="396" urx="564" ury="405" f="5"><![CDATA[[17] D. Holliman. Personal communication, 2003. Former system ]]></tbox></line>
+<line><tbox llx="335" lly="387" urx="541" ury="396" f="5"><![CDATA[administrator for the Berkeley Phylogenomics Group. ]]></tbox></line>
+<line><tbox llx="317" lly="374" urx="531" ury="383" f="5"><![CDATA[[18] N. H. Kapadia, J. A. B. Fortes, and C. E. Brodley. ]]></tbox></line>
+<line><tbox llx="335" lly="365" urx="525" ury="374" f="5"><![CDATA[Predictive application-performance modeling in a ]]></tbox></line>
+<line><tbox llx="335" lly="356" urx="464" ury="365" f="5"><![CDATA[computational grid environment. ]]></tbox><tbox llx="459" lly="357" urx="495" ury="365" f="6"><![CDATA[HPDC, ]]></tbox><tbox llx="489" lly="356" urx="516" ury="365" f="5"><![CDATA[1999. ]]></tbox></line>
+<line><tbox llx="317" lly="343" urx="550" ury="352" f="5"><![CDATA[[19] C. A. Lee. Optimistic grid computing, 2002. Talk at the ]]></tbox></line>
+<line><tbox llx="335" lly="334" urx="528" ury="343" f="5"><![CDATA[Performance Analysis and Distributed Computing ]]></tbox></line>
+<line><tbox llx="335" lly="325" urx="382" ury="334" f="5"><![CDATA[Workshop. ]]></tbox></line>
+<line><tbox llx="317" lly="312" urx="554" ury="321" f="5"><![CDATA[[20] The Lemieux Supercomputer. Pittsburgh Supercomputer ]]></tbox></line>
+<line><tbox llx="335" lly="303" urx="369" ury="312" f="5"><![CDATA[Center, ]]></tbox><tbox llx="365" lly="304" urx="556" ury="312" f="7"><![CDATA[http://www.psc.edu/machines/tcs/lemieux.html, ]]></tbox></line>
+<line><tbox llx="335" lly="294" urx="362" ury="303" f="5"><![CDATA[2003. ]]></tbox></line>
+<line><tbox llx="317" lly="281" urx="538" ury="290" f="5"><![CDATA[[21] T. Lokovic. Personal communication, 2004. Graphics ]]></tbox></line>
+<line><tbox llx="335" lly="272" urx="554" ury="281" f="5"><![CDATA[software engineer at Pixar Animation Studios since 1998. ]]></tbox></line>
+<line><tbox llx="317" lly="259" urx="534" ury="268" f="5"><![CDATA[[22] M. W. Mutka and M. Livny. Profiling workstations' ]]></tbox></line>
+<line><tbox llx="335" lly="251" urx="489" ury="260" f="5"><![CDATA[available capacity for remote execution. ]]></tbox><tbox llx="484" lly="251" urx="543" ury="259" f="6"><![CDATA[Performance, ]]></tbox><tbox llx="537" lly="251" urx="564" ury="260" f="5"><![CDATA[1987. ]]></tbox></line>
+<line><tbox llx="317" lly="238" urx="547" ury="247" f="5"><![CDATA[[23] V. N. Padmanabhan and J. C. Mogul. Using predictive ]]></tbox></line>
+<line><tbox llx="335" lly="229" urx="525" ury="238" f="5"><![CDATA[prefetching to improve World Wide Web latency. ]]></tbox></line>
+<line><tbox llx="335" lly="220" urx="474" ury="228" f="6"><![CDATA[Computer Communication Review, ]]></tbox><tbox llx="468" lly="220" urx="519" ury="229" f="5"><![CDATA[26(3), 1996. ]]></tbox></line>
+<line><tbox llx="317" lly="207" urx="554" ury="216" f="5"><![CDATA[[24] R. H. Patterson, G. A. Gibson, E. Ginting, D. Stodolsky, ]]></tbox></line>
+<line><tbox llx="335" lly="198" urx="528" ury="207" f="5"><![CDATA[and J. Zelenka. Informed prefetching and caching. ]]></tbox><tbox llx="523" lly="198" urx="556" ury="206" f="6"><![CDATA[SOSP, ]]></tbox></line>
+<line><tbox llx="335" lly="189" urx="362" ury="198" f="5"><![CDATA[1995. ]]></tbox></line>
+<line><tbox llx="317" lly="176" urx="391" ury="185" f="5"><![CDATA[[25] G. F. Pfister. ]]></tbox><tbox llx="387" lly="176" urx="476" ury="184" f="6"><![CDATA[In Search of Clusters. ]]></tbox><tbox llx="470" lly="176" urx="551" ury="185" f="5"><![CDATA[Prentice Hall, 1995. ]]></tbox></line>
+<line><tbox llx="317" lly="163" urx="564" ury="172" f="5"><![CDATA[[26] N. Polyzotis and Y. Ioannidis. Speculative query processing. ]]></tbox></line>
+<line><tbox llx="335" lly="154" urx="510" ury="162" f="6"><![CDATA[Conf. on Innovative Data Systems Research, ]]></tbox><tbox llx="504" lly="154" urx="531" ury="163" f="5"><![CDATA[2003. ]]></tbox></line>
+<line><tbox llx="317" lly="141" urx="552" ury="150" f="5"><![CDATA[[27] N. Spring and R. Wolski. Application level scheduling of ]]></tbox></line>
+<line><tbox llx="335" lly="132" urx="512" ury="141" f="5"><![CDATA[gene sequence comparison on metacomputers. ]]></tbox></line>
+<line><tbox llx="335" lly="123" urx="404" ury="132" f="6"><![CDATA[Supercomputing, ]]></tbox><tbox llx="398" lly="123" urx="425" ury="132" f="5"><![CDATA[1998. ]]></tbox></line>
+<line><tbox llx="317" lly="110" urx="527" ury="119" f="5"><![CDATA[[28] D. C. Steere. Exploiting the non-determinism and ]]></tbox></line>
+<line><tbox llx="335" lly="101" urx="546" ury="110" f="5"><![CDATA[asynchrony of set iterators to reduce aggregate file I/O ]]></tbox></line>
+<line><tbox llx="335" lly="92" urx="370" ury="101" f="5"><![CDATA[latency. ]]></tbox><tbox llx="366" lly="92" urx="399" ury="101" f="6"><![CDATA[SOSP, ]]></tbox><tbox llx="393" lly="92" urx="420" ury="101" f="5"><![CDATA[1997. ]]></tbox></line>
+<line><tbox llx="300" lly="42" urx="318" ury="52" f="1"><![CDATA[10]]></tbox></line>
+<pbox llx="52.00" lly="42.00" urx="564.00" ury="736.00"/></page>
+<fonts>
+<font name="TXPUHA+CMR9" h="8.97" n="1"/>
+<font name="OHFFAW+CMTI9" h="8.16" n="2"/>
+<font name="GVKSQB+CMCSC10" h="4.89" n="3"/>
+<font name="Times-Bold" h="17.93" n="4"/>
+<font name="AWCYUH+CMR8" h="7.97" n="5"/>
+<font name="AYEQCZ+CMTI8" h="7.24" n="6"/>
+<font name="YYGWRA+CMTT8" h="7.35" n="7"/>
+<font name="OHFFAW+CMTI9" h="8.16" n="8"/>
+<font name="URRZIH+CMMI9" h="8.06" n="9"/>
+<font name="YCNMIW+CMR6" h="5.37" n="10"/>
+<font name="Times-Bold" h="17.93" n="11"/>
+<font name="QOJOHX+CMTT9" h="7.52" n="12"/>
+<font name="Helvetica" h="0.00" n="13"/>
+<font name="Symbol" h="0.00" n="14"/>
+<font name="Helvetica" h="13.33" n="15"/>
+</fonts>
+</document>

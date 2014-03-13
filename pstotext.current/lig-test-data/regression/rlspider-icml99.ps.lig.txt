@@ -1,0 +1,1049 @@
+y 
+jr6b@andrew.cmu.edu 
+zy 
+mccallum@justresearch.com 
+School of Computer Science 
+Carnegie Mellon University 
+Pittsburgh, PA 15213 
+Just Research 
+4616 Henry Street 
+Pittsburgh, PA 15213 
+Abstract 
+Consider the task of exploring the Web in order to 
+find pages of a particular kind or on a particular topic. 
+This task arises in the construction of domain-specific 
+search engines. A selective, directed web spider can 
+pages indiscriminantly. This paper argues that the 
+solved by reinforcement learning, a branch of machine 
+learning that concerns itself with optimal sequential 
+decision making. One strength of reinforcement learn- 
+ing is that it provides a formalism for measuring the 
+utility of actions that give no immediate benefit, but 
+do give benefit in the future. 
+Topic-specific spidering fits into the reinforcement 
+learning framework because valuing hyperlinks with 
+future reward is important. Experimental results on 
+large collections of real web data show that a reinforce- 
+ment learning spider finds relevant pages three times 
+faster than a competing spider based on breadth first 
+search. The results also show that our spider is not 
+yet taking full advantage of future utility because of 
+inaccuracies in our approximation for mapping hyper- 
+links to their expected future utility. Thus we believe 
+that improving the accuracy of this mapping will in- 
+crease performance even further, and we present ideas 
+for doing so. 
+1 Introduction 
+Spiders are agents that explore the hyperlink 
+graph of the Web, often for the purpose of _##_nd- 
+ing documents with which to populate a search 
+engine. Extensive spidering is the key to ob- 
+taining high coverage by the major Web search 
+Since 
+the goal of these general-purpose search en- 
+gines is to provide search capabilities over the 
+Web as a whole, they aim to find as many dis- 
+tinct web pages as possible. Such a goal lends 
+itself to strategies like breadth-first search. If, 
+on the other hand, the task is to find pages 
+of a particular kind or on a particular topic, 
+(as is the case for a domain-specific search en- 
+gine), then an intelligent spider should try to 
+avoid hyperlinks that lead to o_##_-topic areas, 
+and concentrate on links that lead to docu- 
+ments of interest. 
+This paper describes our research in directed 
+web spidering. We argue that the creation of 
+by reinforcement learning, a branch of ma- 
+chine learning that concerns itself with opti- 
+mal sequential decision making. One strength 
+of reinforcement learning is that it provides a 
+formalism for measuring the utility of actions 
+that give no immediate benefit, but do give 
+benefit in the future. Reinforcement learning 
+agents represent this delayed benefit by learn- 
+ing a mapping from each available action to a 
+scalar value indicating the sum of future dis- 
+counted rewards expected for executing that 
+action. The \discount" makes later rewards 
+less valuable than sooner rewards, thus encour- 
+aging expediency. 
+In our current instantiation of a reinforce- 
+ment learning spider, we learn a mapping from 
+text in the neighborhood of a hyperlink to the 
+future discounted count of relevant pages avail- 
+able as a result of retrieving the page on the 
+other side of the hyperlink. The mapping from 
+text to a scalar is performed casting regression 
+as text classification. Specifically, we discretize 
+the scalar values into a finite number of bins, 
+and use naive Bayes to classify the text into a 
+finite number of classes; the value assigned to a 
+particular hyperlink is then a weighted average 
+of the values of the top-ranked bins. 
+a 
+domain-specific search engine containing com- 
+et al. 
+1999). We have spidered computer science de- 
+partments and labs, so far finding over 50,000 
+research papers in postscript format. Each of 
+these papers is transformed into ASCII, then 
+run through a specially-trained hidden Markov 
+model to automatically find the title, authors, 
+abstract, references, etc. Forward and back- 
+ward references between papers are resolved. 
+Finally, all this information is made avail- 
+able in a searchable, public web interface at 
+www.cora.justresearch.com. 
+cern. The majority of the pages in many 
+computer science department web sites do 
+not contain links to research papers, but in- 
+stead are about courses, homework, schedules 
+and admissions information. Avoiding whole 
+branches and neighborhoods of departmental 
+and increase the number of research papers 
+found given a finite amount of crawling time. 
+We report on a series of experiments us- 
+ing the complete set of web pages and hy- 
+perlinks from four university computer sci- 
+ence departments|a total of more than 53,000 
+pages and 592,000 hyperlinks. The specific spi- 
+domain-specific 
+search engine, is to find research papers as ef- 
+_##_ciently as possible. The results show that a 
+reinforcement learning spider finds half of the 
+available research papers with only one-third 
+the number of page retrievals as a competing 
+spider based on breadth-first search. 
+However, the experiments indicate that our 
+spider is not yet taking full advantage of rep- 
+resenting delayed reward. A reinforcement 
+learning spider that uses delayed reward per- 
+forms slightly worse overall than a spider that 
+uses immediate reward only|although it per- 
+forms dramatically better in the beginning. 
+Our analysis indicates that this is caused by 
+decreased text classification accuracy in the 
+delayed-reward case, where the number of dis- 
+cretized bins is larger and the training data 
+is more noisy. Improving classification accu- 
+racy should allow the delayed-reward spider to 
+dominate the immediate-reward spider every- 
+where, (not just at the beginning), and thus 
+out-perform the breadth-_##_rst-search spider by 
+even more than the current factor of three. 
+The last sections present ideas for increasing 
+this accuracy. 
+2 Reinforcement Learning 
+Here, we give a short description of reinforce- 
+ment learning, explain why it is an appropriate 
+framework for spidering and describe the ap- 
+proach we use to apply reinforcement learning 
+to spidering. 
+In machine learning, the term \reinforce- 
+ment learning" refers to a framework for learn- 
+ing optimal decision making from rewards or 
+punishment (Kaelbling, Littman, & Moore 
+1996). Upon taking an action, the learner is 
+never told the correct action for a particular 
+state, but is simply told how good or bad the 
+selected action was, expressed in the form of a 
+scalar \reward." 
+a 
+a state-action transition 
+and a reward func- 
+At each time step, the 
+selects an action, 
+and then as a result is given a reward and its 
+new state. The goal of reinforcement learning 
+a mapping from states to 
+that maximizes the sum of 
+its reward over time. The most common for- 
+mulation of \reward over time" is a discounted 
+dis- 
+1, expresses \in_##_a- 
+tion," making sooner rewards more valuable 
+than later rewards. In addition to preventing 
+the sum of future rewards from blowing up to 
+infinity, this also encourages the agent to solve 
+the task in as few steps as possible. Accord- 
+we can define 
+of each state to be: 
+(s) = 
+1 
+X 
+t=0 
+(1) 
+time steps 
+The optimal policy, 
+, is the one that maximizes the value, 
+s. 
+In order to learn the optimal policy, we learn 
+, and its more specific 
+be the value of 
+and thereafter 
+following the optimal policy. This is expressed 
+as: 
+(2) 
+We can now define the optimal policy in terms 
+by selecting from each state the ac- 
+tion with the highest expected future reward: 
+The seminal work 
+by Bellman (1957) shows that the optimal pol- 
+icy can be straightforwardly found by dynamic 
+programming. 
+2.1 Spidering as Reinforcement Learning 
+As an aid to understanding how reinforcement 
+learning relates to spidering, consider the task 
+of a mouse exploring a maze to find several 
+pieces of cheese. The agent's actions are mov- 
+ing among the grid squares of the maze. The 
+agent receives a reward for finding each piece 
+of cheese. The state is the position of the 
+mouse and the locations of the cheese pieces re- 
+maining to be consumed (since the cheese can 
+only be consumed and provide reward once). 
+Note that the agent only receives immediate 
+reward for finding a maze square containing 
+cheese, but that in order to act optimally it 
+must choose actions considering future rewards 
+as well. 
+In the spidering task, the on-topic docu- 
+ments are immediate rewards, like the pieces 
+of cheese. The actions are following a partic- 
+ular hyperlink. The state is the locations of 
+the on-topic documents remaining to be con- 
+sumed. The state does not include the current 
+\position" of the agent since a crawler can re- 
+trieve any page for which it knows the URL. 
+The number of actions is large and dynamic, in 
+that it depends on which documents the spider 
+has visited so far. 
+The key features of topic-specific spidering 
+that make reinforcement learning the proper 
+framework for defining the optimal solution 
+are: (1) performance is measured in terms 
+of reward over time, and (2) the environment 
+presents situations with delayed reward. 
+2.2 Practical Approximations 
+The problem now is how to apply reinforce- 
+ment learning to spidering in such a way that 
+it can be practically solved. Unfortunately, the 
+state space is huge: two to the power of the 
+number of on-topic documents on the Web. 
+The action space is also large: the number 
+of unique URLs with incoming links on the 
+Web. Thus we need to make some simplify- 
+ing assumptions in order to make the prob- 
+lem tractable and to aid generalization. Note, 
+however, that by defining the exact solution 
+in terms of the optimal policy, and making 
+our assumptions explicit, we will better under- 
+stand what inaccuracies we have introduced, 
+and how to select areas of future work that will 
+improve performance further. The assump- 
+tions we choose initially are the following two: 
+(1) we assume that the state is independent of 
+which on-topic documents have already been 
+consumed; that is, we collapse all states into 
+one, and (2) we assume that the relevant dis- 
+tinctions between the actions can be captured 
+by the words in the neighborhood of the hy- 
+perlink corresponding to each action. 
+function be- 
+comes a mapping from a `bag-of-words" to a 
+scalar (sum of future reward). Learning to per- 
+remaining sub-problems: (1) assigning appro- 
+values to each hyperlink in the train- 
+ing set, and (2) learning a mapping from text 
+values using the training data. Assigning 
+values to our training set entails striking a 
+balance between future and immediate reward 
+and setting a valuation on various types of fu- 
+ture reward. We perform the mapping from 
+value by casting this regression prob- 
+lem as classification (Torgo & Gama 1997); 
+values, train a naive 
+Bayes classifier on the corresponding neighbor- 
+value of an un- 
+known hyperlink by computing a weighted av- 
+erage of classification scores. 
+2.3 Value Criterion 
+forcement learning, we must first create a map- 
+values. As we have 
+assumed a single state to simplify our system, 
+values with all on-topic 
+documents in place. In our mouse and cheese 
+val- 
+ues before any of the cheese has been eaten. 
+The simplest mapping gives a value of 1 to 
+every hyperlink that points directly to a re- 
+search paper and a value of 0 to all other hy- 
+perlinks. This is equivalent to using the rein- 
+= 0. In 
+many domains, this is not a useful optimiza- 
+tion criteria because the attributes associated 
+with an immediate reward action are distinct 
+from those that identify future reward actions. 
+In the domain of text, this is not necessarily 
+the case. Text that is used to describe pointers 
+to research papers may also be used to point 
+A B 
+Figure 1: A representation of spidering space 
+where arrows are hyperlinks and circles are 
+web documents. The spider is represented 
+are hyperlinks that 
+the spider may elect to follow; _##_lled-in circles 
+denote reward. When a spider is given the 
+choice between an action that provides imme- 
+diate reward and one that provides future re- 
+ward, the spider always achieves the maximum 
+discounted reward by choosing the immediate 
+reward first. 
+toward repositories of such documents. 
+A slightly more involved criteria is one that 
+according to the rewards 
+achievable from the web page that is retrieved 
+This is identical to using re- 
+0. For each 
+hyperlink, we use dynamic programming to 
+calculate a discounted sum over rewards that 
+can be achieved using the hyperlinks stemming 
+from the corresponding web page. 
+A subtle issue comes to bear because of the 
+nature of spidering. In general reinforcement 
+learning problems, a future reward action may 
+be more beneficial than one that provides im- 
+mediate reward. This is often the case when 
+reward varies in magnitude or when reward is 
+highly dependent on the state of the system. 
+However, for the problem of spidering, this is 
+not the case. In fact, given the choice between 
+an action that elicits immediate reward and 
+bet- 
+ter for the spider to choose the immediate re- 
+ward action. 
+An example, depicted in Figure 1, gives good 
+intuition for why future rewards never provide 
+greater benefit. Imagine the case where a spi- 
+and 
+retrieves a research paper and 
+retrieves a web 
+page that includes hyperlinks to 1000 research 
+papers, each of which provides a reward of 1 
+A 
+the sequence of rewards is as follows: 
+101111111. . . 1 
+the 
+first two rewards are reversed: 
+011111111. . . 1 
+The only difference between the two is the 
+time at which the first reward is received. It 
+is beneficial to achieve rewards as quickly as 
+possible, hence it is preferable to perform ac- 
+As the reinforcement 
+learning framework allows for the possibility of 
+future rewards being valued more highly than 
+immediate rewards, some of our experiments 
+values so that no future re- 
+ward hyperlink receives a value higher than an 
+immediate reward hyperlink. 
+2.4 Neighborhood Text 
+With a valuation for the set of known hyper- 
+links, it is necessary to specify features that 
+can be used to compare these to unknown hy- 
+perlinks. For this, we choose the text found in 
+the neighborhood of a hyperlink. Such text is 
+commonly used to describe the content of the 
+page connected to the hyperlink. An example 
+of this, which is commonly found in computer 
+science faculty home pages, is a research pa- 
+per bibliography that contains a hyperlink to 
+a research paper: 
+\Using the Future to Sort Out the Present: Rankprop 
+and Multitask Learning for Medical Risk Analysis," 
+(postscript) R. Caruana, S. Baluja, and T. Mitchell, 
+Neural Information Processing 7, December 1995. 
+Here, the anchor text is the hyperlink and 
+the text of the bibliography provides a good 
+description of the document one would find by 
+following that hyperlink. In the experiments 
+presented in this paper, we associate with each 
+hyperlink two sets of words, 1) the anchor text 
+and tokens from the URL and 2) the full text 
+of the web page where the hyperlink is lo- 
+cated. This associates a significant portion of 
+text with each hyperlink and allows each hy- 
+perlink to be identified uniquely. Experiments 
+not presented in this paper show that using a 
+more restricted set of neighborhood text does 
+not enhance spidering performance. 
+2.5 Naive Bayes 
+We use the text classification algorithm naive 
+Q 
+values. Here, we describe that algorithm in 
+detail. 
+Naive Bayes approaches the task of text 
+classification from a Bayesian learning frame- 
+work. It assumes that text data is generated 
+by a parametric model, and uses training data 
+to calculate estimates of the model parame- 
+ters. Equipped with these estimates, it clas- 
+si_##_es new test documents using Bayes' rule to 
+turn the generative model around and calcu- 
+late the posterior probability that each class 
+would have generated the test document in 
+question. 
+The classifier parameterizes each class sep- 
+arately with a document frequency, and also 
+, has a doc- 
+ument frequency relative to all other classes, 
+). Each class is modeled by a 
+multinomial over words. That is, for every 
+) indi- 
+cates the frequency that the classifier expects 
+. 
+, as an un- 
+ordered collection of its words. To classify 
+a new document with this model, we make 
+the naive Bayes assumption: the words in the 
+document occur independently of each other 
+given the class of the document, (and further- 
+more independently of position). Using this 
+assumption, classification becomes straightfor- 
+ward. We calculate the probability of each 
+class, given the evidence of the document, 
+), and select the class for which this ex- 
+ik 
+to 
+i 
+. We expand 
+) with an application of Bayes' rule, and 
+then make use of the word independence as- 
+sumption: 
+) 
+) 
+j 
+Y 
+k=1 
+ik 
+): (3) 
+) and 
+)) for classification is accomplished us- 
+D. 
+To estimate the word probability parameters, 
+), we count over all word occurrences 
+occurs in doc- 
+uments from that class. We supplement this 
+with Laplace `smoothing' that primes each es- 
+timate with a count of one to avoid probabili- 
+) to be the count of 
+occurs in docu- 
+1g, as given 
+by the document's class label. Then, the esti- 
+j 
+is: 
+) = 1 + 
+P 
+) 
++ 
+jV j 
+s=1 
+P 
+) 
+: 
+(4) 
+The class frequency parameters are set in the 
+indicates the number of 
+classes: 
+) = 1 + 
+P 
+) 
+(5) 
+Empirically, when given a large number of 
+training documents, naive Bayes does a good 
+job of classifying text documents (Lewis 1998). 
+More complete presentations of naive Bayes 
+for text classification are provided by Mitchell 
+(1999). 
+2.6 Regression as Classification 
+Now that we have specified methods for assign- 
+values, choosing fea- 
+tures from each hyperlink for comparison and 
+classifying such features into a discrete set of 
+classes, we can now describe the full process of 
+regression we use to map unknown hyperlinks 
+values. 
+We perform the mapping by casting this 
+regression problem as classification (Torgo & 
+Gama 1997). We discretize the discounted sum 
+of future reward values of our training data, 
+place the hyperlinks into the bin corresponding 
+values as calculated above, and use 
+the hyperlinks' text as training data for a naive 
+Bayes text classifier. 
+In order to determine the value of an un- 
+known hyperlink, we calculate the probabilis- 
+tic class membership for each bin and compute 
+val- 
+ues. The probabilistic class membership values 
+are generated by naive Bayes and are used as 
+values. Thus, the 
+problem of learning a mapping is reduced to 
+the problem of partitioning the set of known 
+hyperlinks and assigning each of those classes 
+value. 
+3 Experimental Setup 
+This section describes the experimental 
+methodology used to evaluate our spiders' abil- 
+ity to locate research papers within computer 
+science department web sites. 
+3.1 Data 
+In August 1998 we completely mapped the 
+documents and hyperlinks of the web sites of 
+computer science departments at Brown Uni- 
+versity, Cornell University, University of Pitts- 
+burgh and University of Texas at Austin. They 
+include 53,012 web pages and postscript files 
+and 592,216 hyperlinks. The target pages (for 
+which a reward of 1 is given) are computer sci- 
+ence research papers. We identify research pa- 
+pers by converting postscript files to text and 
+searching for an abstract or introduction sec- 
+tion in addition to a references or bibliography 
+section. An experiment using a random sam- 
+pling of 200 postscript files shows that this al- 
+gorithm has approximately 95% precision. A 
+total of 2,263 postscript research papers were 
+identified within the webs of the four computer 
+science departments. 
+3.2 Experiments 
+For each spider, we perform a series of four 
+test/train splits in which the data from three 
+universities is used to train a spider that is then 
+tested on the fourth. We create three spiders 
+based on various forms of reinforcement learn- 
+ing and compare their performance. In order 
+to create a baseline for these experiments, we 
+also perform experiments with a spider that 
+uses a FIFO action queue; it follows hyper- 
+links in the order it finds them. We call this 
+spider. 
+The first spider is described in section 2.3 
+as the degenerate form of a reinforcement 
+is 
+set to zero. It partitions documents into two 
+classes for the regression task. One class is 
+those hyperlinks that point to research papers; 
+the other class includes all remaining hyper- 
+spider. 
+The second spider is our first attempt to 
+make use of future reward. It is also described 
+in section 2.3 and is an application of the rein- 
+forcement learning framework with a non-zero 
+spider. 
+We introduce a third spider that attempts 
+to remedy some of the problems inherent in 
+spiders. Such a spider 
+must 1) rank research paper hyperlinks above 
+all others and 2) appropriately prioritize other 
+hyperlinks according to their future reward. 
+spider only singles out research 
+paper hyperlinks and does not explicitly rank 
+other hyperlinks according to their future re- 
+Max Distance to nearest reward 
+1 
+0 0.000 
+1{100 1.000 0.250 0.063 0.016 
+101+ 0.500 0.125 0.031 
+distance 
+spider. Note that some boxes are not assigned 
+values because documents for those cases do 
+= 1:0 is the class of immediate 
+= 0:0 is the class of hyperlinks 
+that lead to no reward. 
+spider does not satisfy #1 
+value greater than 1 to 
+some non-immediate reward hyperlinks. How- 
+ever, it does rank future reward hyperlinks and 
+thus encapsulates #2. 
+To describe a mapping from hyperlinks to 
+values that exhibits the properties of the 
+optimal spider, we construct by hand a set of 
+hyperlink classes (displayed in Table 1) based 
+on distance to the nearest reward and the max- 
+imum attainable reward. In order to avoid as- 
+values larger than 1 to future reward 
+to be a dis- 
+counted sum of all future reward, but rather 
+the discounted value of the nearest reward, 
+modified slightly according to the total amount 
+spi- 
+der. 
+3.3 Evaluation Metrics 
+We use two methods for evaluating the perfor- 
+mance of our spider. The first is the number of 
+web pages retrieved before half of the research 
+papers are retrieved. This provides a simple, 
+intuitive evaluation of performance, but is not 
+robust. A spider may be able to find half of the 
+research papers almost immediately and then 
+A preferred method of evaluation is the calcu- 
+lation of a sum of rewards where each reward 
+is discounted by one minus the percent of web 
+pages yet to be retrieved. This has the effect 
+of calculating the area under the curve when 
+research papers retrieved is plotted against the 
+number of web pages retrieved. When present- 
+ing these \integral" scores, we normalize scores 
+so that a spider that retrieves all research pa- 
+pers before its first action (an impossible sce- 
+nario) achieves a score of 100. 
+4 Results 
+In our experiments, we provide evidence that 
+reinforcement learning-based spiders perform 
+reducing 
+the amount of required effort by as much as 
+two-thirds. We also show that a spider that 
+does not distinguish between future and zero 
+reward hyperlinks can perform well over the 
+lifetime of the spider. However, we note that 
+such a spider does not perform well at the be- 
+ginning stages and is outperformed by a spider 
+that distinguishes between different amounts 
+of future reward. Additionally, we show that a 
+spider that inappropriately weights future re- 
+ward hyperlinks above immediate reward hy- 
+perlinks is outperformed by one that values im- 
+mediate reward hyperlinks most highly. 
+We present empirical findings from our 
+four university data set; each experiment is an 
+average across results from the four universi- 
+ties. We run our spider on each university web, 
+using the web from the other three universities 
+as training data. 
+Our first graph, shown here in Figure 2, 
+distance, fu- 
+spiders. As can be seen, 
+perform significantly 
+showing that there is 
+significant value in using a reinforcement learn- 
+ing framework such as we have constructed. 
+must follow only 9.0% of hyper- 
+links before locating half of the research papers 
+must traverse 27.3%. This is 
+a 67% reduction in the amount of work needed 
+to locate a significant number of research pa- 
+0 
+10 
+20 
+30 
+40 
+50 
+60 
+70 
+80 
+90 
+100 
+0 10 20 30 40 50 60 70 80 90 100 
+Percent 
+Research 
+Papers 
+Found 
+Percent Hyperlinks Followed 
+Spidering CS Departments 
+Future 
+Distance 
+Breadth-First 
+distance, 
+spiders, averaged over 
+four test/train splits with data from four de- 
+partments. The vertical axis shows the per- 
+centage of on-topic documents found, while 
+the horizontal axis shows the percentage of hy- 
+perlinks followed thus far into the spider's ex- 
+fu- 
+and both reinforcement learning spiders 
+find target documents significantly faster than 
+breadth-first. 
+pers. 
+This graph is also useful for comparing the 
+spiders. 
+spider outper- 
+spider at nearly every step 
+of the way. Our integral metric confirms this 
+as 85.2 
+spider comes 
+15% closer to the upper bound on integral 
+breadth- 
+score of 69.4. 
+performs better than 
+is significant because the primary di_##_er- 
+ence between the two spiders their handling of 
+immediate reward hyperlinks. As was men- 
+tioned earlier, immediate reward hyperlinks 
+are always more beneficial than future reward 
+explicitly includes this 
+Q 
+values to immediate reward hyperlinks. 
+0 
+10 
+20 
+30 
+40 
+50 
+60 
+70 
+80 
+90 
+100 
+    
+Percent Hyperlinks Followed 
+Spidering CS Departments 
+Immediate 
+Distance 
+Breadth-First 
+immediate 
+has a higher 
+has better perfor- 
+mance through some of the early stages of spi- 
+dering. 
+Our second graph, shown in Figure 3, 
+breadth-first 
+imme- 
+breadth-first, im- 
+clearly performs much better, reduc- 
+ing by two-thirds the amount of work neces- 
+sary to retrieve half of the available research 
+also performs better than 
+spider, achieving an integral score 
+of 87.4, 15% closer to the upper bound than 
+score of 85.2. 
+is able to achieve 
+this excellent performance without an explicit 
+stratification of future reward hyperlinks. This 
+is somewhat surprising because it does not ex- 
+plicitly account for one of the necessary prop- 
+erties of the optimal spider. However, this may 
+be due to the importance of immediate reward 
+in the later stages of spidering. In classification 
+experiments, we find that the classifier used 
+spider achieves 94% recall in 
+classifying immediate reward hyperlinks. That 
+is to say that of the hyperlinks that are actu- 
+ally immediate reward hyperlinks, the classifier 
+spider labels 94% of those 
+as being immediate reward hyperlinks. After 
+0 
+0.5 
+1 
+1.5 
+2 
+2.5 
+3 
+3.5 
+4 
+4.5 
+5 
+0 0.5 1 1.5 2 2.5 3 3.5 4 4.5 5 
+Percent 
+Research 
+Papers 
+Found 
+Percent Hyperlinks Followed 
+Spidering CS Departments 
+Immediate 
+Distance 
+Breadth-First 
+Figure 4: A close-up view of early perfor- 
+spiders. 
+immediately 
+imme- 
+must wade through nearly 100 hyperlinks 
+before finding its second research paper. 
+10% of the hyperlinks have been followed, most 
+hyperlinks have been found and the task is re- 
+duced to one of identifying immediate reward 
+hyperlinks. 
+dis- 
+imme- 
+has collected more research papers than 
+through the entire spidering run. In 
+fact, in the early stages of spidering, the per- 
+spider is significantly 
+better. In Figure 4, we show the performance 
+through their re- 
+trieval of the first 28, or 5% of research pa- 
+follows 
+61%, or 177 fewer hyperlinks before retrieving 
+the first 5% of research papers. Even more 
+retrieves 
+only a single paper before having followed 88, 
+or 0.67% of the available hyperlinks. This ex- 
+spider 
+is not fully able to 
+judge the value of future reward hyperlinks, 
+even when faced with cases where it is pos- 
+sible to judge those values using only textual 
+features. 
+5 Discussion and Future Work 
+Our results section provides strong evidence 
+that for the task of locating research papers 
+within computer science department webs, re- 
+inforcement learning using text-based features 
+can yield us a substantial win over a more rudi- 
+mentary method such as breadth-first search. 
+We also give evidence that there is value in 
+learning the features of future reward hyper- 
+spider per- 
+forms well without taking regard for the fea- 
+tures found in future reward hyperlinks, it 
+from the beginning. Here we give two reasons 
+spider performs well and 
+propose ideas for improving spidering perfor- 
+mance. 
+In order to gain some understanding of 
+spider performs so well, we 
+examine the words which are most predictive 
+immedi- 
+spider. 
+As one can see in Table 2, many of the 
+words are used to uniquely describe Computer 
+Science research papers. It is common for a 
+web page containing a link to a research pa- 
+per to contain a citation or other descriptive 
+text for that research paper. Hence the rea- 
+son for such features. It is interesting to note 
+that some of these words, such as \technical," 
+\report" and \papers" are commonly used by 
+computer science departments and professors 
+to indicate a hyperlink that points to a collec- 
+should 
+rate highly some future reward hyperlinks. 
+performs best toward the end of 
+a run, most likely because of its ability to iden- 
+tify research papers. Near the end of a run, 
+most of the immediate reward hyperlinks are 
+known and the spidering task is reduced to one 
+of identifying such hyperlinks. As was men- 
+performs very well at 
+this task, achieving a 94% recall rate. 
+performs well at the end 
+0.0238 proceedings 0.0072 report 
+0.0166 pp 0.0069 science 
+0.0128 postscript 0.0069 technical 
+0.0120 computer 0.0068 tr 
+0.0120 international 0.0065 intelligence 
+0.0117 conference 0.0063 boyer 
+0.0115 acm 0.0061 workshop 
+0.0105 proc 0.0061 springer 
+0.0104 symposium 0.0061 aaai 
+0.0098 systems 0.0061 artificial 
+0.0083 paper 0.0061 algorithms 
+0.0078 computing 0.0060 reasoning 
+0.0076 logic 0.0060 lifschitz 
+0.0072 learning 0.0060 papers 
+0.0072 ieee 0.0058 vol 
+Table 2: Most predictive words in class model 
+for class of documents per- 
+taining to hyperlinks that point to research 
+papers. Scores shown are weighted log like- 
+lihood ratios (Cover & Thomas 1991). Note 
+that these words are, intuitively, words that 
+are likely to be used to describe hyperlinks that 
+point directly to Computer Science research 
+papers. 
+performs best to- 
+ward the beginning|when identification of 
+high value future reward links is most impor- 
+tant. As each of these two spiders perform best 
+at two different tasks, an area for future work 
+is experimenting with combinations of these 
+spiders. If it is possible to select future reward 
+imme- 
+ability to identify immediate rewards, 
+then it may be possible to construct a spider 
+that outperforms both of them. 
+One of the assumptions that we made 
+about our application of reinforcement learn- 
+ing to spidering is that the state of a spider 
+is not important for identifying the value of 
+an action. While our assumption is not true, 
+B 
+D 
+F 
+C 
+A 
+E 
+Figure 5: A representation of spidering space 
+where arrows are hyperlinks and circles are 
+web documents. Hyperlinks are labeled with 
+letters of the alphabet; the spider is denoted 
+as a hexagon; circles denote web documents; 
+are 
+hyperlinks that the spider may elect to follow. 
+The actions selected by the spider may change 
+the value of some hyperlinks. 
+especially when much of the search space is un- 
+known. Figure 5 shows an example of such a 
+situation. 
+Here, the spider may elect to follow hyper- 
+have fu- 
+ture reward as their children point to research 
+papers. However, if the spider were to select 
+B 
+would no longer be of value. Of course, one 
+cannot use text features to account for these 
+changing states. However, it is true that there 
+exist certain hyperlinks near reward that are 
+worthless because discovering those hyperlinks 
+necessitates traversing the page to which the 
+hyperlink points. We may be able increase 
+spidering performance by rating these links ac- 
+cording to the state of the spider once it finds 
+such a hyperlink. 
+In selecting a feature set to represent a hy- 
+perlink, we ignored much of the information 
+available to us and restricted ourselves to us- 
+ing unstructured, plain text. We believe that 
+performance increases may be found using fea- 
+tures of a hyperlink that we have neglected, 
+such as HTML markup and the graph struc- 
+ture of the web around the hyperlink. Such ad- 
+ditions are likely to improve classification ac- 
+curacy and thus increase performance of the 
+spider. 
+6 Related Work 
+formation gathering from the Web. 
+ARACHNID (Menczer 1997) is a system 
+that uses a collection of agents for finding in- 
+formation on the Web. Each agent competes 
+for limited computation resources, procreating 
+and mutating proportionally to its success in 
+finding relevant documents. Information gath- 
+ering experiments are demonstrated on the En- 
+cyclopedia Britannica Propaidia tree and syn- 
+thetic data. By contrast, our spider has roots 
+in optimal decision theory, and searches un- 
+structured web pages from the real Web. 
+WebWatcher (Joachims, Freitag, 
+& Mitchell 1997) is a browsing assistant that 
+helps a user find information by recommending 
+which hyperlinks to choose. It thus restricts 
+its action space to only hyperlinks from the 
+current page. WebWatcher uses reinforcement 
+learning to learn the value of each word on 
+a hyperlink. Our work is not user-centric and 
+strives to find a method for learning an optimal 
+decision policy for locating relevant documents 
+when hyperlink selection is unlimited. 
+Laser (Boyan, Freitag, & Joachims 1996) 
+is a search engine that automatically opti- 
+mizes a number of parameters to achieve im- 
+proved retrieval performance. The CMU CS 
+Web is used as the test bed and evaluation is 
+based on the user's selection of links presented 
+by Laser. The work finds that incorporat- 
+ing HTML markup into the TFIDF weighting 
+scheme improves retrieval performance. Uti- 
+lizing such markup may also be effective for 
+improving spidering performance. 
+Cho, Garcia-Molina, & Page (1998) intro- 
+duce a metric, PageRank, for valuing a web 
+page based on its linkage properties. They 
+show that PageRank is an effective spidering 
+metric for locating pages with high PageRank 
+counts or back link counts. However, these 
+metrics perform poorly when the task is to 
+locate pages that are relevant to a particular 
+topic or query. Our research focuses on exactly 
+that aspect: creating a framework to locate 
+web documents that are related to a particu- 
+lar topic. 
+Balabanovic & Shoham (1995) describes a 
+system that gathers interesting web pages for 
+a user. They use a TFIDF metric to compare 
+documents based on their textual features and 
+use a best-first search technique to find such 
+documents. Weights are modified daily based 
+on user evaluation of gathered web pages. Re- 
+sults are positive, outperforming random selec- 
+tion and performing as well as human selected 
+\cool" pages. 
+7 Conclusions 
+Reinforcement learning is an effective frame- 
+work for spidering. We have shown that, for 
+the task of finding research papers, a reinforce- 
+ment learning spider is able to reduce effort by 
+one-third over breadth-first search. 
+The most important next step after these 
+preliminary results is to relax some of the re- 
+strictive assumptions made thus far. Towards 
+this goal, experiments aim to show that rep- 
+resenting delayed reward can further improve 
+lieve that there are many features that are 
+not indicative of immediate reward but are 
+predictive of future reward; following them 
+should improve performance further. We are 
+also studying enlarged feature sets to repre- 
+func- 
+tion: namely, we are working on using word 
+neighborhoods, headers, titles, and words from 
+hyperlink-neighboring pages. 
+Acknowledgements 
+Much of the work for this paper has been done 
+project, a Com- 
+puter Science research paper search engine, 
+We wish to 
+thank Kamal Nigam and Kristie Seymore for 
+and for their helpful 
+comments and observations relating to this re- 
+search. We also wish to thank Tom Mitchell 
+and Mark Craven for their insights. 
+References 
+Balabanovic, M., and Shoham, Y. 1995. 
+Learning information retrieval agents: Ex- 
+periments with automated web browsing. 
+AAAI-95 Spring Symposium on Infor- 
+mation Gathering from Heterogenous, Dis- 
+tributed Environments. 
+Dynamic Programming. 
+Princeton, NJ: Princeton University Press. 
+Boyan, J.; Freitag, D.; and Joachims, T. 1996. 
+A machine learning architecture for optimiz- 
+AAAI workshop 
+on Internet-Based Information Systems. 
+Cho, J.; Garcia-Molina, H.; and Page, L. 
+Computer Networks and ISDN Sys- 
+volume 30. 
+El- 
+New York: 
+John Wiley and Sons. 
+Joachims, T.; Freitag, D.; and Mitchell, T. 
+1997. Webwatcher: A tour guide for the 
+Proceedings of IJCAI- 
+97. 
+Kaelbling, L. P.; Littman, M. L.; and Moore, 
+A. W. 1996. Reinforcement learning: A 
+Journal of Artificial Intelligence Re- 
+237{285. 
+Lewis, D. D. 1998. Naive (Bayes) at forty: 
+The independence assumption in information 
+ECML-98. 
+McCallum, A.; Nigam, K.; Rennie, J.; and 
+Seymore, K. 1999. Building domain-specific 
+search engines with machine learning tech- 
+AAAI-99 Spring Symposium on 
+Intelligent Agents in Cyberspace. 
+Menczer, F. 1997. ARACHNID: Adaptive 
+retrieval agents choosing heuristic neighbor- 
+ICML '97. 
+New 
+York: McGraw-Hill. 
+Nigam, K.; McCallum, A.; Thrun, S.; and 
+Mitchell, T. 1999. Text classification from 
+labeled and unlabeled documents using EM. 
+To appear. 
+Torgo, L., and Gama, J. 1997. Regression us- 
+Intelligent Data 
+1(4).

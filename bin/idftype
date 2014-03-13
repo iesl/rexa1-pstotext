@@ -1,0 +1,166 @@
+#! /usr/bin/perl -w
+use strict;
+
+use FindBin qw($Bin);
+use Getopt::Long;
+
+#======================= [ Forward Decls ] =======================
+sub syntax();
+sub splitFilename($);
+sub getUncompressedFiletype($$) ;
+sub mimeTypeToExtension($) ;
+sub removeLeadingBlankLines($);
+
+
+
+#======================= [ syntax ] =======================
+sub syntax () {
+  print "Syntax: idftype -file filename\n";
+}
+
+#======================= [ Command line processing: ] =======================
+my %options=();
+GetOptions(
+           "file=s"       => \$options{file},
+           "root=s"       => \$options{root},
+           "quiet|q"      => \$options{quiet},
+          );
+
+
+{
+  #======================= [ Main: ] =======================
+  {
+    defined $options{file} or syntax() and exit;
+    $options{root} = "." unless defined $options{root};
+
+    my $file = $options{file};
+    my $filetype;
+
+    ($file, $filetype) = getUncompressedFiletype($options{root}, $file);
+
+    if ( !($filetype =~ /(postscript|pdf)/) ) {
+      ## yuck - try to fix ps/pdfs with (illegal but common) leading blank lines
+      removeLeadingBlankLines( $file );
+      ($file, $filetype) = getUncompressedFiletype($options{root}, $file);
+    }
+
+    my %fileParts = splitFilename( $file ); 
+    my $extension = mimeTypeToExtension( $filetype );
+    $extension = "unknown" unless defined( $extension );
+    my $newFilename = "$fileParts{'dir'}/$fileParts{'noext'}.$extension";
+    if ( "$file" ne "$newFilename" ) {
+      if ( -f "$newFilename" ) {
+        $options{quiet} or print "deleting duplicate file $file\n";
+        unlink($file) or die "unlink error: $!\n";
+      } else {
+        $options{quiet} or print "$file -> $newFilename\n";
+        rename($file, "$newFilename") or die "rename error $file -> $newFilename: $!\n";
+      }
+    } else {
+      $options{quiet} or print "ok: $file\n";
+    }
+  }
+
+
+  #======================= [   removeLeadingBlankLines ] =======================
+  sub removeLeadingBlankLines($) {
+    my ($file) = @_;
+    open( FH, $file );
+    my $line;
+    my $blanks = 0;
+    while ( $line=<FH> ) {
+      if ( $line =~ /^[\s]*$/ ) {
+        $blanks++;
+      } elsif ( $blanks > 0 ) {
+        print "removed blanks\n";
+        open( NFH, "> $file.nlb" );
+        print NFH $line;
+        while ( $line=<FH> ) {
+          print NFH $line;
+        }
+        close NFH;
+        goto DONE;
+      } else {
+        goto DONE;
+      }
+    }
+  DONE: close FH;
+    if ( -f "$file.nlb" ) {
+      unlink( $file );
+      rename( "$file.nlb", "$file" );
+    }
+  }
+
+  #======================= [  getUncompressedFiletype ] =======================
+  sub getUncompressedFiletype($$) {
+    my ($root, $filename) = @_;
+    my $originalName = $filename;
+    my $filetype = `file -b --mime-type $filename`; chomp $filetype;
+    while ( $filetype =~ /(gzip|compress)/ ) {
+      $options{quiet} or print "inflating file $filename\n";
+      my $newfn = "$filename.idftype.tmp";
+      my $gunzip = "gunzip -fqc $filename 2>/dev/null > $newfn";
+      print("running $gunzip\n");
+      `$gunzip`;
+      $filename = $newfn;
+      $filetype = `file -b --mime-type $filename`; chomp $filetype;
+    }
+
+    # rename($filename, "$originalName") or die "rename to orig error $filename -> $originalName: $!\n";
+    return ($filename, $filetype);
+  }
+
+  #======================= [ mimeTypeToExtension ] =======================
+  sub mimeTypeToExtension($) {
+    my ($mimeType) = @_;
+    my $ext;
+    $mimeType =~ m!^application/postscript!i and $ext = "ps";
+    $mimeType =~ m!^application/pdf!i and $ext = "pdf";
+    $mimeType =~ m!^text/plain([^\(]*)!i and $ext = "txt";
+    $mimeType =~ m!^text/html([^\(]*)!i and $ext = "html";
+    $mimeType =~ m!^application/x-gzip!i and $ext = "gz";
+    $mimeType =~ m!^application/x-compress!i and $ext = "compress";
+    return $ext;
+  }
+
+  #======================= [ unknownTypeToExtension ] =======================
+  sub unknownTypeToExtension($) {
+    my ($type) = @_;
+    local $_ = $type;
+    s!/!%!g;
+    s/\s+//g;
+    "$_";
+  }
+
+
+  #======================= [ splitFilename ] =======================
+  sub splitFilename($) {
+    my ($path) =  @_;
+    my $name;
+    my $dir =  $path;
+    if ( $path =~ m!/! ) {
+      $dir =~ s!/[^/]+$!!;
+      ## print "p = $path, d = $dir\n";
+
+      $name = substr( $path, length( $dir )+1 );
+    } else {
+      $name = $dir;
+      $dir = undef;
+    }
+
+    my ($noext, $exts) = split /\./, $name, 2;
+
+    # print "name = $name\n" if defined $name;
+    # print "exts = $exts\n" if defined $exts;
+    # print "dir = $dir\n" if defined $dir;
+    # print "noext = $noext\n" if defined $noext;
+      
+    my %parts = (
+                 "name" => $name,
+                 "dir" => $dir,
+                 "noext" => $noext, 
+                 "exts" => $exts, 
+                );
+    return %parts;
+  }
+}

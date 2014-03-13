@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# ---------------------------
+# -- Grid Engine parameters 
+#
+# -----------------
+# --- interpreter 
+#$ -S /bin/sh
+#
+# -----------------
+# --- run from current dir
+#$ -cwd 
+#
+# -----------------
+# --- job name
+#$ -N rexa.pstotext
+#
+# -----------------
+# --- stdio redirection
+#$ -e /dev/null
+#$ -o /dev/null
+#
+# -----------------
+# --- force jobs to linux 
+#  $ -l arch=lx24-amd64
+#  $ -l hostname=dali0
+#
+# -----------------
+# --- restartable
+# $ -r y
+#
+# -----------------
+# --- merge stdout/stderr?
+#$ -j y
+#
+# -----------------
+# --- pass on entire env
+#$ -V
+#
+# -----------------
+# --- use priority of -100
+# $ -p -100
+#
+# -----------------
+# --- Mail notifications (begin/end/suspend)
+# $ -m bes
+# $ -M saunders@cs.umass.edu
+#
+# Parallel jobs
+#$ -t 1-2
+
+
+# need to get the actual location of bin dirs from config file (or rely on convention)
+declare -r pstotext_bin="../path/to/pstotext/bin"
+declare -r pstotext="$pstotext_bin/pstotext -ligatures $pstotext_bin/ligatures.txt"
+
+run_pstotext () {
+    local pdfFile="$1"
+    $pstotext $pdfFile   # 2> $pdfFile.pstotext.stderr
+}
+
+
+# kludge: remove any pstotext tmp files that may be left in /tmp, 
+# find /tmp -type f -name 'ps2*' -maxdepth 1 -amin +2 -exec rm {} ';'
+
+[[ "$SGE_TASK_ID" ]] || SGE_TASK_ID=1
+
+
+declare -i fileIndex="$SGE_TASK_ID - 1"
+
+declare -a pdfs=( sample.pdf )
+
+run_pstotext ${pdfs[$fileIndex]}
+

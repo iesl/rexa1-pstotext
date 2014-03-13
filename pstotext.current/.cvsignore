@@ -1,0 +1,6 @@
+*.o
+pstotext
+rot90.h
+rot270.h
+ocr.h
+*.cache

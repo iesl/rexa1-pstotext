@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+  <content>
+    <headers headerID="p1x95.0y668.0">
+      <title>Analysis-by-Synthesis Algorithms for Low Bit Rate Coding</title>
+      <authors>
+        <author>
+          <author-first>G.</author-first>
+          <author-last>Riccardi,</author-last>
+        </author>
+        <author>
+          <author-first>G.</author-first>
+          <author-middle>A</author-middle>
+          <author-last>Mian</author-last>
+        </author>
+      </authors>
+      <institution>Dipartimento di Elettronica ed Informatica, Universit#adiPadova</institution>
+      <address>Via Gradenigo 6/A, 35131 Padova, Italy.</address>
+      <email>E-mail: dsp3@paola.dei.unipd.it</email>
+      <note>tel. +00-39-49-8287637, fax +00-39-49-8287699</note>
+      <keyword>Keywords : Low bit-rate coding, Analysis-by-Synthesis, Prototype, Fractional Delay Pitch.</keyword>
+    </headers>
+    <body>ABSTRACT 
+In speech coding at low bit-rates, the computation of 
+a robust excitation signal is a key point, whichchar- 
+acterizes the perceptive quality provided byavocoder. 
+Recently a lot of work has been done in this direction, 
+namely for good quality and coding efficiency in the 
+design of vocoders [4-6]. This work proposes a set of 
+algorithms which apply the rationale of the Analysis- 
+by-Synthesis together with High Resolution technique 
+to low-bit rate coding. In the following we shall call 
+this technique High Resolution Analysis-by-Synthesis 
+(HRAS). As a whole this method provides a precise 
+Analysis parameter estimation and a detailed 
+excitation signal used in signal reconstruction. 
+1. THE HRAS TECHNIQUE 
+The high resolution analysis is based on the "
+fractional" pitch technique, introduced in [1,2]. The 
+synthesis in HRAS, is provided bytwotypes of 
+excitation signals: a train of prototypes at pitch distance, 
+#(n) and a stochastic codebook excitation, #(n). The 
+input #(n) is used as the second orthogonal 
+component of the total excitation. The proposed work deals 
+with algorithms for the computation of the component 
+#(n), which is related to the high resolution task in 
+the signal reconstruction process. To this purpose an 
+enhanced excitation #(n)isprovided by a train of 
+prototypes which are adapted at each pitch period on a 
+frame-by-frame basis: 
+#(n) = 
+bN=M c, 1 
+X 
+i=0 
+L 
+X 
+j= , L 
+# i;j 
+(n)#(n, n 0 , iM , j) (1) 
+where N is the length of the synthesis frame and M 
+the pitch lag estimated in the analysis step. The 
+synthesis parameters L, n 0 , # i;j (n) are, respectively, the 
+temporal extension of each prototype waveform, the 
+corresponding phase term and the long term excitation. 
+The latter parameters should be computed through the 
+minimization of the weighted reconstruction error 
+energy over the synthesis frame: 
+min 
+n0 ;i;j 
+X 
+n 
+(~y w (n), 
++ 
+bN=M c, 1 
+X 
+i=0 
+L 
+X 
+j= , L 
+# i;j (n)hw (n , n 0 , iM , j)) 2 
+(2) 
+where hw (n) is the weighted pulse response of the all- 
+pole model, ~ y w (n)=yw (n) , y w0 (n) is the weighted 
+difference between the original signal,y(n), and the term 
+due to the free response y 0 (n) [3]. Aweighting filter was 
+chosen according to perceptive considerations given in 
+[7]. No closed solution exists for the corresponding 
+solution of equation (2), which results almost irresolvable 
+for real time applications.Hence different sub-optimal 
+procedures can be tried according to hypothesis applied 
+to the signal reconstruction process. Three approaches 
+will be presented. 
+1. The first method is based on the assumption 
+that the signal in the analysis frame (
+usually in the range 20-30 ms) is not stationary. 
+In this case each prototype is computed 
+taking into account the contribution of the past 
+prototypes.This way the computation of each 
+prototype results in a sequence of 
+minimization problems (and into the solution of the 
+corresponding linear systems) associated to 
+each pitch period. 
+2. As for the second approach, the 
+stationary hypothesis within the analysis frame is 
+used for efficient modeling of the prototype 
+train. Thus the excitation #(n) is obtained 
+by means of a gain vector modulating a 
+prototype associated to the processed frame. As 
+1 
+0 100 200 300 400 500 600 
+-6000 
+-4000 
+-2000 
+0 
+2000 
+4000 
+0 100 200 300 400 500 600 
+-6000 
+-4000 
+-2000 
+0 
+2000 
+4000 
+0 100 200 300 400 500 600 
+-6000 
+-4000 
+-2000 
+0 
+2000 
+4000 
+original 
+synthesized 
+prototype train 
+Figure 1: Plot of original , synthesized and prototype 
+signal computed with algorithm 3 (L=15). 
+opposed to the first method the error energy 
+minimization is carried out all along the 
+analysis frame and the prototype is derived by the 
+solution of only two linear systems. 
+3. In the third procedure no assumptions are 
+made on the nature of the excitation signal 
+#(n). This approach turns out to be the best 
+solution for the minimization problem stated 
+in equation (2), compared to the other two 
+methods, but it has a greater computational 
+cost. The coefficients # i;j are computed by 
+means of a closed form, once the terms n 0 
+and L are derived with a suboptimal 
+procedure. The adaptive structure of the signal 
+#(n) makes it possible to recover not only the 
+matching errors between the estimated 
+analysis parameters and the reference signal to be 
+synthesized,but also the slowly time-varying 
+parameters of voice signal.Fig. 1 shows the 
+reconstructed signal by using signal #(n)in 
+case the voice signal is passing from a 
+stationary interval into another. In fig. 2 an attack 
+to a stationary piece of signal is processed 
+and reconstructed with signal #(n), as well.It 
+is evident , in both cases, the good adaptation 
+of the excitation signal to spectral changes. 
+The three methods proposed for modelling the 
+excitation signal in case of voiced speech, allow to face 
+to the quasi-stationary nature of speech signal at low 
+bitrates. The way they have to be used depends upon 
+the constraints of the coding scheme:variable or fixed 
+bit rate coding, algorithm computational cost, 
+coding effectiveness and objective performance. The first 
+0 50 100 150 200 250 
+-5000 
+0 
+5000 
+0 50 100 150 200 250 
+-5000 
+0 
+5000 
+0 50 100 150 200 250 
+-2000 
+0 
+2000 
+original 
+synthesized 
+prototype train 
+Figure 2: Plot of original , synthesized and prototype 
+signal computed with algorithm 3 (L=15). 
+method has the lowest computational cost and it better 
+fits in a fixed bitrate coding.The second procedure has 
+the highest coding e#ciency,when used in a variable 
+bitrate coding scheme.The last algorithm presented gives 
+the best objective and subjective performance while 
+keeping low the bitrate associated. 
+The main contribution of this work stands in the 
+introduction of the the High Resolution Analysis and of 
+the Analysis-by-Synthesis for low bitrate coding. As a 
+result, the HRAS technique provides both a beneficial 
+introduction of a fine description of the spectral 
+parameters and a high performance signal reconstruction 
+step.</body>
+    <biblio>
+      <reference refID="p2x315.0y297.0">
+        <ref-marker>[1]</ref-marker>
+        <authors>
+          <author>
+            <author-first>P.</author-first>
+            <author-last>Kroon,</author-last>
+          </author>
+          <author>
+            <author-first>B.</author-first>
+            <author-last>Atal</author-last>
+          </author>
+        </authors>
+        <reference-hlabeled>''</reference-hlabeled>
+        <title>Pitch Predictors with High Temporal Resolution</title>
+        <reference-hlabeled>"</reference-hlabeled>
+        <conference>Proc. ICASSP,</conference>
+        <pages>pp.661-664,</pages>
+        <date>Albuquerque '90.</date>
+      </reference>
+      <reference refID="p2x315.0y263.0">
+        <ref-marker>[2]</ref-marker>
+        <authors>
+          <author>
+            <author-first>J.</author-first>
+            <author-middle>S.</author-middle>
+            <author-last>Marques</author-last>
+          </author>
+          et al.
+        </authors>
+        <reference-hlabeled>''</reference-hlabeled>
+        <title>Improved Pitch Prediction with Fractional Delays in CELP coding"</title>
+        <conference>Proc. ICASSP,</conference>
+        <pages>pp.665-668, Albuquerque '90.</pages>
+      </reference>
+      <reference refID="p2x315.0y230.0">
+        <ref-marker>[3]</ref-marker>
+        <authors>
+          <author>
+            <author-first>M.</author-first>
+            <author-last>Fratti,</author-last>
+          </author>
+          <author>
+            <author-first>G.</author-first>
+            <author-middle>A.</author-middle>
+            <author-last>Mian,</author-last>
+          </author>
+          <author>
+            <author-first>G.</author-first>
+            <author-last>Riccardi,</author-last>
+          </author>
+        </authors>
+        <reference-hlabeled>''</reference-hlabeled>
+        <title>An Approach to Parameter Reoptimization in Multipulse BasedCoders ''</title>
+        <journal>accepted in IEEE Trans. on Speech Proc.</journal>
+      </reference>
+      <reference refID="p2x315.0y196.0">
+        <ref-marker>[4]</ref-marker>
+        <authors>
+          <author>
+            <author-first>W.</author-first>
+            <author-middle>B.</author-middle>
+            <author-last>Kleijn,</author-last>
+          </author>
+          <author>
+            <author-first>W.</author-first>
+            <author-last>Granzow</author-last>
+          </author>
+        </authors>
+        <reference-hlabeled>''</reference-hlabeled>
+        <title>Method for Waveform Interpolation in Speech Coding</title>
+        <reference-hlabeled>"</reference-hlabeled>
+        <journal>Digital Signal Processing,</journal>
+        <volume>vol.1,</volume>
+        <pages>pp. 215-230,</pages>
+        <date>1991.</date>
+      </reference>
+      <reference refID="p2x315.0y162.0">
+        <ref-marker>[5]</ref-marker>
+        <authors>
+          <author>
+            <author-first>S.</author-first>
+            <author-last>Ono,</author-last>
+          </author>
+          <author>
+            <author-first>K.</author-first>
+            <author-last>Ozawa</author-last>
+          </author>
+        </authors>
+        <title>''2.4 kps Pitch Prediction Multipulse Speech Coding"</title>
+        <conference>Proc. ICASSP,</conference>
+        <pages>pp. 175-178,</pages>
+        <date>1988,</date>
+        <publisher>NY.</publisher>
+      </reference>
+      <reference refID="p2x315.0y138.0">
+        <ref-marker>[6]</ref-marker>
+        <authors>
+          <author>
+            <author-first>W.</author-first>
+            <author-last>Granzow,</author-last>
+          </author>
+          <author>
+            <author-first>B.</author-first>
+            <author-last>Atal</author-last>
+          </author>
+        </authors>
+        <reference-hlabeled>''</reference-hlabeled>
+        <title>High Quality Digital Speech at 4 kbps"</title>
+        <conference>Proc. GLOBECOM</conference>
+        <pages>pp. 941-945,</pages>
+        <date>1990.</date>
+      </reference>
+      <reference refID="p2x315.0y115.0">
+        <ref-marker>[7]</ref-marker>
+        <authors>
+          <author>
+            <author-first>B.</author-first>
+            <author-last>Atal,</author-last>
+          </author>
+          <author>
+            <author-first>M.</author-first>
+            <author-last>Schroeder</author-last>
+          </author>
+        </authors>
+        <reference-hlabeled>''</reference-hlabeled>
+        <title>Predictive Coding of Speech Signals and Subjective Error Criteria</title>
+        <reference-hlabeled>"</reference-hlabeled>
+        <journal>IEEE Trans. Acoust. Speech Sig. Proc.,</journal>
+        <volume>vol. ASSP-27,</volume>
+        <number>no.3,</number>
+        <pages>pp.247254,</pages>
+        <date>June 1979.</date>
+      </reference>
+    </biblio>
+  </content>
+  <CitationContexts />
+  <grants />
+</document>
+

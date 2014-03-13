@@ -1,0 +1,953 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+<page n="1">
+<line><tbox llx="70" lly="701" urx="478" ury="728" f="1"><![CDATA[Mixed Membership Models of Scientific Publications ]]></tbox></line>
+<line><tbox llx="71" lly="668" urx="177" ury="685" f="2"><![CDATA[ELENA EROSHEVA ]]></tbox><tbox llx="166" lly="668" urx="179" ury="683" f="4"><![CDATA[¤ ]]></tbox><tbox llx="169" lly="668" urx="292" ury="685" f="2"><![CDATA[, STEPHEN FIENBERG ]]></tbox><tbox llx="281" lly="668" urx="297" ury="683" f="4"><![CDATA[+§ ]]></tbox><tbox llx="287" lly="668" urx="304" ury="685" f="2"><![CDATA[, ]]></tbox><tbox llx="294" lly="668" urx="327" ury="683" f="3"><![CDATA[AND ]]></tbox><tbox llx="319" lly="668" urx="416" ury="685" f="2"><![CDATA[JOHN LAFFERTY ]]></tbox><tbox llx="405" lly="668" urx="421" ury="683" f="4"><![CDATA[#§ ]]></tbox></line>
+<line><tbox llx="72" lly="649" urx="84" ury="662" f="5"><![CDATA[¤ ]]></tbox><tbox llx="75" lly="649" urx="536" ury="664" f="6"><![CDATA[Department of Statistics, School of Social Work, and the Center for Statistics and the Social Sciences, University ]]></tbox></line>
+<line><tbox llx="71" lly="637" urx="220" ury="652" f="6"><![CDATA[of Washington, Seattle, WA 98195 ]]></tbox></line>
+<line><tbox llx="72" lly="625" urx="84" ury="638" f="5"><![CDATA[+ ]]></tbox><tbox llx="75" lly="625" urx="388" ury="640" f="6"><![CDATA[Department of Statistics, Carnegie Mellon University, Pittsburgh, PA 15213 ]]></tbox></line>
+<line><tbox llx="72" lly="613" urx="84" ury="626" f="5"><![CDATA[# ]]></tbox><tbox llx="75" lly="613" urx="414" ury="628" f="6"><![CDATA[Computer Science Department, Carnegie Mellon University, Pittsburgh, PA 15213 ]]></tbox></line>
+<line><tbox llx="72" lly="601" urx="84" ury="614" f="5"><![CDATA[§ ]]></tbox><tbox llx="75" lly="601" urx="477" ury="616" f="6"><![CDATA[Center for Automated Learning and Discovery, Carnegie Mellon University, Pittsburgh, PA 15213 ]]></tbox></line>
+<line><tbox llx="71" lly="568" urx="99" ury="584" f="7"><![CDATA[The ]]></tbox><tbox llx="91" lly="568" urx="303" ury="583" f="8"><![CDATA[Proceedings of the National Academy of Sciences ]]></tbox><tbox llx="295" lly="568" urx="536" ury="584" f="7"><![CDATA[(PNAS) is one of world's most cited multidisciplinary ]]></tbox></line>
+<line><tbox llx="71" lly="556" urx="536" ury="572" f="7"><![CDATA[scientific journals. The PNAS official classification structure of subjects is reflected in topic labels submitted ]]></tbox></line>
+<line><tbox llx="71" lly="544" urx="536" ury="560" f="7"><![CDATA[by the authors of manuscripts, largely related to traditionally established disciplines. These include broad ]]></tbox></line>
+<line><tbox llx="71" lly="532" urx="536" ury="548" f="7"><![CDATA[field classifications into Physical Sciences, Biological Sciences, Social Sciences, and further subtopic classifi- ]]></tbox></line>
+<line><tbox llx="71" lly="520" urx="536" ury="536" f="7"><![CDATA[cations within the fields. Focusing on Biological Sciences, we explore an internal soft classification structure ]]></tbox></line>
+<line><tbox llx="71" lly="508" urx="536" ury="524" f="7"><![CDATA[of articles based only on semantic decompositions of abstracts and bibliographies, and compare it with the ]]></tbox></line>
+<line><tbox llx="71" lly="496" urx="217" ury="512" f="7"><![CDATA[formal discipline classifications. ]]></tbox></line>
+<line><tbox llx="86" lly="484" urx="536" ury="500" f="7"><![CDATA[Our model assumes that there is a fixed number of internal categories, each characterized by multino- ]]></tbox></line>
+<line><tbox llx="71" lly="472" urx="419" ury="488" f="7"><![CDATA[mial distributions over words (in abstracts) and references (in bibliographies). ]]></tbox><tbox llx="412" lly="472" urx="536" ury="488" f="7"><![CDATA[Soft classification for each ]]></tbox></line>
+<line><tbox llx="71" lly="460" urx="536" ury="476" f="7"><![CDATA[article is based on proportions of the article's content coming from each category. We discuss the appropri- ]]></tbox></line>
+<line><tbox llx="71" lly="448" urx="536" ury="464" f="7"><![CDATA[ateness of the model for the PNAS database as well as other features of the data relevant to soft classification. ]]></tbox></line>
+<line><tbox llx="86" lly="410" urx="536" ury="425" f="8"><![CDATA["The Proceedings is there to help bring new ideas promptly into play. New ideas may not always be right, but ]]></tbox></line>
+<line><tbox llx="71" lly="398" urx="536" ury="413" f="8"><![CDATA[their prominent presence can lead to correction. We must be careful not to censor those ideas which seem to be off ]]></tbox></line>
+<line><tbox llx="71" lly="386" urx="357" ury="401" f="8"><![CDATA[beat." Saunders MacLane, PNAS, Vol. 94, pp. 5983-5985, June 1997 ]]></tbox></line>
+<line><tbox llx="86" lly="369" urx="280" ury="384" f="6"><![CDATA[Are there internal categories of papers in the ]]></tbox><tbox llx="272" lly="369" urx="486" ury="384" f="8"><![CDATA[Proceedings of the National Academy of Sciences ]]></tbox><tbox llx="477" lly="369" urx="535" ury="384" f="6"><![CDATA[that we can ]]></tbox></line>
+<line><tbox llx="71" lly="357" urx="536" ury="372" f="6"><![CDATA[obtain empirically with statistical data mining tools based only on semantic decompositions of words and refer- ]]></tbox></line>
+<line><tbox llx="71" lly="345" urx="535" ury="360" f="6"><![CDATA[ences used? Can we identify MacLane's "off-beat" but potentially path-breaking PNAS papers using these internal ]]></tbox></line>
+<line><tbox llx="71" lly="333" urx="536" ury="348" f="6"><![CDATA[categories? Do these empirically defined categories correspond in some natural way to the classification by field ]]></tbox></line>
+<line><tbox llx="71" lly="321" urx="536" ury="336" f="6"><![CDATA[used to organize the papers for publication, or does PNAS publish substantial numbers of interdisciplinary papers ]]></tbox></line>
+<line><tbox llx="71" lly="309" urx="536" ury="324" f="6"><![CDATA[that transcend these disciplinary boundaries? These are examples of questions that our contribution to the mapping ]]></tbox></line>
+<line><tbox llx="71" lly="297" urx="342" ury="312" f="6"><![CDATA[of knowledge domains represented by PNAS attempts to explore. ]]></tbox></line>
+<line><tbox llx="86" lly="285" urx="535" ury="300" f="6"><![CDATA[A number of mathematical and statistical techniques have been developed for analyzing complex data in ways ]]></tbox></line>
+<line><tbox llx="71" lly="273" urx="536" ury="288" f="6"><![CDATA[that could reveal underlying data patterns through some form of classification. Computational advances have ]]></tbox></line>
+<line><tbox llx="71" lly="261" urx="536" ury="276" f="6"><![CDATA[made some of these techniques extremely popular in recent years. For example, two of the ten most cited articles ]]></tbox></line>
+<line><tbox llx="71" lly="249" urx="536" ury="264" f="6"><![CDATA[from 1997-2001 PNAS publications are on applications of clustering for gene expression patterns [1, 2]. The ]]></tbox></line>
+<line><tbox llx="71" lly="238" urx="536" ury="252" f="6"><![CDATA[traditional assumption in most methods that aim to discover knowledge in underlying data patterns has been that ]]></tbox></line>
+<line><tbox llx="71" lly="226" urx="536" ury="240" f="6"><![CDATA[each subject (object or individual) from the population of interest inherently belongs to only one of the underlying ]]></tbox></line>
+<line><tbox llx="71" lly="214" urx="355" ury="228" f="6"><![CDATA[subpopulations (clusters, classes, aspects, or pure type categories). ]]></tbox><tbox llx="350" lly="214" urx="536" ury="228" f="6"><![CDATA[This implies that a subject shares all of its ]]></tbox></line>
+<line><tbox llx="71" lly="202" urx="478" ury="216" f="6"><![CDATA[attributes, usually with some degree of uncertainty, with the subpopulation to which it belongs. ]]></tbox><tbox llx="474" lly="202" urx="536" ury="216" f="6"><![CDATA[Given that a ]]></tbox></line>
+<line><tbox llx="71" lly="190" urx="536" ury="204" f="6"><![CDATA[relatively small number of subpopulations is often necessary for a meaningful interpretation of the underlying ]]></tbox></line>
+<line><tbox llx="71" lly="178" urx="536" ury="192" f="6"><![CDATA[patterns, many data collections do not conform with the traditional assumption. Subjects in such populations may ]]></tbox></line>
+<line><tbox llx="71" lly="166" urx="536" ury="181" f="6"><![CDATA[combine attributes from several subpopulations simultaneously. In other words, they may have a mixed collection ]]></tbox></line>
+<line><tbox llx="71" lly="154" urx="319" ury="169" f="6"><![CDATA[of attributes originating from more than one subpopulation. ]]></tbox></line>
+<line><tbox llx="86" lly="142" urx="536" ury="157" f="6"><![CDATA[Several different disciplines have developed approaches that have a common statistical structure which we ]]></tbox></line>
+<line><tbox llx="71" lly="130" urx="207" ury="145" f="6"><![CDATA[refer to as mixed membership. ]]></tbox><tbox llx="202" lly="130" urx="536" ury="145" f="6"><![CDATA[In genetics, mixed membership models can account for the fact that individual ]]></tbox></line>
+<line><tbox llx="71" lly="118" urx="536" ury="133" f="6"><![CDATA[genotypes may come from different subpopulations according to (unknown) proportions of an individual's ancestry. ]]></tbox></line>
+<line><tbox llx="71" lly="106" urx="536" ury="121" f="6"><![CDATA[Rosenberg et al. [3] use such a model to analyze genetic samples from 52 human populations around the globe, ]]></tbox></line>
+<line><tbox llx="295" lly="74" urx="311" ury="89" f="6"><![CDATA[1 ]]></tbox></line>
+<pbox llx="70.00" lly="74.00" urx="536.00" ury="728.00"/></page>
+<page n="2">
+<line><tbox llx="71" lly="706" urx="536" ury="721" f="1"><![CDATA[identifying major genetic clusters without using the geographic information about the origins of individuals. In the ]]></tbox></line>
+<line><tbox llx="71" lly="694" urx="536" ury="709" f="1"><![CDATA[Social Sciences, such models are natural since members of a society can exhibit mixed membership with respect ]]></tbox></line>
+<line><tbox llx="71" lly="682" urx="536" ury="697" f="1"><![CDATA[to the underlying social or health groups for a particular problem being studied. Hence, individual responses to a ]]></tbox></line>
+<line><tbox llx="71" lly="670" urx="536" ury="685" f="1"><![CDATA[series of questions may have mixed origins. Woodbury et al. [4] employ this idea to develop medical classification. ]]></tbox></line>
+<line><tbox llx="71" lly="658" urx="536" ury="673" f="1"><![CDATA[In text analysis and information retrieval, mixed membership models have been used to account for different topical ]]></tbox></line>
+<line><tbox llx="71" lly="646" urx="212" ury="661" f="1"><![CDATA[aspects of individual documents. ]]></tbox></line>
+<line><tbox llx="86" lly="634" urx="535" ury="649" f="1"><![CDATA[In the following section we describe a class of mixed membership models that unifies existing special cases ]]></tbox></line>
+<line><tbox llx="71" lly="622" urx="535" ury="637" f="1"><![CDATA[[5]. We then explain how this class of models can be adapted to analyze both the semantic content of a document ]]></tbox></line>
+<line><tbox llx="71" lly="610" urx="536" ury="625" f="1"><![CDATA[and its citations of other publications. We fit this document-oriented mixed membership model to a subcollection ]]></tbox></line>
+<line><tbox llx="71" lly="598" urx="535" ury="613" f="1"><![CDATA[of the PNAS database supplied to the participants in the Arthur M. Sackler Colloquium on "Mapping Knowledge ]]></tbox></line>
+<line><tbox llx="71" lly="586" urx="536" ury="601" f="1"><![CDATA[Domains." We focus in our analysis on a high level description of the fields in Biological Sciences in terms of ]]></tbox></line>
+<line><tbox llx="71" lly="574" urx="536" ury="589" f="1"><![CDATA[a small number of extreme or basis categories. Griffiths and Steyvers [6] use a related version of the model for ]]></tbox></line>
+<line><tbox llx="71" lly="562" urx="296" ury="577" f="1"><![CDATA[abstracts only and attempt a finer level of description. ]]></tbox></line>
+<line><tbox llx="71" lly="532" urx="200" ury="548" f="2"><![CDATA[Mixed Membership Models ]]></tbox></line>
+<line><tbox llx="86" lly="516" urx="536" ury="531" f="1"><![CDATA[The general mixed membership model we work with relies on four levels of assumptions: population, subject, ]]></tbox></line>
+<line><tbox llx="71" lly="504" urx="536" ury="519" f="1"><![CDATA[latent variable, and sampling scheme. Population level assumptions describe the general structure of the population ]]></tbox></line>
+<line><tbox llx="71" lly="492" urx="206" ury="507" f="1"><![CDATA[that is common to all subjects. ]]></tbox><tbox llx="200" lly="492" urx="536" ury="507" f="1"><![CDATA[Subject level assumptions specify the distribution of observable responses given ]]></tbox></line>
+<line><tbox llx="71" lly="480" urx="205" ury="495" f="1"><![CDATA[individual membership scores. ]]></tbox><tbox llx="199" lly="480" urx="536" ury="495" f="1"><![CDATA[Membership scores are usually unknown and hence can also be viewed as latent ]]></tbox></line>
+<line><tbox llx="71" lly="468" urx="536" ury="483" f="1"><![CDATA[variables. The next assumption is whether the membership scores are treated as fixed or random in the model. ]]></tbox></line>
+<line><tbox llx="71" lly="456" urx="536" ury="471" f="1"><![CDATA[Finally, the last level of assumption specifies the number of distinct observed characteristics (attributes) and the ]]></tbox></line>
+<line><tbox llx="71" lly="444" urx="482" ury="459" f="1"><![CDATA[number of replications for each characteristic. We describe each set of assumptions formally in turn. ]]></tbox></line>
+<line><tbox llx="71" lly="424" urx="153" ury="440" f="2"><![CDATA[Population level. ]]></tbox><tbox llx="152" lly="425" urx="233" ury="440" f="1"><![CDATA[Assume there are ]]></tbox><tbox llx="226" lly="425" urx="244" ury="436" f="3"><![CDATA[K ]]></tbox><tbox llx="236" lly="425" urx="497" ury="440" f="1"><![CDATA[original or basis subpopulations in the populations of interest. ]]></tbox><tbox llx="490" lly="425" urx="536" ury="440" f="1"><![CDATA[For each ]]></tbox></line>
+<line><tbox llx="71" lly="413" urx="138" ury="428" f="1"><![CDATA[subpopulation ]]></tbox><tbox llx="131" lly="413" urx="149" ury="424" f="3"><![CDATA[k, ]]></tbox><tbox llx="140" lly="413" urx="191" ury="428" f="1"><![CDATA[denote by ]]></tbox><tbox llx="184" lly="413" urx="209" ury="424" f="3"><![CDATA[f(x ]]></tbox><tbox llx="199" lly="412" urx="210" ury="420" f="5"><![CDATA[j ]]></tbox><tbox llx="203" lly="406" urx="221" ury="424" f="6"><![CDATA[|µ ]]></tbox><tbox llx="211" lly="412" urx="226" ury="420" f="5"><![CDATA[kj ]]></tbox><tbox llx="217" lly="413" urx="233" ury="426" f="4"><![CDATA[) ]]></tbox><tbox llx="224" lly="413" urx="429" ury="428" f="1"><![CDATA[the probability distribution for response variable ]]></tbox><tbox llx="421" lly="413" urx="438" ury="424" f="3"><![CDATA[j, ]]></tbox><tbox llx="430" lly="413" urx="465" ury="428" f="1"><![CDATA[where ]]></tbox><tbox llx="458" lly="413" urx="472" ury="424" f="3"><![CDATA[µ ]]></tbox><tbox llx="463" lly="412" urx="478" ury="420" f="5"><![CDATA[kj ]]></tbox><tbox llx="473" lly="413" urx="535" ury="428" f="1"><![CDATA[is a vector of ]]></tbox></line>
+<line><tbox llx="71" lly="401" urx="474" ury="416" f="1"><![CDATA[parameters. Assume that within a subpopulation, responses to observed variables are independent. ]]></tbox></line>
+<line><tbox llx="71" lly="381" urx="139" ury="397" f="2"><![CDATA[Subject level. ]]></tbox><tbox llx="137" lly="382" urx="295" ury="396" f="1"><![CDATA[For each subject, membership vector ]]></tbox><tbox llx="288" lly="382" urx="303" ury="393" f="3"><![CDATA[¸ ]]></tbox><tbox llx="294" lly="382" urx="326" ury="395" f="4"><![CDATA[= (¸ ]]></tbox><tbox llx="317" lly="381" urx="328" ury="389" f="7"><![CDATA[1 ]]></tbox><tbox llx="321" lly="382" urx="366" ury="393" f="3"><![CDATA[, . . . , ¸K ]]></tbox><tbox llx="355" lly="382" urx="370" ury="395" f="4"><![CDATA[) ]]></tbox><tbox llx="362" lly="382" urx="536" ury="396" f="1"><![CDATA[provides the degrees of a subject's mem- ]]></tbox></line>
+<line><tbox llx="71" lly="370" urx="445" ury="384" f="1"><![CDATA[bership in each of the subpopulations. The probability distribution of observed responses ]]></tbox><tbox llx="439" lly="370" urx="454" ury="381" f="3"><![CDATA[x ]]></tbox><tbox llx="445" lly="369" urx="455" ury="377" f="5"><![CDATA[j ]]></tbox><tbox llx="450" lly="370" urx="535" ury="384" f="1"><![CDATA[for each subject is ]]></tbox></line>
+<line><tbox llx="71" lly="358" urx="254" ury="372" f="1"><![CDATA[fully defined by the conditional probability ]]></tbox><tbox llx="247" lly="358" urx="279" ury="369" f="3"><![CDATA[P r(x ]]></tbox><tbox llx="269" lly="357" urx="280" ury="365" f="5"><![CDATA[j ]]></tbox><tbox llx="273" lly="351" urx="296" ury="369" f="6"><![CDATA[|¸) ]]></tbox><tbox llx="287" lly="358" urx="306" ury="371" f="4"><![CDATA[= ]]></tbox></line>
+<line><tbox llx="300" lly="338" urx="324" ury="377" f="8"><![CDATA[P ]]></tbox><tbox llx="310" lly="356" urx="322" ury="364" f="5"><![CDATA[k ]]></tbox><tbox llx="317" lly="358" urx="332" ury="369" f="3"><![CDATA[¸ ]]></tbox><tbox llx="323" lly="357" urx="334" ury="365" f="5"><![CDATA[k ]]></tbox><tbox llx="327" lly="358" urx="353" ury="369" f="3"><![CDATA[f(x ]]></tbox><tbox llx="343" lly="357" urx="354" ury="365" f="5"><![CDATA[j ]]></tbox><tbox llx="347" lly="351" urx="365" ury="369" f="6"><![CDATA[|µ ]]></tbox><tbox llx="355" lly="357" urx="370" ury="365" f="5"><![CDATA[kj ]]></tbox><tbox llx="361" lly="358" urx="379" ury="371" f="4"><![CDATA[), ]]></tbox><tbox llx="371" lly="358" urx="536" ury="372" f="1"><![CDATA[and the assumption that response vari- ]]></tbox></line>
+<line><tbox llx="71" lly="346" urx="102" ury="360" f="1"><![CDATA[ables ]]></tbox><tbox llx="95" lly="346" urx="111" ury="357" f="3"><![CDATA[x ]]></tbox><tbox llx="101" lly="345" urx="112" ury="353" f="5"><![CDATA[j ]]></tbox><tbox llx="107" lly="346" urx="536" ury="360" f="1"><![CDATA[are independent, conditional on membership scores. In addition, given the membership scores, observed ]]></tbox></line>
+<line><tbox llx="71" lly="334" urx="282" ury="349" f="1"><![CDATA[responses from different subjects are independent. ]]></tbox></line>
+<line><tbox llx="71" lly="314" urx="172" ury="330" f="2"><![CDATA[Latent variable level. ]]></tbox><tbox llx="171" lly="314" urx="536" ury="329" f="1"><![CDATA[With respect to the latent variables, one could either assume that they are fixed unknown ]]></tbox></line>
+<line><tbox llx="71" lly="303" urx="405" ury="317" f="1"><![CDATA[constants or that they are random realizations from some underlying distribution. ]]></tbox></line>
+<line><tbox llx="83" lly="283" urx="209" ury="297" f="1"><![CDATA[1. If the membership scores ]]></tbox><tbox llx="203" lly="283" urx="218" ury="294" f="3"><![CDATA[¸ ]]></tbox><tbox llx="210" lly="283" urx="480" ury="297" f="1"><![CDATA[are fixed but unknown, the conditional probability of observing ]]></tbox><tbox llx="473" lly="283" urx="488" ury="294" f="3"><![CDATA[x ]]></tbox><tbox llx="479" lly="282" urx="489" ury="290" f="5"><![CDATA[j ]]></tbox><tbox llx="481" lly="283" urx="535" ury="297" f="1"><![CDATA[, given the ]]></tbox></line>
+<line><tbox llx="96" lly="271" urx="151" ury="285" f="1"><![CDATA[parameters ]]></tbox><tbox llx="143" lly="271" urx="160" ury="282" f="9"><![CDATA[µ ]]></tbox><tbox llx="150" lly="271" urx="267" ury="285" f="1"><![CDATA[and membership scores, is ]]></tbox></line>
+<line><tbox llx="238" lly="240" urx="270" ury="251" f="3"><![CDATA[P r(x ]]></tbox><tbox llx="261" lly="239" urx="271" ury="247" f="5"><![CDATA[j ]]></tbox><tbox llx="265" lly="233" urx="287" ury="251" f="6"><![CDATA[|¸; ]]></tbox><tbox llx="278" lly="240" urx="299" ury="251" f="9"><![CDATA[µ) ]]></tbox><tbox llx="295" lly="240" urx="315" ury="253" f="4"><![CDATA[= ]]></tbox></line>
+<line><tbox llx="319" lly="253" urx="333" ury="261" f="5"><![CDATA[K ]]></tbox></line>
+<line><tbox llx="315" lly="222" urx="343" ury="260" f="8"><![CDATA[X ]]></tbox><tbox llx="316" lly="228" urx="337" ury="236" f="5"><![CDATA[k=1 ]]></tbox></line>
+<line><tbox llx="331" lly="240" urx="347" ury="251" f="3"><![CDATA[¸ ]]></tbox><tbox llx="337" lly="239" urx="349" ury="247" f="5"><![CDATA[k ]]></tbox><tbox llx="342" lly="240" urx="367" ury="251" f="3"><![CDATA[f(x ]]></tbox><tbox llx="358" lly="239" urx="368" ury="247" f="5"><![CDATA[j ]]></tbox><tbox llx="362" lly="233" urx="380" ury="251" f="6"><![CDATA[|µ ]]></tbox><tbox llx="370" lly="239" urx="384" ury="247" f="5"><![CDATA[kj ]]></tbox><tbox llx="376" lly="240" urx="394" ury="253" f="4"><![CDATA[). ]]></tbox><tbox llx="513" lly="239" urx="535" ury="254" f="1"><![CDATA[(1) ]]></tbox></line>
+<line><tbox llx="83" lly="204" urx="195" ury="219" f="1"><![CDATA[2. If membership scores ]]></tbox><tbox llx="188" lly="205" urx="204" ury="216" f="3"><![CDATA[¸ ]]></tbox><tbox llx="196" lly="204" urx="442" ury="219" f="1"><![CDATA[are realizations of latent variables from some distribution ]]></tbox><tbox llx="436" lly="203" urx="459" ury="216" f="3"><![CDATA[D® ]]></tbox><tbox llx="448" lly="204" urx="536" ury="219" f="1"><![CDATA[, parameterized by ]]></tbox></line>
+<line><tbox llx="96" lly="192" urx="132" ury="207" f="1"><![CDATA[vector ]]></tbox><tbox llx="124" lly="193" urx="143" ury="204" f="3"><![CDATA[®, ]]></tbox><tbox llx="134" lly="192" urx="276" ury="207" f="1"><![CDATA[then the probability of observing ]]></tbox><tbox llx="269" lly="193" urx="284" ury="204" f="3"><![CDATA[x ]]></tbox><tbox llx="275" lly="192" urx="285" ury="200" f="5"><![CDATA[j ]]></tbox><tbox llx="277" lly="192" urx="390" ury="207" f="1"><![CDATA[, given the parameters, is: ]]></tbox></line>
+<line><tbox llx="207" lly="161" urx="239" ury="172" f="3"><![CDATA[P r(x ]]></tbox><tbox llx="230" lly="160" urx="240" ury="168" f="5"><![CDATA[j ]]></tbox><tbox llx="234" lly="154" urx="256" ury="172" f="6"><![CDATA[|®, ]]></tbox><tbox llx="247" lly="161" urx="268" ury="172" f="9"><![CDATA[µ) ]]></tbox><tbox llx="265" lly="161" urx="284" ury="174" f="4"><![CDATA[= ]]></tbox><tbox llx="285" lly="147" urx="318" ury="189" f="8"><![CDATA[Z Ã ]]></tbox><tbox llx="308" lly="174" urx="322" ury="182" f="5"><![CDATA[K ]]></tbox></line>
+<line><tbox llx="304" lly="143" urx="332" ury="181" f="8"><![CDATA[X ]]></tbox><tbox llx="304" lly="150" urx="326" ury="158" f="5"><![CDATA[k=1 ]]></tbox></line>
+<line><tbox llx="320" lly="161" urx="336" ury="172" f="3"><![CDATA[¸ ]]></tbox><tbox llx="326" lly="160" urx="338" ury="168" f="5"><![CDATA[k ]]></tbox><tbox llx="331" lly="161" urx="356" ury="172" f="3"><![CDATA[f(x ]]></tbox><tbox llx="347" lly="160" urx="357" ury="168" f="5"><![CDATA[j ]]></tbox><tbox llx="351" lly="154" urx="369" ury="172" f="6"><![CDATA[|µ ]]></tbox><tbox llx="358" lly="160" urx="373" ury="168" f="5"><![CDATA[kj ]]></tbox><tbox llx="365" lly="161" urx="380" ury="174" f="4"><![CDATA[) ]]></tbox><tbox llx="371" lly="151" urx="392" ury="189" f="8"><![CDATA[! ]]></tbox><tbox llx="380" lly="159" urx="409" ury="172" f="3"><![CDATA[dD® ]]></tbox><tbox llx="397" lly="161" urx="425" ury="174" f="4"><![CDATA[(¸). ]]></tbox><tbox llx="513" lly="160" urx="535" ury="175" f="1"><![CDATA[(2) ]]></tbox></line>
+<line><tbox llx="295" lly="74" urx="311" ury="89" f="1"><![CDATA[2 ]]></tbox></line>
+<pbox llx="71.00" lly="74.00" urx="536.00" ury="721.00"/></page>
+<page n="3">
+<line><tbox llx="71" lly="705" urx="159" ury="721" f="1"><![CDATA[Sampling scheme. ]]></tbox><tbox llx="158" lly="706" urx="203" ury="721" f="2"><![CDATA[Suppose ]]></tbox><tbox llx="196" lly="706" urx="213" ury="717" f="3"><![CDATA[R ]]></tbox><tbox llx="206" lly="706" urx="326" ury="721" f="2"><![CDATA[independent replications of ]]></tbox><tbox llx="320" lly="706" urx="335" ury="717" f="3"><![CDATA[J ]]></tbox><tbox llx="328" lly="706" urx="536" ury="721" f="2"><![CDATA[distinct characteristics are observed for one sub- ]]></tbox></line>
+<line><tbox llx="71" lly="692" urx="99" ury="707" f="2"><![CDATA[ject, ]]></tbox><tbox llx="93" lly="686" urx="114" ury="704" f="4"><![CDATA[{x ]]></tbox><tbox llx="104" lly="699" urx="121" ury="707" f="5"><![CDATA[(r) ]]></tbox></line>
+<line><tbox llx="104" lly="691" urx="115" ury="699" f="5"><![CDATA[1 ]]></tbox><tbox llx="114" lly="693" urx="152" ury="704" f="3"><![CDATA[, . . . , x ]]></tbox><tbox llx="142" lly="699" urx="159" ury="707" f="5"><![CDATA[(r) ]]></tbox></line>
+<line><tbox llx="142" lly="690" urx="154" ury="698" f="6"><![CDATA[J ]]></tbox><tbox llx="153" lly="686" urx="168" ury="704" f="4"><![CDATA[} ]]></tbox><tbox llx="158" lly="697" urx="171" ury="705" f="6"><![CDATA[R ]]></tbox></line>
+<line><tbox llx="158" lly="691" urx="179" ury="699" f="6"><![CDATA[r=1 ]]></tbox><tbox llx="171" lly="692" urx="500" ury="707" f="2"><![CDATA[. Then, if the membership scores are treated as realizations from distribution ]]></tbox><tbox llx="493" lly="691" urx="517" ury="704" f="3"><![CDATA[D® ]]></tbox><tbox llx="506" lly="692" urx="535" ury="707" f="2"><![CDATA[, the ]]></tbox></line>
+<line><tbox llx="71" lly="680" urx="182" ury="695" f="2"><![CDATA[conditional probability is ]]></tbox></line>
+<line><tbox llx="138" lly="647" urx="160" ury="658" f="3"><![CDATA[P r ]]></tbox><tbox llx="152" lly="631" urx="172" ury="669" f="7"><![CDATA[³ ]]></tbox><tbox llx="158" lly="640" urx="179" ury="658" f="4"><![CDATA[{x ]]></tbox><tbox llx="169" lly="653" urx="186" ury="661" f="5"><![CDATA[(r) ]]></tbox></line>
+<line><tbox llx="169" lly="645" urx="180" ury="653" f="5"><![CDATA[1 ]]></tbox><tbox llx="179" lly="647" urx="217" ury="658" f="3"><![CDATA[, . . . , x ]]></tbox><tbox llx="207" lly="653" urx="224" ury="661" f="5"><![CDATA[(r) ]]></tbox></line>
+<line><tbox llx="207" lly="645" urx="219" ury="653" f="6"><![CDATA[J ]]></tbox><tbox llx="218" lly="640" urx="233" ury="658" f="4"><![CDATA[} ]]></tbox><tbox llx="223" lly="652" urx="236" ury="660" f="6"><![CDATA[R ]]></tbox></line>
+<line><tbox llx="223" lly="645" urx="244" ury="653" f="6"><![CDATA[r=1 ]]></tbox><tbox llx="237" lly="640" urx="259" ury="658" f="4"><![CDATA[|®, ]]></tbox><tbox llx="251" lly="647" urx="268" ury="658" f="8"><![CDATA[µ ]]></tbox><tbox llx="257" lly="631" urx="276" ury="669" f="7"><![CDATA[´ ]]></tbox><tbox llx="270" lly="647" urx="290" ury="660" f="9"><![CDATA[= ]]></tbox><tbox llx="290" lly="634" urx="324" ury="660" f="7"><![CDATA[Z 0 @ ]]></tbox></line>
+<line><tbox llx="315" lly="660" urx="327" ury="668" f="6"><![CDATA[J ]]></tbox></line>
+<line><tbox llx="311" lly="630" urx="338" ury="668" f="7"><![CDATA[Y ]]></tbox><tbox llx="311" lly="636" urx="332" ury="644" f="6"><![CDATA[j=1 ]]></tbox></line>
+<line><tbox llx="330" lly="660" urx="343" ury="668" f="6"><![CDATA[R ]]></tbox></line>
+<line><tbox llx="327" lly="630" urx="353" ury="668" f="7"><![CDATA[Y ]]></tbox></line>
+<line><tbox llx="326" lly="636" urx="347" ury="644" f="6"><![CDATA[r=1 ]]></tbox></line>
+<line><tbox llx="346" lly="660" urx="359" ury="668" f="6"><![CDATA[K ]]></tbox></line>
+<line><tbox llx="342" lly="630" urx="370" ury="668" f="7"><![CDATA[X ]]></tbox><tbox llx="342" lly="636" urx="364" ury="644" f="6"><![CDATA[k=1 ]]></tbox></line>
+<line><tbox llx="358" lly="647" urx="373" ury="658" f="3"><![CDATA[¸ ]]></tbox><tbox llx="364" lly="646" urx="375" ury="654" f="6"><![CDATA[k ]]></tbox><tbox llx="368" lly="647" urx="394" ury="658" f="3"><![CDATA[f(x ]]></tbox><tbox llx="384" lly="653" urx="401" ury="661" f="5"><![CDATA[(r) ]]></tbox></line>
+<line><tbox llx="384" lly="645" urx="395" ury="653" f="6"><![CDATA[j ]]></tbox><tbox llx="395" lly="640" urx="413" ury="658" f="4"><![CDATA[|µ ]]></tbox><tbox llx="402" lly="646" urx="417" ury="654" f="6"><![CDATA[kj ]]></tbox><tbox llx="408" lly="647" urx="424" ury="660" f="9"><![CDATA[) ]]></tbox><tbox llx="415" lly="640" urx="437" ury="660" f="7"><![CDATA[1 A ]]></tbox><tbox llx="425" lly="646" urx="453" ury="658" f="3"><![CDATA[dD® ]]></tbox><tbox llx="442" lly="647" urx="470" ury="660" f="9"><![CDATA[(¸). ]]></tbox><tbox llx="513" lly="647" urx="535" ury="662" f="2"><![CDATA[(3) ]]></tbox></line>
+<line><tbox llx="71" lly="614" urx="478" ury="628" f="2"><![CDATA[When the latent variables are treated as unknown constants, the conditional probability for observing ]]></tbox><tbox llx="470" lly="614" urx="487" ury="625" f="3"><![CDATA[R ]]></tbox><tbox llx="478" lly="614" urx="535" ury="628" f="2"><![CDATA[replications ]]></tbox></line>
+<line><tbox llx="71" lly="602" urx="90" ury="616" f="2"><![CDATA[of ]]></tbox><tbox llx="84" lly="602" urx="99" ury="613" f="3"><![CDATA[J ]]></tbox><tbox llx="92" lly="602" urx="461" ury="616" f="2"><![CDATA[variables can be derived analogously. In general, the number of observed characteristics ]]></tbox><tbox llx="454" lly="602" urx="469" ury="613" f="3"><![CDATA[J ]]></tbox><tbox llx="462" lly="602" urx="535" ury="616" f="2"><![CDATA[need not be the ]]></tbox></line>
+<line><tbox llx="71" lly="590" urx="291" ury="604" f="2"><![CDATA[same across subjects, and the number of replications ]]></tbox><tbox llx="284" lly="590" urx="301" ury="601" f="3"><![CDATA[R ]]></tbox><tbox llx="293" lly="590" urx="515" ury="604" f="2"><![CDATA[need not be the same across observed characteristics. ]]></tbox></line>
+<line><tbox llx="81" lly="563" urx="536" ury="578" f="2"><![CDATA[One can derive examples of mixed membership models from this general set up by specifying different choices ]]></tbox></line>
+<line><tbox llx="71" lly="551" urx="90" ury="566" f="2"><![CDATA[of ]]></tbox><tbox llx="83" lly="552" urx="98" ury="562" f="3"><![CDATA[J ]]></tbox><tbox llx="91" lly="551" urx="116" ury="566" f="2"><![CDATA[and ]]></tbox><tbox llx="109" lly="552" urx="129" ury="562" f="3"><![CDATA[R, ]]></tbox><tbox llx="121" lly="551" urx="337" ury="566" f="2"><![CDATA[and different latent variable assumptions. Thus, the ]]></tbox><tbox llx="328" lly="551" urx="428" ury="566" f="10"><![CDATA[Grade of Membership ]]></tbox><tbox llx="419" lly="551" urx="535" ury="566" f="2"><![CDATA[model of Manton et al. [7] ]]></tbox></line>
+<line><tbox llx="71" lly="539" urx="271" ury="554" f="2"><![CDATA[assumes polytomous responses are observed to ]]></tbox><tbox llx="263" lly="540" urx="279" ury="551" f="3"><![CDATA[J ]]></tbox><tbox llx="271" lly="539" urx="536" ury="554" f="2"><![CDATA[survey questions without replications and uses the fixed-effects ]]></tbox></line>
+<line><tbox llx="71" lly="527" urx="536" ury="542" f="2"><![CDATA[assumption for the membership scores. Potthoff et al. [8] employ a variation of the Grade of Membership model by ]]></tbox></line>
+<line><tbox llx="71" lly="515" urx="498" ury="530" f="2"><![CDATA[treating the membership scores as Dirichlet random variables; the authors refer to the resulting model as ]]></tbox><tbox llx="489" lly="515" urx="536" ury="530" f="10"><![CDATA[Dirichlet ]]></tbox></line>
+<line><tbox llx="71" lly="504" urx="233" ury="518" f="10"><![CDATA[generalization of latent class models. ]]></tbox><tbox llx="225" lly="503" urx="536" ury="518" f="2"><![CDATA[Erosheva [5] provides a formal latent class representation for the Grade of ]]></tbox></line>
+<line><tbox llx="71" lly="491" urx="202" ury="506" f="2"><![CDATA[Membership model approach. ]]></tbox><tbox llx="195" lly="491" urx="352" ury="506" f="2"><![CDATA[In genetics, Pritchard et al. [9] use a ]]></tbox><tbox llx="343" lly="492" urx="487" ury="506" f="10"><![CDATA[clustering model with admixture. ]]></tbox><tbox llx="480" lly="491" urx="535" ury="506" f="2"><![CDATA[For diploid ]]></tbox></line>
+<line><tbox llx="71" lly="479" urx="264" ury="494" f="2"><![CDATA[individuals the clustering model assumes that ]]></tbox><tbox llx="257" lly="480" urx="274" ury="491" f="3"><![CDATA[R ]]></tbox><tbox llx="266" lly="480" urx="293" ury="493" f="9"><![CDATA[= 2 ]]></tbox><tbox llx="285" lly="479" urx="456" ury="494" f="2"><![CDATA[replications (genotypes) are observed at ]]></tbox><tbox llx="449" lly="480" urx="464" ury="491" f="3"><![CDATA[J ]]></tbox><tbox llx="456" lly="479" urx="535" ury="494" f="2"><![CDATA[distinct locations ]]></tbox></line>
+<line><tbox llx="71" lly="468" urx="536" ury="482" f="2"><![CDATA[(loci), treating the proportions of a subject's genome that originated from each of the basis subpopulations as ]]></tbox></line>
+<line><tbox llx="71" lly="456" urx="482" ury="470" f="2"><![CDATA[random Dirichlet realizations. Variations of mixed membership models for text documents called ]]></tbox><tbox llx="474" lly="456" urx="536" ury="471" f="10"><![CDATA[probabilistic ]]></tbox></line>
+<line><tbox llx="71" lly="444" urx="178" ury="459" f="10"><![CDATA[latent semantic analysis ]]></tbox><tbox llx="169" lly="444" urx="213" ury="458" f="2"><![CDATA[[10] and ]]></tbox><tbox llx="205" lly="444" urx="320" ury="459" f="10"><![CDATA[latent Dirichlet allocation ]]></tbox><tbox llx="311" lly="444" urx="536" ury="458" f="2"><![CDATA[[11] both assume that a single characteristic (word) is ]]></tbox></line>
+<line><tbox llx="71" lly="432" urx="536" ury="446" f="2"><![CDATA[observed a number of times for each document, but the former model considers the membership scores as fixed ]]></tbox></line>
+<line><tbox llx="71" lly="420" urx="413" ury="434" f="2"><![CDATA[unknown constants, whereas the latter treats them as random Dirichlet realizations. ]]></tbox></line>
+<line><tbox llx="86" lly="408" urx="536" ury="422" f="2"><![CDATA[The mixed membership model framework presented above unifies several specialized models that have been ]]></tbox></line>
+<line><tbox llx="71" lly="396" urx="434" ury="411" f="2"><![CDATA[developed independently in the social sciences, genetics, and text mining applications. ]]></tbox><tbox llx="429" lly="396" urx="535" ury="411" f="2"><![CDATA[In the text mining area, ]]></tbox></line>
+<line><tbox llx="71" lly="384" urx="191" ury="399" f="2"><![CDATA[initial work by Hofmann on ]]></tbox><tbox llx="182" lly="384" urx="342" ury="399" f="10"><![CDATA[probabilistic latent semantic analysis ]]></tbox><tbox llx="332" lly="384" urx="535" ury="399" f="2"><![CDATA[[10] was followed by the work of Blei et al. [11], ]]></tbox></line>
+<line><tbox llx="71" lly="372" urx="536" ury="387" f="2"><![CDATA[who proposed a Dirichlet generating distribution for the membership scores and the use of variational methods ]]></tbox></line>
+<line><tbox llx="71" lly="360" urx="141" ury="375" f="2"><![CDATA[to estimate the ]]></tbox><tbox llx="134" lly="360" urx="251" ury="375" f="10"><![CDATA[latent Dirichlet allocation ]]></tbox><tbox llx="243" lly="360" urx="536" ury="375" f="2"><![CDATA[model parameters. Minka and Lafferty [12] develop a more accurate ]]></tbox></line>
+<line><tbox llx="71" lly="348" urx="233" ury="363" f="2"><![CDATA[approximation method for this model. ]]></tbox></line>
+<line><tbox llx="86" lly="336" urx="536" ury="351" f="2"><![CDATA[A natural extension of the original analyses in the text mining area that have been based on a single source is to ]]></tbox></line>
+<line><tbox llx="71" lly="324" urx="536" ury="339" f="2"><![CDATA[combine information from multiple sources. Cohn and Hofmann [13] propose a probabilistic model of document ]]></tbox></line>
+<line><tbox llx="71" lly="312" urx="536" ury="327" f="2"><![CDATA[content and hypertext connectivity for text documents by considering links (or references) in addition to words, ]]></tbox></line>
+<line><tbox llx="71" lly="300" urx="536" ury="315" f="2"><![CDATA[thus, essentially combining two distinct characteristics; they treat the membership scores as fixed. Following Cohn ]]></tbox></line>
+<line><tbox llx="71" lly="288" urx="536" ury="303" f="2"><![CDATA[and Hofmann, we adopt a mixed membership model for words and references in journal publications but treat the ]]></tbox></line>
+<line><tbox llx="71" lly="276" urx="536" ury="291" f="2"><![CDATA[membership scores as random Dirichlet realizations. Barnard et al. [14] develop similar and alternative approaches ]]></tbox></line>
+<line><tbox llx="71" lly="264" urx="271" ury="279" f="2"><![CDATA[for combining different sources of information. ]]></tbox></line>
+<line><tbox llx="71" lly="234" urx="265" ury="250" f="1"><![CDATA[Mixed Membership Models for Documents ]]></tbox></line>
+<line><tbox llx="86" lly="218" urx="536" ury="233" f="2"><![CDATA[We can use the general model framework for documents consisting of abstracts and references by representing ]]></tbox></line>
+<line><tbox llx="71" lly="204" urx="139" ury="219" f="2"><![CDATA[a document as ]]></tbox><tbox llx="133" lly="205" urx="147" ury="215" f="3"><![CDATA[d ]]></tbox><tbox llx="139" lly="205" urx="176" ury="218" f="9"><![CDATA[= ({x ]]></tbox><tbox llx="167" lly="209" urx="188" ury="218" f="5"><![CDATA[(r1 ) ]]></tbox></line>
+<line><tbox llx="167" lly="203" urx="178" ury="211" f="5"><![CDATA[1 ]]></tbox><tbox llx="181" lly="197" urx="211" ury="216" f="4"><![CDATA[}, {x ]]></tbox><tbox llx="201" lly="209" urx="222" ury="218" f="5"><![CDATA[(r2 ) ]]></tbox></line>
+<line><tbox llx="201" lly="203" urx="212" ury="211" f="5"><![CDATA[2 ]]></tbox><tbox llx="215" lly="197" urx="235" ury="216" f="4"><![CDATA[}) ]]></tbox><tbox llx="226" lly="204" urx="261" ury="219" f="2"><![CDATA[where ]]></tbox><tbox llx="254" lly="205" urx="269" ury="215" f="3"><![CDATA[x ]]></tbox><tbox llx="260" lly="209" urx="281" ury="218" f="5"><![CDATA[(r1 ) ]]></tbox></line>
+<line><tbox llx="260" lly="203" urx="271" ury="211" f="5"><![CDATA[1 ]]></tbox><tbox llx="275" lly="204" urx="417" ury="219" f="2"><![CDATA[is a word (w) in the abstract and ]]></tbox><tbox llx="410" lly="205" urx="425" ury="215" f="3"><![CDATA[x ]]></tbox><tbox llx="416" lly="209" urx="436" ury="218" f="5"><![CDATA[(r2 ) ]]></tbox></line>
+<line><tbox llx="416" lly="203" urx="427" ury="211" f="5"><![CDATA[2 ]]></tbox><tbox llx="431" lly="204" urx="535" ury="219" f="2"><![CDATA[is a reference (r) in the ]]></tbox></line>
+<line><tbox llx="71" lly="192" urx="135" ury="207" f="2"><![CDATA[bibliography, ]]></tbox><tbox llx="128" lly="193" urx="142" ury="204" f="3"><![CDATA[r ]]></tbox><tbox llx="133" lly="192" urx="144" ury="200" f="6"><![CDATA[j ]]></tbox><tbox llx="139" lly="193" urx="170" ury="206" f="9"><![CDATA[= 1, ]]></tbox><tbox llx="162" lly="193" urx="197" ury="204" f="3"><![CDATA[. . . , R ]]></tbox><tbox llx="188" lly="192" urx="198" ury="200" f="6"><![CDATA[j ]]></tbox><tbox llx="190" lly="192" urx="536" ury="207" f="2"><![CDATA[. By adopting the "bag of words" assumption, we treat the words in each abstract ]]></tbox></line>
+<line><tbox llx="71" lly="180" urx="363" ury="195" f="2"><![CDATA[as independent replications of the first observed characteristic (word). ]]></tbox><tbox llx="357" lly="180" urx="536" ury="195" f="2"><![CDATA[Similarly, under the assumption of a "bag ]]></tbox></line>
+<line><tbox llx="71" lly="168" urx="536" ury="183" f="2"><![CDATA[of references" we treat references as independent replications of the second observed characteristic (reference). ]]></tbox></line>
+<line><tbox llx="71" lly="156" urx="337" ury="171" f="2"><![CDATA[Thus, the representation of a document consists of word counts ]]></tbox><tbox llx="330" lly="157" urx="371" ury="168" f="3"><![CDATA[n(w, d) ]]></tbox><tbox llx="363" lly="156" urx="481" ury="171" f="2"><![CDATA[(the number of times word ]]></tbox><tbox llx="474" lly="157" urx="491" ury="168" f="3"><![CDATA[w ]]></tbox><tbox llx="483" lly="156" urx="535" ury="171" f="2"><![CDATA[appears in ]]></tbox></line>
+<line><tbox llx="71" lly="144" urx="121" ury="159" f="2"><![CDATA[document ]]></tbox><tbox llx="114" lly="145" urx="132" ury="156" f="3"><![CDATA[d) ]]></tbox><tbox llx="123" lly="144" urx="217" ury="159" f="2"><![CDATA[and reference counts ]]></tbox><tbox llx="209" lly="145" urx="247" ury="156" f="3"><![CDATA[n(r, d) ]]></tbox><tbox llx="238" lly="144" urx="344" ury="159" f="2"><![CDATA[(1 if the bibliography of ]]></tbox><tbox llx="337" lly="145" urx="352" ury="156" f="3"><![CDATA[d ]]></tbox><tbox llx="343" lly="144" urx="444" ury="159" f="2"><![CDATA[contains a reference to ]]></tbox><tbox llx="436" lly="145" urx="453" ury="156" f="3"><![CDATA[r, ]]></tbox><tbox llx="444" lly="144" urx="470" ury="159" f="2"><![CDATA[and ]]></tbox><tbox llx="460" lly="145" urx="477" ury="158" f="9"><![CDATA[0 ]]></tbox><tbox llx="469" lly="144" urx="535" ury="159" f="2"><![CDATA[otherwise). In ]]></tbox></line>
+<line><tbox llx="71" lly="132" urx="288" ury="147" f="2"><![CDATA[this context, subpopulations refer to topical aspects. ]]></tbox></line>
+<line><tbox llx="295" lly="74" urx="311" ury="89" f="2"><![CDATA[3 ]]></tbox></line>
+<pbox llx="71.00" lly="74.00" urx="536.00" ury="721.00"/></page>
+<page n="4">
+<line><tbox llx="86" lly="706" urx="159" ury="721" f="1"><![CDATA[The parameters ]]></tbox><tbox llx="151" lly="706" urx="168" ury="717" f="2"><![CDATA[µ ]]></tbox><tbox llx="158" lly="706" urx="238" ury="721" f="1"><![CDATA[of our model are: ]]></tbox></line>
+<line><tbox llx="185" lly="684" urx="281" ury="699" f="1"><![CDATA[Dirichlet parameters: ]]></tbox><tbox llx="291" lly="685" urx="307" ury="696" f="3"><![CDATA[® ]]></tbox><tbox llx="297" lly="684" urx="308" ury="692" f="4"><![CDATA[1 ]]></tbox><tbox llx="302" lly="685" urx="350" ury="696" f="3"><![CDATA[, . . . , ®K , ]]></tbox><tbox llx="513" lly="684" urx="535" ury="699" f="1"><![CDATA[(4) ]]></tbox></line>
+<line><tbox llx="173" lly="669" urx="281" ury="684" f="1"><![CDATA[word aspect parameters: ]]></tbox><tbox llx="291" lly="670" urx="305" ury="681" f="3"><![CDATA[µ ]]></tbox><tbox llx="296" lly="669" urx="311" ury="677" f="4"><![CDATA[1k ]]></tbox><tbox llx="302" lly="670" urx="339" ury="683" f="6"><![CDATA[(w) = ]]></tbox><tbox llx="333" lly="670" urx="359" ury="681" f="3"><![CDATA[p(w ]]></tbox><tbox llx="351" lly="663" urx="364" ury="681" f="7"><![CDATA[| ]]></tbox><tbox llx="356" lly="670" urx="387" ury="681" f="3"><![CDATA[k), k ]]></tbox><tbox llx="378" lly="670" urx="417" ury="683" f="6"><![CDATA[= 1, 2, ]]></tbox><tbox llx="410" lly="670" urx="449" ury="681" f="3"><![CDATA[. . . , K, ]]></tbox><tbox llx="513" lly="669" urx="535" ury="684" f="1"><![CDATA[(5) ]]></tbox></line>
+<line><tbox llx="156" lly="654" urx="281" ury="669" f="1"><![CDATA[reference aspect parameters: ]]></tbox><tbox llx="291" lly="655" urx="305" ury="666" f="3"><![CDATA[µ ]]></tbox><tbox llx="296" lly="654" urx="311" ury="662" f="4"><![CDATA[2k ]]></tbox><tbox llx="302" lly="655" urx="337" ury="668" f="6"><![CDATA[(r) = ]]></tbox><tbox llx="330" lly="655" urx="354" ury="666" f="3"><![CDATA[q(r ]]></tbox><tbox llx="346" lly="648" urx="359" ury="666" f="7"><![CDATA[| ]]></tbox><tbox llx="350" lly="655" urx="382" ury="666" f="3"><![CDATA[k), k ]]></tbox><tbox llx="373" lly="655" urx="412" ury="668" f="6"><![CDATA[= 1, 2, ]]></tbox><tbox llx="404" lly="655" urx="443" ury="666" f="3"><![CDATA[. . . , K. ]]></tbox><tbox llx="513" lly="654" urx="535" ury="669" f="1"><![CDATA[(6) ]]></tbox></line>
+<line><tbox llx="86" lly="631" urx="239" ury="646" f="1"><![CDATA[In the generative model, documents ]]></tbox><tbox llx="232" lly="631" urx="247" ury="642" f="3"><![CDATA[d ]]></tbox><tbox llx="237" lly="631" urx="274" ury="645" f="6"><![CDATA[= ({x ]]></tbox><tbox llx="265" lly="636" urx="286" ury="645" f="4"><![CDATA[(r1 ) ]]></tbox></line>
+<line><tbox llx="265" lly="629" urx="276" ury="637" f="4"><![CDATA[1 ]]></tbox><tbox llx="279" lly="624" urx="310" ury="643" f="7"><![CDATA[}, {x ]]></tbox><tbox llx="299" lly="636" urx="320" ury="645" f="4"><![CDATA[(r2 ) ]]></tbox></line>
+<line><tbox llx="299" lly="629" urx="310" ury="637" f="4"><![CDATA[2 ]]></tbox><tbox llx="313" lly="624" urx="333" ury="643" f="7"><![CDATA[}) ]]></tbox><tbox llx="323" lly="631" urx="532" ury="646" f="1"><![CDATA[are sampled according to the following sequence: ]]></tbox></line>
+<line><tbox llx="203" lly="610" urx="219" ury="621" f="3"><![CDATA[¸ ]]></tbox><tbox llx="219" lly="603" urx="237" ury="621" f="7"><![CDATA[» ]]></tbox><tbox llx="235" lly="610" urx="535" ury="624" f="1"><![CDATA[Dirichlet(®), (7) ]]></tbox></line>
+<line><tbox llx="189" lly="585" urx="205" ury="596" f="3"><![CDATA[x ]]></tbox><tbox llx="195" lly="590" urx="216" ury="599" f="4"><![CDATA[(r1 ) ]]></tbox></line>
+<line><tbox llx="195" lly="583" urx="206" ury="591" f="4"><![CDATA[1 ]]></tbox><tbox llx="219" lly="578" urx="237" ury="596" f="7"><![CDATA[» ]]></tbox><tbox llx="235" lly="585" urx="305" ury="600" f="1"><![CDATA[Multinomial(p ]]></tbox><tbox llx="296" lly="584" urx="308" ury="592" f="5"><![CDATA[¸ ]]></tbox><tbox llx="299" lly="585" urx="317" ury="598" f="6"><![CDATA[), ]]></tbox><tbox llx="310" lly="585" urx="346" ury="600" f="1"><![CDATA[where ]]></tbox><tbox llx="339" lly="585" urx="354" ury="596" f="3"><![CDATA[p ]]></tbox><tbox llx="344" lly="584" urx="356" ury="592" f="5"><![CDATA[¸ ]]></tbox><tbox llx="350" lly="585" urx="369" ury="598" f="6"><![CDATA[= ]]></tbox></line>
+<line><tbox llx="366" lly="598" urx="380" ury="606" f="5"><![CDATA[K ]]></tbox></line>
+<line><tbox llx="363" lly="568" urx="391" ury="606" f="9"><![CDATA[X ]]></tbox><tbox llx="363" lly="574" urx="384" ury="582" f="5"><![CDATA[k=1 ]]></tbox></line>
+<line><tbox llx="379" lly="585" urx="394" ury="596" f="3"><![CDATA[¸ ]]></tbox><tbox llx="385" lly="584" urx="396" ury="592" f="5"><![CDATA[k ]]></tbox><tbox llx="391" lly="585" urx="405" ury="596" f="3"><![CDATA[µ ]]></tbox><tbox llx="396" lly="584" urx="411" ury="592" f="4"><![CDATA[1k ]]></tbox><tbox llx="404" lly="585" urx="417" ury="596" f="3"><![CDATA[, ]]></tbox><tbox llx="513" lly="585" urx="535" ury="600" f="1"><![CDATA[(8) ]]></tbox></line>
+<line><tbox llx="189" lly="550" urx="205" ury="561" f="3"><![CDATA[x ]]></tbox><tbox llx="195" lly="555" urx="216" ury="564" f="4"><![CDATA[(r2 ) ]]></tbox></line>
+<line><tbox llx="195" lly="548" urx="206" ury="556" f="4"><![CDATA[2 ]]></tbox><tbox llx="219" lly="543" urx="237" ury="561" f="7"><![CDATA[» ]]></tbox><tbox llx="235" lly="550" urx="304" ury="564" f="1"><![CDATA[Multinomial(q ]]></tbox><tbox llx="295" lly="549" urx="307" ury="557" f="5"><![CDATA[¸ ]]></tbox><tbox llx="298" lly="550" urx="316" ury="563" f="6"><![CDATA[), ]]></tbox><tbox llx="310" lly="550" urx="345" ury="564" f="1"><![CDATA[where ]]></tbox><tbox llx="338" lly="550" urx="352" ury="561" f="3"><![CDATA[q ]]></tbox><tbox llx="343" lly="549" urx="355" ury="557" f="5"><![CDATA[¸ ]]></tbox><tbox llx="349" lly="550" urx="368" ury="563" f="6"><![CDATA[= ]]></tbox></line>
+<line><tbox llx="365" lly="563" urx="379" ury="571" f="5"><![CDATA[K ]]></tbox></line>
+<line><tbox llx="361" lly="532" urx="389" ury="571" f="9"><![CDATA[X ]]></tbox><tbox llx="362" lly="539" urx="383" ury="547" f="5"><![CDATA[k=1 ]]></tbox></line>
+<line><tbox llx="377" lly="550" urx="393" ury="561" f="3"><![CDATA[¸ ]]></tbox><tbox llx="384" lly="549" urx="395" ury="557" f="5"><![CDATA[k ]]></tbox><tbox llx="390" lly="550" urx="404" ury="561" f="3"><![CDATA[µ ]]></tbox><tbox llx="395" lly="549" urx="410" ury="557" f="4"><![CDATA[2k ]]></tbox><tbox llx="403" lly="550" urx="416" ury="561" f="3"><![CDATA[, ]]></tbox><tbox llx="513" lly="550" urx="535" ury="564" f="1"><![CDATA[(9) ]]></tbox></line>
+<line><tbox llx="71" lly="519" urx="106" ury="533" f="1"><![CDATA[where ]]></tbox><tbox llx="100" lly="500" urx="124" ury="538" f="9"><![CDATA[P ]]></tbox><tbox llx="111" lly="517" urx="124" ury="525" f="5"><![CDATA[w ]]></tbox><tbox llx="119" lly="519" urx="133" ury="530" f="3"><![CDATA[µ ]]></tbox><tbox llx="123" lly="518" urx="139" ury="526" f="4"><![CDATA[1k ]]></tbox><tbox llx="130" lly="519" urx="179" ury="532" f="6"><![CDATA[(w) = 1 ]]></tbox><tbox llx="172" lly="519" urx="197" ury="533" f="1"><![CDATA[and ]]></tbox><tbox llx="191" lly="500" urx="215" ury="538" f="9"><![CDATA[P ]]></tbox><tbox llx="202" lly="517" urx="213" ury="525" f="5"><![CDATA[r ]]></tbox><tbox llx="207" lly="519" urx="222" ury="530" f="3"><![CDATA[µ ]]></tbox><tbox llx="212" lly="518" urx="227" ury="526" f="4"><![CDATA[2k ]]></tbox><tbox llx="219" lly="519" urx="267" ury="532" f="6"><![CDATA[(r) = 1, ]]></tbox><tbox llx="262" lly="519" urx="277" ury="530" f="3"><![CDATA[k ]]></tbox><tbox llx="270" lly="519" urx="302" ury="532" f="6"><![CDATA[= 1, ]]></tbox><tbox llx="294" lly="519" urx="333" ury="530" f="3"><![CDATA[. . . , K. ]]></tbox><tbox llx="328" lly="519" urx="536" ury="533" f="1"><![CDATA[Since distributions of words and references in a ]]></tbox></line>
+<line><tbox llx="71" lly="507" urx="536" ury="522" f="1"><![CDATA[document are convex combinations of the aspects' distributions, the aspects can be thought of as extreme or basis ]]></tbox></line>
+<line><tbox llx="71" lly="495" urx="536" ury="510" f="1"><![CDATA[categories for a collection of documents. The sampling of words and references in the model can also be interpreted ]]></tbox></line>
+<line><tbox llx="71" lly="483" urx="536" ury="498" f="1"><![CDATA[as a latent classification process where an aspect of origin is drawn first for each word and for each reference in a ]]></tbox></line>
+<line><tbox llx="71" lly="471" urx="525" ury="486" f="1"><![CDATA[document, according to a multinomial distribution parameterized by the document-specific membership scores ]]></tbox><tbox llx="517" lly="471" urx="536" ury="482" f="3"><![CDATA[¸, ]]></tbox></line>
+<line><tbox llx="71" lly="459" urx="536" ury="474" f="1"><![CDATA[and words and references are then generated from corresponding distributions of the aspects of origin [5]. Rather ]]></tbox></line>
+<line><tbox llx="71" lly="447" urx="151" ury="462" f="1"><![CDATA[than a mixture of ]]></tbox><tbox llx="144" lly="447" urx="162" ury="458" f="3"><![CDATA[K ]]></tbox><tbox llx="154" lly="447" urx="536" ury="462" f="1"><![CDATA[latent classes, the model can be thought of as a "simplicial mixture" [12] since the word and ]]></tbox></line>
+<line><tbox llx="71" lly="435" urx="309" ury="450" f="1"><![CDATA[reference probabilities range over a simplex with corners ]]></tbox><tbox llx="301" lly="435" urx="316" ury="446" f="3"><![CDATA[µ ]]></tbox><tbox llx="306" lly="435" urx="321" ury="443" f="4"><![CDATA[1k ]]></tbox><tbox llx="316" lly="435" urx="341" ury="450" f="1"><![CDATA[and ]]></tbox><tbox llx="334" lly="435" urx="349" ury="446" f="3"><![CDATA[µ ]]></tbox><tbox llx="339" lly="435" urx="354" ury="443" f="4"><![CDATA[2k ]]></tbox><tbox llx="346" lly="435" urx="412" ury="450" f="1"><![CDATA[, respectively. ]]></tbox></line>
+<line><tbox llx="86" lly="423" urx="219" ury="438" f="1"><![CDATA[The likelihood function is thus ]]></tbox></line>
+<line><tbox llx="143" lly="399" urx="167" ury="410" f="3"><![CDATA[p(µ ]]></tbox><tbox llx="160" lly="392" urx="173" ury="410" f="7"><![CDATA[| ]]></tbox><tbox llx="164" lly="399" urx="183" ury="410" f="3"><![CDATA[d) ]]></tbox><tbox llx="181" lly="399" urx="200" ury="412" f="6"><![CDATA[= ]]></tbox><tbox llx="201" lly="386" urx="220" ury="424" f="9"><![CDATA[Z ]]></tbox><tbox llx="206" lly="390" urx="235" ury="399" f="4"><![CDATA[¢K-1 ]]></tbox></line>
+<line><tbox llx="229" lly="399" urx="263" ury="414" f="1"><![CDATA[Dir(¸ ]]></tbox><tbox llx="255" lly="392" urx="268" ury="410" f="7"><![CDATA[| ]]></tbox><tbox llx="259" lly="399" urx="279" ury="410" f="3"><![CDATA[®) ]]></tbox><tbox llx="273" lly="382" urx="300" ury="420" f="9"><![CDATA[Y ]]></tbox><tbox llx="277" lly="388" urx="290" ury="396" f="5"><![CDATA[w ]]></tbox></line>
+<line><tbox llx="287" lly="399" urx="302" ury="410" f="3"><![CDATA[p ]]></tbox><tbox llx="293" lly="398" urx="305" ury="406" f="5"><![CDATA[¸ ]]></tbox><tbox llx="295" lly="399" urx="322" ury="412" f="6"><![CDATA[(w) ]]></tbox><tbox llx="313" lly="404" urx="344" ury="412" f="5"><![CDATA[n(w,d) ]]></tbox></line>
+<line><tbox llx="340" lly="382" urx="367" ury="420" f="9"><![CDATA[Y ]]></tbox><tbox llx="345" lly="388" urx="356" ury="396" f="5"><![CDATA[r ]]></tbox></line>
+<line><tbox llx="355" lly="399" urx="369" ury="410" f="3"><![CDATA[q ]]></tbox><tbox llx="360" lly="398" urx="372" ury="406" f="5"><![CDATA[¸ ]]></tbox><tbox llx="363" lly="399" urx="387" ury="412" f="6"><![CDATA[(r) ]]></tbox><tbox llx="378" lly="404" urx="406" ury="412" f="5"><![CDATA[n(r,d) ]]></tbox><tbox llx="401" lly="399" urx="422" ury="410" f="3"><![CDATA[d¸ ]]></tbox><tbox llx="508" lly="399" urx="535" ury="414" f="1"><![CDATA[(10) ]]></tbox></line>
+<line><tbox llx="181" lly="364" urx="221" ury="384" f="6"><![CDATA[= ¡( ]]></tbox><tbox llx="212" lly="352" urx="236" ury="390" f="9"><![CDATA[P ]]></tbox><tbox llx="223" lly="369" urx="233" ury="377" f="5"><![CDATA[i ]]></tbox><tbox llx="228" lly="371" urx="244" ury="382" f="3"><![CDATA[® ]]></tbox><tbox llx="234" lly="371" urx="244" ury="379" f="5"><![CDATA[i ]]></tbox><tbox llx="235" lly="371" urx="251" ury="384" f="6"><![CDATA[) ]]></tbox></line>
+<line><tbox llx="203" lly="338" urx="226" ury="376" f="9"><![CDATA[Q ]]></tbox><tbox llx="212" lly="355" urx="222" ury="363" f="5"><![CDATA[i ]]></tbox></line>
+<line><tbox llx="215" lly="358" urx="243" ury="371" f="6"><![CDATA[¡(® ]]></tbox><tbox llx="234" lly="357" urx="244" ury="365" f="5"><![CDATA[i ]]></tbox><tbox llx="235" lly="358" urx="250" ury="371" f="6"><![CDATA[) ]]></tbox><tbox llx="244" lly="351" urx="263" ury="389" f="9"><![CDATA[Z ]]></tbox><tbox llx="250" lly="355" urx="278" ury="364" f="4"><![CDATA[¢K-1 ]]></tbox></line>
+<line><tbox llx="278" lly="378" urx="290" ury="386" f="5"><![CDATA[k ]]></tbox></line>
+<line><tbox llx="274" lly="347" urx="300" ury="385" f="9"><![CDATA[Y ]]></tbox><tbox llx="274" lly="353" urx="294" ury="361" f="5"><![CDATA[i=1 ]]></tbox></line>
+<line><tbox llx="288" lly="364" urx="304" ury="375" f="3"><![CDATA[¸ ]]></tbox><tbox llx="294" lly="370" urx="307" ury="378" f="5"><![CDATA[® ]]></tbox><tbox llx="300" lly="369" urx="308" ury="375" f="10"><![CDATA[i ]]></tbox><tbox llx="302" lly="365" urx="321" ury="378" f="12"><![CDATA[-1 ]]></tbox></line>
+<line><tbox llx="294" lly="362" urx="304" ury="370" f="5"><![CDATA[i ]]></tbox><tbox llx="316" lly="347" urx="343" ury="385" f="9"><![CDATA[Y ]]></tbox><tbox llx="320" lly="354" urx="333" ury="362" f="5"><![CDATA[w ]]></tbox></line>
+<line><tbox llx="331" lly="364" urx="345" ury="375" f="3"><![CDATA[p ]]></tbox><tbox llx="336" lly="364" urx="348" ury="372" f="5"><![CDATA[¸ ]]></tbox><tbox llx="339" lly="364" urx="365" ury="378" f="6"><![CDATA[(w) ]]></tbox><tbox llx="356" lly="369" urx="387" ury="377" f="5"><![CDATA[n(w,d) ]]></tbox></line>
+<line><tbox llx="384" lly="347" urx="410" ury="385" f="9"><![CDATA[Y ]]></tbox><tbox llx="388" lly="354" urx="399" ury="362" f="5"><![CDATA[r ]]></tbox></line>
+<line><tbox llx="398" lly="364" urx="412" ury="375" f="3"><![CDATA[q ]]></tbox><tbox llx="403" lly="364" urx="415" ury="372" f="5"><![CDATA[¸ ]]></tbox><tbox llx="406" lly="364" urx="430" ury="378" f="6"><![CDATA[(r) ]]></tbox><tbox llx="421" lly="369" urx="450" ury="377" f="5"><![CDATA[n(r,d) ]]></tbox><tbox llx="444" lly="364" urx="465" ury="375" f="3"><![CDATA[d¸ ]]></tbox><tbox llx="508" lly="364" urx="535" ury="379" f="1"><![CDATA[(11) ]]></tbox></line>
+<line><tbox llx="71" lly="333" urx="106" ury="348" f="1"><![CDATA[where ]]></tbox><tbox llx="97" lly="332" urx="134" ury="347" f="6"><![CDATA[¢K-1 ]]></tbox><tbox llx="126" lly="333" urx="159" ury="348" f="1"><![CDATA[is the ]]></tbox><tbox llx="149" lly="334" urx="173" ury="347" f="6"><![CDATA[(K ]]></tbox><tbox llx="167" lly="327" urx="185" ury="345" f="7"><![CDATA[- ]]></tbox><tbox llx="175" lly="334" urx="232" ury="347" f="6"><![CDATA[1)-simplex. ]]></tbox></line>
+<line><tbox llx="86" lly="321" urx="536" ury="336" f="1"><![CDATA[It is important to note that the assumption of exchangeability among words and references (conditional inde- ]]></tbox></line>
+<line><tbox llx="71" lly="309" urx="536" ury="324" f="1"><![CDATA[pendence given the membership scores) does not imply joint independence among the observed characteristics. ]]></tbox></line>
+<line><tbox llx="71" lly="298" urx="536" ury="312" f="1"><![CDATA[Instead, the assumption of exchangeability means that dependencies among words and references can be fully ex- ]]></tbox></line>
+<line><tbox llx="71" lly="286" urx="536" ury="300" f="1"><![CDATA[plained by the documents' membership scores. For an extended discussion on exchangeability in this context, see ]]></tbox></line>
+<line><tbox llx="71" lly="274" urx="101" ury="288" f="1"><![CDATA[[15]. ]]></tbox></line>
+<line><tbox llx="71" lly="243" urx="227" ury="259" f="13"><![CDATA[Alternative Models for References ]]></tbox></line>
+<line><tbox llx="86" lly="227" urx="535" ury="242" f="1"><![CDATA[For the analysis of PNAS publications in the next section, we assume multinomial sampling of words and ]]></tbox></line>
+<line><tbox llx="71" lly="215" urx="536" ury="230" f="1"><![CDATA[references. While multinomial sampling is computationally convenient, it is not a realistic model of the way in ]]></tbox></line>
+<line><tbox llx="71" lly="203" urx="536" ury="218" f="1"><![CDATA[which authors select references for the bibliography of a paper. We briefly describe examples of more realistic ]]></tbox></line>
+<line><tbox llx="71" lly="191" urx="235" ury="206" f="1"><![CDATA[generative assumptions for references. ]]></tbox></line>
+<line><tbox llx="86" lly="179" urx="536" ury="194" f="1"><![CDATA[Suppose an article focuses on a sufficiently narrow scientific area. In this case the authors may have essentially ]]></tbox></line>
+<line><tbox llx="71" lly="167" urx="536" ury="182" f="1"><![CDATA[perfect knowledge of the literature and thus they would pay separate attention to each paper in their pool of ]]></tbox></line>
+<line><tbox llx="71" lly="155" urx="536" ury="170" f="1"><![CDATA[references as they consider whether to include it in the bibliography. Under these circumstances, given that the ]]></tbox></line>
+<line><tbox llx="71" lly="142" urx="404" ury="157" f="1"><![CDATA[pool of references contains R papers, we assume that a document is represented as ]]></tbox><tbox llx="396" lly="142" urx="411" ury="153" f="3"><![CDATA[d ]]></tbox><tbox llx="402" lly="142" urx="438" ury="155" f="6"><![CDATA[= ({x ]]></tbox><tbox llx="429" lly="147" urx="450" ury="156" f="4"><![CDATA[(r1 ) ]]></tbox></line>
+<line><tbox llx="429" lly="140" urx="440" ury="148" f="4"><![CDATA[1 ]]></tbox><tbox llx="443" lly="135" urx="461" ury="153" f="7"><![CDATA[}, ]]></tbox><tbox llx="453" lly="142" urx="468" ury="153" f="3"><![CDATA[x ]]></tbox><tbox llx="458" lly="141" urx="469" ury="149" f="4"><![CDATA[2 ]]></tbox><tbox llx="463" lly="142" urx="483" ury="153" f="3"><![CDATA[, x ]]></tbox><tbox llx="473" lly="141" urx="484" ury="149" f="4"><![CDATA[3 ]]></tbox><tbox llx="477" lly="142" urx="531" ury="153" f="3"><![CDATA[, . . . , xR-1 ]]></tbox><tbox llx="520" lly="142" urx="535" ury="155" f="6"><![CDATA[) ]]></tbox></line>
+<line><tbox llx="71" lly="128" urx="106" ury="142" f="1"><![CDATA[where ]]></tbox><tbox llx="99" lly="128" urx="114" ury="139" f="3"><![CDATA[x ]]></tbox><tbox llx="105" lly="133" urx="126" ury="142" f="4"><![CDATA[(r1 ) ]]></tbox></line>
+<line><tbox llx="105" lly="126" urx="116" ury="134" f="4"><![CDATA[1 ]]></tbox></line>
+<line><tbox llx="120" lly="128" urx="244" ury="142" f="1"><![CDATA[is a word (w) in the abstract, ]]></tbox><tbox llx="237" lly="128" urx="254" ury="139" f="3"><![CDATA[R ]]></tbox><tbox llx="245" lly="128" urx="384" ury="142" f="1"><![CDATA[is the number of references, and ]]></tbox><tbox llx="376" lly="128" urx="392" ury="139" f="3"><![CDATA[x ]]></tbox><tbox llx="382" lly="127" urx="393" ury="135" f="4"><![CDATA[2 ]]></tbox><tbox llx="386" lly="128" urx="440" ury="139" f="3"><![CDATA[, . . . , xR-1 ]]></tbox><tbox llx="432" lly="128" urx="536" ury="142" f="1"><![CDATA[are all references in the ]]></tbox></line>
+<line><tbox llx="71" lly="116" urx="307" ury="131" f="1"><![CDATA[pool. Reference counts do not change: they are given by ]]></tbox><tbox llx="300" lly="116" urx="337" ury="127" f="3"><![CDATA[n(r, d) ]]></tbox><tbox llx="328" lly="116" urx="358" ury="129" f="6"><![CDATA[= 1, ]]></tbox><tbox llx="349" lly="116" urx="445" ury="131" f="1"><![CDATA[if the bibliography of ]]></tbox><tbox llx="438" lly="116" urx="453" ury="127" f="3"><![CDATA[d ]]></tbox><tbox llx="445" lly="116" urx="536" ury="131" f="1"><![CDATA[contains a reference ]]></tbox></line>
+<line><tbox llx="71" lly="104" urx="90" ury="119" f="1"><![CDATA[to ]]></tbox><tbox llx="82" lly="104" urx="99" ury="115" f="3"><![CDATA[r, ]]></tbox><tbox llx="91" lly="104" urx="129" ury="119" f="1"><![CDATA[and by ]]></tbox><tbox llx="122" lly="104" urx="159" ury="115" f="3"><![CDATA[n(r, d) ]]></tbox><tbox llx="150" lly="104" urx="177" ury="117" f="6"><![CDATA[= 0 ]]></tbox><tbox llx="168" lly="104" urx="221" ury="119" f="1"><![CDATA[otherwise. ]]></tbox></line>
+<line><tbox llx="295" lly="74" urx="311" ury="89" f="1"><![CDATA[4 ]]></tbox></line>
+<pbox llx="71.00" lly="74.00" urx="536.00" ury="721.00"/></page>
+<page n="5">
+<line><tbox llx="86" lly="705" urx="345" ury="720" f="1"><![CDATA[Then our model for generating documents would be to sample ]]></tbox><tbox llx="338" lly="706" urx="353" ury="717" f="2"><![CDATA[d ]]></tbox><tbox llx="343" lly="706" urx="380" ury="719" f="3"><![CDATA[= ({x ]]></tbox><tbox llx="371" lly="711" urx="392" ury="720" f="5"><![CDATA[(r1 ) ]]></tbox></line>
+<line><tbox llx="371" lly="704" urx="382" ury="712" f="5"><![CDATA[1 ]]></tbox><tbox llx="385" lly="699" urx="403" ury="717" f="4"><![CDATA[}, ]]></tbox><tbox llx="394" lly="706" urx="410" ury="717" f="2"><![CDATA[x ]]></tbox><tbox llx="400" lly="705" urx="411" ury="713" f="5"><![CDATA[2 ]]></tbox><tbox llx="405" lly="706" urx="424" ury="717" f="2"><![CDATA[, x ]]></tbox><tbox llx="415" lly="705" urx="426" ury="713" f="5"><![CDATA[3 ]]></tbox><tbox llx="419" lly="706" urx="473" ury="717" f="2"><![CDATA[, . . . , xR-1 ]]></tbox><tbox llx="462" lly="706" urx="477" ury="719" f="3"><![CDATA[) ]]></tbox><tbox llx="469" lly="705" urx="532" ury="720" f="1"><![CDATA[according to: ]]></tbox></line>
+<line><tbox llx="150" lly="684" urx="166" ury="695" f="2"><![CDATA[¸ ]]></tbox><tbox llx="166" lly="677" urx="184" ury="695" f="4"><![CDATA[» ]]></tbox><tbox llx="182" lly="684" urx="535" ury="698" f="1"><![CDATA[Dirichlet(®) (12) ]]></tbox></line>
+<line><tbox llx="136" lly="659" urx="151" ury="670" f="2"><![CDATA[x ]]></tbox><tbox llx="142" lly="664" urx="162" ury="673" f="5"><![CDATA[(r1 ) ]]></tbox></line>
+<line><tbox llx="142" lly="657" urx="153" ury="665" f="5"><![CDATA[1 ]]></tbox><tbox llx="166" lly="652" urx="184" ury="670" f="4"><![CDATA[» ]]></tbox><tbox llx="182" lly="659" urx="252" ury="674" f="1"><![CDATA[Multinomial(p ]]></tbox><tbox llx="243" lly="658" urx="254" ury="666" f="6"><![CDATA[¸ ]]></tbox><tbox llx="245" lly="659" urx="263" ury="672" f="3"><![CDATA[), ]]></tbox><tbox llx="257" lly="659" urx="293" ury="674" f="1"><![CDATA[where ]]></tbox><tbox llx="286" lly="659" urx="300" ury="670" f="2"><![CDATA[p ]]></tbox><tbox llx="291" lly="658" urx="303" ury="666" f="6"><![CDATA[¸ ]]></tbox><tbox llx="296" lly="659" urx="316" ury="672" f="3"><![CDATA[= ]]></tbox></line>
+<line><tbox llx="313" lly="672" urx="327" ury="680" f="6"><![CDATA[K ]]></tbox></line>
+<line><tbox llx="309" lly="642" urx="337" ury="680" f="9"><![CDATA[X ]]></tbox><tbox llx="309" lly="648" urx="331" ury="656" f="6"><![CDATA[k=1 ]]></tbox></line>
+<line><tbox llx="325" lly="659" urx="341" ury="670" f="2"><![CDATA[¸ ]]></tbox><tbox llx="331" lly="658" urx="343" ury="666" f="6"><![CDATA[k ]]></tbox><tbox llx="338" lly="659" urx="352" ury="670" f="2"><![CDATA[µ ]]></tbox><tbox llx="342" lly="658" urx="358" ury="666" f="5"><![CDATA[1k ]]></tbox><tbox llx="508" lly="659" urx="535" ury="674" f="1"><![CDATA[(13) ]]></tbox></line>
+<line><tbox llx="146" lly="624" urx="161" ury="635" f="2"><![CDATA[x ]]></tbox><tbox llx="152" lly="623" urx="162" ury="631" f="6"><![CDATA[j ]]></tbox><tbox llx="166" lly="617" urx="184" ury="635" f="4"><![CDATA[» ]]></tbox><tbox llx="182" lly="624" urx="239" ury="638" f="1"><![CDATA[Bernoulli(q ]]></tbox><tbox llx="230" lly="623" urx="242" ury="631" f="6"><![CDATA[¸ ]]></tbox><tbox llx="233" lly="624" urx="254" ury="637" f="3"><![CDATA[(x ]]></tbox><tbox llx="245" lly="623" urx="255" ury="631" f="6"><![CDATA[j ]]></tbox><tbox llx="246" lly="624" urx="268" ury="637" f="3"><![CDATA[)), ]]></tbox><tbox llx="262" lly="624" urx="297" ury="638" f="1"><![CDATA[where ]]></tbox><tbox llx="291" lly="624" urx="305" ury="635" f="2"><![CDATA[q ]]></tbox><tbox llx="295" lly="623" urx="307" ury="631" f="6"><![CDATA[¸ ]]></tbox><tbox llx="298" lly="624" urx="319" ury="637" f="3"><![CDATA[(x ]]></tbox><tbox llx="310" lly="623" urx="321" ury="631" f="6"><![CDATA[j ]]></tbox><tbox llx="312" lly="624" urx="338" ury="637" f="3"><![CDATA[) = ]]></tbox></line>
+<line><tbox llx="335" lly="637" urx="349" ury="645" f="6"><![CDATA[K ]]></tbox></line>
+<line><tbox llx="331" lly="606" urx="359" ury="645" f="9"><![CDATA[X ]]></tbox><tbox llx="331" lly="613" urx="353" ury="621" f="6"><![CDATA[k=1 ]]></tbox></line>
+<line><tbox llx="347" lly="624" urx="363" ury="635" f="2"><![CDATA[¸ ]]></tbox><tbox llx="353" lly="623" urx="365" ury="631" f="6"><![CDATA[k ]]></tbox><tbox llx="360" lly="624" urx="374" ury="635" f="2"><![CDATA[µ ]]></tbox><tbox llx="365" lly="623" urx="380" ury="631" f="6"><![CDATA[jk ]]></tbox><tbox llx="373" lly="624" urx="394" ury="635" f="2"><![CDATA[, j ]]></tbox><tbox llx="385" lly="624" urx="425" ury="637" f="3"><![CDATA[= 2, 3, ]]></tbox><tbox llx="417" lly="624" urx="452" ury="635" f="2"><![CDATA[. . . , R ]]></tbox><tbox llx="444" lly="617" urx="463" ury="635" f="4"><![CDATA[- ]]></tbox><tbox llx="452" lly="624" urx="472" ury="637" f="3"><![CDATA[1, ]]></tbox><tbox llx="508" lly="624" urx="535" ury="638" f="1"><![CDATA[(14) ]]></tbox></line>
+<line><tbox llx="71" lly="592" urx="106" ury="607" f="1"><![CDATA[where ]]></tbox><tbox llx="100" lly="573" urx="124" ury="611" f="9"><![CDATA[P ]]></tbox><tbox llx="110" lly="590" urx="123" ury="598" f="6"><![CDATA[w ]]></tbox><tbox llx="118" lly="593" urx="133" ury="604" f="2"><![CDATA[µ ]]></tbox><tbox llx="123" lly="592" urx="138" ury="600" f="5"><![CDATA[1k ]]></tbox><tbox llx="129" lly="593" urx="179" ury="606" f="3"><![CDATA[(w) = 1, ]]></tbox><tbox llx="175" lly="593" urx="190" ury="604" f="2"><![CDATA[k ]]></tbox><tbox llx="182" lly="593" urx="212" ury="606" f="3"><![CDATA[= 1, ]]></tbox><tbox llx="205" lly="593" urx="244" ury="604" f="2"><![CDATA[. . . , K. ]]></tbox><tbox llx="237" lly="592" urx="535" ury="607" f="1"><![CDATA[The likelihood function based on this alternative model would not only ]]></tbox></line>
+<line><tbox llx="71" lly="580" urx="536" ury="595" f="1"><![CDATA[take into account which documents contain which references, but it would also incorporate the information about ]]></tbox></line>
+<line><tbox llx="71" lly="568" urx="257" ury="583" f="1"><![CDATA[which references documents do not contain. ]]></tbox></line>
+<line><tbox llx="86" lly="556" urx="536" ury="571" f="1"><![CDATA[Alternatively we could consider a reference list as being generated by a two-step combination of multinomial ]]></tbox></line>
+<line><tbox llx="71" lly="544" urx="536" ury="559" f="1"><![CDATA[and Bernoulli draws where authors first select a pool of references determined by the compositional structure of ]]></tbox></line>
+<line><tbox llx="71" lly="532" urx="536" ury="547" f="1"><![CDATA[the research (multinomial sampling) and then decide which references are most relevant for the current document ]]></tbox></line>
+<line><tbox llx="71" lly="521" urx="536" ury="535" f="1"><![CDATA[and which are not (Bernoulli sampling). Yet another alternative is to assume that the authors have knowledge ]]></tbox></line>
+<line><tbox llx="71" lly="509" urx="536" ury="523" f="1"><![CDATA[of importance only regarding those papers that are of similar decomposition. The probabilities of including a ]]></tbox></line>
+<line><tbox llx="71" lly="497" urx="536" ury="511" f="1"><![CDATA[reference to a paper that is within an area of expertise may then depend on the contextual decomposition of citing ]]></tbox></line>
+<line><tbox llx="71" lly="485" urx="536" ury="499" f="1"><![CDATA[that paper (multinomial or Bernoulli sampling). The probabilities of giving a reference to a paper that is outside ]]></tbox></line>
+<line><tbox llx="71" lly="473" urx="536" ury="487" f="1"><![CDATA[of the area of expertise may then be considered a constant, which is equivalent to saying that references to papers ]]></tbox></line>
+<line><tbox llx="71" lly="461" urx="306" ury="475" f="1"><![CDATA[that are outside of the area of expertise occur by chance. ]]></tbox></line>
+<line><tbox llx="86" lly="449" urx="536" ury="464" f="1"><![CDATA[Both the basic model for references and any alternatives would still need to reflect the time ordering on pub- ]]></tbox></line>
+<line><tbox llx="71" lly="437" urx="536" ury="452" f="1"><![CDATA[lications and include in the pool of possible references only those that have already been published, perhaps even ]]></tbox></line>
+<line><tbox llx="71" lly="425" urx="536" ury="440" f="1"><![CDATA[with a short time lag. But even such changes are unlikely to produce a "correct" model for citation practices. As ]]></tbox></line>
+<line><tbox llx="71" lly="413" urx="490" ury="428" f="1"><![CDATA[Box [16] reminds us, no model can be right but some models are more sensible and useful than others. ]]></tbox></line>
+<line><tbox llx="71" lly="383" urx="174" ury="399" f="10"><![CDATA[Estimating the Model ]]></tbox></line>
+<line><tbox llx="86" lly="366" urx="536" ury="381" f="1"><![CDATA[The primary complication in using a mixed membership model such as (7)--(9) where the membership proba- ]]></tbox></line>
+<line><tbox llx="71" lly="354" urx="536" ury="369" f="1"><![CDATA[bilities are random rather than fixed, is that the integral in (10) cannot be computed explicitly and therefore must ]]></tbox></line>
+<line><tbox llx="71" lly="342" urx="536" ury="357" f="1"><![CDATA[be approximated. Two approximation schemes have been recently investigated for this problem, and the associated ]]></tbox></line>
+<line><tbox llx="71" lly="331" urx="199" ury="345" f="1"><![CDATA[problem of fitting the model. ]]></tbox><tbox llx="193" lly="331" urx="409" ury="345" f="1"><![CDATA[In the variational approach [11], the mixture terms ]]></tbox><tbox llx="402" lly="331" urx="417" ury="342" f="2"><![CDATA[p ]]></tbox><tbox llx="407" lly="330" urx="419" ury="338" f="6"><![CDATA[¸ ]]></tbox><tbox llx="410" lly="331" urx="448" ury="344" f="3"><![CDATA[(w) = ]]></tbox></line>
+<line><tbox llx="442" lly="311" urx="467" ury="349" f="9"><![CDATA[P ]]></tbox><tbox llx="453" lly="337" urx="467" ury="345" f="6"><![CDATA[K ]]></tbox></line>
+<line><tbox llx="453" lly="329" urx="475" ury="337" f="6"><![CDATA[k=1 ]]></tbox><tbox llx="470" lly="331" urx="485" ury="342" f="2"><![CDATA[¸ ]]></tbox><tbox llx="476" lly="330" urx="487" ury="338" f="6"><![CDATA[k ]]></tbox><tbox llx="482" lly="331" urx="496" ury="342" f="2"><![CDATA[µ ]]></tbox><tbox llx="487" lly="330" urx="502" ury="338" f="5"><![CDATA[1k ]]></tbox><tbox llx="493" lly="331" urx="520" ury="344" f="3"><![CDATA[(w) ]]></tbox><tbox llx="512" lly="331" urx="535" ury="345" f="1"><![CDATA[are ]]></tbox></line>
+<line><tbox llx="71" lly="319" urx="536" ury="333" f="1"><![CDATA[bounded from below in a product form that leads to a tractable integral; the lower bound is then maximized. A re- ]]></tbox></line>
+<line><tbox llx="71" lly="307" urx="536" ury="321" f="1"><![CDATA[lated approach, called Expectation-Propagation (EP) [12], also approximates each mixture term in a product form, ]]></tbox></line>
+<line><tbox llx="71" lly="295" urx="536" ury="309" f="1"><![CDATA[but chooses the parameters of the factors by matching first and second moments. Either of these approximations to ]]></tbox></line>
+<line><tbox llx="71" lly="283" urx="536" ury="297" f="1"><![CDATA[the integral (10) can be used in an approximate EM algorithm to estimate the parameters of the models. It is shown ]]></tbox></line>
+<line><tbox llx="71" lly="271" urx="536" ury="285" f="1"><![CDATA[in [12] that EP in general leads to better approximations than the simple variational method for mixed membership ]]></tbox></line>
+<line><tbox llx="71" lly="259" urx="536" ury="274" f="1"><![CDATA[models, although we have obtained comparable results with both approaches on the PNAS collection. The results ]]></tbox></line>
+<line><tbox llx="71" lly="247" urx="280" ury="262" f="1"><![CDATA[reported below use the variational approximation. ]]></tbox></line>
+<line><tbox llx="71" lly="217" urx="169" ury="233" f="10"><![CDATA[The PNAS Database ]]></tbox></line>
+<line><tbox llx="86" lly="200" urx="112" ury="215" f="1"><![CDATA[The ]]></tbox><tbox llx="104" lly="200" urx="239" ury="215" f="11"><![CDATA[National Academy of Sciences ]]></tbox><tbox llx="231" lly="200" urx="536" ury="215" f="1"><![CDATA[provided the database for the participants of the Arthur M. Sackler Col- ]]></tbox></line>
+<line><tbox llx="71" lly="188" urx="252" ury="203" f="1"><![CDATA[loquium "Mapping Knowledge Domains." ]]></tbox><tbox llx="247" lly="188" urx="535" ury="203" f="1"><![CDATA[We have focused on a subset which contains all Biological Sciences ]]></tbox></line>
+<line><tbox llx="71" lly="176" urx="536" ury="191" f="1"><![CDATA[articles in volumes 94--98 of the Proceedings which correspond to Julian years 1997-2001, thereby ignoring articles ]]></tbox></line>
+<line><tbox llx="71" lly="164" urx="535" ury="179" f="1"><![CDATA[published in the Social and Physical Sciences unless they have official dual classifications with one classification ]]></tbox></line>
+<line><tbox llx="71" lly="153" urx="189" ury="167" f="1"><![CDATA[in the Biological Sciences. ]]></tbox><tbox llx="183" lly="153" urx="396" ury="167" f="1"><![CDATA[The reason for this narrowing of focus is twofold. ]]></tbox><tbox llx="389" lly="153" urx="536" ury="167" f="1"><![CDATA[First, the major share of Proceed- ]]></tbox></line>
+<line><tbox llx="71" lly="141" urx="536" ury="155" f="1"><![CDATA[ings publications in recent years represents research developments in the Biological Sciences. Thus, out of 13,008 ]]></tbox></line>
+<line><tbox llx="71" lly="129" urx="434" ury="143" f="1"><![CDATA[articles published in 94--98 volumes, 12,036 or 92.53% are in the Biological Sciences. ]]></tbox><tbox llx="428" lly="129" urx="536" ury="143" f="1"><![CDATA[The share of Social and ]]></tbox></line>
+<line><tbox llx="71" lly="117" urx="390" ury="131" f="1"><![CDATA[Physical Sciences articles in volumes 94--98 is a much more modest 7.47%. ]]></tbox><tbox llx="384" lly="117" urx="535" ury="131" f="1"><![CDATA[Second, we assume a collection of ]]></tbox></line>
+<line><tbox llx="71" lly="105" urx="536" ury="119" f="1"><![CDATA[papers is characterized by mixed membership in a number of internal categories, and Social and Physical Sciences ]]></tbox></line>
+<line><tbox llx="295" lly="74" urx="311" ury="89" f="1"><![CDATA[5 ]]></tbox></line>
+<pbox llx="71.00" lly="74.00" urx="536.00" ury="721.00"/></page>
+<page n="6">
+<line><tbox llx="71" lly="706" urx="536" ury="721" f="1"><![CDATA[papers are unlikely to share the same internal categories with papers from the Biological Sciences. We also auto- ]]></tbox></line>
+<line><tbox llx="71" lly="694" urx="536" ury="709" f="1"><![CDATA[matically ignore other types of PNAS publications such as corrections, commentaries, letters, and reviews because ]]></tbox></line>
+<line><tbox llx="71" lly="682" urx="247" ury="697" f="1"><![CDATA[these are not traditional research reports. ]]></tbox><tbox llx="241" lly="682" urx="536" ury="697" f="1"><![CDATA[Among the Biological Sciences papers in our database, eleven articles ]]></tbox></line>
+<line><tbox llx="71" lly="670" urx="536" ury="685" f="1"><![CDATA[were not processed because they did not have an abstract, and one article was not processed because it did not ]]></tbox></line>
+<line><tbox llx="71" lly="658" urx="174" ury="673" f="1"><![CDATA[contain any references. ]]></tbox></line>
+<line><tbox llx="86" lly="646" urx="536" ury="661" f="1"><![CDATA[PNAS is one of world's most cited multidisciplinary scientific journals. Historically, when submitting a re- ]]></tbox></line>
+<line><tbox llx="71" lly="634" urx="536" ury="649" f="1"><![CDATA[search paper to the Proceedings, authors have to select a major category from Physical, Biological, or Social ]]></tbox></line>
+<line><tbox llx="71" lly="622" urx="536" ury="637" f="1"><![CDATA[Sciences, and a minor category from the list of topics. The Proceedings permits dual classifications between ]]></tbox></line>
+<line><tbox llx="71" lly="610" urx="358" ury="625" f="1"><![CDATA[major categories and, in exceptional cases, within a major category. ]]></tbox><tbox llx="353" lly="610" urx="536" ury="625" f="1"><![CDATA[The lists of topics change over time to re- ]]></tbox></line>
+<line><tbox llx="71" lly="598" urx="243" ury="613" f="1"><![CDATA[flect changes in the Academy sections. ]]></tbox><tbox llx="239" lly="598" urx="536" ury="613" f="1"><![CDATA[As stated in the PNAS information for authors revised in June 2002, ]]></tbox></line>
+<line><tbox llx="71" lly="586" urx="535" ury="601" f="1"><![CDATA[official classification of PNAS publications in Biological Sciences contains 19 topics: Biochemistry, Medical Sci- ]]></tbox></line>
+<line><tbox llx="71" lly="574" urx="535" ury="589" f="1"><![CDATA[ences, Neurobiology, Cell Biology, Genetics, Immunology, Biophysics, Evolution, Microbiology, Plant Biology, ]]></tbox></line>
+<line><tbox llx="71" lly="562" urx="535" ury="577" f="1"><![CDATA[Developmental Biology, Physiology, Pharmacology, Ecology, Applied Biology, Psychology, Population Biology, ]]></tbox></line>
+<line><tbox llx="71" lly="550" urx="536" ury="565" f="1"><![CDATA[Agricultural Sciences, and Anthropology. The percentages of published papers and numbers of dual classification ]]></tbox></line>
+<line><tbox llx="71" lly="539" urx="249" ury="553" f="1"><![CDATA[papers in each topic are shown in Table 1. ]]></tbox></line>
+<line><tbox llx="206" lly="517" urx="420" ury="530" f="2"><![CDATA[Topic Number Percent ]]></tbox></line>
+<line><tbox llx="185" lly="504" urx="264" ury="517" f="2"><![CDATA[1 Biochemistry ]]></tbox><tbox llx="332" lly="504" urx="420" ury="517" f="2"><![CDATA[2578 (33) 21.517 ]]></tbox></line>
+<line><tbox llx="185" lly="493" urx="279" ury="506" f="2"><![CDATA[2 Medical Sciences ]]></tbox><tbox llx="332" lly="493" urx="420" ury="506" f="2"><![CDATA[1547 (13) 12.912 ]]></tbox></line>
+<line><tbox llx="185" lly="482" urx="266" ury="495" f="2"><![CDATA[3 Neurobiology ]]></tbox><tbox llx="332" lly="482" urx="420" ury="495" f="2"><![CDATA[1343 (9) 11.209 ]]></tbox></line>
+<line><tbox llx="185" lly="471" urx="262" ury="484" f="2"><![CDATA[4 Cell Biology ]]></tbox><tbox llx="332" lly="471" urx="420" ury="484" f="2"><![CDATA[1231 (10) 10.275 ]]></tbox></line>
+<line><tbox llx="185" lly="460" urx="247" ury="473" f="2"><![CDATA[5 Genetics ]]></tbox><tbox llx="336" lly="460" urx="381" ury="473" f="2"><![CDATA[980 (14) ]]></tbox><tbox llx="390" lly="460" urx="420" ury="473" f="2"><![CDATA[8.180 ]]></tbox></line>
+<line><tbox llx="185" lly="449" urx="262" ury="462" f="2"><![CDATA[6 Immunology ]]></tbox><tbox llx="336" lly="449" urx="420" ury="462" f="2"><![CDATA[865 (9) 7.220 ]]></tbox></line>
+<line><tbox llx="185" lly="438" urx="256" ury="451" f="2"><![CDATA[7 Biophysics ]]></tbox><tbox llx="336" lly="438" urx="381" ury="451" f="2"><![CDATA[636 (40) ]]></tbox><tbox llx="390" lly="438" urx="420" ury="451" f="2"><![CDATA[5.308 ]]></tbox></line>
+<line><tbox llx="185" lly="427" urx="251" ury="440" f="2"><![CDATA[8 Evolution ]]></tbox><tbox llx="336" lly="427" urx="381" ury="440" f="2"><![CDATA[510 (12) ]]></tbox><tbox llx="390" lly="427" urx="420" ury="440" f="2"><![CDATA[4.257 ]]></tbox></line>
+<line><tbox llx="185" lly="416" urx="265" ury="429" f="2"><![CDATA[9 Microbiology ]]></tbox><tbox llx="336" lly="416" urx="381" ury="429" f="2"><![CDATA[498 (11) ]]></tbox><tbox llx="390" lly="416" urx="420" ury="429" f="2"><![CDATA[4.157 ]]></tbox></line>
+<line><tbox llx="185" lly="405" urx="266" ury="418" f="2"><![CDATA[10 Plant Biology ]]></tbox><tbox llx="336" lly="405" urx="420" ury="418" f="2"><![CDATA[488 (4) 4.073 ]]></tbox></line>
+<line><tbox llx="185" lly="394" urx="302" ury="407" f="2"><![CDATA[11 Developmental Biology ]]></tbox><tbox llx="336" lly="394" urx="420" ury="407" f="2"><![CDATA[366 (2) 3.055 ]]></tbox></line>
+<line><tbox llx="185" lly="383" urx="256" ury="396" f="2"><![CDATA[12 Physiology ]]></tbox><tbox llx="336" lly="383" urx="420" ury="396" f="2"><![CDATA[340 (1) 2.838 ]]></tbox></line>
+<line><tbox llx="185" lly="372" urx="268" ury="385" f="2"><![CDATA[13 Pharmacology ]]></tbox><tbox llx="336" lly="372" urx="420" ury="385" f="2"><![CDATA[188 (2) 1.569 ]]></tbox></line>
+<line><tbox llx="185" lly="361" urx="246" ury="375" f="2"><![CDATA[14 Ecology ]]></tbox><tbox llx="336" lly="361" urx="420" ury="375" f="2"><![CDATA[133 (5) 1.110 ]]></tbox></line>
+<line><tbox llx="185" lly="350" urx="318" ury="364" f="2"><![CDATA[15 Applied Biological Sciences ]]></tbox><tbox llx="341" lly="350" urx="420" ury="364" f="2"><![CDATA[94 (6) 0.785 ]]></tbox></line>
+<line><tbox llx="185" lly="339" urx="258" ury="353" f="2"><![CDATA[16 Psychology ]]></tbox><tbox llx="341" lly="339" urx="420" ury="353" f="2"><![CDATA[88 (1) 0.734 ]]></tbox></line>
+<line><tbox llx="185" lly="328" urx="294" ury="342" f="2"><![CDATA[17 Agricultural Sciences ]]></tbox><tbox llx="341" lly="328" urx="420" ury="342" f="2"><![CDATA[43 (2) 0.359 ]]></tbox></line>
+<line><tbox llx="185" lly="317" urx="420" ury="331" f="2"><![CDATA[18 Population Biology 43 (5) 0.359 ]]></tbox></line>
+<line><tbox llx="185" lly="306" urx="266" ury="320" f="2"><![CDATA[19 Anthropology ]]></tbox><tbox llx="341" lly="306" urx="420" ury="320" f="2"><![CDATA[10 (0) 0.083 ]]></tbox></line>
+<line><tbox llx="206" lly="295" urx="381" ury="309" f="2"><![CDATA[Total 11981 (179) ]]></tbox><tbox llx="397" lly="295" urx="420" ury="309" f="2"><![CDATA[100 ]]></tbox></line>
+<line><tbox llx="71" lly="264" urx="535" ury="278" f="1"><![CDATA[Table 1: Biological Sciences publications in PNAS volumes 94--98, by subtopic. Numbers of papers with dual ]]></tbox></line>
+<line><tbox llx="71" lly="252" urx="238" ury="267" f="1"><![CDATA[classifications are given in parentheses. ]]></tbox></line>
+<line><tbox llx="86" lly="228" urx="536" ury="243" f="1"><![CDATA[The topic labels provide a classification structure for published materials and most of the articles are members ]]></tbox></line>
+<line><tbox llx="71" lly="216" urx="536" ury="231" f="1"><![CDATA[of only a single topic. For our mixed membership model, we assume that there is a fixed number of extreme ]]></tbox></line>
+<line><tbox llx="71" lly="204" urx="536" ury="219" f="1"><![CDATA[internal categories or aspects, each of which is characterized by multinomial distributions over words (in abstracts) ]]></tbox></line>
+<line><tbox llx="71" lly="192" urx="220" ury="207" f="1"><![CDATA[and references (in bibliographies). ]]></tbox><tbox llx="214" lly="192" urx="536" ury="207" f="1"><![CDATA[Aspects are determined from contextual decompositions in such a way that a ]]></tbox></line>
+<line><tbox llx="71" lly="180" urx="536" ury="195" f="1"><![CDATA[multinomial distribution of words and references in each document is a convex combination of the corresponding ]]></tbox></line>
+<line><tbox llx="71" lly="168" urx="204" ury="183" f="1"><![CDATA[distributions from the aspects. ]]></tbox><tbox llx="199" lly="168" urx="536" ury="183" f="1"><![CDATA[The convex combination for each article is based on proportions of the article's ]]></tbox></line>
+<line><tbox llx="71" lly="156" urx="536" ury="171" f="1"><![CDATA[content coming from each category. These proportions, or membership scores, determine soft classifications of ]]></tbox></line>
+<line><tbox llx="71" lly="144" urx="250" ury="159" f="1"><![CDATA[articles with respect to internal categories. ]]></tbox></line>
+<line><tbox llx="295" lly="74" urx="311" ury="89" f="1"><![CDATA[6 ]]></tbox></line>
+<pbox llx="71.00" lly="74.00" urx="536.00" ury="721.00"/></page>
+<page n="7">
+<line><tbox llx="71" lly="693" urx="113" ury="709" f="1"><![CDATA[Results ]]></tbox></line>
+<line><tbox llx="86" lly="677" urx="391" ury="692" f="2"><![CDATA[Choosing a suitable value for the number of internal categories or aspects, ]]></tbox><tbox llx="383" lly="677" urx="404" ury="688" f="3"><![CDATA[K, ]]></tbox><tbox llx="396" lly="677" urx="535" ury="692" f="2"><![CDATA[in this type of setting is difficult. ]]></tbox></line>
+<line><tbox llx="71" lly="665" urx="536" ury="680" f="2"><![CDATA[In our analyses, we focused largely on two versions of the model, one with eight aspects and the other with ten. ]]></tbox></line>
+<line><tbox llx="71" lly="653" urx="536" ury="668" f="2"><![CDATA[The set of parameters in our model is given by multinomial word and reference probabilities for each aspect, and ]]></tbox></line>
+<line><tbox llx="71" lly="641" urx="493" ury="656" f="2"><![CDATA[by the parameters of Dirichlet distribution, which is a generating distribution for membership scores. ]]></tbox><tbox llx="487" lly="641" urx="536" ury="656" f="2"><![CDATA[There are ]]></tbox></line>
+<line><tbox llx="70" lly="629" urx="109" ury="643" f="4"><![CDATA[39,616 ]]></tbox><tbox llx="102" lly="629" urx="186" ury="644" f="2"><![CDATA[unique words and ]]></tbox><tbox llx="178" lly="629" urx="217" ury="643" f="4"><![CDATA[77,115 ]]></tbox><tbox llx="210" lly="629" urx="536" ury="644" f="2"><![CDATA[unique references in our data, hence adding an aspect corresponds to having ]]></tbox></line>
+<line><tbox llx="70" lly="618" urx="215" ury="631" f="4"><![CDATA[39,615 + 77,114 + 1 = 116,730 ]]></tbox><tbox llx="207" lly="617" urx="307" ury="632" f="2"><![CDATA[additional parameters. ]]></tbox><tbox llx="300" lly="617" urx="536" ury="632" f="2"><![CDATA[Because of the large numbers of parameters involved, it ]]></tbox></line>
+<line><tbox llx="71" lly="605" urx="535" ury="620" f="2"><![CDATA[is difficult to assess the extent to which the added pair of aspects actually improve the fit of the model to the data. ]]></tbox></line>
+<line><tbox llx="71" lly="593" urx="536" ury="608" f="2"><![CDATA[On the basis of a set of preliminary comparisons we found little to choose between them in fit and greater ease of ]]></tbox></line>
+<line><tbox llx="71" lly="581" urx="516" ury="596" f="2"><![CDATA[interpretation for the eight aspect model. Therefore we report only the results of the eight aspect model here. ]]></tbox></line>
+<line><tbox llx="86" lly="569" urx="536" ury="584" f="2"><![CDATA[To see whether there are certain contexts that correspond to the aspects, we examine the most common words ]]></tbox></line>
+<line><tbox llx="71" lly="557" urx="536" ury="572" f="2"><![CDATA[in the estimated multinomial distributions. In Table 2 we report the first 15 of the high probability words for ]]></tbox></line>
+<line><tbox llx="71" lly="545" urx="536" ury="560" f="2"><![CDATA[each aspect, filtering out so called "stop words", words that are generally common in English. An alternative way ]]></tbox></line>
+<line><tbox llx="71" lly="534" urx="536" ury="548" f="2"><![CDATA[would be to discard the words from the "stop list" before fitting the model. If the distribution of "stop words" is ]]></tbox></line>
+<line><tbox llx="71" lly="522" urx="517" ury="536" f="2"><![CDATA[not uniform across the internal categories, this alternative approach may potentially produce different results. ]]></tbox></line>
+<line><tbox llx="86" lly="510" urx="536" ury="524" f="2"><![CDATA[The following interpretations are based on examination of 50 high probability words for each aspect. Note ]]></tbox></line>
+<line><tbox llx="71" lly="498" urx="259" ury="512" f="2"><![CDATA[that enumeration of the aspects is arbitrary. ]]></tbox><tbox llx="253" lly="498" urx="536" ury="512" f="2"><![CDATA[The first aspect includes a number of words such as Ca2+, kinase, ]]></tbox></line>
+<line><tbox llx="71" lly="486" urx="536" ury="500" f="2"><![CDATA[phosphorylation, receptor, g (protein) channel, that pertain to cell signaling and intracellular signal transduction. It ]]></tbox></line>
+<line><tbox llx="71" lly="474" urx="536" ury="488" f="2"><![CDATA[is likely that in this aspect signal transduction is considered as applied to neuron signaling as indicated by the words ]]></tbox></line>
+<line><tbox llx="71" lly="462" urx="189" ury="477" f="2"><![CDATA[synaptic, neurons, voltage. ]]></tbox><tbox llx="182" lly="462" urx="536" ury="477" f="2"><![CDATA[It is interesting that Ca2+ in the first aspect is the highest probability contextual word ]]></tbox></line>
+<line><tbox llx="71" lly="450" urx="536" ury="465" f="2"><![CDATA[over all the aspects. Frequent words for the second aspect indicate that its context is related to molecular evolution ]]></tbox></line>
+<line><tbox llx="71" lly="438" urx="536" ury="453" f="2"><![CDATA[that deals with natural selection on population and intraspecies level and mechanisms of acquiring genetic traits. ]]></tbox></line>
+<line><tbox llx="71" lly="426" urx="536" ury="441" f="2"><![CDATA[Words in aspect 3 pertain mostly to plant molecular biology area. High probability words in aspect 4 relate to ]]></tbox></line>
+<line><tbox llx="71" lly="414" urx="536" ury="429" f="2"><![CDATA[studies of neuronal responses in mice and humans, which identify this aspect as related to developmental biology ]]></tbox></line>
+<line><tbox llx="71" lly="402" urx="155" ury="417" f="2"><![CDATA[and neurobiology. ]]></tbox><tbox llx="152" lly="402" urx="536" ury="417" f="2"><![CDATA[Aspect 5 contains words that can be associated with biochemistry and molecular biology. ]]></tbox></line>
+<line><tbox llx="71" lly="390" urx="536" ury="405" f="2"><![CDATA[Words in aspect 6 point to genetics and molecular biology. Frequent words for aspect 7 contain such terms as ]]></tbox></line>
+<line><tbox llx="71" lly="378" urx="536" ury="393" f="2"><![CDATA[immune, IL or interleukin, antigen, (interferon) gamma, and MHC class II, that point to a relatively new area ]]></tbox></line>
+<line><tbox llx="71" lly="366" urx="536" ury="381" f="2"><![CDATA[in immunology, namely, tumor immunology. Presence of such words as HIV and virus in aspect 7 indicates a ]]></tbox></line>
+<line><tbox llx="71" lly="354" urx="224" ury="369" f="2"><![CDATA[more general immunology content. ]]></tbox><tbox llx="217" lly="354" urx="536" ury="369" f="2"><![CDATA[For aspect 8, words such as increase or reduced, treatment, effect, fold, and ]]></tbox></line>
+<line><tbox llx="71" lly="342" urx="536" ury="357" f="2"><![CDATA[p (assuming it stands for p-value) correspond to general reporting of experimental results, likely in the area of ]]></tbox></line>
+<line><tbox llx="71" lly="330" urx="141" ury="345" f="2"><![CDATA[endocrinology. ]]></tbox></line>
+<line><tbox llx="86" lly="318" urx="536" ury="333" f="2"><![CDATA[As for words, multinomial distributions are estimated for the references that are present in our collection. For ]]></tbox></line>
+<line><tbox llx="71" lly="306" urx="360" ury="321" f="2"><![CDATA[estimation we only need unique indicators for each referenced paper. ]]></tbox><tbox llx="354" lly="306" urx="536" ury="321" f="2"><![CDATA[After the model is fitted, attributes of high ]]></tbox></line>
+<line><tbox llx="71" lly="294" urx="502" ury="309" f="2"><![CDATA[probability references for each aspect provide additional information about its contextual interpretation. ]]></tbox><tbox llx="495" lly="294" urx="536" ury="309" f="2"><![CDATA[Table 3 ]]></tbox></line>
+<line><tbox llx="71" lly="282" urx="536" ury="297" f="2"><![CDATA[provides attributes of 15 high probability references for each aspect that were available in the database, together ]]></tbox></line>
+<line><tbox llx="71" lly="271" urx="535" ury="285" f="2"><![CDATA[with PNAS citation counts (number of times cited by PNAS papers in the database). Notice that because the model ]]></tbox></line>
+<line><tbox llx="71" lly="259" urx="536" ury="273" f="2"><![CDATA[draws from the contextual decomposition, high reference count is not necessary for a reference to have high aspect ]]></tbox></line>
+<line><tbox llx="71" lly="247" urx="482" ury="261" f="2"><![CDATA[probability. In Table 3 high probability references for aspect 1 are dominated by publications in ]]></tbox><tbox llx="474" lly="247" urx="515" ury="262" f="5"><![CDATA[Nature, ]]></tbox><tbox llx="508" lly="247" urx="535" ury="261" f="2"><![CDATA[and, ]]></tbox></line>
+<line><tbox llx="71" lly="235" urx="252" ury="249" f="2"><![CDATA[similarly, references in aspect 7 are mostly ]]></tbox><tbox llx="243" lly="235" urx="307" ury="250" f="5"><![CDATA[Nature, Cell, ]]></tbox><tbox llx="297" lly="235" urx="323" ury="249" f="2"><![CDATA[and ]]></tbox><tbox llx="314" lly="235" urx="356" ury="250" f="5"><![CDATA[Science ]]></tbox><tbox llx="350" lly="235" urx="493" ury="249" f="2"><![CDATA[publications from the mid-1990s. ]]></tbox></line>
+<line><tbox llx="86" lly="223" urx="536" ury="237" f="2"><![CDATA[Examining titles of the references (not shown), we see that manuals, textbooks, and references to articles ]]></tbox></line>
+<line><tbox llx="71" lly="211" urx="536" ury="225" f="2"><![CDATA[that describe particular methodology appear to be prominent for many aspects. Thus, among the first 15 high ]]></tbox></line>
+<line><tbox llx="71" lly="199" urx="536" ury="214" f="2"><![CDATA[probability references, all 15 from aspect 3, and more than half from aspect 4 are of this methodological type. In ]]></tbox></line>
+<line><tbox llx="71" lly="187" urx="440" ury="202" f="2"><![CDATA[contrast, most high probability references for aspect 7 are those that report new findings. ]]></tbox><tbox llx="433" lly="187" urx="536" ury="202" f="2"><![CDATA[Titles of the references ]]></tbox></line>
+<line><tbox llx="71" lly="175" urx="536" ury="190" f="2"><![CDATA[indicate neurobiology content for aspect 1, molecular evolution for aspect 2, and plant molecular biology for aspect ]]></tbox></line>
+<line><tbox llx="71" lly="163" urx="536" ury="178" f="2"><![CDATA[3, which is in agreement with our conclusions based on high probability words. For other aspects, titles of hight ]]></tbox></line>
+<line><tbox llx="71" lly="151" urx="536" ury="166" f="2"><![CDATA[probability references help us to refine the aspects. Thus, aspect 4 mostly pertains to study of brain development, in ]]></tbox></line>
+<line><tbox llx="71" lly="139" urx="536" ury="154" f="2"><![CDATA[particular, via genetic manipulation of mouse embryo. Aspect 5, identified as biochemistry and molecular biology ]]></tbox></line>
+<line><tbox llx="71" lly="127" urx="403" ury="142" f="2"><![CDATA[by the words, can be described as protein structural biology by the references. ]]></tbox><tbox llx="397" lly="127" urx="536" ury="142" f="2"><![CDATA[Aspect 6 may be labelled more ]]></tbox></line>
+<line><tbox llx="71" lly="115" urx="536" ury="130" f="2"><![CDATA[detailed as "DNA repair, mutagenesis, and cell cycle." The references for aspects 7 and 8 shift their focuses more ]]></tbox></line>
+<line><tbox llx="295" lly="74" urx="311" ury="89" f="2"><![CDATA[7 ]]></tbox></line>
+<pbox llx="70.00" lly="74.00" urx="536.00" ury="722.00"/></page>
+<page n="8">
+<line><tbox llx="118" lly="708" urx="159" ury="722" f="1"><![CDATA[Aspect 1 ]]></tbox><tbox llx="210" lly="708" urx="251" ury="722" f="1"><![CDATA[Aspect 2 ]]></tbox><tbox llx="310" lly="708" urx="351" ury="722" f="1"><![CDATA[Aspect 3 ]]></tbox><tbox llx="395" lly="708" urx="436" ury="722" f="1"><![CDATA[Aspect 4 ]]></tbox></line>
+<line><tbox llx="118" lly="695" urx="245" ury="708" f="1"><![CDATA[ca2+ 0.0062 species ]]></tbox><tbox llx="273" lly="695" urx="487" ury="708" f="1"><![CDATA[0.0040 sequence 0.0024 development 0.0034 ]]></tbox></line>
+<line><tbox llx="118" lly="684" urx="252" ury="697" f="1"><![CDATA[channel 0.0047 sequence ]]></tbox><tbox llx="273" lly="684" urx="335" ury="697" f="1"><![CDATA[0.0026 acid ]]></tbox><tbox llx="358" lly="684" urx="433" ury="697" f="1"><![CDATA[0.0020 neurons ]]></tbox><tbox llx="453" lly="684" urx="487" ury="697" f="1"><![CDATA[0.0034 ]]></tbox></line>
+<line><tbox llx="118" lly="673" urx="423" ury="687" f="1"><![CDATA[membrane 0.0047 sequences 0.0024 plants 0.0018 brain ]]></tbox><tbox llx="453" lly="673" urx="487" ury="687" f="1"><![CDATA[0.0029 ]]></tbox></line>
+<line><tbox llx="118" lly="662" urx="245" ury="676" f="1"><![CDATA[channels 0.0040 genetic ]]></tbox><tbox llx="273" lly="662" urx="337" ury="676" f="1"><![CDATA[0.0024 cdna ]]></tbox><tbox llx="358" lly="662" urx="428" ury="676" f="1"><![CDATA[0.0017 mouse ]]></tbox><tbox llx="453" lly="662" urx="487" ury="676" f="1"><![CDATA[0.0025 ]]></tbox></line>
+<line><tbox llx="118" lly="651" urx="248" ury="665" f="1"><![CDATA[receptors 0.0028 genome ]]></tbox><tbox llx="274" lly="651" urx="430" ury="665" f="1"><![CDATA[0.0022 mutant 0.0015 normal ]]></tbox><tbox llx="453" lly="651" urx="487" ury="665" f="1"><![CDATA[0.0024 ]]></tbox></line>
+<line><tbox llx="118" lly="640" urx="253" ury="654" f="1"><![CDATA[synaptic 0.0026 evolution ]]></tbox><tbox llx="273" lly="640" urx="487" ury="654" f="1"><![CDATA[0.0020 single 0.0015 expressed 0.0021 ]]></tbox></line>
+<line><tbox llx="118" lly="629" urx="244" ury="643" f="1"><![CDATA[neurons 0.0022 among ]]></tbox><tbox llx="274" lly="629" urx="427" ury="643" f="1"><![CDATA[0.0017 enzyme 0.0015 cortex ]]></tbox><tbox llx="453" lly="629" urx="487" ury="643" f="1"><![CDATA[0.0019 ]]></tbox></line>
+<line><tbox llx="118" lly="618" urx="338" ury="632" f="1"><![CDATA[g 0.0021 population 0.0016 plant ]]></tbox><tbox llx="358" lly="618" urx="487" ury="632" f="1"><![CDATA[0.0014 embryonic 0.0017 ]]></tbox></line>
+<line><tbox llx="118" lly="607" urx="237" ury="621" f="1"><![CDATA[calcium 0.0021 most ]]></tbox><tbox llx="273" lly="607" urx="423" ury="621" f="1"><![CDATA[0.0016 identified 0.0013 adult ]]></tbox><tbox llx="453" lly="607" urx="487" ury="621" f="1"><![CDATA[0.0017 ]]></tbox></line>
+<line><tbox llx="118" lly="596" urx="487" ury="610" f="1"><![CDATA[activation 0.0020 chromosome 0.0015 amino 0.0013 neuronal 0.0016 ]]></tbox></line>
+<line><tbox llx="118" lly="586" urx="251" ury="599" f="1"><![CDATA[release 0.0020 selection ]]></tbox><tbox llx="274" lly="586" urx="435" ury="599" f="1"><![CDATA[0.0015 expressed 0.0013 function ]]></tbox><tbox llx="453" lly="586" urx="487" ury="599" f="1"><![CDATA[0.0016 ]]></tbox></line>
+<line><tbox llx="118" lly="575" urx="427" ury="588" f="1"><![CDATA[kinase 0.0019 populations 0.0014 mutants 0.0013 neural ]]></tbox><tbox llx="453" lly="575" urx="487" ury="588" f="1"><![CDATA[0.0015 ]]></tbox></line>
+<line><tbox llx="118" lly="564" urx="237" ury="577" f="1"><![CDATA[subunit 0.0019 three ]]></tbox><tbox llx="274" lly="564" urx="423" ury="577" f="1"><![CDATA[0.0014 molecules 0.0012 early ]]></tbox><tbox llx="453" lly="564" urx="487" ury="577" f="1"><![CDATA[0.0014 ]]></tbox></line>
+<line><tbox llx="118" lly="553" urx="240" ury="566" f="1"><![CDATA[intracellular 0.0017 based ]]></tbox><tbox llx="274" lly="553" urx="340" ury="566" f="1"><![CDATA[0.0013 based ]]></tbox><tbox llx="359" lly="553" urx="433" ury="566" f="1"><![CDATA[0.0012 patients ]]></tbox><tbox llx="453" lly="553" urx="487" ury="566" f="1"><![CDATA[0.0014 ]]></tbox></line>
+<line><tbox llx="118" lly="542" urx="251" ury="555" f="1"><![CDATA[acid 0.0016 variation ]]></tbox><tbox llx="274" lly="542" urx="333" ury="555" f="1"><![CDATA[0.0013 kda ]]></tbox><tbox llx="358" lly="542" urx="487" ury="555" f="1"><![CDATA[0.0011 functional 0.0013 ]]></tbox></line>
+<line><tbox llx="118" lly="519" urx="159" ury="533" f="1"><![CDATA[Aspect 5 ]]></tbox><tbox llx="210" lly="519" urx="251" ury="533" f="1"><![CDATA[Aspect 6 ]]></tbox><tbox llx="310" lly="519" urx="351" ury="533" f="1"><![CDATA[Aspect 7 ]]></tbox><tbox llx="395" lly="519" urx="436" ury="533" f="1"><![CDATA[Aspect 8 ]]></tbox></line>
+<line><tbox llx="118" lly="506" urx="325" ury="519" f="1"><![CDATA[residues 0.0028 transcription 0.0060 il ]]></tbox><tbox llx="359" lly="506" urx="488" ury="519" f="1"><![CDATA[0.0046 increased 0.0027 ]]></tbox></line>
+<line><tbox llx="118" lly="495" urx="246" ury="508" f="1"><![CDATA[enzyme 0.0023 nuclear ]]></tbox><tbox llx="274" lly="495" urx="341" ury="508" f="1"><![CDATA[0.0036 tumor ]]></tbox><tbox llx="359" lly="495" urx="488" ury="508" f="1"><![CDATA[0.0040 receptors 0.0023 ]]></tbox></line>
+<line><tbox llx="118" lly="484" urx="253" ury="497" f="1"><![CDATA[active 0.0020 promoter ]]></tbox><tbox llx="274" lly="484" urx="409" ury="497" f="1"><![CDATA[0.0031 activation 0.0036 g ]]></tbox><tbox llx="453" lly="484" urx="487" ury="497" f="1"><![CDATA[0.0022 ]]></tbox></line>
+<line><tbox llx="118" lly="473" urx="331" ury="486" f="1"><![CDATA[terminal 0.0019 transcriptional 0.0030 hiv ]]></tbox><tbox llx="359" lly="473" urx="409" ury="486" f="1"><![CDATA[0.0032 p ]]></tbox><tbox llx="453" lly="473" urx="487" ury="486" f="1"><![CDATA[0.0022 ]]></tbox></line>
+<line><tbox llx="118" lly="462" urx="233" ury="476" f="1"><![CDATA[amino 0.0019 p53 ]]></tbox><tbox llx="273" lly="462" urx="429" ury="476" f="1"><![CDATA[0.0029 apoptosis 0.0031 insulin ]]></tbox><tbox llx="453" lly="462" urx="487" ury="476" f="1"><![CDATA[0.0018 ]]></tbox></line>
+<line><tbox llx="118" lly="451" urx="231" ury="465" f="1"><![CDATA[rna 0.0018 rna ]]></tbox><tbox llx="274" lly="451" urx="429" ury="465" f="1"><![CDATA[0.0027 kinase 0.0028 effects ]]></tbox><tbox llx="453" lly="451" urx="487" ury="465" f="1"><![CDATA[0.0018 ]]></tbox></line>
+<line><tbox llx="118" lly="440" urx="243" ury="454" f="1"><![CDATA[structural 0.0018 kinase ]]></tbox><tbox llx="274" lly="440" urx="434" ury="454" f="1"><![CDATA[0.0024 antigen 0.0026 increase ]]></tbox><tbox llx="453" lly="440" urx="487" ury="454" f="1"><![CDATA[0.0018 ]]></tbox></line>
+<line><tbox llx="118" lly="429" urx="238" ury="443" f="1"><![CDATA[state 0.0018 yeast ]]></tbox><tbox llx="273" lly="429" urx="338" ury="443" f="1"><![CDATA[0.0024 virus ]]></tbox><tbox llx="358" lly="429" urx="420" ury="443" f="1"><![CDATA[0.0025 acid ]]></tbox><tbox llx="453" lly="429" urx="487" ury="443" f="1"><![CDATA[0.0018 ]]></tbox></line>
+<line><tbox llx="118" lly="418" urx="249" ury="432" f="1"><![CDATA[folding 0.0017 function ]]></tbox><tbox llx="273" lly="418" urx="425" ury="432" f="1"><![CDATA[0.0022 gamma 0.0021 effect ]]></tbox><tbox llx="453" lly="418" urx="487" ury="432" f="1"><![CDATA[0.0016 ]]></tbox></line>
+<line><tbox llx="118" lly="407" urx="419" ury="421" f="1"><![CDATA[sequence 0.0017 activation 0.0020 infection 0.0021 fold ]]></tbox><tbox llx="453" lly="407" urx="487" ury="421" f="1"><![CDATA[0.0016 ]]></tbox></line>
+<line><tbox llx="118" lly="396" urx="252" ury="410" f="1"><![CDATA[form 0.0016 sequence ]]></tbox><tbox llx="274" lly="396" urx="433" ury="410" f="1"><![CDATA[0.0018 immune 0.0020 reduced ]]></tbox><tbox llx="453" lly="396" urx="487" ury="410" f="1"><![CDATA[0.0016 ]]></tbox></line>
+<line><tbox llx="118" lly="385" urx="249" ury="399" f="1"><![CDATA[peptide 0.0016 terminal ]]></tbox><tbox llx="274" lly="385" urx="487" ury="399" f="1"><![CDATA[0.0018 signaling 0.0018 treatment 0.0016 ]]></tbox></line>
+<line><tbox llx="118" lly="374" urx="238" ury="388" f="1"><![CDATA[atp 0.0015 cycle ]]></tbox><tbox llx="273" lly="374" urx="339" ury="388" f="1"><![CDATA[0.0018 death ]]></tbox><tbox llx="358" lly="374" urx="432" ury="388" f="1"><![CDATA[0.0017 glucose ]]></tbox><tbox llx="453" lly="374" urx="487" ury="388" f="1"><![CDATA[0.0016 ]]></tbox></line>
+<line><tbox llx="118" lly="364" urx="423" ury="377" f="1"><![CDATA[helix 0.0015 mutations 0.0017 activated 0.0017 mrna ]]></tbox><tbox llx="453" lly="364" urx="487" ury="377" f="1"><![CDATA[0.0015 ]]></tbox></line>
+<line><tbox llx="118" lly="353" urx="244" ury="366" f="1"><![CDATA[substrate 0.0015 factors ]]></tbox><tbox llx="274" lly="353" urx="336" ury="366" f="1"><![CDATA[0.0017 vivo ]]></tbox><tbox llx="359" lly="353" urx="418" ury="366" f="1"><![CDATA[0.0017 rats ]]></tbox><tbox llx="453" lly="353" urx="487" ury="366" f="1"><![CDATA[0.0015 ]]></tbox></line>
+<line><tbox llx="201" lly="321" urx="405" ury="336" f="2"><![CDATA[Table 2: High probability words for each aspect. ]]></tbox></line>
+<line><tbox llx="71" lly="289" urx="367" ury="304" f="2"><![CDATA[towards HIV infection and studies of molecular mechanisms of obesity. ]]></tbox></line>
+<line><tbox llx="86" lly="277" urx="536" ury="292" f="2"><![CDATA[Among frequent references for the eight aspects, there are seven PNAS papers, two of which appear in two ]]></tbox></line>
+<line><tbox llx="71" lly="265" urx="536" ury="280" f="2"><![CDATA[aspects. These seven papers share a special feature: they were all either co-authored or contributed by a distin- ]]></tbox></line>
+<line><tbox llx="71" lly="253" urx="536" ury="268" f="2"><![CDATA[guished member of the National Academy of Sciences. In fact, one paper was co-authored by a Nobel prize winner ]]></tbox></line>
+<line><tbox llx="71" lly="241" urx="536" ury="256" f="2"><![CDATA[and two were contributed by other Nobelists. Although these papers do not have the highest counts in the database, ]]></tbox></line>
+<line><tbox llx="71" lly="229" urx="536" ury="244" f="2"><![CDATA[they are notable for various reasons; e.g., one is on clustering and gene expression [1], and it is also one of the ]]></tbox></line>
+<line><tbox llx="71" lly="217" urx="536" ury="232" f="2"><![CDATA[two highly cited PNAS papers on clustering which we mentioned in the introduction. These seven papers may ]]></tbox></line>
+<line><tbox llx="71" lly="205" urx="536" ury="220" f="2"><![CDATA[not necessarily be "off-beat," but they may be among those that fulfill Saunders MacLane's petition regarding the ]]></tbox></line>
+<line><tbox llx="71" lly="193" urx="178" ury="208" f="2"><![CDATA[special nature of PNAS. ]]></tbox></line>
+<line><tbox llx="86" lly="181" urx="536" ury="196" f="2"><![CDATA[From our analysis of high probability words, it is difficult to see whether the majority of aspects correspond to a ]]></tbox></line>
+<line><tbox llx="71" lly="169" urx="536" ury="184" f="2"><![CDATA[single topic from the official classifications in PNAS Biological Science publications. To investigate whether there ]]></tbox></line>
+<line><tbox llx="71" lly="157" urx="536" ury="172" f="2"><![CDATA[is a correspondence between the estimated aspects and the given topics, we examine aspect "loadings" for each ]]></tbox></line>
+<line><tbox llx="71" lly="145" urx="536" ury="160" f="2"><![CDATA[paper. Given estimated parameters of the model, the distribution of each article's "loadings" can be obtained via ]]></tbox></line>
+<line><tbox llx="71" lly="133" urx="536" ury="148" f="2"><![CDATA[Bayes' theorem. The variational and EP procedures provide Dirichlet approximations to the posterior distribution ]]></tbox></line>
+<line><tbox llx="72" lly="122" urx="98" ury="133" f="3"><![CDATA[p(¸ ]]></tbox><tbox llx="90" lly="115" urx="103" ury="133" f="6"><![CDATA[| ]]></tbox><tbox llx="94" lly="122" urx="112" ury="133" f="3"><![CDATA[d, ]]></tbox><tbox llx="104" lly="122" urx="125" ury="133" f="5"><![CDATA[µ) ]]></tbox><tbox llx="114" lly="121" urx="199" ury="136" f="2"><![CDATA[for each document ]]></tbox><tbox llx="191" lly="122" urx="209" ury="133" f="3"><![CDATA[d. ]]></tbox><tbox llx="200" lly="121" urx="535" ury="136" f="2"><![CDATA[We employ the mean of this Dirichlet as an estimate of the weight of the document ]]></tbox></line>
+<line><tbox llx="71" lly="110" urx="536" ury="124" f="2"><![CDATA[on each aspect. Histograms of these loadings are provided in Figure 4 for four topics: Biophysics, Biochemistry, ]]></tbox></line>
+<line><tbox llx="295" lly="74" urx="311" ury="89" f="2"><![CDATA[8 ]]></tbox></line>
+<pbox llx="71.00" lly="74.00" urx="536.00" ury="722.00"/></page>
+<page n="9">
+<line><tbox llx="89" lly="701" urx="114" ury="709" f="1"><![CDATA[Aspect 1 ]]></tbox></line>
+<line><tbox llx="78" lly="638" urx="118" ury="646" f="2"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="77" lly="645" urx="78" ury="648" f="3"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="77" lly="658" urx="78" ury="667" f="3"><![CDATA[200 ]]></tbox></line>
+<line><tbox llx="77" lly="674" urx="78" ury="683" f="3"><![CDATA[400 ]]></tbox></line>
+<line><tbox llx="77" lly="690" urx="78" ury="699" f="3"><![CDATA[600 ]]></tbox></line>
+<line><tbox llx="144" lly="701" urx="169" ury="709" f="1"><![CDATA[Aspect 2 ]]></tbox></line>
+<line><tbox llx="134" lly="638" urx="173" ury="646" f="4"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="132" lly="645" urx="133" ury="648" f="5"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="132" lly="658" urx="133" ury="667" f="5"><![CDATA[200 ]]></tbox></line>
+<line><tbox llx="132" lly="674" urx="133" ury="683" f="5"><![CDATA[400 ]]></tbox></line>
+<line><tbox llx="132" lly="690" urx="133" ury="699" f="5"><![CDATA[600 ]]></tbox></line>
+<line><tbox llx="200" lly="701" urx="225" ury="709" f="1"><![CDATA[Aspect 3 ]]></tbox></line>
+<line><tbox llx="189" lly="638" urx="228" ury="646" f="6"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="187" lly="645" urx="188" ury="648" f="7"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="187" lly="658" urx="188" ury="667" f="7"><![CDATA[200 ]]></tbox></line>
+<line><tbox llx="187" lly="674" urx="188" ury="683" f="7"><![CDATA[400 ]]></tbox></line>
+<line><tbox llx="187" lly="690" urx="188" ury="699" f="7"><![CDATA[600 ]]></tbox></line>
+<line><tbox llx="255" lly="701" urx="280" ury="709" f="1"><![CDATA[Aspect 4 ]]></tbox></line>
+<line><tbox llx="244" lly="638" urx="283" ury="646" f="8"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="242" lly="645" urx="243" ury="648" f="9"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="242" lly="658" urx="243" ury="667" f="9"><![CDATA[200 ]]></tbox></line>
+<line><tbox llx="242" lly="674" urx="243" ury="683" f="9"><![CDATA[400 ]]></tbox></line>
+<line><tbox llx="242" lly="690" urx="243" ury="699" f="9"><![CDATA[600 ]]></tbox></line>
+<line><tbox llx="89" lly="621" urx="114" ury="629" f="1"><![CDATA[Aspect 5 ]]></tbox></line>
+<line><tbox llx="78" lly="557" urx="118" ury="565" f="10"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="77" lly="564" urx="78" ury="568" f="11"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="77" lly="577" urx="78" ury="586" f="11"><![CDATA[200 ]]></tbox></line>
+<line><tbox llx="77" lly="593" urx="78" ury="602" f="11"><![CDATA[400 ]]></tbox></line>
+<line><tbox llx="77" lly="609" urx="78" ury="618" f="11"><![CDATA[600 ]]></tbox></line>
+<line><tbox llx="144" lly="621" urx="169" ury="629" f="1"><![CDATA[Aspect 6 ]]></tbox></line>
+<line><tbox llx="134" lly="557" urx="173" ury="565" f="12"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="132" lly="564" urx="133" ury="568" f="13"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="132" lly="577" urx="133" ury="586" f="13"><![CDATA[200 ]]></tbox></line>
+<line><tbox llx="132" lly="593" urx="133" ury="602" f="13"><![CDATA[400 ]]></tbox></line>
+<line><tbox llx="132" lly="609" urx="133" ury="618" f="13"><![CDATA[600 ]]></tbox></line>
+<line><tbox llx="200" lly="621" urx="225" ury="629" f="1"><![CDATA[Aspect 7 ]]></tbox></line>
+<line><tbox llx="189" lly="557" urx="228" ury="565" f="14"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="187" lly="564" urx="188" ury="568" f="15"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="187" lly="577" urx="188" ury="586" f="15"><![CDATA[200 ]]></tbox></line>
+<line><tbox llx="187" lly="593" urx="188" ury="602" f="15"><![CDATA[400 ]]></tbox></line>
+<line><tbox llx="187" lly="609" urx="188" ury="618" f="15"><![CDATA[600 ]]></tbox></line>
+<line><tbox llx="255" lly="621" urx="280" ury="629" f="1"><![CDATA[Aspect 8 ]]></tbox></line>
+<line><tbox llx="244" lly="557" urx="283" ury="565" f="16"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="242" lly="564" urx="243" ury="568" f="17"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="242" lly="577" urx="243" ury="586" f="17"><![CDATA[200 ]]></tbox></line>
+<line><tbox llx="242" lly="593" urx="243" ury="602" f="17"><![CDATA[400 ]]></tbox></line>
+<line><tbox llx="242" lly="609" urx="243" ury="618" f="17"><![CDATA[600 ]]></tbox></line>
+<line><tbox llx="161" lly="709" urx="203" ury="720" f="18"><![CDATA[Biophysics ]]></tbox></line>
+<line><tbox llx="328" lly="701" urx="353" ury="709" f="1"><![CDATA[Aspect 1 ]]></tbox></line>
+<line><tbox llx="317" lly="638" urx="356" ury="646" f="19"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="315" lly="645" urx="316" ury="648" f="20"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="315" lly="652" urx="316" ury="661" f="20"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="315" lly="670" urx="316" ury="682" f="20"><![CDATA[1500 ]]></tbox></line>
+<line><tbox llx="315" lly="690" urx="316" ury="701" f="20"><![CDATA[2500 ]]></tbox></line>
+<line><tbox llx="383" lly="701" urx="408" ury="709" f="1"><![CDATA[Aspect 2 ]]></tbox></line>
+<line><tbox llx="372" lly="638" urx="412" ury="646" f="21"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="371" lly="645" urx="372" ury="648" f="22"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="371" lly="652" urx="372" ury="661" f="22"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="371" lly="670" urx="372" ury="682" f="22"><![CDATA[1500 ]]></tbox></line>
+<line><tbox llx="371" lly="690" urx="372" ury="701" f="22"><![CDATA[2500 ]]></tbox></line>
+<line><tbox llx="438" lly="701" urx="463" ury="709" f="1"><![CDATA[Aspect 3 ]]></tbox></line>
+<line><tbox llx="428" lly="638" urx="467" ury="646" f="23"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="426" lly="645" urx="427" ury="648" f="24"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="426" lly="652" urx="427" ury="661" f="24"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="426" lly="670" urx="427" ury="682" f="24"><![CDATA[1500 ]]></tbox></line>
+<line><tbox llx="426" lly="690" urx="427" ury="701" f="24"><![CDATA[2500 ]]></tbox></line>
+<line><tbox llx="494" lly="701" urx="519" ury="709" f="1"><![CDATA[Aspect 4 ]]></tbox></line>
+<line><tbox llx="483" lly="638" urx="522" ury="646" f="25"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="481" lly="645" urx="482" ury="648" f="26"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="481" lly="652" urx="482" ury="661" f="26"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="481" lly="670" urx="482" ury="682" f="26"><![CDATA[1500 ]]></tbox></line>
+<line><tbox llx="481" lly="690" urx="482" ury="701" f="26"><![CDATA[2500 ]]></tbox></line>
+<line><tbox llx="328" lly="621" urx="353" ury="629" f="1"><![CDATA[Aspect 5 ]]></tbox></line>
+<line><tbox llx="317" lly="557" urx="356" ury="565" f="27"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="315" lly="564" urx="316" ury="568" f="28"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="315" lly="571" urx="316" ury="580" f="28"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="315" lly="590" urx="316" ury="601" f="28"><![CDATA[1500 ]]></tbox></line>
+<line><tbox llx="315" lly="609" urx="316" ury="621" f="28"><![CDATA[2500 ]]></tbox></line>
+<line><tbox llx="383" lly="621" urx="408" ury="629" f="1"><![CDATA[Aspect 6 ]]></tbox></line>
+<line><tbox llx="372" lly="557" urx="412" ury="565" f="29"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="371" lly="564" urx="372" ury="568" f="30"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="371" lly="571" urx="372" ury="580" f="30"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="371" lly="590" urx="372" ury="601" f="30"><![CDATA[1500 ]]></tbox></line>
+<line><tbox llx="371" lly="609" urx="372" ury="621" f="30"><![CDATA[2500 ]]></tbox></line>
+<line><tbox llx="438" lly="621" urx="463" ury="629" f="1"><![CDATA[Aspect 7 ]]></tbox></line>
+<line><tbox llx="428" lly="557" urx="467" ury="565" f="31"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="426" lly="564" urx="427" ury="568" f="32"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="426" lly="571" urx="427" ury="580" f="32"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="426" lly="590" urx="427" ury="601" f="32"><![CDATA[1500 ]]></tbox></line>
+<line><tbox llx="426" lly="609" urx="427" ury="621" f="32"><![CDATA[2500 ]]></tbox></line>
+<line><tbox llx="494" lly="621" urx="519" ury="629" f="1"><![CDATA[Aspect 8 ]]></tbox></line>
+<line><tbox llx="483" lly="557" urx="522" ury="565" f="33"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="481" lly="564" urx="482" ury="568" f="34"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="481" lly="571" urx="482" ury="580" f="34"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="481" lly="590" urx="482" ury="601" f="34"><![CDATA[1500 ]]></tbox></line>
+<line><tbox llx="481" lly="609" urx="482" ury="621" f="34"><![CDATA[2500 ]]></tbox></line>
+<line><tbox llx="397" lly="709" urx="446" ury="720" f="18"><![CDATA[Biochemistry ]]></tbox></line>
+<line><tbox llx="89" lly="525" urx="114" ury="533" f="1"><![CDATA[Aspect 1 ]]></tbox></line>
+<line><tbox llx="78" lly="462" urx="118" ury="470" f="35"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="77" lly="469" urx="78" ury="472" f="36"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="77" lly="476" urx="78" ury="485" f="36"><![CDATA[100 ]]></tbox></line>
+<line><tbox llx="77" lly="496" urx="78" ury="505" f="36"><![CDATA[300 ]]></tbox></line>
+<line><tbox llx="77" lly="515" urx="78" ury="524" f="36"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="144" lly="525" urx="169" ury="533" f="1"><![CDATA[Aspect 2 ]]></tbox></line>
+<line><tbox llx="134" lly="462" urx="173" ury="470" f="37"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="132" lly="469" urx="133" ury="472" f="38"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="132" lly="476" urx="133" ury="485" f="38"><![CDATA[100 ]]></tbox></line>
+<line><tbox llx="132" lly="496" urx="133" ury="505" f="38"><![CDATA[300 ]]></tbox></line>
+<line><tbox llx="132" lly="515" urx="133" ury="524" f="38"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="200" lly="525" urx="225" ury="533" f="1"><![CDATA[Aspect 3 ]]></tbox></line>
+<line><tbox llx="189" lly="462" urx="228" ury="470" f="39"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="187" lly="469" urx="188" ury="472" f="40"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="187" lly="476" urx="188" ury="485" f="40"><![CDATA[100 ]]></tbox></line>
+<line><tbox llx="187" lly="496" urx="188" ury="505" f="40"><![CDATA[300 ]]></tbox></line>
+<line><tbox llx="187" lly="515" urx="188" ury="524" f="40"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="255" lly="525" urx="280" ury="533" f="1"><![CDATA[Aspect 4 ]]></tbox></line>
+<line><tbox llx="244" lly="462" urx="283" ury="470" f="41"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="242" lly="469" urx="243" ury="472" f="42"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="242" lly="476" urx="243" ury="485" f="42"><![CDATA[100 ]]></tbox></line>
+<line><tbox llx="242" lly="496" urx="243" ury="505" f="42"><![CDATA[300 ]]></tbox></line>
+<line><tbox llx="242" lly="515" urx="243" ury="524" f="42"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="89" lly="445" urx="114" ury="453" f="1"><![CDATA[Aspect 5 ]]></tbox></line>
+<line><tbox llx="78" lly="381" urx="118" ury="389" f="43"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="77" lly="388" urx="78" ury="392" f="44"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="77" lly="396" urx="78" ury="405" f="44"><![CDATA[100 ]]></tbox></line>
+<line><tbox llx="77" lly="415" urx="78" ury="424" f="44"><![CDATA[300 ]]></tbox></line>
+<line><tbox llx="77" lly="435" urx="78" ury="444" f="44"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="144" lly="445" urx="169" ury="453" f="1"><![CDATA[Aspect 6 ]]></tbox></line>
+<line><tbox llx="134" lly="381" urx="173" ury="389" f="45"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="132" lly="388" urx="133" ury="392" f="46"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="132" lly="396" urx="133" ury="405" f="46"><![CDATA[100 ]]></tbox></line>
+<line><tbox llx="132" lly="415" urx="133" ury="424" f="46"><![CDATA[300 ]]></tbox></line>
+<line><tbox llx="132" lly="435" urx="133" ury="444" f="46"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="200" lly="445" urx="225" ury="453" f="1"><![CDATA[Aspect 7 ]]></tbox></line>
+<line><tbox llx="189" lly="381" urx="228" ury="389" f="47"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="187" lly="388" urx="188" ury="392" f="48"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="187" lly="396" urx="188" ury="405" f="48"><![CDATA[100 ]]></tbox></line>
+<line><tbox llx="187" lly="415" urx="188" ury="424" f="48"><![CDATA[300 ]]></tbox></line>
+<line><tbox llx="187" lly="435" urx="188" ury="444" f="48"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="255" lly="445" urx="280" ury="453" f="1"><![CDATA[Aspect 8 ]]></tbox></line>
+<line><tbox llx="244" lly="381" urx="283" ury="389" f="49"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="242" lly="388" urx="243" ury="392" f="50"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="242" lly="396" urx="243" ury="405" f="50"><![CDATA[100 ]]></tbox></line>
+<line><tbox llx="242" lly="415" urx="243" ury="424" f="50"><![CDATA[300 ]]></tbox></line>
+<line><tbox llx="242" lly="435" urx="243" ury="444" f="50"><![CDATA[500 ]]></tbox></line>
+<line><tbox llx="164" lly="533" urx="201" ury="544" f="18"><![CDATA[Evolution ]]></tbox></line>
+<line><tbox llx="328" lly="525" urx="353" ury="533" f="1"><![CDATA[Aspect 1 ]]></tbox></line>
+<line><tbox llx="317" lly="462" urx="356" ury="470" f="51"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="315" lly="469" urx="316" ury="472" f="52"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="315" lly="476" urx="316" ury="485" f="52"><![CDATA[200 ]]></tbox></line>
+<line><tbox llx="315" lly="497" urx="316" ury="506" f="52"><![CDATA[600 ]]></tbox></line>
+<line><tbox llx="315" lly="516" urx="316" ury="528" f="52"><![CDATA[1000 ]]></tbox></line>
+<line><tbox llx="383" lly="525" urx="408" ury="533" f="1"><![CDATA[Aspect 2 ]]></tbox></line>
+<line><tbox llx="372" lly="462" urx="412" ury="470" f="53"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="371" lly="469" urx="372" ury="472" f="54"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="371" lly="476" urx="372" ury="485" f="54"><![CDATA[200 ]]></tbox></line>
+<line><tbox llx="371" lly="497" urx="372" ury="506" f="54"><![CDATA[600 ]]></tbox></line>
+<line><tbox llx="371" lly="516" urx="372" ury="528" f="54"><![CDATA[1000 ]]></tbox></line>
+<line><tbox llx="438" lly="525" urx="463" ury="533" f="1"><![CDATA[Aspect 3 ]]></tbox></line>
+<line><tbox llx="428" lly="462" urx="467" ury="470" f="55"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="426" lly="469" urx="427" ury="472" f="56"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="426" lly="476" urx="427" ury="485" f="56"><![CDATA[200 ]]></tbox></line>
+<line><tbox llx="426" lly="497" urx="427" ury="506" f="56"><![CDATA[600 ]]></tbox></line>
+<line><tbox llx="426" lly="516" urx="427" ury="528" f="56"><![CDATA[1000 ]]></tbox></line>
+<line><tbox llx="494" lly="525" urx="519" ury="533" f="1"><![CDATA[Aspect 4 ]]></tbox></line>
+<line><tbox llx="483" lly="462" urx="522" ury="470" f="57"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="481" lly="469" urx="482" ury="472" f="58"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="481" lly="476" urx="482" ury="485" f="58"><![CDATA[200 ]]></tbox></line>
+<line><tbox llx="481" lly="497" urx="482" ury="506" f="58"><![CDATA[600 ]]></tbox></line>
+<line><tbox llx="481" lly="516" urx="482" ury="528" f="58"><![CDATA[1000 ]]></tbox></line>
+<line><tbox llx="328" lly="445" urx="353" ury="453" f="1"><![CDATA[Aspect 5 ]]></tbox></line>
+<line><tbox llx="317" lly="381" urx="356" ury="389" f="59"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="315" lly="388" urx="316" ury="392" f="60"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="315" lly="396" urx="316" ury="405" f="60"><![CDATA[200 ]]></tbox></line>
+<line><tbox llx="315" lly="416" urx="316" ury="425" f="60"><![CDATA[600 ]]></tbox></line>
+<line><tbox llx="315" lly="436" urx="316" ury="447" f="60"><![CDATA[1000 ]]></tbox></line>
+<line><tbox llx="383" lly="445" urx="408" ury="453" f="1"><![CDATA[Aspect 6 ]]></tbox></line>
+<line><tbox llx="372" lly="381" urx="412" ury="389" f="61"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="371" lly="388" urx="372" ury="392" f="62"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="371" lly="396" urx="372" ury="405" f="62"><![CDATA[200 ]]></tbox></line>
+<line><tbox llx="371" lly="416" urx="372" ury="425" f="62"><![CDATA[600 ]]></tbox></line>
+<line><tbox llx="371" lly="436" urx="372" ury="447" f="62"><![CDATA[1000 ]]></tbox></line>
+<line><tbox llx="438" lly="445" urx="463" ury="453" f="1"><![CDATA[Aspect 7 ]]></tbox></line>
+<line><tbox llx="428" lly="381" urx="467" ury="389" f="63"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="426" lly="388" urx="427" ury="392" f="64"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="426" lly="396" urx="427" ury="405" f="64"><![CDATA[200 ]]></tbox></line>
+<line><tbox llx="426" lly="416" urx="427" ury="425" f="64"><![CDATA[600 ]]></tbox></line>
+<line><tbox llx="426" lly="436" urx="427" ury="447" f="64"><![CDATA[1000 ]]></tbox></line>
+<line><tbox llx="494" lly="445" urx="519" ury="453" f="1"><![CDATA[Aspect 8 ]]></tbox></line>
+<line><tbox llx="483" lly="381" urx="522" ury="389" f="65"><![CDATA[0.0 0.4 0.8 ]]></tbox></line>
+<line><tbox llx="481" lly="388" urx="482" ury="392" f="66"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="481" lly="396" urx="482" ury="405" f="66"><![CDATA[200 ]]></tbox></line>
+<line><tbox llx="481" lly="416" urx="482" ury="425" f="66"><![CDATA[600 ]]></tbox></line>
+<line><tbox llx="481" lly="436" urx="482" ury="447" f="66"><![CDATA[1000 ]]></tbox></line>
+<line><tbox llx="403" lly="533" urx="439" ury="544" f="18"><![CDATA[Genetics ]]></tbox></line>
+<line><tbox llx="71" lly="346" urx="536" ury="361" f="67"><![CDATA[Figure 1: Distributions by aspect of the posterior means of membership scores for articles published in Biophysics, ]]></tbox></line>
+<line><tbox llx="71" lly="334" urx="238" ury="349" f="67"><![CDATA[Biochemistry, Evolution, and Genetics. ]]></tbox></line>
+<line><tbox llx="71" lly="302" urx="182" ury="317" f="67"><![CDATA[Evolution, and Genetics. ]]></tbox><tbox llx="176" lly="302" urx="536" ury="317" f="67"><![CDATA[Relatively high histogram bars near zero correspond to the majority of articles having ]]></tbox></line>
+<line><tbox llx="71" lly="290" urx="536" ury="305" f="67"><![CDATA[small posterior membership scores for the given aspect. About half of the articles in Biophysics can be considered ]]></tbox></line>
+<line><tbox llx="71" lly="278" urx="536" ury="293" f="67"><![CDATA[as full members in aspect 5, but there are also articles from this topic that are full members in aspects 3, 4 and ]]></tbox></line>
+<line><tbox llx="71" lly="266" urx="336" ury="281" f="67"><![CDATA[6. The rest have mixed membership mostly in aspects 3 and 5. ]]></tbox><tbox llx="329" lly="266" urx="536" ury="281" f="67"><![CDATA[Distribution of the aspect loadings for articles in ]]></tbox></line>
+<line><tbox llx="71" lly="254" urx="536" ury="269" f="67"><![CDATA[Biochemistry and Genetics similarly indicates that articles are coming from different aspects, and a substantial part ]]></tbox></line>
+<line><tbox llx="71" lly="242" urx="217" ury="257" f="67"><![CDATA[of them is of mixed membership. ]]></tbox><tbox llx="211" lly="242" urx="536" ury="257" f="67"><![CDATA[Papers published in Evolution, on the other hand, show a somewhat different ]]></tbox></line>
+<line><tbox llx="71" lly="230" urx="346" ury="245" f="67"><![CDATA[behavior---the majority of these papers comes fully from aspect 2. ]]></tbox></line>
+<line><tbox llx="86" lly="218" urx="536" ury="233" f="67"><![CDATA[The sparsity of the loadings can also be gauged by the parameters of the Dirichlet distribution, which are ]]></tbox></line>
+<line><tbox llx="71" lly="207" urx="131" ury="221" f="67"><![CDATA[estimated as ]]></tbox><tbox llx="124" lly="207" urx="140" ury="218" f="68"><![CDATA[® ]]></tbox><tbox llx="131" lly="206" urx="142" ury="214" f="69"><![CDATA[1 ]]></tbox><tbox llx="136" lly="207" urx="188" ury="220" f="70"><![CDATA[= 0.0195, ]]></tbox><tbox llx="182" lly="207" urx="198" ury="218" f="68"><![CDATA[® ]]></tbox><tbox llx="188" lly="206" urx="199" ury="214" f="69"><![CDATA[2 ]]></tbox><tbox llx="194" lly="207" urx="246" ury="220" f="70"><![CDATA[= 0.0203, ]]></tbox><tbox llx="240" lly="207" urx="256" ury="218" f="68"><![CDATA[® ]]></tbox><tbox llx="246" lly="206" urx="257" ury="214" f="69"><![CDATA[3 ]]></tbox><tbox llx="251" lly="207" urx="304" ury="220" f="70"><![CDATA[= 0.0569, ]]></tbox><tbox llx="297" lly="207" urx="314" ury="218" f="68"><![CDATA[® ]]></tbox><tbox llx="304" lly="206" urx="315" ury="214" f="69"><![CDATA[4 ]]></tbox><tbox llx="309" lly="207" urx="362" ury="220" f="70"><![CDATA[= 0.0346, ]]></tbox><tbox llx="355" lly="207" urx="371" ury="218" f="68"><![CDATA[® ]]></tbox><tbox llx="362" lly="206" urx="373" ury="214" f="69"><![CDATA[5 ]]></tbox><tbox llx="367" lly="207" urx="420" ury="220" f="70"><![CDATA[= 0.0317, ]]></tbox><tbox llx="413" lly="207" urx="429" ury="218" f="68"><![CDATA[® ]]></tbox><tbox llx="419" lly="206" urx="430" ury="214" f="69"><![CDATA[6 ]]></tbox><tbox llx="425" lly="207" urx="477" ury="220" f="70"><![CDATA[= 0.0363, ]]></tbox><tbox llx="471" lly="207" urx="487" ury="218" f="68"><![CDATA[® ]]></tbox><tbox llx="477" lly="206" urx="488" ury="214" f="69"><![CDATA[7 ]]></tbox><tbox llx="483" lly="207" urx="535" ury="220" f="70"><![CDATA[= 0.0411, ]]></tbox></line>
+<line><tbox llx="72" lly="195" urx="88" ury="206" f="68"><![CDATA[® ]]></tbox><tbox llx="79" lly="194" urx="90" ury="202" f="69"><![CDATA[8 ]]></tbox><tbox llx="85" lly="195" urx="139" ury="208" f="70"><![CDATA[= 0.0255. ]]></tbox><tbox llx="135" lly="195" urx="536" ury="209" f="67"><![CDATA[The estimated Dirichlet, which is the generative distribution of membership scores, is "bathtub ]]></tbox></line>
+<line><tbox llx="71" lly="183" urx="181" ury="197" f="67"><![CDATA[shaped" on the simplex; ]]></tbox><tbox llx="174" lly="183" urx="536" ury="197" f="67"><![CDATA[as a result, articles will tend to have relatively high membership scores in only a few ]]></tbox></line>
+<line><tbox llx="71" lly="171" urx="113" ury="185" f="67"><![CDATA[aspects. ]]></tbox></line>
+<line><tbox llx="86" lly="159" urx="536" ury="173" f="67"><![CDATA[To summarize the aspect distributions for each topic, we provide mean loadings and the graphical representa- ]]></tbox></line>
+<line><tbox llx="71" lly="147" urx="536" ury="161" f="67"><![CDATA[tion of these values in Figure 4. Larger values correspond to darker colors, and the values below some threshold ]]></tbox></line>
+<line><tbox llx="71" lly="135" urx="360" ury="150" f="67"><![CDATA[are not shown (white) for clarity. As an example, the mean loading of ]]></tbox><tbox llx="351" lly="135" urx="390" ury="148" f="70"><![CDATA[0.2883 ]]></tbox><tbox llx="382" lly="135" urx="536" ury="150" f="67"><![CDATA[for Pharmacology in the first aspect ]]></tbox></line>
+<line><tbox llx="71" lly="123" urx="536" ury="138" f="67"><![CDATA[is the average of the posterior means of the membership scores for this aspect over all Pharmacology publications ]]></tbox></line>
+<line><tbox llx="71" lly="111" urx="536" ury="126" f="67"><![CDATA[in the database. Note that this percentage is based on the assumption of mixed membership, and can be interpreted ]]></tbox></line>
+<line><tbox llx="295" lly="74" urx="311" ury="89" f="67"><![CDATA[9 ]]></tbox></line>
+<pbox llx="71.00" lly="74.00" urx="536.00" ury="721.00"/></page>
+<page n="10">
+<line><tbox llx="71" lly="706" urx="517" ury="721" f="1"><![CDATA[as indicating that 29% of the words in Pharmacology papers originate from aspect 1, according to our model. ]]></tbox></line>
+<line><tbox llx="86" lly="694" urx="536" ury="709" f="1"><![CDATA[Examining the rows of Figure 4, we see that most subtopics in Biological Sciences have major components ]]></tbox></line>
+<line><tbox llx="71" lly="682" urx="306" ury="697" f="1"><![CDATA[from more than one aspect (extreme or basis category). ]]></tbox><tbox llx="300" lly="682" urx="536" ury="697" f="1"><![CDATA[Examining the columns, we can gain further insights in ]]></tbox></line>
+<line><tbox llx="71" lly="670" urx="536" ury="685" f="1"><![CDATA[interpretation of the extreme categories. Aspect 8, for example, is the aspect of origin for a combined 37% of ]]></tbox></line>
+<line><tbox llx="71" lly="658" urx="536" ury="673" f="1"><![CDATA[Physiology, 30% of Pharmacology, and 25% of Medical Sciences papers, according to the mixed membership ]]></tbox></line>
+<line><tbox llx="71" lly="646" urx="536" ury="661" f="1"><![CDATA[model. The most prominent subtopic is Evolution; it has the greatest influence in defining an extremal category, ]]></tbox></line>
+<line><tbox llx="71" lly="634" urx="535" ury="649" f="1"><![CDATA[aspect 2. This is consistent with a special place Evolution holds among the Biological Sciences by standing apart ]]></tbox></line>
+<line><tbox llx="71" lly="622" urx="244" ury="637" f="1"><![CDATA[both conceptually and methodologically. ]]></tbox></line>
+<line><tbox llx="71" lly="592" urx="173" ury="608" f="2"><![CDATA[Concluding Remarks ]]></tbox></line>
+<line><tbox llx="86" lly="576" urx="536" ury="590" f="1"><![CDATA[We have presented results from fitting a mixed membership model to a collection of Biological Sciences pub- ]]></tbox></line>
+<line><tbox llx="71" lly="564" urx="142" ury="578" f="1"><![CDATA[lications in the ]]></tbox><tbox llx="134" lly="564" urx="351" ury="579" f="3"><![CDATA[Proceedings of the National Academy of Sciences, ]]></tbox><tbox llx="342" lly="564" urx="535" ury="578" f="1"><![CDATA[1997--2001, resulting in an implicit semantic ]]></tbox></line>
+<line><tbox llx="71" lly="552" urx="536" ury="566" f="1"><![CDATA[decomposition of words and references in the papers. The model allows us to identify extreme internal categories ]]></tbox></line>
+<line><tbox llx="71" lly="540" urx="536" ury="555" f="1"><![CDATA[of publications and to provide soft classifications of papers into these categories. Our results show that the tradi- ]]></tbox></line>
+<line><tbox llx="71" lly="528" urx="536" ury="543" f="1"><![CDATA[tional discipline classifications correspond to a mixed distribution over the internal categories. Our analyses and ]]></tbox></line>
+<line><tbox llx="71" lly="516" urx="536" ury="531" f="1"><![CDATA[modeling were intended to capture a high level description of a subset of PNAS papers. By contrast, Griffiths ]]></tbox></line>
+<line><tbox llx="71" lly="504" urx="536" ury="519" f="1"><![CDATA[and Steyvers [6] attempt a more fine-grained description by applying a restricted version of the mixed member- ]]></tbox></line>
+<line><tbox llx="71" lly="492" urx="415" ury="507" f="1"><![CDATA[ship model using only words in the abstracts for a larger subset of PNAS papers. ]]></tbox><tbox llx="409" lly="492" urx="536" ury="507" f="1"><![CDATA[We plan to present a careful ]]></tbox></line>
+<line><tbox llx="71" lly="480" urx="334" ury="495" f="1"><![CDATA[comparison between their approach and ours in the near future. ]]></tbox></line>
+<line><tbox llx="86" lly="468" urx="536" ury="483" f="1"><![CDATA[As noted in a famous statement by George Box [16], "all models are wrong." In our case, the assumption of a ]]></tbox></line>
+<line><tbox llx="71" lly="456" urx="536" ury="471" f="1"><![CDATA["bag of words and references" in the mixed membership model clearly oversimplifies reality; the model does not ]]></tbox></line>
+<line><tbox llx="71" lly="444" urx="536" ury="459" f="1"><![CDATA[account for the general structure of the language nor does it capture the compositional structure of bibliographies. ]]></tbox></line>
+<line><tbox llx="71" lly="432" urx="536" ury="447" f="1"><![CDATA[Many interesting extensions of the basic model we have explored are possible, from hierarchical models of topics, ]]></tbox></line>
+<line><tbox llx="71" lly="420" urx="536" ury="435" f="1"><![CDATA[to more detailed models of citations and dynamic models of the evolution of scientific fields over time. Neverthe- ]]></tbox></line>
+<line><tbox llx="71" lly="408" urx="536" ury="423" f="1"><![CDATA[less, as Box notes, even wrong models may be useful. Our results indicate that mixed membership models can be ]]></tbox></line>
+<line><tbox llx="71" lly="396" urx="388" ury="411" f="1"><![CDATA[useful for analyzing the implicit semantic structure of scientific publications. ]]></tbox></line>
+<line><tbox llx="71" lly="366" urx="160" ury="382" f="2"><![CDATA[Acknowledgments ]]></tbox></line>
+<line><tbox llx="86" lly="350" urx="536" ury="365" f="1"><![CDATA[The authors thank Dr. Anna Lokshin (University of Pittsburgh, Pittsburgh, PA) for her help in interpreting ]]></tbox></line>
+<line><tbox llx="71" lly="338" urx="536" ury="353" f="1"><![CDATA[model results from a biologists' perspective. Elena Erosheva's work was supported in part by NIH grant R01 ]]></tbox></line>
+<line><tbox llx="71" lly="326" urx="536" ury="341" f="1"><![CDATA[CA94212-01, and John Lafferty's work was supported by NSF grant CCR-0122581 and ARDA contract MDA904- ]]></tbox></line>
+<line><tbox llx="71" lly="314" urx="127" ury="329" f="1"><![CDATA[00-C-2106. ]]></tbox></line>
+<line><tbox llx="84" lly="256" urx="350" ury="270" f="4"><![CDATA[1. Eisen, M. B., Spellman, P. T., Brown, P. O., and Botstein, D., (1998) ]]></tbox><tbox llx="343" lly="257" urx="452" ury="270" f="5"><![CDATA[Proc. Natl. Acad. Sci. USA ]]></tbox><tbox llx="444" lly="256" urx="465" ury="270" f="6"><![CDATA[95, ]]></tbox><tbox llx="457" lly="256" urx="518" ury="270" f="4"><![CDATA[14863--14868. ]]></tbox></line>
+<line><tbox llx="84" lly="242" urx="534" ury="255" f="4"><![CDATA[2. Tamayo, P., Slonim, D., Mesirov, J., Zhu, Q., Kitareewan, S., Dmitrovsky, E., Lander E. S., and Golub, T. R., (1999) ]]></tbox></line>
+<line><tbox llx="96" lly="231" urx="204" ury="245" f="5"><![CDATA[Proc. Natl. Acad. Sci. USA ]]></tbox><tbox llx="197" lly="230" urx="218" ury="245" f="6"><![CDATA[96, ]]></tbox><tbox llx="210" lly="231" urx="262" ury="244" f="4"><![CDATA[2907--2912. ]]></tbox></line>
+<line><tbox llx="84" lly="217" urx="533" ury="230" f="4"><![CDATA[3. Rosenberg, N. A., Pritchard, J. K., Weber, J. L., Cann, H. M., Kidd, K. K., Zhivotovsky, L. A., and Feldman, M. W., ]]></tbox></line>
+<line><tbox llx="96" lly="206" urx="130" ury="219" f="4"><![CDATA[(2002) ]]></tbox><tbox llx="122" lly="206" urx="160" ury="219" f="5"><![CDATA[Science ]]></tbox><tbox llx="152" lly="205" urx="178" ury="219" f="6"><![CDATA[298, ]]></tbox><tbox llx="170" lly="206" urx="222" ury="219" f="4"><![CDATA[2381--2385. ]]></tbox></line>
+<line><tbox llx="84" lly="191" urx="289" ury="204" f="4"><![CDATA[4. Woodbury, M. A., Clive, J., and Garson, A., (1978) ]]></tbox><tbox llx="282" lly="191" urx="425" ury="205" f="5"><![CDATA[Computers and Biomedical Research ]]></tbox><tbox llx="417" lly="191" urx="439" ury="205" f="6"><![CDATA[11, ]]></tbox><tbox llx="430" lly="191" urx="474" ury="204" f="4"><![CDATA[277--298. ]]></tbox></line>
+<line><tbox llx="84" lly="177" urx="190" ury="190" f="4"><![CDATA[5. Erosheva, E. A., (2002) ]]></tbox><tbox llx="183" lly="177" urx="339" ury="190" f="5"><![CDATA[PhD thesis, Carnegie Mellon University. ]]></tbox></line>
+<line><tbox llx="84" lly="162" urx="251" ury="175" f="4"><![CDATA[6. Griffiths, T. L., and Steyvers, M., (2003) ]]></tbox><tbox llx="243" lly="162" urx="487" ury="176" f="5"><![CDATA[Arthur M. Sackler Colloquium "Mapping Knowledge Domains". ]]></tbox></line>
+<line><tbox llx="84" lly="148" urx="318" ury="161" f="4"><![CDATA[7. Manton, K. G., Woodbury, M. A., and Tolley, H. D., (1994) ]]></tbox><tbox llx="311" lly="148" urx="390" ury="161" f="5"><![CDATA[Wiley-Interscience, ]]></tbox><tbox llx="382" lly="148" urx="408" ury="161" f="4"><![CDATA[312. ]]></tbox></line>
+<line><tbox llx="84" lly="133" urx="376" ury="146" f="4"><![CDATA[8. Potthoff, R. G., Manton, K. G., Woodbury, M. A., and Tolley, H. D., (2000) ]]></tbox><tbox llx="369" lly="133" urx="468" ury="147" f="5"><![CDATA[Journal of Classification ]]></tbox><tbox llx="459" lly="133" urx="481" ury="147" f="6"><![CDATA[17, ]]></tbox><tbox llx="473" lly="133" urx="516" ury="146" f="4"><![CDATA[315--353. ]]></tbox></line>
+<line><tbox llx="84" lly="119" urx="302" ury="132" f="4"><![CDATA[9. Pritchard, J. K., Stephens, M., and Donnelly, P., (2000) ]]></tbox><tbox llx="295" lly="119" urx="337" ury="132" f="5"><![CDATA[Genetics ]]></tbox><tbox llx="329" lly="118" urx="355" ury="132" f="6"><![CDATA[155, ]]></tbox><tbox llx="347" lly="119" urx="390" ury="132" f="4"><![CDATA[945--959. ]]></tbox></line>
+<line><tbox llx="80" lly="104" urx="179" ury="117" f="4"><![CDATA[10. Hofmann, T., (2001) ]]></tbox><tbox llx="172" lly="104" urx="249" ury="118" f="5"><![CDATA[Machine Learning ]]></tbox><tbox llx="241" lly="104" urx="262" ury="118" f="6"><![CDATA[42, ]]></tbox><tbox llx="254" lly="104" urx="297" ury="117" f="4"><![CDATA[177--196. ]]></tbox></line>
+<line><tbox llx="293" lly="74" urx="314" ury="89" f="1"><![CDATA[10 ]]></tbox></line>
+<pbox llx="71.00" lly="74.00" urx="536.00" ury="721.00"/></page>
+<page n="11">
+<line><tbox llx="80" lly="706" urx="279" ury="720" f="1"><![CDATA[11. Blei, D. M., Ng, A. Y., and Jordan, M. I., (2003) ]]></tbox><tbox llx="271" lly="706" urx="425" ury="720" f="2"><![CDATA[Journal of Machine Learning Research, ]]></tbox><tbox llx="416" lly="706" urx="471" ury="720" f="1"><![CDATA[3:993--1002. ]]></tbox></line>
+<line><tbox llx="80" lly="691" urx="239" ury="705" f="1"><![CDATA[12. Minka, T. P., and Lafferty, J., (2002) ]]></tbox><tbox llx="232" lly="691" urx="535" ury="705" f="2"><![CDATA[Uncertainty in Artificial Intelligence: Proceedings of the Eighteenth Conference ]]></tbox></line>
+<line><tbox llx="96" lly="680" urx="150" ury="694" f="2"><![CDATA[(UAI-2002), ]]></tbox><tbox llx="142" lly="680" urx="185" ury="694" f="1"><![CDATA[352--359. ]]></tbox></line>
+<line><tbox llx="80" lly="665" urx="232" ury="679" f="1"><![CDATA[13. Cohn, D., and Hofmann, T., (2001) ]]></tbox><tbox llx="224" lly="665" urx="390" ury="679" f="2"><![CDATA[Neural Information Processing Systems 13. ]]></tbox></line>
+<line><tbox llx="80" lly="650" urx="427" ury="664" f="1"><![CDATA[14. Barn ard, K., Duygulu, P., Forsyth, D., de Freitas, N., Blei, D. M., and Jordan, M. I. (2003) ]]></tbox><tbox llx="420" lly="650" urx="535" ury="664" f="2"><![CDATA[Journal of Machine Learning ]]></tbox></line>
+<line><tbox llx="96" lly="640" urx="139" ury="653" f="2"><![CDATA[Research ]]></tbox><tbox llx="131" lly="639" urx="190" ury="653" f="1"><![CDATA[3:1107--1135. ]]></tbox></line>
+<line><tbox llx="80" lly="624" urx="275" ury="638" f="1"><![CDATA[15. Blei, D. M., Jordan, M. I., and Ng, A. Y., (2003) ]]></tbox><tbox llx="268" lly="625" urx="535" ury="638" f="2"><![CDATA[Bayesian Statistics 7. Proceedings of the Seventh Valencia International ]]></tbox></line>
+<line><tbox llx="96" lly="614" urx="138" ury="627" f="2"><![CDATA[Meeting, ]]></tbox><tbox llx="130" lly="614" urx="163" ury="627" f="1"><![CDATA[25-44. ]]></tbox></line>
+<line><tbox llx="80" lly="599" urx="162" ury="612" f="1"><![CDATA[16. Box, G., (1979) ]]></tbox><tbox llx="155" lly="599" urx="251" ury="612" f="2"><![CDATA[Robustness in Statistics, ]]></tbox><tbox llx="243" lly="599" urx="269" ury="612" f="1"><![CDATA[202. ]]></tbox></line>
+<line><tbox llx="293" lly="74" urx="314" ury="89" f="3"><![CDATA[11 ]]></tbox></line>
+<pbox llx="80.00" lly="74.00" urx="535.00" ury="720.00"/></page>
+<page n="12">
+<line><tbox llx="195" lly="676" urx="236" ury="690" f="1"><![CDATA[Aspect 1 ]]></tbox><tbox llx="367" lly="676" urx="409" ury="690" f="1"><![CDATA[Aspect 2 ]]></tbox></line>
+<line><tbox llx="138" lly="663" urx="247" ury="677" f="1"><![CDATA[Author Journal, Year ]]></tbox><tbox llx="278" lly="663" urx="294" ury="677" f="1"><![CDATA[C ]]></tbox></line>
+<line><tbox llx="139" lly="656" urx="289" ury="664" f="2"><![CDATA[HAMILL OP PFLUG ARCH EUR J PHY, 1981 72 ]]></tbox></line>
+<line><tbox llx="139" lly="650" urx="289" ury="658" f="2"><![CDATA[LAEMMLI UK Nature, 1970 322 ]]></tbox></line>
+<line><tbox llx="139" lly="644" urx="265" ury="652" f="2"><![CDATA[HILLE B IONIC CHANNELS EXCIT, 1992 ]]></tbox><tbox llx="279" lly="644" urx="289" ury="652" f="2"><![CDATA[58 ]]></tbox></line>
+<line><tbox llx="139" lly="638" urx="289" ury="646" f="2"><![CDATA[BLISS TVP NATURE, 1993 54 ]]></tbox></line>
+<line><tbox llx="139" lly="632" urx="171" ury="640" f="2"><![CDATA[SUDHOF TC ]]></tbox><tbox llx="190" lly="632" urx="289" ury="640" f="2"><![CDATA[NATURE, 1995 33 ]]></tbox></line>
+<line><tbox llx="139" lly="626" urx="183" ury="634" f="2"><![CDATA[GRYNKIEWICZ G ]]></tbox><tbox llx="190" lly="626" urx="238" ury="634" f="2"><![CDATA[J BIOL CHEM, 1985 ]]></tbox><tbox llx="279" lly="626" urx="289" ury="634" f="2"><![CDATA[31 ]]></tbox></line>
+<line><tbox llx="139" lly="620" urx="175" ury="628" f="2"><![CDATA[SAMBROOK J ]]></tbox><tbox llx="190" lly="620" urx="270" ury="628" f="2"><![CDATA[MOL CLONING LAB MANU, 1989 ]]></tbox><tbox llx="277" lly="620" urx="289" ury="628" f="2"><![CDATA[764 ]]></tbox></line>
+<line><tbox llx="139" lly="614" urx="183" ury="622" f="2"><![CDATA[SHERRINGTON R ]]></tbox><tbox llx="190" lly="614" urx="289" ury="622" f="2"><![CDATA[NATURE, 1995 33 ]]></tbox></line>
+<line><tbox llx="139" lly="608" urx="175" ury="616" f="2"><![CDATA[ROTHMAN JE ]]></tbox><tbox llx="190" lly="608" urx="289" ury="616" f="2"><![CDATA[NATURE, 1994 27 ]]></tbox></line>
+<line><tbox llx="139" lly="602" urx="167" ury="610" f="2"><![CDATA[SIMONS K ]]></tbox><tbox llx="190" lly="602" urx="289" ury="610" f="2"><![CDATA[NATURE, 1997 35 ]]></tbox></line>
+<line><tbox llx="139" lly="596" urx="289" ury="604" f="2"><![CDATA[SOLLNER T NATURE, 1993 25 ]]></tbox></line>
+<line><tbox llx="139" lly="590" urx="175" ury="598" f="2"><![CDATA[ROTHMAN JE ]]></tbox><tbox llx="190" lly="590" urx="289" ury="598" f="2"><![CDATA[SCIENCE, 1996 24 ]]></tbox></line>
+<line><tbox llx="139" lly="584" urx="181" ury="592" f="2"><![CDATA[THINAKARAN G ]]></tbox><tbox llx="190" lly="584" urx="289" ury="592" f="2"><![CDATA[NEURON, 1996 23 ]]></tbox></line>
+<line><tbox llx="139" lly="578" urx="168" ury="586" f="2"><![CDATA[TOWBIN H ]]></tbox><tbox llx="190" lly="578" urx="289" ury="586" f="2"><![CDATA[P NATL ACAD SCI USA, 1979 86 ]]></tbox></line>
+<line><tbox llx="139" lly="572" urx="289" ury="580" f="2"><![CDATA[BERMAN DM CELL, 1996 21 ]]></tbox></line>
+<line><tbox llx="312" lly="663" urx="417" ury="677" f="1"><![CDATA[Author Journal, Year ]]></tbox><tbox llx="449" lly="663" urx="465" ury="677" f="1"><![CDATA[C ]]></tbox></line>
+<line><tbox llx="312" lly="656" urx="340" ury="664" f="2"><![CDATA[SAITOU N ]]></tbox><tbox llx="360" lly="656" urx="460" ury="664" f="2"><![CDATA[MOL BIOL EVOL, 1987 96 ]]></tbox></line>
+<line><tbox llx="312" lly="650" urx="351" ury="658" f="2"><![CDATA[THOMPSON JD ]]></tbox><tbox llx="360" lly="650" urx="460" ury="658" f="2"><![CDATA[NUCLEIC ACIDS RES, 1994 147 ]]></tbox></line>
+<line><tbox llx="312" lly="644" urx="460" ury="652" f="2"><![CDATA[ALTSCHUL SF NUCLEIC ACIDS RES, 1997 160 ]]></tbox></line>
+<line><tbox llx="312" lly="638" urx="460" ury="646" f="2"><![CDATA[SAMBROOK J MOL CLONING LAB MANU, 1989 764 ]]></tbox></line>
+<line><tbox llx="312" lly="632" urx="460" ury="640" f="2"><![CDATA[ALTSCHUL SF J MOL BIOL, 1990 253 ]]></tbox></line>
+<line><tbox llx="312" lly="626" urx="406" ury="634" f="2"><![CDATA[FELSENSTEIN J EVOLUTION, 1985 ]]></tbox><tbox llx="450" lly="626" urx="460" ury="634" f="2"><![CDATA[51 ]]></tbox></line>
+<line><tbox llx="312" lly="620" urx="342" ury="628" f="2"><![CDATA[KISHINO H ]]></tbox><tbox llx="360" lly="620" urx="406" ury="628" f="2"><![CDATA[J MOL EVOL, 1989 ]]></tbox><tbox llx="450" lly="620" urx="460" ury="628" f="2"><![CDATA[31 ]]></tbox></line>
+<line><tbox llx="312" lly="614" urx="460" ury="622" f="2"><![CDATA[STRIMMER K MOL BIOL EVOL, 1996 31 ]]></tbox></line>
+<line><tbox llx="312" lly="608" urx="343" ury="616" f="2"><![CDATA[KIMURA M ]]></tbox><tbox llx="360" lly="608" urx="406" ury="616" f="2"><![CDATA[J MOL EVOL, 1980 ]]></tbox><tbox llx="450" lly="608" urx="460" ury="616" f="2"><![CDATA[34 ]]></tbox></line>
+<line><tbox llx="312" lly="602" urx="340" ury="610" f="2"><![CDATA[EISEN MB ]]></tbox><tbox llx="360" lly="602" urx="460" ury="610" f="2"><![CDATA[P NATL ACAD SCI USA, 1998 60 ]]></tbox></line>
+<line><tbox llx="312" lly="596" urx="352" ury="604" f="2"><![CDATA[SWOFFORD DL ]]></tbox><tbox llx="360" lly="596" urx="437" ury="604" f="2"><![CDATA[PAUP PHYLOGENETIC AN, 1993 ]]></tbox><tbox llx="450" lly="596" urx="460" ury="604" f="2"><![CDATA[25 ]]></tbox></line>
+<line><tbox llx="312" lly="590" urx="343" ury="598" f="2"><![CDATA[KIMURA M ]]></tbox><tbox llx="360" lly="590" urx="460" ury="598" f="2"><![CDATA[NEUTRAL THEORY MOL E, 1983 28 ]]></tbox></line>
+<line><tbox llx="312" lly="584" urx="440" ury="592" f="2"><![CDATA[KUMAR S MEGA MOL EVOLUTIONAR, 1993 ]]></tbox><tbox llx="450" lly="584" urx="460" ury="592" f="2"><![CDATA[26 ]]></tbox></line>
+<line><tbox llx="312" lly="578" urx="406" ury="586" f="2"><![CDATA[HASEGAWA M J MOL EVOL, 1985 ]]></tbox><tbox llx="450" lly="578" urx="460" ury="586" f="2"><![CDATA[24 ]]></tbox></line>
+<line><tbox llx="312" lly="572" urx="331" ury="580" f="2"><![CDATA[NEI M ]]></tbox><tbox llx="360" lly="572" urx="439" ury="580" f="2"><![CDATA[MOL EVOLUTIONARY GEN, 1987 ]]></tbox><tbox llx="450" lly="572" urx="460" ury="580" f="2"><![CDATA[28 ]]></tbox></line>
+<line><tbox llx="195" lly="550" urx="236" ury="564" f="1"><![CDATA[Aspect 3 ]]></tbox><tbox llx="367" lly="550" urx="409" ury="564" f="1"><![CDATA[Aspect 4 ]]></tbox></line>
+<line><tbox llx="138" lly="537" urx="247" ury="551" f="1"><![CDATA[Author Journal, Year ]]></tbox><tbox llx="279" lly="537" urx="294" ury="551" f="1"><![CDATA[C ]]></tbox></line>
+<line><tbox llx="138" lly="530" urx="290" ury="538" f="2"><![CDATA[SAMBROOK J MOL CLONING LAB MANU, 1989 764 ]]></tbox></line>
+<line><tbox llx="138" lly="524" urx="175" ury="532" f="2"><![CDATA[LAEMMLI UK ]]></tbox><tbox llx="191" lly="524" urx="290" ury="532" f="2"><![CDATA[NATURE, 1970 322 ]]></tbox></line>
+<line><tbox llx="138" lly="518" urx="290" ury="526" f="2"><![CDATA[ALTSCHUL SF J MOL BIOL, 1990 253 ]]></tbox></line>
+<line><tbox llx="138" lly="512" urx="246" ury="520" f="2"><![CDATA[BRADFORD MM ANAL BIOCHEM, 1976 ]]></tbox><tbox llx="277" lly="512" urx="290" ury="520" f="2"><![CDATA[209 ]]></tbox></line>
+<line><tbox llx="138" lly="506" urx="290" ury="514" f="2"><![CDATA[SANGER F P NATL ACAD SCI USA, 1977 140 ]]></tbox></line>
+<line><tbox llx="138" lly="500" urx="290" ury="508" f="2"><![CDATA[MILLER JH EXPT MOL GENETICS, 1972 102 ]]></tbox></line>
+<line><tbox llx="138" lly="494" urx="290" ury="502" f="2"><![CDATA[ALTSCHUL SF NUCLEIC ACIDS RES, 1997 160 ]]></tbox></line>
+<line><tbox llx="138" lly="488" urx="177" ury="496" f="2"><![CDATA[THOMPSON JD ]]></tbox><tbox llx="191" lly="488" urx="256" ury="496" f="2"><![CDATA[NUCLEIC ACIDS RES, 1994 ]]></tbox><tbox llx="277" lly="488" urx="290" ury="496" f="2"><![CDATA[147 ]]></tbox></line>
+<line><tbox llx="138" lly="482" urx="183" ury="490" f="2"><![CDATA[CHOMCZYNSKI P ]]></tbox><tbox llx="190" lly="482" urx="246" ury="490" f="2"><![CDATA[ANAL BIOCHEM, 1987 ]]></tbox><tbox llx="277" lly="482" urx="290" ury="490" f="2"><![CDATA[206 ]]></tbox></line>
+<line><tbox llx="138" lly="476" urx="269" ury="484" f="2"><![CDATA[HARLOW E ANTIBODIES LAB MANUA, 1988 ]]></tbox><tbox llx="277" lly="476" urx="290" ury="484" f="2"><![CDATA[129 ]]></tbox></line>
+<line><tbox llx="138" lly="470" urx="176" ury="478" f="2"><![CDATA[BLATTNER FR ]]></tbox><tbox llx="191" lly="470" urx="229" ury="478" f="2"><![CDATA[SCIENCE, 1997 ]]></tbox><tbox llx="280" lly="470" urx="290" ury="478" f="2"><![CDATA[56 ]]></tbox></line>
+<line><tbox llx="138" lly="464" urx="229" ury="472" f="2"><![CDATA[SCHENA M SCIENCE, 1995 ]]></tbox><tbox llx="280" lly="464" urx="290" ury="472" f="2"><![CDATA[40 ]]></tbox></line>
+<line><tbox llx="138" lly="458" urx="160" ury="466" f="2"><![CDATA[KYTE J ]]></tbox><tbox llx="191" lly="458" urx="290" ury="466" f="2"><![CDATA[J MOL BIOL, 1982 51 ]]></tbox></line>
+<line><tbox llx="138" lly="452" urx="256" ury="460" f="2"><![CDATA[MURASHIGE T PHYSL PLANTARUM , 1962 ]]></tbox><tbox llx="280" lly="452" urx="290" ury="460" f="2"><![CDATA[33 ]]></tbox></line>
+<line><tbox llx="138" lly="446" urx="290" ury="454" f="2"><![CDATA[TOWBIN H P NATL ACAD SCI USA, 1979 86 ]]></tbox></line>
+<line><tbox llx="309" lly="537" urx="420" ury="551" f="1"><![CDATA[Author Journal, Year ]]></tbox><tbox llx="452" lly="537" urx="467" ury="551" f="1"><![CDATA[C ]]></tbox></line>
+<line><tbox llx="310" lly="530" urx="337" ury="538" f="2"><![CDATA[HOGAN B ]]></tbox><tbox llx="364" lly="530" urx="441" ury="538" f="2"><![CDATA[MANIPULATING MOUSE E, 1994 ]]></tbox><tbox llx="453" lly="530" urx="463" ury="538" f="2"><![CDATA[68 ]]></tbox></line>
+<line><tbox llx="310" lly="524" urx="419" ury="532" f="2"><![CDATA[CHOMCZYNSKI P ANAL BIOCHEM, 1987 ]]></tbox><tbox llx="450" lly="524" urx="463" ury="532" f="2"><![CDATA[206 ]]></tbox></line>
+<line><tbox llx="310" lly="518" urx="346" ury="526" f="2"><![CDATA[TALAIRACH J ]]></tbox><tbox llx="364" lly="518" urx="463" ury="526" f="2"><![CDATA[COPLANAR STEREOTAXIC, 1988 60 ]]></tbox></line>
+<line><tbox llx="310" lly="512" urx="463" ury="520" f="2"><![CDATA[PAXINOS G RAT BRAIN STEREOTAXI, 1986 38 ]]></tbox></line>
+<line><tbox llx="310" lly="506" urx="346" ury="514" f="2"><![CDATA[SAMBROOK J ]]></tbox><tbox llx="364" lly="506" urx="463" ury="514" f="2"><![CDATA[MOL CLONING LAB MANU, 1989 764 ]]></tbox></line>
+<line><tbox llx="310" lly="500" urx="333" ury="508" f="2"><![CDATA[NAGY A ]]></tbox><tbox llx="364" lly="500" urx="463" ury="508" f="2"><![CDATA[P NATL ACAD SCI USA, 1993 39 ]]></tbox></line>
+<line><tbox llx="310" lly="494" urx="346" ury="502" f="2"><![CDATA[MANSOUR SL ]]></tbox><tbox llx="364" lly="494" urx="400" ury="502" f="2"><![CDATA[NATURE, 1988 ]]></tbox><tbox llx="453" lly="494" urx="463" ury="502" f="2"><![CDATA[37 ]]></tbox></line>
+<line><tbox llx="310" lly="488" urx="463" ury="496" f="2"><![CDATA[BRAND AH DEVELOPMENT, 1993 46 ]]></tbox></line>
+<line><tbox llx="310" lly="482" urx="337" ury="490" f="2"><![CDATA[HOGAN B ]]></tbox><tbox llx="364" lly="482" urx="441" ury="490" f="2"><![CDATA[MANIPULATING MOUSE E, 1986 ]]></tbox><tbox llx="453" lly="482" urx="463" ury="490" f="2"><![CDATA[32 ]]></tbox></line>
+<line><tbox llx="310" lly="476" urx="394" ury="484" f="2"><![CDATA[TYBULEWICZ VLJ CELL, 1991 ]]></tbox><tbox llx="453" lly="476" urx="463" ury="484" f="2"><![CDATA[46 ]]></tbox></line>
+<line><tbox llx="310" lly="470" urx="342" ury="478" f="2"><![CDATA[KWONG KK ]]></tbox><tbox llx="363" lly="470" urx="433" ury="478" f="2"><![CDATA[P NATL ACAD SCI USA, 1992 ]]></tbox><tbox llx="453" lly="470" urx="462" ury="478" f="2"><![CDATA[24 ]]></tbox></line>
+<line><tbox llx="310" lly="464" urx="394" ury="472" f="2"><![CDATA[DUNLAP JC CELL, 1999 ]]></tbox><tbox llx="453" lly="464" urx="463" ury="472" f="2"><![CDATA[19 ]]></tbox></line>
+<line><tbox llx="310" lly="458" urx="324" ury="466" f="2"><![CDATA[LI E ]]></tbox><tbox llx="364" lly="458" urx="394" ury="466" f="2"><![CDATA[CELL, 1992 ]]></tbox><tbox llx="453" lly="458" urx="463" ury="466" f="2"><![CDATA[35 ]]></tbox></line>
+<line><tbox llx="310" lly="452" urx="463" ury="460" f="2"><![CDATA[ALTSCHUL SF J MOL BIOL, 1990 253 ]]></tbox></line>
+<line><tbox llx="310" lly="446" urx="463" ury="454" f="2"><![CDATA[EISEN MB P NATL ACAD SCI USA, 1998 60 ]]></tbox></line>
+<line><tbox llx="195" lly="424" urx="236" ury="438" f="1"><![CDATA[Aspect 5 ]]></tbox><tbox llx="367" lly="424" urx="409" ury="438" f="1"><![CDATA[Aspect 6 ]]></tbox></line>
+<line><tbox llx="139" lly="411" urx="293" ury="425" f="1"><![CDATA[Author Journal, Year C ]]></tbox></line>
+<line><tbox llx="140" lly="404" urx="288" ury="412" f="2"><![CDATA[KRAULIS PJ J APPL CRYSTALLOGR, 1991 202 ]]></tbox></line>
+<line><tbox llx="140" lly="398" urx="261" ury="406" f="2"><![CDATA[JONES TA ACTA CRYSTALLOGR A, 1991 ]]></tbox><tbox llx="276" lly="398" urx="288" ury="406" f="2"><![CDATA[174 ]]></tbox></line>
+<line><tbox llx="140" lly="392" urx="288" ury="400" f="2"><![CDATA[OTWINOWSKI Z METHOD ENZYMOL, 1997 140 ]]></tbox></line>
+<line><tbox llx="140" lly="386" urx="176" ury="394" f="2"><![CDATA[BRUNGER AT ]]></tbox><tbox llx="189" lly="386" urx="264" ury="394" f="2"><![CDATA[ACTA CRYSTALLOGR D 5, 1998 ]]></tbox><tbox llx="276" lly="386" urx="288" ury="394" f="2"><![CDATA[118 ]]></tbox></line>
+<line><tbox llx="140" lly="380" urx="182" ury="388" f="2"><![CDATA[LASKOWSKI RA ]]></tbox><tbox llx="189" lly="380" urx="288" ury="388" f="2"><![CDATA[J APPL CRYSTALLOGR, 1993 96 ]]></tbox></line>
+<line><tbox llx="140" lly="374" urx="174" ury="382" f="2"><![CDATA[NICHOLLS A ]]></tbox><tbox llx="189" lly="374" urx="230" ury="382" f="2"><![CDATA[PROTEINS, 1991 ]]></tbox><tbox llx="278" lly="374" urx="288" ury="382" f="2"><![CDATA[85 ]]></tbox></line>
+<line><tbox llx="140" lly="368" urx="168" ury="376" f="2"><![CDATA[NAVAZA J ]]></tbox><tbox llx="189" lly="368" urx="261" ury="376" f="2"><![CDATA[ACTA CRYSTALLOGR A, 1994 ]]></tbox><tbox llx="278" lly="368" urx="288" ury="376" f="2"><![CDATA[81 ]]></tbox></line>
+<line><tbox llx="140" lly="362" urx="268" ury="370" f="2"><![CDATA[SAMBROOK J MOL CLONING LAB MANU, 1989 ]]></tbox><tbox llx="275" lly="362" urx="288" ury="370" f="2"><![CDATA[764 ]]></tbox></line>
+<line><tbox llx="140" lly="356" urx="226" ury="364" f="2"><![CDATA[LAEMMLI UK NATURE, 1970 ]]></tbox><tbox llx="276" lly="356" urx="288" ury="364" f="2"><![CDATA[322 ]]></tbox></line>
+<line><tbox llx="140" lly="350" urx="174" ury="358" f="2"><![CDATA[MERRITT EA ]]></tbox><tbox llx="189" lly="350" urx="261" ury="358" f="2"><![CDATA[ACTA CRYSTALLOGR D, 1994 ]]></tbox><tbox llx="278" lly="350" urx="288" ury="358" f="2"><![CDATA[66 ]]></tbox></line>
+<line><tbox llx="140" lly="344" urx="176" ury="352" f="2"><![CDATA[BRUNGER AT ]]></tbox><tbox llx="189" lly="344" urx="226" ury="352" f="2"><![CDATA[NATURE, 1992 ]]></tbox><tbox llx="278" lly="344" urx="288" ury="352" f="2"><![CDATA[48 ]]></tbox></line>
+<line><tbox llx="140" lly="338" urx="288" ury="346" f="2"><![CDATA[BRADFORD MM ANAL BIOCHEM, 1976 209 ]]></tbox></line>
+<line><tbox llx="140" lly="333" urx="174" ury="340" f="2"><![CDATA[MERRITT EA ]]></tbox><tbox llx="189" lly="333" urx="288" ury="340" f="2"><![CDATA[METHOD ENZYMOL, 1997 41 ]]></tbox></line>
+<line><tbox llx="140" lly="327" urx="176" ury="334" f="2"><![CDATA[WUTHRICH K ]]></tbox><tbox llx="189" lly="327" urx="265" ury="334" f="2"><![CDATA[NMR PROTEINS NUCL AC, 1986 ]]></tbox><tbox llx="278" lly="327" urx="288" ury="334" f="2"><![CDATA[40 ]]></tbox></line>
+<line><tbox llx="140" lly="321" urx="241" ury="328" f="2"><![CDATA[KABSCH W BIOPOLYMERS, 1983 ]]></tbox><tbox llx="278" lly="321" urx="288" ury="328" f="2"><![CDATA[39 ]]></tbox></line>
+<line><tbox llx="312" lly="411" urx="417" ury="425" f="1"><![CDATA[Author Journal, Year ]]></tbox><tbox llx="448" lly="411" urx="464" ury="425" f="1"><![CDATA[C ]]></tbox></line>
+<line><tbox llx="313" lly="404" urx="440" ury="412" f="2"><![CDATA[SAMBROOK J MOL CLONING LAB MANU, 1989 ]]></tbox><tbox llx="447" lly="404" urx="459" ury="412" f="2"><![CDATA[764 ]]></tbox></line>
+<line><tbox llx="313" lly="398" urx="348" ury="406" f="2"><![CDATA[SIKORSKI RS ]]></tbox><tbox llx="360" lly="398" urx="459" ury="406" f="2"><![CDATA[GENETICS, 1989 102 ]]></tbox></line>
+<line><tbox llx="313" lly="392" urx="345" ury="400" f="2"><![CDATA[DIGNAM JD ]]></tbox><tbox llx="360" lly="392" urx="425" ury="400" f="2"><![CDATA[NUCLEIC ACIDS RES, 1983 ]]></tbox><tbox llx="449" lly="392" urx="459" ury="400" f="2"><![CDATA[68 ]]></tbox></line>
+<line><tbox llx="313" lly="386" urx="459" ury="394" f="2"><![CDATA[LEVINE AJ CELL, 1997 57 ]]></tbox></line>
+<line><tbox llx="313" lly="380" urx="459" ury="388" f="2"><![CDATA[ELDEIRY WS CELL, 1993 54 ]]></tbox></line>
+<line><tbox llx="313" lly="374" urx="344" ury="382" f="2"><![CDATA[HARLOW E ]]></tbox><tbox llx="360" lly="374" urx="459" ury="382" f="2"><![CDATA[ANTIBODIES LAB MANUA, 1988 129 ]]></tbox></line>
+<line><tbox llx="313" lly="368" urx="345" ury="376" f="2"><![CDATA[HARPER JW ]]></tbox><tbox llx="360" lly="368" urx="459" ury="376" f="2"><![CDATA[CELL, 1993 50 ]]></tbox></line>
+<line><tbox llx="313" lly="362" urx="353" ury="370" f="2"><![CDATA[FRIEDBERG EC ]]></tbox><tbox llx="360" lly="362" urx="438" ury="370" f="2"><![CDATA[DNA REPAIR MUTAGENES, 1995 ]]></tbox><tbox llx="449" lly="362" urx="459" ury="370" f="2"><![CDATA[58 ]]></tbox></line>
+<line><tbox llx="313" lly="356" urx="350" ury="364" f="2"><![CDATA[ALTSCHUL SF ]]></tbox><tbox llx="360" lly="356" urx="403" ury="364" f="2"><![CDATA[J MOL BIOL 1990 ]]></tbox><tbox llx="447" lly="356" urx="459" ury="364" f="2"><![CDATA[253 ]]></tbox></line>
+<line><tbox llx="313" lly="350" urx="459" ury="358" f="2"><![CDATA[OGRYZKO VV CELL, 1996 41 ]]></tbox></line>
+<line><tbox llx="313" lly="344" urx="459" ury="352" f="2"><![CDATA[WEINBERG RA CELL, 1995 40 ]]></tbox></line>
+<line><tbox llx="313" lly="338" urx="459" ury="346" f="2"><![CDATA[KAMEI Y CELL, 1996 39 ]]></tbox></line>
+<line><tbox llx="313" lly="333" urx="351" ury="340" f="2"><![CDATA[HOLLSTEIN M ]]></tbox><tbox llx="360" lly="333" urx="459" ury="340" f="2"><![CDATA[SCIENCE, 1991 41 ]]></tbox></line>
+<line><tbox llx="313" lly="327" urx="459" ury="334" f="2"><![CDATA[FIELDS S NATURE, 1989 67 ]]></tbox></line>
+<line><tbox llx="313" lly="321" urx="459" ury="328" f="2"><![CDATA[YANG XJ NATURE, 1996 37 ]]></tbox></line>
+<line><tbox llx="195" lly="298" urx="236" ury="312" f="1"><![CDATA[Aspect 7 ]]></tbox><tbox llx="367" lly="298" urx="409" ury="312" f="1"><![CDATA[Aspect 8 ]]></tbox></line>
+<line><tbox llx="147" lly="286" urx="251" ury="299" f="1"><![CDATA[Author Journal, Year ]]></tbox><tbox llx="269" lly="286" urx="285" ury="299" f="1"><![CDATA[C ]]></tbox></line>
+<line><tbox llx="147" lly="278" urx="280" ury="286" f="2"><![CDATA[DENG HK NATURE, 1996 46 ]]></tbox></line>
+<line><tbox llx="147" lly="272" urx="231" ury="280" f="2"><![CDATA[DRAGIC T NATURE, 1996 ]]></tbox><tbox llx="271" lly="272" urx="281" ury="280" f="2"><![CDATA[45 ]]></tbox></line>
+<line><tbox llx="147" lly="266" urx="224" ury="274" f="2"><![CDATA[DORANZ BJ CELL, 1996 ]]></tbox><tbox llx="271" lly="266" urx="281" ury="274" f="2"><![CDATA[45 ]]></tbox></line>
+<line><tbox llx="147" lly="260" urx="170" ury="268" f="2"><![CDATA[FENG Y ]]></tbox><tbox llx="195" lly="260" urx="233" ury="268" f="2"><![CDATA[SCIENCE, 1996 ]]></tbox><tbox llx="271" lly="260" urx="281" ury="268" f="2"><![CDATA[43 ]]></tbox></line>
+<line><tbox llx="147" lly="254" urx="233" ury="262" f="2"><![CDATA[ALKHATIB G SCIENCE, 1996 ]]></tbox><tbox llx="271" lly="254" urx="280" ury="262" f="2"><![CDATA[43 ]]></tbox></line>
+<line><tbox llx="147" lly="248" urx="233" ury="256" f="2"><![CDATA[COCCHI F SCIENCE, 1995 ]]></tbox><tbox llx="271" lly="248" urx="281" ury="256" f="2"><![CDATA[41 ]]></tbox></line>
+<line><tbox llx="147" lly="242" urx="224" ury="250" f="2"><![CDATA[CHOE H CELL, 1996 ]]></tbox><tbox llx="271" lly="242" urx="281" ury="250" f="2"><![CDATA[41 ]]></tbox></line>
+<line><tbox llx="147" lly="237" urx="233" ury="244" f="2"><![CDATA[THOMPSON CB SCIENCE, 1995 ]]></tbox><tbox llx="271" lly="237" urx="281" ury="244" f="2"><![CDATA[38 ]]></tbox></line>
+<line><tbox llx="147" lly="231" urx="224" ury="238" f="2"><![CDATA[ZOU H CELL, 1997 ]]></tbox><tbox llx="271" lly="231" urx="281" ury="238" f="2"><![CDATA[40 ]]></tbox></line>
+<line><tbox llx="147" lly="225" urx="182" ury="232" f="2"><![CDATA[DARNELL JE ]]></tbox><tbox llx="195" lly="225" urx="233" ury="232" f="2"><![CDATA[SCIENCE, 1994 ]]></tbox><tbox llx="271" lly="225" urx="281" ury="232" f="2"><![CDATA[40 ]]></tbox></line>
+<line><tbox llx="147" lly="219" urx="224" ury="226" f="2"><![CDATA[MUZIO M CELL, 1996 ]]></tbox><tbox llx="271" lly="219" urx="281" ury="226" f="2"><![CDATA[35 ]]></tbox></line>
+<line><tbox llx="147" lly="213" urx="224" ury="220" f="2"><![CDATA[LI P CELL, 1997 ]]></tbox><tbox llx="271" lly="213" urx="281" ury="220" f="2"><![CDATA[36 ]]></tbox></line>
+<line><tbox llx="147" lly="207" urx="169" ury="214" f="2"><![CDATA[XIA ZG ]]></tbox><tbox llx="195" lly="207" urx="233" ury="214" f="2"><![CDATA[SCIENCE, 1995 ]]></tbox><tbox llx="271" lly="207" urx="281" ury="214" f="2"><![CDATA[38 ]]></tbox></line>
+<line><tbox llx="147" lly="201" urx="281" ury="209" f="2"><![CDATA[BOLDIN MP CELL, 1996 34 ]]></tbox></line>
+<line><tbox llx="147" lly="195" urx="263" ury="203" f="2"><![CDATA[PEAR WS P NATL ACAD SCI USA 1993 ]]></tbox><tbox llx="271" lly="195" urx="281" ury="203" f="2"><![CDATA[57 ]]></tbox></line>
+<line><tbox llx="308" lly="286" urx="430" ury="299" f="1"><![CDATA[Author Journal, Year ]]></tbox><tbox llx="452" lly="286" urx="468" ury="299" f="1"><![CDATA[C ]]></tbox></line>
+<line><tbox llx="309" lly="278" urx="463" ury="286" f="2"><![CDATA[CHOMCZYNSKI P ANAL BIOCHEM, 1987 206 ]]></tbox></line>
+<line><tbox llx="309" lly="272" urx="463" ury="280" f="2"><![CDATA[BRADFORD MM ANAL BIOCHEM, 1976 209 ]]></tbox></line>
+<line><tbox llx="309" lly="266" urx="463" ury="274" f="2"><![CDATA[LAEMMLI UK NATURE, 1970 322 ]]></tbox></line>
+<line><tbox llx="309" lly="260" urx="340" ury="268" f="2"><![CDATA[LOWRY OH ]]></tbox><tbox llx="373" lly="260" urx="463" ury="268" f="2"><![CDATA[J BIOL CHEM, 1951 73 ]]></tbox></line>
+<line><tbox llx="309" lly="254" urx="336" ury="262" f="2"><![CDATA[ZHANG Y ]]></tbox><tbox llx="373" lly="254" urx="464" ury="262" f="2"><![CDATA[NATURE, 1994 31 ]]></tbox></line>
+<line><tbox llx="309" lly="248" urx="463" ury="256" f="2"><![CDATA[KUIPER GGJM P NATL ACAD SCI USA, 1996 27 ]]></tbox></line>
+<line><tbox llx="309" lly="242" urx="463" ury="250" f="2"><![CDATA[SAMBROOK J MOL CLON LAB MANU, 1989 764 ]]></tbox></line>
+<line><tbox llx="309" lly="237" urx="343" ury="244" f="2"><![CDATA[MONCADA S ]]></tbox><tbox llx="373" lly="237" urx="463" ury="244" f="2"><![CDATA[PHARMACOL REV, 1991 25 ]]></tbox></line>
+<line><tbox llx="309" lly="231" urx="463" ury="238" f="2"><![CDATA[PELLEYMOUNTER MA SCIENCE, 1995 23 ]]></tbox></line>
+<line><tbox llx="309" lly="225" urx="464" ury="232" f="2"><![CDATA[CAMPFIELD LA SCIENCE, 1995 23 ]]></tbox></line>
+<line><tbox llx="309" lly="219" urx="463" ury="226" f="2"><![CDATA[KUIPER GGJM ENDOCRINOLOGY, 1997 22 ]]></tbox></line>
+<line><tbox llx="309" lly="213" urx="464" ury="220" f="2"><![CDATA[HALAAS JL SCIENCE, 1995 21 ]]></tbox></line>
+<line><tbox llx="309" lly="207" urx="463" ury="214" f="2"><![CDATA[BLIGH EG CAN J BIOCH PHYSL, 1959 45 ]]></tbox></line>
+<line><tbox llx="309" lly="201" urx="464" ury="209" f="2"><![CDATA[BROWN MS CELL, 1997 28 ]]></tbox></line>
+<line><tbox llx="309" lly="195" urx="339" ury="203" f="2"><![CDATA[ZHANG SH ]]></tbox><tbox llx="373" lly="195" urx="464" ury="203" f="2"><![CDATA[SCIENCE 1992 18 ]]></tbox></line>
+<line><tbox llx="71" lly="163" urx="536" ury="178" f="3"><![CDATA[Table 3: High probability references by aspect. For each aspect, the top references are shown in order of decreasing ]]></tbox></line>
+<line><tbox llx="71" lly="151" urx="536" ury="166" f="3"><![CDATA[probability, according to the model. The count of each reference in the PNAS collection is shown in the rightmost ]]></tbox></line>
+<line><tbox llx="71" lly="139" urx="130" ury="154" f="3"><![CDATA[column (C). ]]></tbox></line>
+<line><tbox llx="293" lly="74" urx="314" ury="89" f="3"><![CDATA[12 ]]></tbox></line>
+<pbox llx="71.00" lly="74.00" urx="536.00" ury="690.00"/></page>
+<page n="13">
+<line><tbox llx="215" lly="410" urx="488" ury="421" f="1"><![CDATA[1 2 3 4 5 6 7 8 ]]></tbox></line>
+<line><tbox llx="157" lly="639" urx="203" ury="650" f="1"><![CDATA[Biochemistry ]]></tbox></line>
+<line><tbox llx="143" lly="621" urx="203" ury="632" f="1"><![CDATA[Medical Sciences ]]></tbox></line>
+<line><tbox llx="156" lly="604" urx="203" ury="614" f="1"><![CDATA[Neurobiology ]]></tbox></line>
+<line><tbox llx="160" lly="586" urx="203" ury="596" f="1"><![CDATA[Cell Biology ]]></tbox></line>
+<line><tbox llx="169" lly="568" urx="203" ury="579" f="1"><![CDATA[Genetics ]]></tbox></line>
+<line><tbox llx="159" lly="550" urx="203" ury="561" f="1"><![CDATA[Immunology ]]></tbox></line>
+<line><tbox llx="164" lly="532" urx="203" ury="543" f="1"><![CDATA[Biophysics ]]></tbox></line>
+<line><tbox llx="168" lly="514" urx="203" ury="525" f="1"><![CDATA[Evolution ]]></tbox></line>
+<line><tbox llx="158" lly="496" urx="203" ury="507" f="1"><![CDATA[Microbiology ]]></tbox></line>
+<line><tbox llx="156" lly="478" urx="203" ury="489" f="1"><![CDATA[Plant Biology ]]></tbox></line>
+<line><tbox llx="127" lly="460" urx="203" ury="471" f="1"><![CDATA[Developmental Biology ]]></tbox></line>
+<line><tbox llx="163" lly="442" urx="203" ury="453" f="1"><![CDATA[Physiology ]]></tbox></line>
+<line><tbox llx="153" lly="425" urx="203" ury="435" f="1"><![CDATA[Pharmacology ]]></tbox></line>
+<line><tbox llx="107" lly="379" urx="485" ury="393" f="2"><![CDATA[Topic 1 2 3 4 5 6 7 8 ]]></tbox></line>
+<line><tbox llx="107" lly="366" urx="495" ury="379" f="2"><![CDATA[Biochemistry 0.0469 0.0347 0.1810 0.0178 0.3838 0.2057 0.0477 0.0823 ]]></tbox></line>
+<line><tbox llx="107" lly="355" urx="180" ury="368" f="2"><![CDATA[Medical Sciences ]]></tbox><tbox llx="205" lly="355" urx="495" ury="368" f="2"><![CDATA[0.0244 0.0502 0.0938 0.1274 0.0181 0.1075 0.3286 0.2500 ]]></tbox></line>
+<line><tbox llx="107" lly="344" urx="495" ury="357" f="2"><![CDATA[Neurobiology 0.2875 0.0398 0.0722 0.3768 0.0196 0.0296 0.0441 0.1304 ]]></tbox></line>
+<line><tbox llx="107" lly="333" urx="163" ury="346" f="2"><![CDATA[Cell Biology ]]></tbox><tbox llx="205" lly="333" urx="495" ury="346" f="2"><![CDATA[0.1691 0.0165 0.1420 0.0684 0.1097 0.2423 0.1637 0.0884 ]]></tbox></line>
+<line><tbox llx="107" lly="322" urx="495" ury="336" f="2"><![CDATA[Genetics 0.0141 0.3056 0.1422 0.1532 0.0487 0.2621 0.0395 0.0347 ]]></tbox></line>
+<line><tbox llx="107" lly="311" urx="495" ury="325" f="2"><![CDATA[Immunology 0.0127 0.0593 0.1003 0.0413 0.0422 0.0915 0.6244 0.0283 ]]></tbox></line>
+<line><tbox llx="107" lly="300" urx="495" ury="314" f="2"><![CDATA[Biophysics 0.0507 0.0295 0.2398 0.0162 0.5496 0.0542 0.0176 0.0423 ]]></tbox></line>
+<line><tbox llx="107" lly="289" urx="495" ury="303" f="2"><![CDATA[Evolution 0.0042 0.7679 0.0465 0.0913 0.0289 0.0378 0.0101 0.0133 ]]></tbox></line>
+<line><tbox llx="107" lly="278" urx="495" ury="292" f="2"><![CDATA[Microbiology 0.0158 0.1725 0.3431 0.0335 0.0647 0.1174 0.1870 0.0661 ]]></tbox></line>
+<line><tbox llx="107" lly="267" urx="167" ury="281" f="2"><![CDATA[Plant Biology ]]></tbox><tbox llx="205" lly="267" urx="495" ury="281" f="2"><![CDATA[0.1333 0.0983 0.4400 0.0360 0.0462 0.0954 0.0166 0.1344 ]]></tbox></line>
+<line><tbox llx="107" lly="256" urx="203" ury="270" f="2"><![CDATA[Developmental Biology ]]></tbox><tbox llx="205" lly="256" urx="495" ury="270" f="2"><![CDATA[0.0475 0.0288 0.1071 0.3729 0.0274 0.2558 0.0974 0.0631 ]]></tbox></line>
+<line><tbox llx="107" lly="245" urx="495" ury="259" f="2"><![CDATA[Physiology 0.3179 0.0275 0.0712 0.1123 0.0258 0.0116 0.0595 0.3743 ]]></tbox></line>
+<line><tbox llx="107" lly="234" urx="495" ury="248" f="2"><![CDATA[Pharmacology 0.2883 0.0161 0.0772 0.1965 0.0299 0.0349 0.0537 0.3033 ]]></tbox></line>
+<line><tbox llx="71" lly="203" urx="536" ury="218" f="3"><![CDATA[Table 4: Mean decompositions of aspect membership scores (bottom), together with a graphical representation ]]></tbox></line>
+<line><tbox llx="71" lly="191" urx="155" ury="206" f="3"><![CDATA[of this table (top). ]]></tbox><tbox llx="149" lly="191" urx="536" ury="206" f="3"><![CDATA[For clarity, the six lowest frequency topics, which make up 3.4% of the Biological Sciences ]]></tbox></line>
+<line><tbox llx="71" lly="179" urx="174" ury="194" f="3"><![CDATA[articles, are not shown. ]]></tbox></line>
+<line><tbox llx="293" lly="74" urx="314" ury="89" f="3"><![CDATA[13]]></tbox></line>
+<pbox llx="71.00" lly="74.00" urx="536.00" ury="650.00"/></page>
+<fonts>
+<font name="Helvetica" h="9.79" n="1"/>
+<font name="Times-Roman" h="12.36" n="2"/>
+<font name="Times-Roman" h="13.73" n="3"/>
+<font name="Times-Roman" h="12.36" n="4"/>
+<font name="Times-Italic" h="12.53" n="5"/>
+<font name="Times-Bold" h="13.43" n="6"/>
+<font name="Helvetica" h="0.00" n="7"/>
+<font name="Helvetica" h="7.09" n="8"/>
+<font name="Helvetica" h="0.00" n="9"/>
+<font name="Helvetica" h="7.09" n="10"/>
+<font name="Helvetica" h="0.00" n="11"/>
+<font name="Helvetica" h="7.09" n="12"/>
+<font name="Helvetica" h="0.00" n="13"/>
+<font name="Helvetica" h="7.09" n="14"/>
+<font name="Helvetica" h="0.00" n="15"/>
+<font name="Helvetica" h="7.09" n="16"/>
+<font name="Helvetica" h="0.00" n="17"/>
+<font name="Helvetica" h="10.63" n="18"/>
+<font name="Helvetica" h="7.09" n="19"/>
+<font name="Helvetica" h="0.00" n="20"/>
+<font name="Helvetica" h="7.09" n="21"/>
+<font name="Helvetica" h="0.00" n="22"/>
+<font name="Helvetica" h="7.09" n="23"/>
+<font name="Helvetica" h="0.00" n="24"/>
+<font name="Helvetica" h="7.09" n="25"/>
+<font name="Helvetica" h="0.00" n="26"/>
+<font name="Helvetica" h="7.09" n="27"/>
+<font name="Helvetica" h="0.00" n="28"/>
+<font name="Helvetica" h="7.09" n="29"/>
+<font name="Helvetica" h="0.00" n="30"/>
+<font name="Helvetica" h="7.09" n="31"/>
+<font name="Helvetica" h="0.00" n="32"/>
+<font name="Helvetica" h="7.09" n="33"/>
+<font name="Helvetica" h="0.00" n="34"/>
+<font name="Helvetica" h="7.09" n="35"/>
+<font name="Helvetica" h="0.00" n="36"/>
+<font name="Helvetica" h="7.09" n="37"/>
+<font name="Helvetica" h="0.00" n="38"/>
+<font name="Helvetica" h="7.09" n="39"/>
+<font name="Helvetica" h="0.00" n="40"/>
+<font name="Helvetica" h="7.09" n="41"/>
+<font name="Helvetica" h="0.00" n="42"/>
+<font name="Helvetica" h="7.09" n="43"/>
+<font name="Helvetica" h="0.00" n="44"/>
+<font name="Helvetica" h="7.09" n="45"/>
+<font name="Helvetica" h="0.00" n="46"/>
+<font name="Helvetica" h="7.09" n="47"/>
+<font name="Helvetica" h="0.00" n="48"/>
+<font name="Helvetica" h="7.09" n="49"/>
+<font name="Helvetica" h="0.00" n="50"/>
+<font name="Helvetica" h="7.09" n="51"/>
+<font name="Helvetica" h="0.00" n="52"/>
+<font name="Helvetica" h="7.09" n="53"/>
+<font name="Helvetica" h="0.00" n="54"/>
+<font name="Helvetica" h="7.09" n="55"/>
+<font name="Helvetica" h="0.00" n="56"/>
+<font name="Helvetica" h="7.09" n="57"/>
+<font name="Helvetica" h="0.00" n="58"/>
+<font name="Helvetica" h="7.09" n="59"/>
+<font name="Helvetica" h="0.00" n="60"/>
+<font name="Helvetica" h="7.09" n="61"/>
+<font name="Helvetica" h="0.00" n="62"/>
+<font name="Helvetica" h="7.09" n="63"/>
+<font name="Helvetica" h="0.00" n="64"/>
+<font name="Helvetica" h="7.09" n="65"/>
+<font name="Helvetica" h="0.00" n="66"/>
+<font name="Times-Roman" h="13.73" n="67"/>
+<font name="ZYVLTH+CMMI10" h="9.96" n="68"/>
+<font name="ERUOBJ+CMR7" h="6.97" n="69"/>
+<font name="AIGBBX+CMR10" h="12.14" n="70"/>
+</fonts>
+</document>

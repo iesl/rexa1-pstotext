@@ -1,0 +1,37 @@
+<project name="rexo" default="compile" basedir=".">
+  <description>pstotext (part of rexa.info project)</description>
+
+  <property name="dist.pstotext" value="dist-pstotext"/>
+
+  <target
+      name="dist"
+      description="create distribution file set">
+    
+    <delete dir="${dist.pstotext}"/>
+    <mkdir dir="${dist.pstotext}"/>
+    <mkdir dir="${dist.pstotext}/bin"/>
+
+    <exec executable="bin/setup"/>
+
+    <copy todir="${dist.pstotext}/bin">
+      <fileset dir="bin">
+	<include name="idftype"/>
+	<include name="ligatures.txt"/>
+	<include name="pstotext"/>
+	<include name="sha2path.pl"/>
+	<include name="totext"/>
+      </fileset>
+    </copy>
+
+    <exec executable="chmod">
+      <arg value="755"/>
+	<arg value="${dist.pstotext}/bin/idftype"/>
+	<arg value="${dist.pstotext}/bin/pstotext"/>
+	<arg value="${dist.pstotext}/bin/sha2path.pl"/>
+	<arg value="${dist.pstotext}/bin/totext"/>
+    </exec>
+  </target>
+
+</project>
+
+

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+<page n="1">
+<line><tbox llx="95" lly="668" urx="516" ury="685" f="1"><![CDATA[Analysis-by-Synthesis Algorithms for Low Bit Rate Coding ]]></tbox></line>
+<line><tbox llx="245" lly="641" urx="362" ury="653" f="2"><![CDATA[G. Riccardi, G.A Mian ]]></tbox></line>
+<line><tbox llx="143" lly="628" urx="464" ury="640" f="2"><![CDATA[Dipartimento di Elettronica ed Informatica, Universit#adiPadova ]]></tbox></line>
+<line><tbox llx="202" lly="616" urx="405" ury="627" f="2"><![CDATA[Via Gradenigo 6/A, 35131 Padova, Italy. ]]></tbox></line>
+<line><tbox llx="223" lly="603" urx="383" ury="614" f="2"><![CDATA[E-mail: dsp3@paola.dei.unipd.it ]]></tbox></line>
+<line><tbox llx="243" lly="590" urx="365" ury="601" f="2"><![CDATA[tel. +00-39-49-8287637, ]]></tbox></line>
+<line><tbox llx="245" lly="577" urx="363" ury="588" f="2"><![CDATA[fax +00-39-49-8287699 ]]></tbox></line>
+<line><tbox llx="85" lly="555" urx="522" ury="566" f="3"><![CDATA[Keywords : Low bit-rate coding, Analysis-by-Synthesis, Prototype, Fractional Delay Pitch. ]]></tbox></line>
+<line><tbox llx="135" lly="528" urx="213" ury="538" f="4"><![CDATA[ABSTRACT ]]></tbox></line>
+<line><tbox llx="50" lly="511" urx="295" ury="522" f="5"><![CDATA[In speech coding at low bit-rates, the computation of ]]></tbox></line>
+<line><tbox llx="50" lly="499" urx="295" ury="510" f="5"><![CDATA[a robust excitation signal is a key point, whichchar- ]]></tbox></line>
+<line><tbox llx="50" lly="487" urx="295" ury="498" f="5"><![CDATA[acterizes the perceptive quality provided byavocoder. ]]></tbox></line>
+<line><tbox llx="50" lly="475" urx="295" ury="486" f="5"><![CDATA[Recently a lot of work has been done in this direction, ]]></tbox></line>
+<line><tbox llx="50" lly="463" urx="295" ury="474" f="5"><![CDATA[namely for good quality and coding efficiency in the ]]></tbox></line>
+<line><tbox llx="50" lly="451" urx="295" ury="462" f="5"><![CDATA[design of vocoders [4-6]. This work proposes a set of ]]></tbox></line>
+<line><tbox llx="50" lly="439" urx="295" ury="450" f="5"><![CDATA[algorithms which apply the rationale of the Analysis- ]]></tbox></line>
+<line><tbox llx="50" lly="427" urx="295" ury="438" f="5"><![CDATA[by-Synthesis together with High Resolution technique ]]></tbox></line>
+<line><tbox llx="50" lly="415" urx="295" ury="426" f="5"><![CDATA[to low-bit rate coding. In the following we shall call ]]></tbox></line>
+<line><tbox llx="50" lly="404" urx="295" ury="415" f="5"><![CDATA[this technique High Resolution Analysis-by-Synthesis ]]></tbox></line>
+<line><tbox llx="50" lly="392" urx="295" ury="403" f="5"><![CDATA[(HRAS). As a whole this method provides a precise ]]></tbox></line>
+<line><tbox llx="50" lly="380" urx="295" ury="391" f="5"><![CDATA[Analysis parameter estimation and a detailed excita- ]]></tbox></line>
+<line><tbox llx="50" lly="368" urx="235" ury="379" f="5"><![CDATA[tion signal used in signal reconstruction. ]]></tbox></line>
+<line><tbox llx="88" lly="355" urx="260" ury="365" f="4"><![CDATA[1. THE HRAS TECHNIQUE ]]></tbox></line>
+<line><tbox llx="60" lly="339" urx="295" ury="350" f="5"><![CDATA[The high resolution analysis is based on the ''frac- ]]></tbox></line>
+<line><tbox llx="50" lly="327" urx="295" ury="338" f="5"><![CDATA[tional'' pitch technique, introduced in [1,2]. The syn- ]]></tbox></line>
+<line><tbox llx="50" lly="315" urx="295" ury="326" f="5"><![CDATA[thesis in HRAS, is provided bytwotypes of excita- ]]></tbox></line>
+<line><tbox llx="50" lly="303" urx="295" ury="314" f="5"><![CDATA[tion signals: a train of prototypes at pitch distance, ]]></tbox></line>
+<line><tbox llx="51" lly="291" urx="80" ury="301" f="6"><![CDATA[#(n) ]]></tbox><tbox llx="74" lly="291" urx="247" ury="302" f="5"><![CDATA[and a stochastic codebook excitation, ]]></tbox><tbox llx="243" lly="291" urx="275" ury="301" f="6"><![CDATA[#(n). ]]></tbox><tbox llx="270" lly="291" urx="295" ury="302" f="5"><![CDATA[The ]]></tbox></line>
+<line><tbox llx="50" lly="279" urx="82" ury="290" f="5"><![CDATA[input ]]></tbox><tbox llx="79" lly="279" urx="108" ury="289" f="6"><![CDATA[#(n) ]]></tbox><tbox llx="103" lly="279" urx="296" ury="290" f="5"><![CDATA[is used as the second orthogonal compo- ]]></tbox></line>
+<line><tbox llx="50" lly="267" urx="295" ury="278" f="5"><![CDATA[nent of the total excitation. The proposed work deals ]]></tbox></line>
+<line><tbox llx="50" lly="255" urx="295" ury="266" f="5"><![CDATA[with algorithms for the computation of the component ]]></tbox></line>
+<line><tbox llx="51" lly="244" urx="83" ury="254" f="6"><![CDATA[#(n), ]]></tbox><tbox llx="78" lly="243" urx="295" ury="254" f="5"><![CDATA[which is related to the high resolution task in ]]></tbox></line>
+<line><tbox llx="50" lly="231" urx="295" ury="242" f="5"><![CDATA[the signal reconstruction process. To this purpose an ]]></tbox></line>
+<line><tbox llx="50" lly="219" urx="145" ury="230" f="5"><![CDATA[enhanced excitation ]]></tbox><tbox llx="140" lly="220" urx="220" ury="230" f="6"><![CDATA[#(n)isprovided ]]></tbox><tbox llx="213" lly="219" urx="295" ury="230" f="5"><![CDATA[by a train of pro- ]]></tbox></line>
+<line><tbox llx="50" lly="207" urx="295" ury="218" f="5"><![CDATA[totypes which are adapted at each pitch period on a ]]></tbox></line>
+<line><tbox llx="50" lly="195" urx="152" ury="206" f="5"><![CDATA[frame-by-frame basis: ]]></tbox></line>
+<line><tbox llx="66" lly="152" urx="95" ury="162" f="6"><![CDATA[#(n) ]]></tbox><tbox llx="95" lly="152" urx="111" ury="163" f="5"><![CDATA[= ]]></tbox></line>
+<line><tbox llx="113" lly="166" urx="139" ury="174" f="7"><![CDATA[bN=M c, ]]></tbox><tbox llx="146" lly="167" urx="154" ury="173" f="9"><![CDATA[1 ]]></tbox></line>
+<line><tbox llx="125" lly="150" urx="151" ury="165" f="10"><![CDATA[X ]]></tbox></line>
+<line><tbox llx="125" lly="141" urx="144" ury="149" f="8"><![CDATA[i=0 ]]></tbox></line>
+<line><tbox llx="157" lly="165" urx="169" ury="173" f="8"><![CDATA[L ]]></tbox></line>
+<line><tbox llx="153" lly="150" urx="180" ury="165" f="10"><![CDATA[X ]]></tbox></line>
+<line><tbox llx="149" lly="141" urx="166" ury="149" f="8"><![CDATA[j= ]]></tbox><tbox llx="159" lly="140" urx="163" ury="149" f="7"><![CDATA[, ]]></tbox><tbox llx="165" lly="141" urx="177" ury="149" f="8"><![CDATA[L ]]></tbox></line>
+<line><tbox llx="172" lly="152" urx="186" ury="162" f="6"><![CDATA[# ]]></tbox><tbox llx="177" lly="151" urx="193" ury="159" f="8"><![CDATA[i;j ]]></tbox></line>
+<line><tbox llx="0" lly="69" urx="194" ury="163" f="5"><![CDATA[(n)#(n, ]]></tbox><tbox llx="222" lly="152" urx="237" ury="162" f="6"><![CDATA[n ]]></tbox><tbox llx="229" lly="153" urx="237" ury="158" f="9"><![CDATA[0 ]]></tbox><tbox llx="230" lly="150" urx="239" ury="162" f="11"><![CDATA[, ]]></tbox><tbox llx="242" lly="152" urx="264" ury="162" f="6"><![CDATA[iM ]]></tbox><tbox llx="252" lly="152" urx="262" ury="162" f="11"><![CDATA[, ]]></tbox><tbox llx="264" lly="152" urx="282" ury="162" f="6"><![CDATA[j) ]]></tbox><tbox llx="275" lly="152" urx="295" ury="163" f="5"><![CDATA[(1) ]]></tbox></line>
+<line><tbox llx="60" lly="118" urx="295" ury="129" f="5"><![CDATA[where N is the length of the synthesis frame and M ]]></tbox></line>
+<line><tbox llx="50" lly="106" urx="295" ury="117" f="5"><![CDATA[the pitch lag estimated in the analysis step. The syn- ]]></tbox></line>
+<line><tbox llx="50" lly="94" urx="149" ury="106" f="5"><![CDATA[thesis parameters L, ]]></tbox><tbox llx="146" lly="95" urx="161" ury="105" f="6"><![CDATA[n ]]></tbox><tbox llx="152" lly="96" urx="160" ury="101" f="9"><![CDATA[0 ]]></tbox><tbox llx="156" lly="94" urx="167" ury="106" f="5"><![CDATA[, ]]></tbox><tbox llx="163" lly="95" urx="178" ury="105" f="6"><![CDATA[# ]]></tbox><tbox llx="168" lly="94" urx="184" ury="102" f="8"><![CDATA[i;j ]]></tbox><tbox llx="177" lly="94" urx="295" ury="106" f="5"><![CDATA[(n) are, respectively, the ]]></tbox></line>
+<line><tbox llx="50" lly="82" urx="295" ury="94" f="5"><![CDATA[temporal extension of each prototype waveform, the ]]></tbox></line>
+<line><tbox llx="50" lly="70" urx="295" ury="82" f="5"><![CDATA[corresponding phase term and the long term excitation. ]]></tbox></line>
+<line><tbox llx="310" lly="527" urx="555" ury="538" f="5"><![CDATA[The latter parameters should be computed through the ]]></tbox></line>
+<line><tbox llx="310" lly="515" urx="555" ury="526" f="5"><![CDATA[minimization of the weighted reconstruction error en- ]]></tbox></line>
+<line><tbox llx="310" lly="503" urx="449" ury="514" f="5"><![CDATA[ergy over the synthesis frame: ]]></tbox></line>
+<line><tbox llx="334" lly="462" urx="361" ury="473" f="6"><![CDATA[min ]]></tbox></line>
+<line><tbox llx="333" lly="450" urx="359" ury="459" f="8"><![CDATA[n0 ;i;j ]]></tbox></line>
+<line><tbox llx="360" lly="460" urx="387" ury="475" f="10"><![CDATA[X ]]></tbox></line>
+<line><tbox llx="364" lly="451" urx="376" ury="459" f="8"><![CDATA[n ]]></tbox></line>
+<line><tbox llx="376" lly="462" urx="392" ury="473" f="5"><![CDATA[(~y ]]></tbox><tbox llx="385" lly="461" urx="397" ury="469" f="8"><![CDATA[w ]]></tbox><tbox llx="391" lly="462" urx="413" ury="473" f="5"><![CDATA[(n), ]]></tbox></line>
+<line><tbox llx="347" lly="423" urx="363" ury="434" f="5"><![CDATA[+ ]]></tbox></line>
+<line><tbox llx="347" lly="437" urx="373" ury="445" f="7"><![CDATA[bN=M c, ]]></tbox><tbox llx="380" lly="439" urx="388" ury="444" f="9"><![CDATA[1 ]]></tbox></line>
+<line><tbox llx="359" lly="421" urx="385" ury="436" f="10"><![CDATA[X ]]></tbox></line>
+<line><tbox llx="359" lly="412" urx="378" ury="420" f="8"><![CDATA[i=0 ]]></tbox></line>
+<line><tbox llx="390" lly="436" urx="402" ury="444" f="8"><![CDATA[L ]]></tbox></line>
+<line><tbox llx="386" lly="421" urx="412" ury="436" f="10"><![CDATA[X ]]></tbox></line>
+<line><tbox llx="381" lly="412" urx="398" ury="420" f="8"><![CDATA[j= ]]></tbox><tbox llx="391" lly="412" urx="396" ury="420" f="7"><![CDATA[, ]]></tbox><tbox llx="397" lly="412" urx="410" ury="420" f="8"><![CDATA[L ]]></tbox></line>
+<line><tbox llx="402" lly="423" urx="416" ury="433" f="6"><![CDATA[# ]]></tbox><tbox llx="406" lly="422" urx="422" ury="430" f="8"><![CDATA[i;j ]]></tbox><tbox llx="415" lly="421" urx="459" ury="434" f="5"><![CDATA[(n)hw (n ]]></tbox><tbox llx="449" lly="423" urx="460" ury="433" f="11"><![CDATA[, ]]></tbox><tbox llx="464" lly="423" urx="479" ury="433" f="6"><![CDATA[n ]]></tbox><tbox llx="470" lly="424" urx="478" ury="430" f="9"><![CDATA[0 ]]></tbox><tbox llx="472" lly="422" urx="483" ury="433" f="11"><![CDATA[, ]]></tbox><tbox llx="487" lly="423" urx="509" ury="433" f="6"><![CDATA[iM ]]></tbox><tbox llx="497" lly="423" urx="509" ury="433" f="11"><![CDATA[, ]]></tbox><tbox llx="513" lly="423" urx="534" ury="433" f="6"><![CDATA[j)) ]]></tbox><tbox llx="526" lly="430" urx="533" ury="435" f="9"><![CDATA[2 ]]></tbox></line>
+<line><tbox llx="534" lly="423" urx="555" ury="434" f="5"><![CDATA[(2) ]]></tbox></line>
+<line><tbox llx="310" lly="392" urx="343" ury="403" f="5"><![CDATA[where ]]></tbox><tbox llx="340" lly="391" urx="360" ury="402" f="6"><![CDATA[hw ]]></tbox><tbox llx="351" lly="392" urx="555" ury="403" f="5"><![CDATA[(n) is the weighted pulse response of the all- ]]></tbox></line>
+<line><tbox llx="310" lly="380" urx="368" ury="391" f="5"><![CDATA[pole model, ]]></tbox><tbox llx="363" lly="380" urx="376" ury="391" f="5"><![CDATA[~ ]]></tbox><tbox llx="363" lly="380" urx="377" ury="390" f="6"><![CDATA[y ]]></tbox><tbox llx="367" lly="379" urx="380" ury="387" f="8"><![CDATA[w ]]></tbox><tbox llx="373" lly="378" urx="433" ury="391" f="5"><![CDATA[(n)=yw (n) ]]></tbox><tbox llx="424" lly="380" urx="432" ury="390" f="11"><![CDATA[, ]]></tbox><tbox llx="435" lly="380" urx="449" ury="390" f="6"><![CDATA[y ]]></tbox><tbox llx="439" lly="379" urx="456" ury="387" f="8"><![CDATA[w0 ]]></tbox><tbox llx="450" lly="380" urx="555" ury="391" f="5"><![CDATA[(n) is the weighted dif- ]]></tbox></line>
+<line><tbox llx="310" lly="368" urx="555" ury="379" f="5"><![CDATA[ference between the original signal,y(n), and the term ]]></tbox></line>
+<line><tbox llx="310" lly="356" urx="417" ury="367" f="5"><![CDATA[due to the free response ]]></tbox><tbox llx="413" lly="357" urx="426" ury="367" f="6"><![CDATA[y ]]></tbox><tbox llx="418" lly="357" urx="426" ury="363" f="9"><![CDATA[0 ]]></tbox><tbox llx="421" lly="356" urx="459" ury="367" f="5"><![CDATA[(n) [3]. ]]></tbox><tbox llx="455" lly="356" urx="555" ury="367" f="5"><![CDATA[Aweighting filter was ]]></tbox></line>
+<line><tbox llx="310" lly="344" urx="555" ury="355" f="5"><![CDATA[chosen according to perceptive considerations given in ]]></tbox></line>
+<line><tbox llx="310" lly="332" urx="555" ury="343" f="5"><![CDATA[[7]. No closed solution exists for the corresponding so- ]]></tbox></line>
+<line><tbox llx="310" lly="320" urx="555" ury="331" f="5"><![CDATA[lution of equation (2), which results almost irresolvable ]]></tbox></line>
+<line><tbox llx="310" lly="308" urx="555" ury="319" f="5"><![CDATA[for real time applications.Hence different sub-optimal ]]></tbox></line>
+<line><tbox llx="310" lly="296" urx="555" ury="307" f="5"><![CDATA[procedures can be tried according to hypothesis applied ]]></tbox></line>
+<line><tbox llx="310" lly="284" urx="555" ury="295" f="5"><![CDATA[to the signal reconstruction process. Three approaches ]]></tbox></line>
+<line><tbox llx="310" lly="272" urx="394" ury="283" f="5"><![CDATA[will be presented. ]]></tbox></line>
+<line><tbox llx="339" lly="253" urx="555" ury="264" f="5"><![CDATA[1. The first method is based on the assumption ]]></tbox></line>
+<line><tbox llx="352" lly="241" urx="555" ury="252" f="5"><![CDATA[that the signal in the analysis frame (usu- ]]></tbox></line>
+<line><tbox llx="352" lly="229" urx="555" ury="240" f="5"><![CDATA[ally in the range 20-30 ms) is not stationary. ]]></tbox></line>
+<line><tbox llx="352" lly="217" urx="555" ury="228" f="5"><![CDATA[In this case each prototype is computed tak- ]]></tbox></line>
+<line><tbox llx="352" lly="205" urx="555" ury="216" f="5"><![CDATA[ing into account the contribution of the past ]]></tbox></line>
+<line><tbox llx="352" lly="193" urx="555" ury="204" f="5"><![CDATA[prototypes.This way the computation of each ]]></tbox></line>
+<line><tbox llx="352" lly="181" urx="555" ury="192" f="5"><![CDATA[prototype results in a sequence of minimiza- ]]></tbox></line>
+<line><tbox llx="352" lly="169" urx="555" ury="180" f="5"><![CDATA[tion problems (and into the solution of the ]]></tbox></line>
+<line><tbox llx="352" lly="157" urx="555" ury="168" f="5"><![CDATA[corresponding linear systems) associated to ]]></tbox></line>
+<line><tbox llx="352" lly="146" urx="438" ury="157" f="5"><![CDATA[each pitch period. ]]></tbox></line>
+<line><tbox llx="339" lly="130" urx="555" ury="141" f="5"><![CDATA[2. As for the second approach, the station- ]]></tbox></line>
+<line><tbox llx="352" lly="118" urx="555" ury="129" f="5"><![CDATA[ary hypothesis within the analysis frame is ]]></tbox></line>
+<line><tbox llx="352" lly="106" urx="555" ury="117" f="5"><![CDATA[used for efficient modeling of the prototype ]]></tbox></line>
+<line><tbox llx="352" lly="94" urx="478" ury="106" f="5"><![CDATA[train. Thus the excitation ]]></tbox><tbox llx="475" lly="95" urx="504" ury="105" f="6"><![CDATA[#(n) ]]></tbox><tbox llx="498" lly="94" urx="555" ury="106" f="5"><![CDATA[is obtained ]]></tbox></line>
+<line><tbox llx="352" lly="82" urx="555" ury="94" f="5"><![CDATA[by means of a gain vector modulating a pro- ]]></tbox></line>
+<line><tbox llx="352" lly="70" urx="555" ury="82" f="5"><![CDATA[totype associated to the processed frame. As ]]></tbox></line>
+<line><tbox llx="296" lly="41" urx="309" ury="52" f="5"><![CDATA[1 ]]></tbox></line>
+<pbox llx="0.00" lly="41.00" urx="555.00" ury="685.00"/></page>
+<page n="2">
+<line><tbox llx="74" lly="595" urx="281" ury="605" f="1"><![CDATA[0 100 200 300 400 500 600 ]]></tbox></line>
+<line><tbox llx="59" lly="601" urx="81" ury="611" f="1"><![CDATA[-6000 ]]></tbox></line>
+<line><tbox llx="59" lly="607" urx="81" ury="617" f="1"><![CDATA[-4000 ]]></tbox></line>
+<line><tbox llx="59" lly="613" urx="81" ury="624" f="1"><![CDATA[-2000 ]]></tbox></line>
+<line><tbox llx="71" lly="620" urx="81" ury="630" f="1"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="61" lly="626" urx="81" ury="637" f="1"><![CDATA[2000 ]]></tbox></line>
+<line><tbox llx="61" lly="633" urx="81" ury="643" f="1"><![CDATA[4000 ]]></tbox></line>
+<line><tbox llx="74" lly="653" urx="281" ury="663" f="1"><![CDATA[0 100 200 300 400 500 600 ]]></tbox></line>
+<line><tbox llx="59" lly="659" urx="81" ury="669" f="1"><![CDATA[-6000 ]]></tbox></line>
+<line><tbox llx="59" lly="666" urx="81" ury="676" f="1"><![CDATA[-4000 ]]></tbox></line>
+<line><tbox llx="59" lly="672" urx="81" ury="682" f="1"><![CDATA[-2000 ]]></tbox></line>
+<line><tbox llx="71" lly="679" urx="81" ury="689" f="1"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="61" lly="685" urx="81" ury="695" f="1"><![CDATA[2000 ]]></tbox></line>
+<line><tbox llx="61" lly="692" urx="81" ury="702" f="1"><![CDATA[4000 ]]></tbox></line>
+<line><tbox llx="74" lly="536" urx="281" ury="546" f="1"><![CDATA[0 100 200 300 400 500 600 ]]></tbox></line>
+<line><tbox llx="59" lly="542" urx="81" ury="552" f="1"><![CDATA[-6000 ]]></tbox></line>
+<line><tbox llx="59" lly="548" urx="81" ury="558" f="1"><![CDATA[-4000 ]]></tbox></line>
+<line><tbox llx="59" lly="555" urx="81" ury="565" f="1"><![CDATA[-2000 ]]></tbox></line>
+<line><tbox llx="71" lly="561" urx="81" ury="571" f="1"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="61" lly="568" urx="81" ury="578" f="1"><![CDATA[2000 ]]></tbox></line>
+<line><tbox llx="61" lly="574" urx="81" ury="584" f="1"><![CDATA[4000 ]]></tbox></line>
+<line><tbox llx="77" lly="698" urx="103" ury="708" f="1"><![CDATA[original ]]></tbox></line>
+<line><tbox llx="77" lly="640" urx="115" ury="650" f="1"><![CDATA[synthesized ]]></tbox></line>
+<line><tbox llx="77" lly="582" urx="122" ury="592" f="1"><![CDATA[prototype train ]]></tbox></line>
+<line><tbox llx="51" lly="505" urx="98" ury="515" f="2"><![CDATA[Figure 1: ]]></tbox><tbox llx="97" lly="505" urx="296" ury="515" f="3"><![CDATA[Plot of original , synthesized and prototype sig- ]]></tbox></line>
+<line><tbox llx="51" lly="495" urx="220" ury="505" f="3"><![CDATA[nal computed with algorithm 3 (L=15). ]]></tbox></line>
+<line><tbox llx="92" lly="467" urx="295" ury="478" f="4"><![CDATA[opposed to the first method the error energy ]]></tbox></line>
+<line><tbox llx="92" lly="455" urx="296" ury="466" f="4"><![CDATA[minimization is carried out all along the anal- ]]></tbox></line>
+<line><tbox llx="92" lly="443" urx="295" ury="454" f="4"><![CDATA[ysis frame and the prototype is derived by the ]]></tbox></line>
+<line><tbox llx="92" lly="431" urx="254" ury="442" f="4"><![CDATA[solution of only two linear systems. ]]></tbox></line>
+<line><tbox llx="80" lly="415" urx="295" ury="426" f="4"><![CDATA[3. In the third procedure no assumptions are ]]></tbox></line>
+<line><tbox llx="92" lly="403" urx="296" ury="414" f="4"><![CDATA[made on the nature of the excitation signal ]]></tbox></line>
+<line><tbox llx="93" lly="391" urx="125" ury="401" f="5"><![CDATA[#(n). ]]></tbox><tbox llx="119" lly="391" urx="295" ury="402" f="4"><![CDATA[This approach turns out to be the best ]]></tbox></line>
+<line><tbox llx="92" lly="379" urx="295" ury="390" f="4"><![CDATA[solution for the minimization problem stated ]]></tbox></line>
+<line><tbox llx="92" lly="367" urx="295" ury="378" f="4"><![CDATA[in equation (2), compared to the other two ]]></tbox></line>
+<line><tbox llx="92" lly="355" urx="296" ury="366" f="4"><![CDATA[methods, but it has a greater computational ]]></tbox></line>
+<line><tbox llx="92" lly="343" urx="197" ury="354" f="4"><![CDATA[cost. The coefficients ]]></tbox><tbox llx="194" lly="343" urx="208" ury="353" f="5"><![CDATA[# ]]></tbox><tbox llx="198" lly="342" urx="214" ury="350" f="6"><![CDATA[i;j ]]></tbox><tbox llx="212" lly="343" urx="295" ury="354" f="4"><![CDATA[are computed by ]]></tbox></line>
+<line><tbox llx="92" lly="331" urx="280" ury="342" f="4"><![CDATA[means of a closed form, once the terms ]]></tbox><tbox llx="277" lly="332" urx="293" ury="342" f="5"><![CDATA[n ]]></tbox><tbox llx="284" lly="332" urx="292" ury="338" f="7"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="92" lly="319" urx="117" ury="330" f="4"><![CDATA[and ]]></tbox><tbox llx="113" lly="320" urx="129" ury="330" f="5"><![CDATA[L ]]></tbox><tbox llx="123" lly="319" urx="295" ury="330" f="4"><![CDATA[are derived with a suboptimal proce- ]]></tbox></line>
+<line><tbox llx="92" lly="307" urx="296" ury="318" f="4"><![CDATA[dure. The adaptive structure of the signal ]]></tbox></line>
+<line><tbox llx="93" lly="296" urx="122" ury="306" f="5"><![CDATA[#(n) ]]></tbox><tbox llx="115" lly="295" urx="295" ury="306" f="4"><![CDATA[makes it possible to recover not only the ]]></tbox></line>
+<line><tbox llx="92" lly="283" urx="296" ury="294" f="4"><![CDATA[matching errors between the estimated anal- ]]></tbox></line>
+<line><tbox llx="92" lly="271" urx="295" ury="282" f="4"><![CDATA[ysis parameters and the reference signal to be ]]></tbox></line>
+<line><tbox llx="92" lly="259" urx="296" ury="270" f="4"><![CDATA[synthesized,but also the slowly time-varying ]]></tbox></line>
+<line><tbox llx="92" lly="247" urx="295" ury="258" f="4"><![CDATA[parameters of voice signal.Fig. 1 shows the ]]></tbox></line>
+<line><tbox llx="92" lly="235" urx="259" ury="246" f="4"><![CDATA[reconstructed signal by using signal ]]></tbox><tbox llx="256" lly="236" urx="301" ury="246" f="5"><![CDATA[#(n)in ]]></tbox></line>
+<line><tbox llx="92" lly="223" urx="295" ury="234" f="4"><![CDATA[case the voice signal is passing from a station- ]]></tbox></line>
+<line><tbox llx="92" lly="211" urx="295" ury="222" f="4"><![CDATA[ary interval into another. In fig. 2 an attack ]]></tbox></line>
+<line><tbox llx="92" lly="200" urx="295" ury="211" f="4"><![CDATA[to a stationary piece of signal is processed ]]></tbox></line>
+<line><tbox llx="92" lly="188" urx="228" ury="199" f="4"><![CDATA[and reconstructed with signal ]]></tbox><tbox llx="224" lly="188" urx="255" ury="198" f="5"><![CDATA[#(n), ]]></tbox><tbox llx="248" lly="188" urx="296" ury="199" f="4"><![CDATA[as well.It ]]></tbox></line>
+<line><tbox llx="92" lly="176" urx="296" ury="187" f="4"><![CDATA[is evident , in both cases, the good adaptation ]]></tbox></line>
+<line><tbox llx="92" lly="164" urx="289" ury="175" f="4"><![CDATA[of the excitation signal to spectral changes. ]]></tbox></line>
+<line><tbox llx="60" lly="142" urx="295" ury="153" f="4"><![CDATA[The three methods proposed for modelling the ex- ]]></tbox></line>
+<line><tbox llx="50" lly="130" urx="295" ury="141" f="4"><![CDATA[citation signal in case of voiced speech, allow to face ]]></tbox></line>
+<line><tbox llx="50" lly="118" urx="296" ury="129" f="4"><![CDATA[to the quasi-stationary nature of speech signal at low ]]></tbox></line>
+<line><tbox llx="50" lly="106" urx="295" ury="117" f="4"><![CDATA[bitrates. The way they have to be used depends upon ]]></tbox></line>
+<line><tbox llx="50" lly="94" urx="295" ury="106" f="4"><![CDATA[the constraints of the coding scheme:variable or fixed ]]></tbox></line>
+<line><tbox llx="50" lly="82" urx="295" ury="94" f="4"><![CDATA[bit rate coding, algorithm computational cost, cod- ]]></tbox></line>
+<line><tbox llx="50" lly="70" urx="295" ury="82" f="4"><![CDATA[ing effectiveness and objective performance. The first ]]></tbox></line>
+<line><tbox llx="333" lly="653" urx="540" ury="663" f="1"><![CDATA[0 50 100 150 200 250 ]]></tbox></line>
+<line><tbox llx="318" lly="665" urx="340" ury="675" f="1"><![CDATA[-5000 ]]></tbox></line>
+<line><tbox llx="330" lly="679" urx="340" ury="689" f="1"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="320" lly="692" urx="340" ury="702" f="1"><![CDATA[5000 ]]></tbox></line>
+<line><tbox llx="333" lly="595" urx="540" ury="605" f="1"><![CDATA[0 50 100 150 200 250 ]]></tbox></line>
+<line><tbox llx="318" lly="607" urx="340" ury="617" f="1"><![CDATA[-5000 ]]></tbox></line>
+<line><tbox llx="330" lly="620" urx="340" ury="630" f="1"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="320" lly="633" urx="340" ury="643" f="1"><![CDATA[5000 ]]></tbox></line>
+<line><tbox llx="333" lly="536" urx="540" ury="546" f="1"><![CDATA[0 50 100 150 200 250 ]]></tbox></line>
+<line><tbox llx="318" lly="547" urx="340" ury="557" f="1"><![CDATA[-2000 ]]></tbox></line>
+<line><tbox llx="330" lly="559" urx="340" ury="569" f="1"><![CDATA[0 ]]></tbox></line>
+<line><tbox llx="320" lly="570" urx="340" ury="580" f="1"><![CDATA[2000 ]]></tbox></line>
+<line><tbox llx="336" lly="699" urx="362" ury="709" f="1"><![CDATA[original ]]></tbox></line>
+<line><tbox llx="336" lly="641" urx="375" ury="651" f="1"><![CDATA[synthesized ]]></tbox></line>
+<line><tbox llx="336" lly="582" urx="381" ury="593" f="1"><![CDATA[prototype train ]]></tbox></line>
+<line><tbox llx="311" lly="505" urx="357" ury="515" f="2"><![CDATA[Figure 2: ]]></tbox><tbox llx="356" lly="505" urx="555" ury="515" f="3"><![CDATA[Plot of original , synthesized and prototype sig- ]]></tbox></line>
+<line><tbox llx="310" lly="495" urx="479" ury="505" f="3"><![CDATA[nal computed with algorithm 3 (L=15). ]]></tbox></line>
+<line><tbox llx="310" lly="470" urx="554" ury="481" f="4"><![CDATA[method has the lowest computational cost and it better ]]></tbox></line>
+<line><tbox llx="310" lly="458" urx="555" ury="469" f="4"><![CDATA[fits in a fixed bitrate coding.The second procedure has ]]></tbox></line>
+<line><tbox llx="310" lly="446" urx="555" ury="457" f="4"><![CDATA[the highest coding e#ciency,when used in a variable bi- ]]></tbox></line>
+<line><tbox llx="310" lly="434" urx="555" ury="445" f="4"><![CDATA[trate coding scheme.The last algorithm presented gives ]]></tbox></line>
+<line><tbox llx="310" lly="422" urx="555" ury="433" f="4"><![CDATA[the best objective and subjective performance while ]]></tbox></line>
+<line><tbox llx="310" lly="410" urx="469" ury="421" f="4"><![CDATA[keeping low the bitrate associated. ]]></tbox></line>
+<line><tbox llx="310" lly="399" urx="555" ury="410" f="4"><![CDATA[The main contribution of this work stands in the in- ]]></tbox></line>
+<line><tbox llx="310" lly="387" urx="555" ury="398" f="4"><![CDATA[troduction of the the High Resolution Analysis and of ]]></tbox></line>
+<line><tbox llx="310" lly="375" urx="555" ury="386" f="4"><![CDATA[the Analysis-by-Synthesis for low bitrate coding. As a ]]></tbox></line>
+<line><tbox llx="310" lly="363" urx="555" ury="374" f="4"><![CDATA[result, the HRAS technique provides both a beneficial ]]></tbox></line>
+<line><tbox llx="310" lly="351" urx="555" ury="362" f="4"><![CDATA[introduction of a fine description of the spectral pa- ]]></tbox></line>
+<line><tbox llx="310" lly="339" urx="554" ury="350" f="4"><![CDATA[rameters and a high performance signal reconstruction ]]></tbox></line>
+<line><tbox llx="310" lly="327" urx="338" ury="338" f="4"><![CDATA[step. ]]></tbox></line>
+<line><tbox llx="387" lly="311" urx="479" ury="322" f="8"><![CDATA[REFERENCES ]]></tbox></line>
+<line><tbox llx="315" lly="297" urx="412" ury="307" f="3"><![CDATA[[1] P. Kroon, B. Atal ]]></tbox><tbox llx="408" lly="298" urx="556" ury="307" f="9"><![CDATA[''Pitch Predictors with High Tem- ]]></tbox></line>
+<line><tbox llx="330" lly="288" urx="411" ury="297" f="9"><![CDATA[poral Resolution'' ]]></tbox><tbox llx="406" lly="287" urx="555" ury="297" f="3"><![CDATA[Proc. ICASSP, pp.661-664, Albu- ]]></tbox></line>
+<line><tbox llx="330" lly="277" urx="387" ury="287" f="3"><![CDATA[querque '90. ]]></tbox></line>
+<line><tbox llx="315" lly="263" urx="417" ury="274" f="3"><![CDATA[[2] J.S. Marques et al. ]]></tbox><tbox llx="414" lly="264" urx="557" ury="273" f="9"><![CDATA[''Improved Pitch Prediction with ]]></tbox></line>
+<line><tbox llx="330" lly="254" urx="490" ury="263" f="9"><![CDATA[Fractional Delays in CELP coding'' ]]></tbox><tbox llx="485" lly="253" urx="555" ury="263" f="3"><![CDATA[Proc. ICASSP, ]]></tbox></line>
+<line><tbox llx="330" lly="243" urx="456" ury="253" f="3"><![CDATA[pp.665-668, Albuquerque '90. ]]></tbox></line>
+<line><tbox llx="315" lly="230" urx="481" ury="240" f="3"><![CDATA[[3] M. Fratti, G.A. Mian, G. Riccardi, ]]></tbox><tbox llx="477" lly="230" urx="557" ury="239" f="9"><![CDATA[''An Approach to ]]></tbox></line>
+<line><tbox llx="330" lly="220" urx="557" ury="229" f="9"><![CDATA[Parameter Reoptimization in Multipulse BasedCoders ]]></tbox></line>
+<line><tbox llx="330" lly="209" urx="344" ury="218" f="9"><![CDATA['' ]]></tbox><tbox llx="337" lly="209" urx="513" ury="219" f="3"><![CDATA[accepted in IEEE Trans. on Speech Proc. ]]></tbox></line>
+<line><tbox llx="315" lly="196" urx="444" ury="206" f="3"><![CDATA[[4] W. B. Kleijn, W. Granzow ]]></tbox><tbox llx="439" lly="196" urx="556" ury="205" f="9"><![CDATA[''Method for Waveform In- ]]></tbox></line>
+<line><tbox llx="330" lly="186" urx="460" ury="195" f="9"><![CDATA[terpolation in Speech Coding'' ]]></tbox><tbox llx="454" lly="185" urx="555" ury="196" f="3"><![CDATA[Digital Signal Process- ]]></tbox></line>
+<line><tbox llx="330" lly="175" urx="453" ury="185" f="3"><![CDATA[ing, vol.1, pp. 215-230, 1991. ]]></tbox></line>
+<line><tbox llx="315" lly="162" urx="409" ury="172" f="3"><![CDATA[[5] S. Ono, K. Ozawa ]]></tbox><tbox llx="403" lly="163" urx="557" ury="172" f="9"><![CDATA[''2.4 kps Pitch Prediction Multipulse ]]></tbox></line>
+<line><tbox llx="330" lly="152" urx="401" ury="161" f="9"><![CDATA[Speech Coding'' ]]></tbox><tbox llx="393" lly="152" urx="555" ury="162" f="3"><![CDATA[Proc. ICASSP, pp. 175-178, 1988, NY. ]]></tbox></line>
+<line><tbox llx="315" lly="138" urx="424" ury="149" f="3"><![CDATA[[6] W. Granzow, B. Atal ]]></tbox><tbox llx="420" lly="139" urx="557" ury="148" f="9"><![CDATA[''High Quality Digital Speech at ]]></tbox></line>
+<line><tbox llx="330" lly="129" urx="369" ury="138" f="9"><![CDATA[4 kbps'' ]]></tbox><tbox llx="362" lly="128" urx="526" ury="138" f="3"><![CDATA[Proc. GLOBECOM pp. 941-945, 1990. ]]></tbox></line>
+<line><tbox llx="315" lly="115" urx="431" ury="125" f="3"><![CDATA[[7] B. Atal, M. Schroeder ]]></tbox><tbox llx="428" lly="116" urx="557" ury="125" f="9"><![CDATA[''Predictive Coding of Speech ]]></tbox></line>
+<line><tbox llx="330" lly="105" urx="500" ury="114" f="9"><![CDATA[Signals and Subjective Error Criteria'' ]]></tbox><tbox llx="495" lly="105" urx="555" ury="115" f="3"><![CDATA[IEEE Trans. ]]></tbox></line>
+<line><tbox llx="330" lly="94" urx="555" ury="104" f="3"><![CDATA[Acoust. Speech Sig. Proc.,vol. ASSP-27,no.3, pp.247- ]]></tbox></line>
+<line><tbox llx="330" lly="84" urx="400" ury="94" f="3"><![CDATA[254, June 1979.]]></tbox></line>
+<pbox llx="50.00" lly="70.00" urx="557.00" ury="709.00"/></page>
+<fonts>
+<font name="Helvetica" h="9.06" n="1"/>
+<font name="T3" h="8.40" n="2"/>
+<font name="T2" h="9.12" n="3"/>
+<font name="T11" h="10.08" n="4"/>
+<font name="T10" h="9.12" n="5"/>
+<font name="T8" h="6.96" n="6"/>
+<font name="T7" h="4.56" n="7"/>
+<font name="T12" h="9.60" n="8"/>
+<font name="T1" h="7.92" n="9"/>
+<font name="T6" h="13.92" n="10"/>
+<font name="T5" h="9.22" n="11"/>
+<font name="T4" h="3.12" n="12"/>
+</fonts>
+</document>

@@ -1,0 +1,41 @@
+Running pstotext: 
+
+Pstotext is based on the DEC utility pstotext, and inherits most of
+its command-line options.  It is modified to output an xml-formatted
+listing of the contents of a postscript/pdf file, rather than plain
+text. The xml contains some formatting information, including lines,
+text boxes, limited font information, page boundaries, and page
+numbers. A text box is considered to be a portion of a text line with
+the same font, where words are sufficiently close together to be
+considered 'contiguous'. The definition of contiguous is based on the
+spacing between words, relative to the average width of glyph in
+whatever font is currently in use. See source code for more details.
+
+
+The command line option -ligature <file> adds the ability to correct, 
+to a limited extent, errors in extracting ligatured text. It uses
+a dictionary of common ligatured words to make substitutions to the
+extracted text.
+
+
+Usage: pstotext [option|file]...
+Options:
+  -cork               assume Cork encoding for dvips output
+  -landscape          rotate 270 degrees
+  -landscapeOther     rotate 90 degrees
+  -portrait           don't rotate (default)
+  -bboxes             output one word per line with bounding box
+  -ligatures file     *attempt* to fix words with missing ligatures
+                      using the specified ligature dictionary
+  -debug              show Ghostscript output and error messages
+  -gs "command"       Ghostscript command
+  -                   read from stdin (default if no files specified)
+  -output file        output results to "file" (default is stdout)
+
+
+
+Note: pstotext calls gs (ghostscript) to do the dirty work of interpreting
+documents. Ghostscript will occasionally die on certain document, and pstotext
+has some built in checkpointing printf's that output to stderr when any problems arise. 
+Don't redirect stderr to stdout, unless  you want those messages in the xml output
+(which will result in badly formed xml).

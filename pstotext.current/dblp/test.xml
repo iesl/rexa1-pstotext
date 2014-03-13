@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE dblp SYSTEM "dblp.dtd">
+<dblp>
+
+<inproceedings mdate="2002-01-03" key="conf/ds/Metaxides75">
+<author>A. Metaxides</author>
+<title>``Information Bearing'' and ``Non-Information Bearing'' Sets.</title>
+<pages>363-368</pages>
+<year>1975</year>
+<booktitle>IFIP TC-2 Special Working Conference on Data Base Description</booktitle>
+<url>db/conf/ds/ddd75.html#Metaxides75</url>
+</inproceedings>
+
+<inproceedings mdate="2003-01-22" key="conf/gi/Ludewig90">
+<author>Jochen Ludewig</author>
+<title>``Software-Entsorgung'': Vortr&auml;ge und Podiumsdiskussion.</title>
+<pages>193-194</pages>
+<year>1990</year>
+<crossref>conf/gi/1990-1</crossref>
+<booktitle>GI Jahrestagung (1)</booktitle>
+<url>db/conf/gi/gi90-1.html#Ludewig90</url>
+</inproceedings>
+
+<inproceedings mdate="2002-12-11" key="conf/acm/Shaw94">
+<author>Mary Shaw</author>
+<title>Putting ``Engineering'' into Software Engineering (Abstract).</title>
+<pages>417</pages>
+<year>1994</year>
+<booktitle>ACM Conference on Computer Science</booktitle>
+<ee>http://doi.acm.org/10.1145/197530.197679</ee>
+<url>db/conf/acm/csc94.html#Shaw94</url>
+</inproceedings>
+
+<inproceedings mdate="2002-01-12" key="conf/iv/Tatham99">
+<author>Eric W. Tatham</author>
+<title>Optical Occlusion and Shadows in a 'See-Through' Augmented Reality Display.</title>
+<pages>128-131</pages>
+<year>1999</year>
+<booktitle>IV</booktitle>
+<ee>http://computer.org/proceedings/iv/0210/02100128abs.htm</ee>
+<url>db/conf/iv/iv1999.html#Tatham99</url>
+</inproceedings>
+
+<inproceedings mdate="2002-01-12" key="conf/iv/KeramopoulosPP99">
+<author>Euclid Keramopoulos</author>
+<author>Philippos Pouyioutas</author>
+<author>Tasos Ptohos</author>
+<title>The User's View Level of the GOQL Graphical Query Language.</title>
+<pages>81-</pages>
+<year>1999</year>
+<booktitle>IV</booktitle>
+<ee>http://computer.org/proceedings/iv/0210/02100081abs.htm</ee>
+<url>db/conf/iv/iv1999.html#KeramopoulosPP99</url>
+</inproceedings>
+
+<inproceedings mdate="2003-01-22" key="conf/ki/Schlechta88">
+<author>Karl Schlechta</author>
+<title>Remarks to Shoham's Temporal Logic.</title>
+<pages>88-95</pages>
+<year>1988</year>
+<crossref>conf/ki/1988</crossref>
+<booktitle>GWAI</booktitle>
+<url>db/conf/ki/gwai88.html#Schlechta88</url>
+</inproceedings>
+
+<article mdate="2003-01-31" key="tr/ibm/IWBS66">
+<author>G&uuml;nther G&ouml;rz</author>
+<title>Verarbeitung nat&uuml;rlicher Sprache</title>
+<journal>IWBS Report</journal>
+<volume>66</volume>
+<year>1989</year>
+<publisher>IBM Germany Science Center, Institute for Knowledge Based Systems</publisher>
+</article>
+
+<mastersthesis mdate="2002-01-03" key="ms/Brown92">
+<author>Kurt P. Brown</author>
+<title>PRPL: A Database Workload Specification Language, v1.3.</title>
+<year>1992</year>
+<school>Univ. of Wisconsin-Madison</school>
+</mastersthesis>
+
+<mastersthesis mdate="2002-01-03" key="ms/Yurek97">
+<author>Tolga Yurek</author>
+<title>Efficient View Maintenance at Data Warehouses.</title>
+<year>1997</year>
+<school>University of California at Santa Barbara, Department of Computer Science</school>
+</mastersthesis>
+
+<article mdate="2002-01-03" key="tr/gte/TR-0146-06-91-165">
+<ee>db/labs/gte/TR-0146-06-91-165.html</ee>
+<author>Alejandro P. Buchmann</author>
+<author>M. Tamer &Ouml;zsu</author>
+<author>Dimitrios Georgakopoulos</author>
+<title>Towards a Transaction Management System for DOM.</title>
+<journal>GTE Laboratories Incorporated</journal>
+<volume>TR-0146-06-91-165</volume>
+<month>June</month>
+<year>1991</year>
+<url>db/labs/gte/index.html#TR-0146-06-91-165</url>
+<cdrom>GTE/BUCH91.pdf</cdrom>
+</article>
+
+<article mdate="2002-01-03" key="tr/dec/SRC1997-018">
+<editor>Paul R. McJones</editor>
+<title>The 1995 SQL Reunion: People, Project, and Politics, May 29, 1995.</title>
+<journal>Digital System Research Center Report</journal>
+<volume>SRC1997-018</volume>
+<year>1997</year>
+<ee>db/labs/dec/SRC1997-018.html</ee>
+<ee>http://www.mcjones.org/System_R/SQL_Reunion_95/</ee>
+<cdrom>decTR/src1997-018.pdf</cdrom>
+</article>
+
+<article mdate="2002-01-03" key="tr/gte/TR-0263-08-94-165">
+<ee>db/labs/gte/TR-0263-08-94-165.html</ee>
+<author>Frank Manola</author>
+<title>An Evaluation of Object-Oriented DBMS Developments: 1994 Edition.</title>
+<journal>GTE Laboratories Incorporated</journal>
+<volume>TR-0263-08-94-165</volume>
+<month>August</month>
+<year>1994</year>
+<url>db/labs/gte/index.html#TR-0263-08-94-165</url>
+<cdrom>GTE/MANO94a.pdf</cdrom>
+</article>
+
+<article mdate="2002-01-03" key="tr/gte/TR-0169-12-91-165">
+<ee>db/labs/gte/TR-0169-12-91-165.html</ee>
+<author>Frank Manola</author>
+<title>Object Data Language Facilities for Multimedia Data Types.</title>
+<journal>GTE Laboratories Incorporated</journal>
+<volume>TR-0169-12-91-165</volume>
+<month>December</month>
+<year>1991</year>
+<url>db/labs/gte/index.html#TR-0169-12-91-165</url>
+<cdrom>GTE/MANO91a.pdf</cdrom>
+</article>
+
+<article mdate="2002-01-03" key="tr/gte/TR-0231-08-93-165">
+<ee>db/labs/gte/TR-0231-08-93-165.html</ee>
+<author>Frank Manola</author>
+<author>Sandra Heiler</author>
+<title>A 'RISC' Object Model for Object System Interoperation: Concepts and Applications.</title>
+<journal>GTE Laboratories Incorporated</journal>
+<volume>TR-0231-08-93-165</volume>
+<month>August</month>
+<year>1993</year>
+<url>db/labs/gte/index.html#TR-0231-08-93-165</url>
+<cdrom>GTE/MANO93c.pdf</cdrom>
+</article>
+
+<article mdate="2002-01-03" key="tr/gte/TM-0014-06-88-165">
+<ee>db/labs/gte/TM-0014-06-88-165.html</ee>
+<author>Frank Manola</author>
+<title>Distributed Object Management Technology.</title>
+<journal>GTE Laboratories Incorporated</journal>
+<volume>TM-0014-06-88-165</volume>
+<month>June</month>
+<year>1988</year>
+<url>db/labs/gte/index.html#TM-0014-06-88-165</url>
+<cdrom>GTE/MANO88.pdf</cdrom>
+</article>
+
+<article mdate="2002-01-03" key="tr/gte/TM-0332-11-90-165">
+<ee>db/labs/gte/TM-0332-11-90-165.html</ee>
+<author>Frank Manola</author>
+<author>Mark F. Hornick</author>
+<author>Alejandro P. Buchmann</author>
+<title>Object Data Model Facilities for Multimedia Data Types.</title>
+<journal>GTE Laboratories Incorporated</journal>
+<volume>TM-0332-11-90-165</volume>
+<month>December</month>
+<year>1990</year>
+<url>db/labs/gte/index.html#TM-0332-11-90-165</url>
+<cdrom>GTE/MANO90b.pdf</cdrom>
+</article>
+
+<article mdate="2002-01-03" key="tr/gte/TR-0236-09-93-165">
+<ee>db/labs/gte/TR-0236-09-93-165.html</ee>
+<author>Farshad Nayeri</author>
+<author>Benjamin Hurwitz</author>
+<title>Experiments with Dispatching in a Distributed Object System.</title>
+<journal>GTE Laboratories Incorporated</journal>
+<volume>TR-0236-09-93-165</volume>
+<month>July</month>
+<year>1993</year>
+<url>db/labs/gte/index.html#TR-0236-09-93-165</url>
+<cdrom>GTE/NAYE93c.pdf</cdrom>
+</article>
+</dblp>

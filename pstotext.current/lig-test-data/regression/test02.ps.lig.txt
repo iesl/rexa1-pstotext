@@ -1,0 +1,907 @@
+Pfaffian Algorithms for Sampling Routings on 
+? 
+2 
+School of Mathematics 
+College of Computing and School of Mathematics, 
+Georgia Institute of Technology, Atlanta GA 30332, USA 
+randall}@math.gatech.edu 
+fixed 
+provide a common representation for several combinatorial 
+problems and have been the key element for designing sampling algo- 
+rithms. Markov chain algorithms based on routings have led to efficient 
+samplers for tilings, Eulerian orientations [8] and triangulations [9], while 
+an algorithm which successively calculates ratios of determinants has led 
+to a very fast method for sampling fixed routings [12]. We extend Wil- 
+where the num- 
+ber of paths, as well as the endpoints, are allowed to vary. The algorithm 
+is based on a technique due to Stembridge for counting free routings 
+by calculating the Pfaffian of a suitable matrix [11] and a method of 
+Colbourn, Myrvold and Neufeld [1] for efficiently calculating ratios of 
+determinants. As an application, we show how to sample tilings on pla- 
+nar lattice regions with free boundary conditions. 
+1 Introduction 
+Physicists study combinatorial structures on lattices in order to understand vari- 
+ous physical systems. For example, tilings on planar lattice regions model systems 
+of diatomic molecules, or dimers. By studying statistics of random configurations 
+square or the Aztec dia- 
+mond), physicists gain insight into the behavior of these systems on the infinite 
+lattice, the so-called thermodynamic limit. 
+It is well known that the boundary of the region plays a crucial role. There 
+of the family of finite 
+of boundary conditions defined for the regions. 
+boundary conditions, where 
+the configurations are forced to precisely agree with the boundary. In the case of 
+domino tilings this means that tiles are forced to cover all of the squares inside, 
+and only inside, the region. Another important type of boundary condition con- 
+in the shape 
+of the region. Returning to tilings, this means that tiles can overlap the bound- 
+ary (as long as the configuration can be extended to a tiling of the plane). In the 
+boundary conditions. 
+Research suported in part by NSF Career Grant No. CCR-9703206 
+p 
+p 
+p 
+p 
+p 
+pp p p p p pp p p p p p p p p p p p p p p p p p p p p p p p 
+p p p p p p p p p p p 
+p p p p p p p p p p p p 
+p p p p p p 
+Fixed boundaries Free boundaries 
+Domino tilings on regions with fixed and free boundary conditions 
+One reason for studying free boundary conditions is that these eliminate 
+the boundary effect due to the shape of the region (in the limit). This is not 
+true for families of regions with fixed boundary conditions, where properties of 
+random configurations can vary drastically according to their shape. Consider, 
+n!1 
+) 
+) 
+, 
+is a nested family of regions tending towards the infinite lattice 
+. With fixed boundary conditions, the 
+entropy over all finite 
+. In contrast, the family of Aztec diamonds is known to 
+have lower entropy, which is related to the arctic circle phenomenon whereby 
+frozen regions of the Aztec diamond emerge having a completely predictable 
+local tiling [5]. On the other hand, with free boundary conditions, for any family 
+of regions where the ratio of the length of the perimeter to the area of the region 
+tends to zero, the entropy will converge to the same (maximal) value. In other 
+words, statistics of tilings of square regions with free boundary conditions will 
+agree with statistics of tilings of Aztec diamonds with free boundary conditions. 
+Several algorithms for sampling tilings on regions with fixed boundary con- 
+or sets of non- 
+intersecting lattice paths where the number of paths and the position of their 
+endpoints are fixed. The first is a Markov chain approach of Luby, Randall and 
+Sinclair [8] which samples routings uniformly (and can be extended to the case 
+where the paths are edge disjoint, but not necessarily vertex disjoint). A second 
+approach, due to Wilson [12], uses the Gessel-Viennot method for enumerating 
+routings by calculating a determinant [2] (and the close relationship between 
+counting and sampling formalized by Jerrum, Valiant and Vazirani [4]). Wilson 
+utilizes a technique introduced by Colbourn, Myrvold and Neufeld [1] which al- 
+lows ratios of determinants of closely related matrices to be computed quickly 
+without having to evaluate both determinants. 
+or sets of non-intersecting lattice paths 
+where the positions of the endpoints of the paths, as well as the number of 
+paths, are allowed to vary. Our result relies on Stembridge's algorithm counting 
+the number of free routings of a region by evaluating a Pfaffian [11]. We adapt 
+the method of Colbourn, Myrvold and Neufeld to allow ratios of Pfaffians to 
+be evaluated quickly, a special case of a technique of Kenyon for calculating 
+, 
+is the maximal number of paths in 
+) algorithm. We apply this 
+sampling method to generate random domino and lozenge tilings of hexagonal 
+regions with free boundary conditions. 
+The remainder of the paper is organized as follows. In section 2 we review the 
+counting techniques of Gessel-Viennot and Stembridge for fixed and free rout- 
+ings, respectively. In section 3 we present our algorithm for uniformly sampling 
+free routings. Finally, in section 4 we show the bijections between free routings 
+and tilings on regions with free boundary conditions which allow us to sample 
+these tilings efficiently. 
+2 Background: Counting routings 
+First we begin with an overview of the method of Gessel and Viennot for counting 
+fixed routings and that of Stembridge for counting free routings. Wilson shows 
+how to sample fixed routings using self-reducibility and iterative applications of 
+the Gessel-Viennot method. We give a similar method to sample free routings, 
+utilizing Stembridge's method for counting free routings. 
+2.1 The Gessel-Viennot method 
+number of non-intersecting paths, with specified sources and sinks, in certain 
+directed graphs by computing a determinant of a matrix. For their technique to 
+work, the graph must be directed and acyclic. Furthermore, the sources and sinks 
+In this definition, we require that 
+be ordered. 
+are 
+0 
+path. 
+l 
+for 
+. 
+= 
+denote the number of directed 
+. Since the graph is assumed to be acyclic, 
+. 
+We have the following theorem [2, 11]: 
+as above, the num- 
+. 
+are not compatible, then the preceding theorem 
+fails. (See [11] for an example for which the theorem fails.) 
+ver- 
+can be uniformly 
+time. 
+2.2 Stembridge's extension 
+Stembridge[11] extends the Gessel-Viennot method to count free routings of 
+. In the case of free 
+potential 
+sinks. Also, it is no longer always true that 
+, as was true in the case of fixed routings. 
+in the routing; 
+sinks. First, 
+we need a bit of linear algebra. 
+), 
+and let 
+}} 
+into pairs. Let 
+1 2n 
+n 
+. 
+, is defined by 
+_##_ 
+. 
+det(B) = 
+. 
+in theorem 1, 
+l 
+denote the number of non-intersecting paths 
+ik 
+jk 
+_##_ 
+. 
+= 
+is the number of pairs of non-intersecting 
+h 
+denote the number of paths 
+. 
+is odd; if not, we can add an additional isolated vertex 
+. The following is due to Stembridge[11]: 
+-tuple of vertices in an acyclic digraph 
+be an ordered subset of vertices that is compatible with 
+be the skew-symmetric matrix where the upper triangular entries are 
+given by 
+ij 
+_##_ 
+_##_ 
+= Pf(Q) 
+. 
+looks like: 
+= 
+0 B B @ 
+q1 
+q2 
+. . . 
+. . . 
+. . . 
+. . . 
+. . . 
+0 
+. 
+Stembridge uses this theorem to study shifted tableaux, plane partitions, 
+and Schur's Q-functions. As we will see in section 4 it can be used to count 
+and generate tilings with free boundary conditions. We first give an extension of 
+Stembridge's result. 
+2.3 Fixing sources 
+We can extend theorem 4 to count the number of free routings where we specify 
+that certain sources must be used (or unused) in a routing. 
+by 
+. The following theorem formalizes this: 
+-tuple of vertices in an acyclic digraph 
+. 
+be the skew-symmetric matrix 
+where the upper triangular entries are given by 
+= 
+8 } } } } } } < } } } } } } : 
+vice-versa) 
+) 
+) 
+in 
+out 
+is as in theorem 4 
+with 
+in the set of unused sources. 
+obtained 
+. We use the result (from [11, 
+in size) we can write 
+J 
+] (1) 
+) = 
+of 
+even. 
+-1} 
+_##_ 
+. Now apply the above result for the Pfaffian of a sum. 
+will contain a row of zeros. Similarly, 
+C 
+. So the only terms that survive in the sum (1) 
+appears in one 
+, that term corresponds to a set of paths (not necessarily non- 
+Q 
+will 
+i 
+ut 
+3 Generating random routings 
+We present an algorithm to uniformly generate a free routing of a planar acyclic 
+with compatible sources and sinks. This algorithm is similar to the 
+determinant algorithm of [12] for generating fixed routings. Once again, we as- 
+odd. 
+We use self-reducibility to find the routing by building paths one edge at a 
+is 
+used in the routing. Then, if used, we select one of its out-going edges, with 
+appropriate probabilities, and add it to the routing, thereby starting a path 
+, the other end of the selected edge, 
+. We use the fact that ratios 
+of Pfaffians can be computed efficiently to determine the probability of using a 
+particular source or edge. The following theorem is analogous to the result in [1] 
+for ratios of determinants of matrices that differ by a single row. 
+be a 
+row and column. 
+Then 
+Pf(B) 
+. 
+is an invertible matrix 
+row, then 
+det(C) 
+ii 
+, an invertible, skew-symmetric 
+ith 
+with 
+ith 
+is invertible. Then we have that det(C)/ det(A) = 
+. Finally, we use the 
+= 0 since 
+must agree. 
+Hence, 
+Pf(B) 
+2 
+= det(B) 
+det(A) = det(B) 
+det(C) 
+ii 
+2 
+(2) 
+row 
+is skew-symmetric 
+as the matrix 
+we proceed as before 
+) to get the same result as in (2). 
+= adj(A)/ det(A) , where adj(A) 
+, we can write (2) as 
+(3) 
+, the sign 
+in that case is + , and by continuity the sign for a whole neighborhood of the 
+parameter values is also + . By taking partial derivatives and evaluating at 0 , 
+we see that the coefficients of the polynomials must be equal, so that the sign 
+ut 
+after changing a 
+. In our case we will be changing both a row 
+and a column, but we can update the inverse by applying the Sherman-Morrison 
+) time using this method 
+(for details see, e.g., [1, 12]). (The Sherman-Morrison formula for updating an 
+inverse has shown some numerical instability in practice; we may achieve greater 
+at a small cost in 
+the running time of the algorithm.) Now we are ready to describe the algorithm. 
+vertices and 
+, the sources and sinks, respectively. The variable 
+records the routing 
+of 
+, which we use to compute 
+are updated as 
+, which will be the number of 
+to any 
+Q 
+as we move 
+w 
+the algorithm is: 
+) 
+w 
+. (O(n) time.) 
+= 0 . (O(n) time.) 
+down to 1 (Dynamic programming step) (O(ln) time.) 
+. 
+down to 1 
+= 
+. 
+.) 
+. 
+. 
+) time.) 
+. 
+'s.) 
+l 
+. 
+= 
+l-1 
+k=1 
++ 1] 
++ 1] 
+'s.) 
+, 
+) time.) 
+then 
+is used as a source (see details below). 
+= 0 . 
+) time.) 
+to include in the path of the 
+be the other endpoint of this edge. 
+, see remark 1 below. 
+. 
+n) 
+time.) 
+forward to an (as yet) 
+so that it 
+is not used during some later step to begin a different path. However, we also 
+forward 
+. This conflicts with the 
+. We get around this difficulty as 
+so 
+that it is pushed forward in later steps of the algorithm. Update row and column 
+is used, 
+accordingly with successive applications of the Sherman-Morrison 
+to the path 
+. We will see examples of digraphs in which this situation might 
+arise in section 4 where we consider tilings of reduced Aztec diamonds. 
+i 
+. Informally, 
+is joined to a phantom sink by a 
+forward to this phantom sink corresponds 
+'s neighbors. In 
+practice, we need not handle this situation as a special case, since we can examine 
+in turn and if we reject using any of them then 
+is not pushed. 
+is used in a 
+) 
+Pf(Q) 
+is a skew- 
+column. In particular, 
+can be found using theorem 5, where we apply the theorem 
+in 
+to that set). We use theorem 6 to compute this probability as the dot 
+is used, we replace 
+ith 
+is not 
+is 
+), using 
+two successive applications of the Sherman-Morrison formula, once for changing 
+) , 
+) . 
+forward in step 6(b) changes the 
+is 
+) 
+Pf(Q) 
+. If 
+row and column 
+, we proceed as outlined in 
+) , 
+. 
+We have demonstrated the following theorem: 
+vertices, having com- 
+in 
+. 
+4 Lattice paths 
+In this section, we demonstrate applications of the techniques from the previous 
+section. We show how to generate random domino tilings of the reduced Aztec 
+diamond with free boundary conditions and lozenge tilings of the hexagon with 
+free boundary conditions. The key idea is the existence of a bijection between 
+the set of tilings of this region and the set of free routings in a related digraph. 
+For details of the analogous bijections in the case of fixed boundary conditions, 
+we refer the reader to [8]. 
+4.1 Domino tilings of the reduced Aztec diamond 
+, is a region composed of 
+row 
+n 
+using non-overlapping dominoes, where a domino covers two adjacent squares. 
+is a tiling in which all the squares 
+are covered, but the dominoes are allowed to "stick out" of (or overlap) 
+the boundary of the region. We assume that we know the orientation of a domino 
+that overlaps the boundary, i.e., a single square (or half-domino) is designated 
+as the bottom, top, left or right half of a domino. 
+with free boundary conditions (or simply, a free tiling), 
+, first color the left square of 
+using alternating black and 
+white squares (as on the underlying infinite chessboard). Mark the midpoint 
+of each vertical edge that has a black square to its right. Fix (0, 0) as the 
++ 1 additional points 
++ 
+(2n, 0) . Join a point with 
+. 
+. 
+r r r r r 
+r r r r rr r r r r 
+r r r r r 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p p p p p p 
+p p p p 
+p p p p p 
+p p p p 
+p p p p p r r r r r 
+r r r r rr r r r r 
+r r r r r 
+@ 
+@ 
+@ 
+@ @ 
+@ 
+@ 
+@ 
+@ @ 
+@ 
+@ 
+@ 
+@ 
+@ 
+@ 
+@ 
+@ 
+@ 
+@ 
+s1 
+s2 
+s3 
+s4 
+s5 
+s6 
+s7 
+s8 
+s9 
+t1 
+t2 
+t3 
+t4 
+t5 
+t6 
+t7 
+t8 
+t9 
+D4 
+The reduced Aztec diamond 
+are those 
+that remain between points after the deletion step. Direct edges from left to 
+2n+1 
+is the 
+, the reduced Aztec 
+. The right picture 
+. 
+and free 
+. 
+as follows: 
+. It's 
+possible that no source lies on the edge of a domino, in which case the routing 
+is empty. Otherwise, the routing consists of the paths constructed as follows: If 
+lies on the edge of a domino, this determines the first edge in a path starting 
+that 
+lies on the right side of the domino. This new vertex must lie on the left side of 
+that 
+does not have a domino to its right. Choose the next source, in the prescribed 
+order, that is not on a path already constructed, and repeat this procedure. The 
+paths are non-intersecting since dominoes cannot overlap and because of the 
+order in which the sources were examined. See figure 3 for an example of a free 
+and the corresponding routing. (An arrow in the tiling 
+points to the location of the other half of a domino that overlaps the boundary.) 
+The proof that this map forms a bijection is analogous to the proof given in [8] 
+which establishes a similar bijection between domino tilings of regions with fixed 
+ut 
+  
+  
+" 
+" 
+! 
+# 
+r r r r r 
+r r r r rr r r r r 
+r r r r r 
+@ @ 
+@ @ 
+@ @ 
+@ @ 
+@ @ 
+@ @ 
+p 
+p 
+p 
+p 
+p 
+pp p p p p pp p p p p p 
+p 
+p 
+p 
+p 
+p 
+pp p p p p pp p p p p p 
+p p p p p pp p p p p p p p p p p pp p p p p pp p p p p p p p p p p pp p p p p p 
+@ @ 
+@ @ 
+@ @ 
+@ @ 
+@ @ 
+@ @ 
+r r r r r 
+r r r r rr r r r r 
+r r r r r 
+p p p p p p p p p p p p p p p p p p p p p 
+p p p p p p p p p p p p p p p p p p p p p p p p p p 
+p p p p p p p p p p p p p p p p p p p p p p p p p p 
+p p p p p p p p p p p p p p p p p p p p p p p p p p 
+p p p p p p p p p p p p p p p p p p p p p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p 
+p p p p p p 
+p p p p p p p p p p p 
+p p p p p p p p p p p p p p p p 
+p p p p p p p p p p p p p p p p p p p p p 
+p p p p p p p p p p p p p p p p p p p p p 
+p p p p p p p p p p p p p p p p 
+p p p p p p p p p p p 
+p p p p p p 
+s1 s1 
+s2 s2 
+s3 s3 
+s4 s4 
+s5 s5 
+s6 s6 
+s7 s7 
+s8 s8 
+s9 s9 
+t1 t1 
+t2 t2 
+t3 t3 
+t4 t4 
+t5 t5 
+t6 t6 
+t7 t7 
+t8 t8 
+t9 t9 
+A free domino tiling Marked tiles The corresponding routing 
+A domino tiling with free boundary conditions and its free routing 
+Dn 
+by using the algorithm given 
+. 
+4.2 Lozenge tilings of the hexagon 
+We use a similar approach as in the previous section to generate lozenge tilings 
+of a hexagonal region of the triangular lattice with free boundary conditions. 
+There is a bijection between the collection of free boundary tilings, and the set 
+of free routings of a related digraph. 
+edges 
+is a covering of the region with lozenges, 
+where a lozenge covers two adjacent triangles, and lozenges do not overlap. As 
+is 
+a tiling in which lozenges may overlap the boundary of the region. We describe 
+, in which free routings correspond to free 
+by adding the 
+. 
+. These marked points form the 
+. Join two points if they lie on adjacent triangles. These are the 
+. Direct these edges from left to right. A free boundary lozenge tiling 
+. Again, the proof of this bijection 
+follows analogously to the proof given in [8] for establishing a bijection between 
+fixed lozenge tilings and fixed routings. Figure 4 provides a pictorial illustration 
+of this correspondence. 
+algorithm of section 3 allows us to uniformly gen- 
+, which we may then map to their corresponding free 
+. 
+r r r r 
+r r r r 
+r r 
+r r 
+H H H H H H H H H 
+_##_ _##_ _##_ _##_ _##_H H H 
+_##_ _##_ _##_ _##_ _##_ 
+_##_ _##_ _##_ _##_ _##_ 
+H 
+H 
+H 
+H 
+H 
+H 
+H 
+H 
+H 
+H 
+H 
+H 
+H 
+H H _##_ _##_ _##_ _##_ _##_ 
+_##_ _##_ _##_ _##_ _##_ 
+H 
+H 
+H 
+H H _##_ _##_ _##_ 
+H H H H H H H H H 
+H H H H H H H 
+H H H H H 
+_##_ _##_ _##_ 
+_##_ _##_ _##_ 
+_##_ _##_ _##_ _##_ _##_ 
+_##_ _##_ _##_ 
+_##_ _##_ _##_ 
+p 
+p 
+p 
+p 
+p 
+p p 
+p 
+p 
+p 
+p 
+p p 
+p 
+p 
+p 
+p 
+p p 
+p 
+p 
+p 
+p 
+p p p p p p p 
+p p p p p p 
+p 
+p 
+p 
+p 
+p 
+p p p p p p p 
+p p p p p p 
+_##_ _##_ _##_ _##_ _##_ 
+_##_ _##_ _##_ _##_ _##_ 
+H 
+H 
+H 
+H H 
+H 
+H 
+H 
+H 
+H 
+` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` 
+` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` 
+` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` 
+` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` 
+` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` 
+` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` 
+` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` 
+` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` 
+H H H H H H H H H 
+_##_ _##_ _##_ _##_ _##_H H H 
+r r r r 
+r r r r 
+r r 
+r r 
+s1 
+s2 
+s3 
+s4 
+s5 
+s6 
+t1 
+t2 
+t3 
+t4 
+t5 
+t6 
+A free lozenge tiling The corresponding routing 
+A lozenge tiling with free boundary conditions and its free routing 
+We would like to thank Dan Klain, Tom Morley and the 
+referees for many useful comments. 
+References 
+1. C. J. Colbourn, W. J. Myrvold, and E. Neufeld. Two algorithms for unranking 
+20:268--281, 1996. 
+2. I. M. Gessel and X. G. Viennot. Binomial determinants, paths, and hook length 
+58:300--321, 1985. 
+3. I. M. Gessel and X. G. Viennot. Determinants, paths, and plane partitions. Preprint, 
+1989. 
+4. M. R. Jerrum, L. G. Valiant, and V. V. Vazirani. Random generation of com- 
+Theoretical Computer Science, 
+43:169--188, 1986. 
+5. W. Jockusch, J. Propp, and P. Shor. Random domino tilings and the arctic circle 
+theorem. Preprint, 1995. 
+Annales de l'Institut Henri 
+33:591--618, 1997. 
+Bulletin of the 
+5:85--90, 1973. 
+8. M. Luby, D. Randall, and A. Sinclair. Markov chain algorithms for planar lattice 
+150-- 
+159, 1995. 
+9. L. McShine and P. Tetali. On the mixing time of the triangulation walk and other 
+Randomization Methods in Algorithm Design, DIMACS-AMS 
+43, 1998. 
+10. J. Sherman and W. J. Morrison. Adjustment of an inverse matrix corresponding 
+to changes in the elements of a given column or a given row of the original matrix. 
+20:621, 1949. 
+Advances 
+83:96--131, 1990. 
+Proc. 8th 
+258--267, 1997.
