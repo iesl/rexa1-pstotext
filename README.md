@@ -10,7 +10,7 @@
 
 #### Provided utilities:
 
-  **pstotext**: extract text and positional information from pdf
+  **pstotext**: Extract text and positional information from pdf
     Usage: pstotext input-file.pdf > output.xml
 
         pstotext --help: 
@@ -29,7 +29,7 @@
             -output file        output results to "file" (default is stdout)
 
 
-  **run-pstotext.sh** Wrapper for pstotext.
+  **run-pstotext.sh**: Wrapper for pstotext.
    * Runs pstotext with a few extra features:
      * Specifies a timeout (some pdfs can cause pstotext to hang indefinitely), and kills it if
        necessary.
@@ -38,18 +38,16 @@
        outputs the result of the test
      * Creates log files with the results of the process
 
-    Usage: run-pstotext.sh --file test-data/test.pdf --nogzip -timeout 30 --debug
-
-    Options:
-        --file somefile.pdf
-        --nogzip 
-        --pstotext  path to pstotext (if not on the standard path)
-        --timeout   time allowed before kill pstotext subprocess
-        --debug     print extra info to stdout
-        --log       name of logfile
-        --logprefix string that will be prepended to all logging output for this process
-
-
+        Usage: run-pstotext.sh --file test-data/test.pdf --nogzip -timeout 30 --debug
+     
+        Options:
+            --file somefile.pdf
+            --nogzip 
+            --pstotext  path to pstotext (if not on the standard path)
+            --timeout   time allowed before kill pstotext subprocess
+            --debug     print extra info to stdout
+            --log       name of logfile
+            --logprefix string that will be prepended to all logging output for this process
 
   **idftype**
    Try to guess the file type of an unknown file, then rename the file with an appropriate
