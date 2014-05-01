@@ -1,7 +1,6 @@
-## This is the Rexa version 1 pstotext, adapted from the DEC utility pstotext.
+### This is the Rexa version 1 pstotext, adapted from the DEC utility pstotext.
 
-### Installing
-====
+#### Installing
 
     Run bin/setup to recompile pstotext. This will compile pstotext and place the executable in
     bin/. The file 'ligatures.txt', also in the bin directory, should either be in the same
@@ -9,8 +8,7 @@
 
         pstotext -ligatures /path/to/ligatures.txt
 
-### Provided utilities:
-====
+#### Provided utilities:
 
   **pstotext**: extract text and positional information from pdf
     Usage: pstotext input-file.pdf > output.xml
