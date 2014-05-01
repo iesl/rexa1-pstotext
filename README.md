@@ -13,8 +13,7 @@
 ====
 
   **pstotext**: extract text and positional information from pdf
-
-    Basic usage: pstotext input-file.pdf > output.xml
+    Usage: pstotext input-file.pdf > output.xml
 
         pstotext --help: 
           Usage: bin/pstotext [option|file]...
@@ -33,31 +32,32 @@
 
 
   **run-pstotext.sh** Wrapper for pstotext.
-    Runs pstotext with a few extra features:
-        * Specifies a timeout (some pdfs can cause pstotext to hang indefinitely), and kills it if
-          necessary.
-        * Outputs the results to the specified file, and optionally zips the output file.
-        * Runs a simple test to determine if that paper is likely to be a research paper, and
-          outputs the result of the test
-        * Creates log files with the results of the process
-
+   * Runs pstotext with a few extra features:
+     * Specifies a timeout (some pdfs can cause pstotext to hang indefinitely), and kills it if
+       necessary.
+     * Outputs the results to the specified file, and optionally zips the output file.
+     * Runs a simple test to determine if that paper is likely to be a research paper, and
+       outputs the result of the test
+     * Creates log files with the results of the process
 
     Usage: run-pstotext.sh --file test-data/test.pdf --nogzip -timeout 30 --debug
-           "file=s"        => \$options{file},
-           "nogzip"        => \$options{nogzip},
-           "pstotext:s"    => \$options{pstotext},
-           "timeout=i"     => \$options{timeout},
-           "debug"         => \$options{debug},
-           "log=s"         => \$options{log},
-           "logprefix=s"   => \$options{logprefix},
+
+    Options:
+        --file somefile.pdf
+        --nogzip 
+        --pstotext  path to pstotext (if not on the standard path)
+        --timeout   time allowed before kill pstotext subprocess
+        --debug     print extra info to stdout
+        --log       name of logfile
+        --logprefix string that will be prepended to all logging output for this process
 
 
 
-  **idftype**  Try to guess the file type of an unknown file, then rename the file with an
-    appropriate extension. If the file is compressed, uncompress and identify the newly expanded
-    file. 
+  **idftype**
+   Try to guess the file type of an unknown file, then rename the file with an appropriate
+   extension. If the file is compressed, uncompress and identify the newly expanded file.
 
-    Usage: idftype -file unknown-file
+   Usage: idftype -file unknown-file
     
     
 
