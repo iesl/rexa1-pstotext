@@ -40,16 +40,16 @@
        outputs the result of the test
      * Creates log files with the results of the process
 
-
-        Options:
-            --file somefile.pdf
-            --nogzip 
-            --pstotext  path to pstotext (if not on the standard path)
-            --timeout   time allowed before kill pstotext subprocess
-            --debug     print extra info to stdout
-            --log       name of logfile
-            --logprefix string that will be prepended to all logging output for this process
-
+```
+    Options:
+        --file somefile.pdf
+        --nogzip
+        --pstotext  path to pstotext (if not on the standard path)
+        --timeout   time allowed before kill pstotext subprocess
+        --debug     print extra info to stdout
+        --log       name of logfile
+        --logprefix string that will be prepended to all logging output for this process
+```
 
   **idftype**
    Try to guess the file type of an unknown file, then rename the file with an appropriate
