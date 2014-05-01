@@ -30,6 +30,8 @@
 
 
   **run-pstotext.sh**: Wrapper for pstotext.
+    Usage: run-pstotext.sh --file test-data/test.pdf --nogzip -timeout 30 --debug
+
    * Runs pstotext with a few extra features:
      * Specifies a timeout (some pdfs can cause pstotext to hang indefinitely), and kills it if
        necessary.
@@ -38,8 +40,7 @@
        outputs the result of the test
      * Creates log files with the results of the process
 
-        Usage: run-pstotext.sh --file test-data/test.pdf --nogzip -timeout 30 --debug
-     
+
         Options:
             --file somefile.pdf
             --nogzip 
@@ -49,17 +50,11 @@
             --log       name of logfile
             --logprefix string that will be prepended to all logging output for this process
 
+
   **idftype**
    Try to guess the file type of an unknown file, then rename the file with an appropriate
    extension. If the file is compressed, uncompress and identify the newly expanded file.
 
    Usage: idftype -file unknown-file
-    
-    
-
-
-
-
-
 
 
