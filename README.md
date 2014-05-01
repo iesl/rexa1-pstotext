@@ -53,9 +53,9 @@ pstotext, or else specified as a parameter:
         --file somefile.pdf
         --nogzip
         --pstotext  path to pstotext (if not on the standard path)
-        --timeout   time allowed before kill pstotext subprocess
-        --debug     print extra info to stdout
-        --log       name of logfile
+        --timeout   timeout before killing pstotext subprocess
+        --debug     print extra debugging info to stdout
+        --log       name of logfile to append
         --logprefix string that will be prepended to all logging output for this process
 ```
 
@@ -63,8 +63,9 @@ pstotext, or else specified as a parameter:
 
    Try to guess the file type of an unknown file, then rename the file with an
    appropriate extension. If the file is compressed, uncompress and identify
-   the newly expanded file.
+   the newly expanded file. The input file will be overwritten if any renaming
+   or decompression takes place.
 
-   Usage: idftype -file unknown-file
+   Usage: idftype -file /some/unknown/file.xxx
 
 
