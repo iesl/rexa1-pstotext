@@ -1,12 +1,12 @@
-### This is the Rexa version 1 pstotext, adapted from the DEC utility pstotext.
+#### Rexa version 1 pstotext, adapted from the DEC utility pstotext.
 
 #### Installing
 
-    Run bin/setup to recompile pstotext. This will compile pstotext and place the executable in
-    bin/. The file 'ligatures.txt', also in the bin directory, should either be in the same
-    directory as pstotext, or else specified as a parameter:
+Run bin/setup to recompile pstotext. This will compile pstotext and place the executable in bin/.
+The file 'ligatures.txt', also in the bin directory, should either be in the same directory as
+pstotext, or else specified as a parameter:
 
-        pstotext -ligatures /path/to/ligatures.txt
+    pstotext -ligatures /path/to/ligatures.txt
 
 #### Provided utilities:
 
