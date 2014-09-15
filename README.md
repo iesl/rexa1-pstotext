@@ -2,7 +2,7 @@
 
 #### Installing
 
-Run bin/setup to recompile pstotext. This will compile pstotext and place the executable in bin/.
+Run bin/setup to recompile pstotext. This will compile pstotext and place the executable in bin/.  Make sure you have ghostscript installed (and either on your path, or supplied via the -gs argument, see below).
 The file 'ligatures.txt', also in the bin directory, should either be in the same directory as
 pstotext, or else specified as a parameter:
 
